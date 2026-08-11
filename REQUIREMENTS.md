@@ -9,24 +9,24 @@ A Kotlin Multiplatform app (iOS first, native SwiftUI UI + Apple Watch companion
 2. Uses AI to augment those notes into a well-organized, connected knowledge graph for learning, grounded in trusted sources.
 3. Helps nurses quickly understand a patient's chart in the moment — chief complaint + prescribed drugs — via short (layman's) and long (technical) explanations of *why* each medication is prescribed.
 
-Three related but distinct feature areas: **(A) personal learning graph**, **(B) in-the-moment chart lookup**, and onboarding/orientation that personalizes both. Decisions below are tagged accordingly.
+Three related but distinct feature areas: **(A) personal learning graph**, **(B) in-the-moment chart lookup**, and onboarding/orientation that personalizes both.
 
 ## Platform & stack decisions
 
-> **Revised 2026-08-11**: platform priority flipped from Android-first to **iOS-first**. Original Android+Wear OS-only decision (below, struck through in spirit) is superseded. Apple Watch support, originally dropped because Kotlin/KMP watchOS support is limited, is **back in scope** as a later phase since iOS is now primary — it'll be a native Swift watchOS companion, not a KMP target.
+> iOS is the primary platform (revised from an earlier Android-first draft). Apple Watch support — dropped early on because Kotlin/KMP's watchOS support is limited — is back in scope as a native Swift companion now that iOS is primary.
 
 | Area | Decision | Rationale |
 |---|---|---|
-| Primary platform | **iOS first.** Android is a later phase, not dropped. | Reflects updated priority; Kotlin Multiplatform makes adding Android later straightforward once shared logic exists. |
-| iOS UI | **Native SwiftUI**, separate Swift codebase (not Compose Multiplatform) | Best platform feel and full access to iOS APIs; most mature/well-supported path for an iOS-first app. Means UI is written twice long-term (SwiftUI for iOS, Compose for Android) but each feels fully native. |
-| Shared logic | Kotlin Multiplatform (`shared` module) for business logic/data layer, consumed by iOS via a compiled framework | Keeps non-UI logic (models, networking, sync, local cache) in one Kotlin codebase across platforms; not yet scaffolded — next step after the iOS UI shell. |
-| Watch companion | **Native watchOS app (Swift)**, later phase | Apple Watch is back in scope now that iOS is primary. Wear OS is deferred/likely dropped given iOS-first priority — revisit only if Android phone support is prioritized later. |
+| Primary platform | **iOS first.** Android is a later phase, not dropped. | Kotlin Multiplatform makes adding Android later straightforward once shared logic exists. |
+| iOS UI | **Native SwiftUI**, separate Swift codebase (not Compose Multiplatform) | Best platform feel and full access to iOS APIs; most mature/well-supported path for an iOS-first app. UI is written twice long-term (SwiftUI for iOS, Compose for Android later) but each feels fully native. |
+| Shared logic | Kotlin Multiplatform (`shared` module) for business logic/data layer, consumed by iOS via a compiled framework | Keeps non-UI logic (models, networking, sync, local cache) in one Kotlin codebase across platforms. Not yet scaffolded — next step after the iOS UI shell. |
+| Watch companion | **Native watchOS app (Swift)**, later phase | Apple Watch is back in scope now that iOS is primary. Wear OS deferred/likely dropped given iOS-first priority. |
 | Android UI (future phase) | Jetpack Compose | Standard modern Android stack, once Android phase is scheduled |
 | Local storage | Platform-native for now (e.g. SwiftData/Core Data on iOS), offline-first; may move into the shared KMP module later | Must work in low-connectivity hospital environments |
 | Backend | Kotlin + Ktor | One language end-to-end; backend owns all LLM calls |
 | Database | Postgres + `pgvector` | One store for structured graph tables *and* embeddings; avoids standing up a separate graph DB for v1 |
 | AI | Claude API, called server-side only | App never holds the API key; backend can rate-limit/cache and is where graph-building logic lives |
-| Knowledge corpus (v1) | Open/public sources only: MedlinePlus, CDC, NIH/PubMed abstracts, StatPearls (open-access) | No licensing negotiation needed for MVP. Every AI explanation should cite its source. Licensed clinical DBs (Lexicomp, UpToDate, Davis's) considered but deferred — real cost/licensing constraint if revisited later. |
+| Knowledge corpus (v1) | Open/public sources only: MedlinePlus, CDC, NIH/PubMed abstracts, StatPearls (open-access) | No licensing negotiation needed for MVP. Every AI explanation cites its source. Licensed clinical DBs (Lexicomp, UpToDate, Davis's) considered but deferred — real cost/licensing constraint if revisited later. |
 
 ### Project layout
 ```
@@ -46,7 +46,7 @@ First-open flow that asks the nurse a few questions about themselves so the app 
 - One question: **specialty/unit type** — e.g. Telemetry, Med-Surg, Oncology, ICU/Critical Care, ER, L&D/Maternity, Pediatrics, NICU, Psych/Behavioral Health, OR/Perioperative, PACU, Renal/Dialysis, Rehab, Home Health/Hospice.
 - **Multi-select** — a nurse can float across or work multiple units.
 - Fully **editable later** from settings — not a one-time lock-in.
-- No other onboarding questions in v1 (e.g. experience level considered, deferred — revisit if a real personalization need shows up).
+- No other onboarding questions in v1. An experience-level question was raised (see Open questions) but deliberately deferred, not ruled out.
 
 ### How it affects the app
 - **Personalizes, does not restrict.** Selected specialties bias:
@@ -61,6 +61,14 @@ First-open flow that asks the nurse a few questions about themselves so the app 
 - Voice notes via iPhone and, in a later phase, Apple Watch (short memos captured on watch, queued and finished/transcribed on phone via Watch Connectivity).
 - Typed notes as an alternative to voice.
 - Offline-first: notes queue locally and sync when connectivity returns.
+- No assumption about *where* capture happens (bedside vs. break room vs. post-shift) — audio capture works the same regardless of location, so the product doesn't design around one setting over another.
+
+### Privacy guardrail — PHI filter (day-1 MVP requirement)
+- This is a personal learning tool, not clinical documentation or decision support.
+- **On-device transcription** (e.g. iOS Speech framework in on-device mode) so raw audio/transcript never leaves the phone before PHI screening completes — nothing unfiltered is sent to the backend.
+- **PHI screening runs at capture time**, not just as a post-hoc pattern check. Post-hoc regex matching on names/MRNs alone won't catch spoken conversational PHI ("68-year-old in bed 12 with a COPD exacerbation..."), so screening runs against the transcript as part of the capture flow, before sync/upload.
+- Detected PHI-like content **flags for review rather than silently auto-redacting** — heuristics will have false positives/negatives, so the nurse reviews and edits before the note is saved/synced.
+- In scope for the MVP (Phase 2 capture build), not a later hardening pass.
 
 ### AI augmentation
 - Transcript cleanup.
@@ -79,10 +87,6 @@ First-open flow that asks the nurse a few questions about themselves so the app 
 - Gap detection over the graph (e.g. "you noted furosemide 3 times but never linked it to fluid balance — review?").
 - Full design in [Suggestion engine](#suggestion-engine) below.
 
-### Privacy guardrail
-- This is a personal learning tool, not clinical documentation or decision support.
-- Persistent reminder + lightweight on-device pattern check (names, MRNs, room numbers) before any note content uploads — patient-identifiable info should not enter the learning graph at all.
-
 ## Feature B: Patient chart lookup (chief complaint + medications)
 
 ### Purpose
@@ -91,7 +95,7 @@ While reviewing a patient's chart, quickly understand *why* each prescribed drug
 ### Input / data entry
 - **Manual quick entry only** (v1). Nurse types/selects the chief complaint and picks drugs from a list for the patient in front of them.
 - No OCR/photo capture, no EHR integration in v1.
-- EHR integration (FHIR API against Epic/Cerner) explicitly deferred — would require a HIPAA Business Associate Agreement and hospital IT/legal involvement. Not designed for now; noted as a possible future phase only.
+- EHR integration (FHIR API against Epic/Cerner) explicitly deferred — would require a HIPAA Business Associate Agreement and hospital IT/legal involvement. Noted as a possible future phase only.
 
 ### Data retention — ephemeral by design
 - Nothing patient-specific persists. The combination of "this chief complaint + these drugs for this patient encounter" is **not stored**.
@@ -101,13 +105,17 @@ While reviewing a patient's chart, quickly understand *why* each prescribed drug
 ### Output — two-tier explanation per medication
 For each prescribed drug, relative to the entered chief complaint:
 1. **Short/concise version** — plain layman's terms. Explains *why the patient is taking this* in language suitable for explaining to a patient. **Not** designed to be shown/handed directly to the patient — it's the nurse's own quick reference so they can explain it in their own words. (Revisit if a true patient-facing display mode is wanted later — would raise the bar on reviewing exact AI wording and need a distinct UI mode.)
-2. **Long/detailed version** — more technical. Includes side effects, mechanism, and relevant clinical detail. For the nurse's own deeper understanding.
-- Both versions should be grounded in the same curated open-source corpus as Feature A, with citations, and should reason about the specific indication (why *this* drug for *this* chief complaint), not just return a generic drug monograph.
+2. **Long/detailed version** — more technical. Includes mechanism, side effects, **and nursing implications** (labs/vitals to monitor, what to watch for) — not pharmacology-textbook content alone.
+- Both versions grounded in the same curated open-source corpus as Feature A, with citations, reasoning about the specific indication (why *this* drug for *this* chief complaint) rather than returning a generic drug monograph.
+
+### Scope — learning tool, not a full formulary
+- Not an exhaustive drug reference covering every possible medication. MVP coverage tracks what's actually common/relevant to learning, not completeness.
+- When multiple drugs are prescribed together for a single therapeutic purpose/effect (e.g. a combination regimen), they can be represented as one combined concept with its own short/long explanation, rather than requiring separate, isolated coverage of each drug in the combination.
 
 ### Feeds the learning graph (de-identified)
 - Chart lookups **do** feed into the personal learning graph (Feature A) — in de-identified form only.
-- A lookup produces/reinforces a generic `concept→concept` edge (e.g. `furosemide —treats→ CHF`), plus the short/long explanations cached as that concept's content. No patient identifier, encounter, date/time, or chart-specific detail is attached to the edge — only the drug↔complaint relationship itself.
-- This means repeated lookups across different patients with the same complaint/drug pairing strengthen the same graph edge rather than creating duplicate or patient-linked entries.
+- A lookup produces/reinforces a generic `concept→concept` edge (e.g. `furosemide —treats→ CHF`), plus the short/long explanations cached as that concept's content. No patient identifier, encounter, date/time, or chart-specific detail is attached — only the drug↔complaint relationship itself.
+- Repeated lookups across different patients with the same complaint/drug pairing strengthen the same graph edge rather than creating duplicate or patient-linked entries.
 - Feeds the same gap-detection/spaced-repetition mechanism as Feature A — e.g. a drug↔complaint pairing looked up often but never otherwise reviewed could surface as a suggested learning item.
 
 ## Suggestion engine
@@ -125,7 +133,7 @@ Turns the passive knowledge graph, spaced-repetition state, and specialty profil
 ### Suggestion types
 1. **Due for review** — spaced-repetition items past due (classic SRS).
 2. **Shallow concept gaps** — concepts referenced multiple times (via notes or chart lookups) but never explored in depth (no note attached, only appears as an edge target). This is the "furosemide mentioned 3 times but never linked to fluid balance" case.
-3. **Specialty core-concept gaps** — concepts considered foundational for the nurse's selected specialties that don't exist in their graph at all yet. Requires a seed list of foundational concepts per specialty, curated as part of populating the knowledge corpus (see Phase 6) — a content task, not just code.
+3. **Specialty core-concept gaps** — concepts considered foundational for the nurse's selected specialties that don't exist in their graph at all yet. Requires a seed list of foundational concepts per specialty, curated as part of populating the knowledge corpus (Phase 6) — a content task, not just code.
 4. **Related-concept expansion** — graph neighbors (via embedding similarity or explicit edges) of a concept the nurse just reviewed/added that aren't yet captured — e.g. after adding furosemide, suggest loop diuretics as a class, potassium wasting, ototoxicity.
 5. **Reinforced-by-practice** — Feature B edges hit repeatedly across different (de-identified) chart lookups, signaling real-world relevance worth deeper study even if the nurse hasn't flagged it themselves.
 
@@ -144,7 +152,7 @@ Score each candidate suggestion from a blend of: overdue-ness (SRS), mention/edg
 ## Roadmap (sequenced, each phase independently shippable)
 
 1. Foundations — repo, data model, privacy/PII guardrail copy, design system. iOS UI shell scaffolded (`iosApp/`, SwiftUI, XcodeGen).
-2. Capture MVP (iPhone only) — voice + typed notes, local on-device storage, basic list/organize UI. Includes first-open orientation (specialty/unit multi-select, editable later in settings).
+2. Capture MVP (iPhone only) — voice + typed notes, on-device transcription, on-device PHI screening at capture time, local on-device storage, basic list/organize UI. Includes first-open orientation (specialty/unit multi-select, editable later in settings).
 3. Shared KMP module — extract business logic/data layer into `shared/` so Android and future platforms can reuse it; iOS consumes it via a compiled framework.
 4. Backend + sync — Ktor API, Postgres, auth, note backup/multi-device sync.
 5. AI augmentation pipeline — transcript cleanup, concept/entity extraction, plain-language explanations.
@@ -156,8 +164,26 @@ Score each candidate suggestion from a blend of: overdue-ness (SRS), mention/edg
 11. Polish — semantic + full-text search, tagging, export.
 12. Android phase (future) — Jetpack Compose UI atop the shared KMP module, once iOS is validated.
 
+## Panel feedback (2026-08-11)
+
+Reviewed by four simulated nurse personas of varying experience for realism/workflow gaps.
+
+- **New grad, med-surg (~4mo)** — capture speed must be brutal-fast (sub-5s) or won't be used on top of existing charting burden; Feature B's long version needs nursing implications, not just pharmacology; pushes back on deferring experience-level in onboarding.
+- **Telemetry/step-down (6yr)** — real capture likely happens off-unit (break room/post-shift) given hospital phone-use policies; one-drug-at-a-time entry in Feature B too slow for a 5-6 patient assignment, wants bulk entry or reusable complaint+med combos; wants a way to represent unit-specific protocols that generic sources won't cover.
+- **ICU/charge nurse (18yr)** — wants a persistent, visually distinct "educational, not clinical decision support" disclaimer on every AI explanation, not just a one-time notice; thinks PHI guardrail needs to catch spoken conversational PHI, not just pattern-match names/MRNs; questions fully-ephemeral Feature B design since it means zero personal lookup history — wants an aggregate, patient-delinked count only.
+- **Nurse educator/preceptor (12yr)** — suggestion engine's spaced-repetition approach fits orientation programs well; wants concepts eventually mappable to existing frameworks (NCLEX categories, unit competency checklists, CCRN/CMSRN-style blueprints); also pushes back on deferring experience-level onboarding; asks whether citations will be source links only or quoted excerpts.
+
+**Resolved since this review**: capture-location assumption (doesn't matter, audio capture works anywhere); PHI screening (now a day-1 capture-time requirement, on-device); Feature B long-version content (nursing implications now required). Still open: experience-level onboarding (deferred, not ruled out — see below), bulk/multi-patient entry for Feature B, unit-specific protocol representation, persistent AI-content disclaimer, aggregate lookup history, competency-framework mapping, citation depth.
+
 ## Open questions (unresolved)
 
+- **Experience-level onboarding signal**: deferred for now per product decision, revisit later. Two panel personas independently flagged that "layman's terms" and suggestion depth should calibrate to seniority, not just specialty.
+- **Bulk/multi-patient entry for Feature B**: one-drug-at-a-time manual entry may be too slow for a full patient assignment — worth a bulk-entry or reusable-combo flow.
+- **Unit-specific protocol representation**: how to represent floor/unit-specific order sets and protocols that generic open sources won't cover.
+- **Persistent AI-content disclaimer**: whether every AI explanation needs a visually distinct "educational, not clinical decision support" marker, not just a one-time onboarding notice.
+- **Feature B lookup history**: fully ephemeral (current design) vs. an aggregate, patient-delinked personal count (e.g. "looked up furosemide 12 times this month") with no encounter-level record.
+- **Competency-framework mapping**: whether concepts should eventually map to existing frameworks (NCLEX categories, unit competency checklists, CCRN/CMSRN-style blueprints).
+- **Citation depth**: source title/link only vs. quoted excerpt from the source, for both Feature A and Feature B explanations.
 - **Backend hosting**: self-hosted (VPS/Fly.io/Cloud Run) vs. managed Postgres (Neon) + Cloud Run.
 - **Auth**: solo personal use (simple local/passcode) vs. multi-user from day one.
 - **Concept dedup strategy**: exact-match vs. embedding-similarity merge for the learning graph.
