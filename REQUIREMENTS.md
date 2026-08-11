@@ -55,6 +55,62 @@ First-open flow that asks the nurse a few questions about themselves so the app 
 - Everything remains fully accessible regardless of selection — a nurse can capture/learn/look up anything, specialty just weights the suggestion ranking.
 - Stored as user profile data (`UserProfile.specialties: List<Specialty>`), separate from the note/graph/patient-lookup data — not itself part of the knowledge graph.
 
+## Content taxonomy
+
+Defines what a "concept" in the knowledge graph can actually be. Originally the app leaned heavily on medications; this formalizes the full scope so procedures and abbreviations (e.g. TAVR, post-op shorthand like NPO or POD#1) are first-class, not an afterthought bolted onto the drug model.
+
+### Concept types
+Every node in the knowledge graph has a `type`:
+
+| Type | Examples | Notes |
+|---|---|---|
+| **Medication** | Furosemide, beta-blockers (class), a combination regimen | Existing coverage (Feature A + B). Can represent a single drug, a drug class, or a combo regimen (see Feature B scope). |
+| **Procedure** | TAVR, central line insertion, chest tube placement, wound vac change | What it is, why it's done, what nursing care follows it. |
+| **Condition / diagnosis** | CHF, COPD, sepsis, DKA, AKI | Disease processes — often the chief-complaint side of a Feature B lookup. |
+| **Lab value / diagnostic finding** | Potassium, BNP, troponin, a specific EKG finding | What it measures, normal/abnormal ranges, why it's trended. |
+| **Equipment / device** | PICC line, ventilator, telemetry monitor, wound vac | What it does, care/monitoring considerations. |
+| **Protocol / order set** | Sepsis bundle, stroke protocol, rapid response criteria | Standard or unit-specific; ties into the "unit-specific protocol representation" open question below. |
+| **Anatomy & physiology** | Loop of Henle, cardiac conduction system | Foundational reference underlying the other types. Lowest priority for v1 content population. |
+
+MVP content population prioritizes **Medication, Procedure, Condition, and Abbreviation aliases** (see below) — the categories nurses actually asked for. Lab value, Equipment, Protocol, and Anatomy are supported by the same data model from day one but populated later; this is a content-curation sequencing decision, not a schema limitation.
+
+### Abbreviations & acronyms are aliases, not a separate type
+An abbreviation like "TAVR" isn't its own concept — it's an **alias** that resolves to the canonical concept (`Transcatheter Aortic Valve Replacement`, type `Procedure`). Modeling it this way instead of as a standalone entry avoids duplicate/orphaned content for every shorthand variant of the same real-world thing.
+
+- **`Alias`** — an alternate searchable name attached to a `Concept`: abbreviation/acronym (TAVR, NPO, POD#1), brand name (Lasix → Furosemide), or common nickname. Many aliases can point to one concept.
+- Search and autocomplete match against both canonical names and aliases. When a query matches an alias, the result shows the expansion inline (e.g. "TAVR → Transcatheter Aortic Valve Replacement") so the nurse learns the expansion immediately, even before opening the concept.
+- Brand names already existed informally in concept detail copy (e.g. "Common brand name: Lasix" on the Furosemide screen) — this formalizes that pattern into a queryable field instead of prose buried in the body text.
+
+## Concept detail pages
+
+Every concept, regardless of type, has its own page — reachable via search, category browse, a tag, or as a related-concept link from another concept's page. This is the payoff of modeling procedures/conditions/labs/etc. as first-class graph nodes (see [Content taxonomy](#content-taxonomy)) instead of text-only descriptions: the graph isn't just a data structure, it's how a nurse actually moves through content.
+
+### Common structure (every type)
+- Title, type badge, alias line if applicable (e.g. "Also known as: TAVR").
+- Tags — each tag is a tappable link to a filtered view of every concept sharing it (same mechanism as the Learn page's category chips).
+- Persistent educational disclaimer banner ("educational reference, not clinical decision support" — shown on every page, not a one-time notice).
+- Short explanation.
+- Related concepts — chips linking to other concept pages via graph edges; tapping one navigates to that concept's own detail page, not just a preview.
+- Source citations.
+
+### Type-specific content
+Layered on top of the common structure above:
+
+| Type | Additional sections |
+|---|---|
+| Medication | Mechanism & side effects, nursing implications, common brand name (existing — see Furosemide). |
+| Procedure | **What it is & target concern** — what condition/problem the procedure addresses, via a `treats` edge to the relevant Condition concept, rendered inline (e.g. "Treats: Severe aortic stenosis"). **What to monitor** — post-procedure monitoring parameters (vitals, labs, complications to watch for). **Medications typically used** — linked Medication concepts via a `uses` edge, rendered as tappable chips that open those drug pages directly (e.g. TAVR → anticoagulation, sedation reversal agents). |
+| Condition | Presentation/signs & symptoms, typical treatments (the reverse of `treats` — which medications/procedures address this condition), risk factors. |
+| Lab value | Normal range, what an abnormal high/low indicates, related conditions. |
+| Equipment | Purpose, care/monitoring considerations. |
+| Protocol | Trigger criteria, steps. |
+
+### New edge type: `uses`
+`uses` (Procedure → Medication) captures "this procedure typically involves this medication" — distinct from `treats`, which captures "this addresses that condition." The existing `treats` edge already generalizes cleanly from Medication→Condition to Procedure→Condition, so no new edge type is needed there.
+
+### Navigation model
+Every tag, related-concept chip, and inline `treats`/`uses` reference is a live link to that concept's own page. A procedure page's monitoring/medication sections aren't duplicated text — they're graph relationships rendered in place, so updating a drug's info once updates it everywhere it's referenced (a procedure page, a condition's "typical treatments" list, a chart lookup result, etc.).
+
 ## Feature A: Personal learning graph
 
 ### Capture
@@ -77,10 +133,27 @@ First-open flow that asks the nurse a few questions about themselves so the app 
 
 ### Knowledge graph
 - **Note** — raw capture (audio ref + transcript, text, timestamp, device, sync state).
-- **Concept** — extracted entity with canonical AI-generated explanation + source citations.
-- **Edge** — typed relationship: `note→concept (mentions)`, `concept→concept (related_to / is_a / treats / contraindicated_with)`.
-- **Tag** — freeform + suggested categories (med-surg, pharm, unit-specific protocol, etc.).
+- **Concept** — extracted entity with a `type` (see [Content taxonomy](#content-taxonomy)), canonical AI-generated explanation, source citations, and any `Alias` entries (abbreviations/acronyms/brand names).
+- **Edge** — typed relationship: `note→concept (mentions)`, `concept→concept (related_to / is_a / treats / contraindicated_with / uses)`. See [Concept detail pages](#concept-detail-pages) for how `treats`/`uses` render as live, navigable content.
+- **Tag** — freeform + suggested categories (med-surg, pharm, unit-specific protocol, etc.) — distinct from `Concept.type`, which is the structural taxonomy; tags are looser, user- and specialty-driven labels layered on top.
 - Automatic dedupe/merge of near-duplicate concepts (embedding-similarity based — exact strategy TBD).
+
+### Learn page — search, browse & history
+The Learn tab is the primary surface for both the personalized suggestion feed (below) and deliberate, on-demand lookup — searching a drug, procedure, or abbreviation the nurse just heard and wants to understand right now. These are different use cases (passive "what should I learn" vs. active "what is this") and the page is structured to serve both without one crowding out the other.
+
+**Layout, top to bottom:**
+1. **Search bar** — persistent, always at the top. Autocompletes against concept names *and* aliases across all taxonomy types (medication, procedure, condition, lab value, equipment, protocol). A query matching an alias (e.g. "TAVR") shows the expansion and resolved concept inline in the result, tagged with its type (e.g. "Transcatheter Aortic Valve Replacement — Procedure"). Medication-type results also surface a key-side-effects preview inline (existing behavior), extended to show the most safety-relevant preview line per type where one exists (e.g. a procedure's key post-op watch-fors).
+2. **History button** — icon button on/near the search bar, opens the dedicated **Search history** screen (below). Kept as an explicit button rather than buried in a menu since re-finding something you looked up yesterday is a common, fast action.
+3. **Category quick-access** — a row of tappable category chips (Medications, Procedures, Conditions, Abbreviations, Lab Values, Equipment, Protocols) for browsing by topic when the nurse doesn't have an exact term in mind, not just free-text search. Tapping a category filters to concepts of that type.
+4. **Recent** — a compact, horizontally-scrollable strip of the last handful of concepts viewed, for one-tap re-access without opening full history.
+5. **Suggested for you** — the existing personalized suggestion feed (Due for review / New to explore / Specialty focus / etc.), unchanged, positioned below the search/browse area so deliberate lookup always takes visual priority over passive suggestions.
+
+**Search history screen** (opened via the history button):
+- Rows of past concept lookups, grouped by day (Today / Yesterday / older — same grouping pattern already used in Capture's note list), each row showing the concept name, its type tag, and a relative timestamp. Tapping a row reopens that concept's detail page.
+- Logs *resolved concept views*, not raw typed queries — if a nurse types "furo" and opens Furosemide, the history entry is "Furosemide," not the partial query string. This is more useful to scan later and avoids cluttering history with typos and abandoned partial searches.
+- Tapping any search result opens that concept's own page — see [Concept detail pages](#concept-detail-pages).
+- "Recent" (item 4 above) is just the most recent few entries from this same history — one underlying log, two surfaces (a quick strip and a full screen).
+- Includes a **Clear history** action — this is general medical-knowledge search history (not patient-specific, so it doesn't carry the same PHI stakes as Feature B), but the nurse should still be able to clear it, consistent with the app's overall privacy-conscious posture.
 
 ### Learning suggestions
 - **ReviewSchedule** — per-concept spaced-repetition state.
@@ -128,6 +201,7 @@ Turns the passive knowledge graph, spaced-repetition state, and specialty profil
 - **ReviewSchedule**: per-concept spaced-repetition due dates.
 - `UserProfile.specialties`: personalization weighting from onboarding.
 - Feature B lookup frequency: which de-identified drug↔complaint edges get reinforced often.
+- Learn-page search frequency: concepts looked up via deliberate search but never otherwise captured in a note — a nurse repeatedly searching "TAVR" without it showing up elsewhere in their graph is itself a signal.
 - Concept "depth": whether a concept has an actual note/explanation attached, or only exists as an edge target/passing mention.
 
 ### Suggestion types
@@ -157,7 +231,7 @@ Score each candidate suggestion from a blend of: overdue-ness (SRS), mention/edg
 4. Backend + sync — Ktor API, Postgres, auth, note backup/multi-device sync.
 5. AI augmentation pipeline — transcript cleanup, concept/entity extraction, plain-language explanations.
 6. Curated knowledge RAG — ingest MedlinePlus/CDC/StatPearls, chunk + embed into `pgvector`, ground explanations with citations.
-7. Knowledge graph — concept nodes/edges, dedupe/merge, graph browsing UI.
+7. Knowledge graph — concept nodes/edges, dedupe/merge, graph browsing UI. Includes `Concept.type` taxonomy and `Alias` model (see Content taxonomy), per-type concept detail page templates (see Concept detail pages), and the Learn page search/category-browse/history UI.
 8. Learning suggestions — gap detection + spaced-repetition reminders (see Suggestion engine).
 9. Chart lookup (Feature B) — manual chief complaint + drug entry, short/long dual explanations, ephemeral by design.
 10. Apple Watch companion — native watchOS app for on-wrist voice capture, synced via Watch Connectivity.
@@ -189,3 +263,5 @@ Reviewed by four simulated nurse personas of varying experience for realism/work
 - **Concept dedup strategy**: exact-match vs. embedding-similarity merge for the learning graph.
 - **Local storage tech on iOS**: SwiftData vs. Core Data vs. pushing local persistence into the shared KMP module (e.g. SQLDelight) from the start so Android doesn't need a rewrite later.
 - **When to scaffold `shared/` and `backend/`**: now vs. after the iOS UI shell has real screens to wire up.
+- **Search history sync & retention**: local-only vs. synced across devices via the backend; whether it should ever expire/auto-prune, beyond the manual "Clear history" action.
+- **Content taxonomy population order**: confirm Medication → Procedure → Condition → Abbreviation aliases as the v1 curation priority, with Lab value/Equipment/Protocol/Anatomy deferred — revisit once real usage data shows what nurses actually search for.
