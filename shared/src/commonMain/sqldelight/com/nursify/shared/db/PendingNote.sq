@@ -1,0 +1,29 @@
+-- Outbox for offline-captured notes. Matches the sync design in
+-- SYSTEM_DESIGN.md: a note gets queued locally with syncState = PENDING,
+-- a background task pushes it via ApiClient.createNote() using this row's
+-- id as the idempotency key, then marks it SYNCED or FAILED.
+
+CREATE TABLE PendingNote (
+    id TEXT NOT NULL PRIMARY KEY,
+    transcript TEXT NOT NULL,
+    device TEXT NOT NULL,
+    phiReviewed INTEGER NOT NULL,
+    createdAt INTEGER NOT NULL,
+    syncState TEXT NOT NULL
+);
+
+selectAll:
+SELECT * FROM PendingNote ORDER BY createdAt DESC;
+
+selectPending:
+SELECT * FROM PendingNote WHERE syncState = 'PENDING';
+
+insertNote:
+INSERT INTO PendingNote(id, transcript, device, phiReviewed, createdAt, syncState)
+VALUES (?, ?, ?, ?, ?, ?);
+
+markSynced:
+UPDATE PendingNote SET syncState = 'SYNCED' WHERE id = ?;
+
+markFailed:
+UPDATE PendingNote SET syncState = 'FAILED' WHERE id = ?;

@@ -34,7 +34,7 @@ nursify/
   REQUIREMENTS.md
   SYSTEM_DESIGN.md
   iosApp/          # native SwiftUI app (scaffolded — see iosApp/README.md)
-  shared/          # KMP business-logic module (not yet scaffolded)
+  shared/          # KMP module: models, API client, SQLDelight — JVM target verified, iOS targets unverified (see shared/README.md)
   backend/         # Ktor backend (scaffolded and running — see backend/README.md)
 ```
 

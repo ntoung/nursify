@@ -1,0 +1,32 @@
+-- Local cache of concepts for offline reads (SearchView/ConceptDetailView
+-- should work with no connectivity, per REQUIREMENTS.md's offline-first
+-- capture requirement — extended here to reads too).
+
+CREATE TABLE ConceptCache (
+    id TEXT NOT NULL PRIMARY KEY,
+    type TEXT NOT NULL,
+    name TEXT NOT NULL,
+    shortExplanation TEXT NOT NULL,
+    sectionsJson TEXT NOT NULL,
+    tagsJson TEXT NOT NULL,
+    aliasesJson TEXT NOT NULL,
+    relatedConceptIdsJson TEXT NOT NULL,
+    sourceCitation TEXT,
+    cachedAt INTEGER NOT NULL
+);
+
+selectAll:
+SELECT * FROM ConceptCache;
+
+selectById:
+SELECT * FROM ConceptCache WHERE id = ?;
+
+searchByName:
+SELECT * FROM ConceptCache WHERE name LIKE '%' || :query || '%';
+
+insertOrReplace:
+INSERT OR REPLACE INTO ConceptCache(id, type, name, shortExplanation, sectionsJson, tagsJson, aliasesJson, relatedConceptIdsJson, sourceCitation, cachedAt)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+clearAll:
+DELETE FROM ConceptCache;
