@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Nursify — Screen Mockups v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF7F2;
+    --card:#FFFFFF;
+    --ink:#3A352E;
+    --sub:#8B8377;
+    --line:#EEE7DB;
+    --accent:#5FA88C;
+    --accent-ink:#3E7D66;
+    --accent-soft-bg:#E7F2ED;
+    --warn-bg:#FDF1E3;
+    --warn-line:#F3D9B3;
+    --warn-ink:#97672C;
+    --badge-due-bg:#FCE7E0; --badge-due-ink:#B5583B;
+    --badge-new-bg:#E7EEF9; --badge-new-ink:#4C6E9C;
+    --badge-practice-bg:#E6F3E9; --badge-practice-ink:#3F8158;
+    --badge-core-bg:#FBF0DC; --badge-core-ink:#A57C2E;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    padding:56px;
+    background:#14171A;
+    font-family:'Nunito',ui-rounded,-apple-system,sans-serif;
+  }
+  h1{
+    color:#F3F1EC;
+    font-family:'Quicksand',ui-rounded,-apple-system,sans-serif;
+    font-size:24px;
+    font-weight:600;
+    margin:0 0 8px 0;
+  }
+  .h1-sub{
+    color:#8B9099;
+    font-size:14px;
+    margin:0 0 36px 0;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,462px);
+    gap:64px 44px;
+  }
+  .slot{display:flex;flex-direction:column;align-items:center;}
+  .slot-label{
+    color:#A7ADB6;
+    font-family:'Quicksand',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.03em;
+    margin-bottom:16px;
+    text-transform:uppercase;
+  }
+
+  /* iPhone 16 Pro Max frame: 430x932pt content, titanium bezel */
+  .phone{
+    width:462px;
+    height:964px;
+    background:linear-gradient(160deg,#3d3d40,#1b1b1d);
+    border-radius:68px;
+    padding:16px;
+    box-shadow:0 36px 70px rgba(0,0,0,0.55);
+  }
+  .screen{
+    width:430px;
+    height:932px;
+    background:var(--bg);
+    border-radius:54px;
+    overflow:hidden;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+  }
+  .island{
+    position:absolute;
+    top:14px;
+    left:50%;
+    transform:translateX(-50%);
+    width:126px;
+    height:37px;
+    background:#000;
+    border-radius:20px;
+    z-index:5;
+  }
+  .statusbar{
+    height:54px;
+    flex:0 0 auto;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    padding:0 32px 10px 32px;
+    font-family:'Quicksand',sans-serif;
+    font-size:15px;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .status-icons{display:flex;align-items:center;gap:7px;color:var(--ink);}
+  .status-icons svg{display:block;}
+
+  .content{flex:1 1 auto;overflow:hidden;padding:2px 24px 14px 24px;}
+  .content.scroll{overflow-y:auto;}
+
+  .tabbar{
+    flex:0 0 auto;
+    height:96px;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(6px);
+    border-top:1px solid var(--line);
+    display:flex;
+    align-items:flex-start;
+    padding-top:12px;
+  }
+  .tab{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;
+    color:#B7B0A2;font-family:'Quicksand',sans-serif;font-size:12px;font-weight:600;
+  }
+  .tab svg{width:24px;height:24px;}
+  .tab.active{color:var(--accent-ink);}
+
+  .icon{display:inline-block;vertical-align:middle;}
+
+  .screen-title{
+    font-family:'Quicksand',sans-serif;
+    font-size:33px;font-weight:700;color:var(--ink);margin:14px 0 6px 0;
+  }
+  .screen-sub{font-size:15.5px;color:var(--sub);margin:0 0 20px 0;line-height:1.5;}
+
+  .section-label{
+    font-family:'Quicksand',sans-serif;
+    font-size:13px;font-weight:700;color:var(--sub);
+    text-transform:uppercase;letter-spacing:0.05em;margin:22px 0 10px 2px;
+  }
+  .section-label:first-child{margin-top:6px;}
+
+  /* Onboarding */
+  .chip-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
+  .chip{
+    padding:11px 18px;border-radius:22px;background:#fff;
+    border:1.5px solid var(--line);font-size:14.5px;font-weight:700;color:var(--ink);
+    font-family:'Nunito',sans-serif;
+  }
+  .chip.selected{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .primary-btn{
+    background:var(--accent);color:#fff;text-align:center;padding:17px;
+    border-radius:20px;font-family:'Quicksand',sans-serif;font-weight:700;font-size:16px;
+  }
+  .helper-text{font-size:13px;color:var(--sub);text-align:center;margin:12px 0 0 0;}
+
+  /* Suggestion feed */
+  .greeting{font-family:'Quicksand',sans-serif;font-size:25px;font-weight:700;color:var(--ink);margin:14px 0 16px 0;}
+  .sugg-card{background:var(--card);border-radius:22px;padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 10px rgba(58,53,46,0.05);}
+  .sugg-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .sugg-title{font-family:'Quicksand',sans-serif;font-size:16.5px;font-weight:700;color:var(--ink);}
+  .badge{font-family:'Quicksand',sans-serif;font-size:11px;font-weight:700;padding:4px 10px;border-radius:10px;text-transform:uppercase;letter-spacing:0.03em;white-space:nowrap;}
+  .badge.due{background:var(--badge-due-bg);color:var(--badge-due-ink);}
+  .badge.new{background:var(--badge-new-bg);color:var(--badge-new-ink);}
+  .badge.practice{background:var(--badge-practice-bg);color:var(--badge-practice-ink);}
+  .badge.core{background:var(--badge-core-bg);color:var(--badge-core-ink);}
+  .sugg-why{font-size:13.5px;color:var(--sub);margin-top:6px;line-height:1.5;}
+
+  /* Capture */
+  .warn-banner{
+    background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:16px;
+    padding:13px 15px;font-size:13.5px;color:var(--warn-ink);margin-bottom:16px;line-height:1.5;
+    display:flex;gap:10px;align-items:flex-start;
+  }
+  .warn-banner .icon{flex:0 0 auto;margin-top:1px;}
+  .warn-banner b{display:block;font-family:'Quicksand',sans-serif;font-size:14.5px;margin-bottom:3px;font-weight:700;}
+  .mic-wrap{display:flex;flex-direction:column;align-items:center;padding:28px 0 22px 0;}
+  .mic-btn{
+    width:104px;height:104px;border-radius:50%;
+    background:linear-gradient(160deg,#F0917A,#DE7259);
+    display:flex;align-items:center;justify-content:center;color:#fff;
+    box-shadow:0 10px 24px rgba(222,114,89,0.35);
+  }
+  .mic-btn svg{width:38px;height:38px;}
+  .wave{display:flex;align-items:center;gap:4px;height:30px;margin-top:18px;}
+  .wave span{width:3.5px;background:var(--accent);border-radius:3px;display:block;}
+  .rec-label{font-family:'Quicksand',sans-serif;font-size:14px;color:var(--sub);margin-top:12px;font-weight:700;}
+  .note-row{display:flex;justify-content:space-between;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--line);gap:10px;}
+  .note-text{font-size:14.5px;color:var(--ink);line-height:1.5;}
+  .note-time{font-size:12px;color:var(--sub);white-space:nowrap;margin-top:1px;font-weight:600;}
+
+  /* Concept detail */
+  .back-row{display:flex;align-items:center;gap:4px;color:var(--accent-ink);font-family:'Quicksand',sans-serif;font-size:16px;font-weight:700;margin:14px 0 12px 0;}
+  .back-row svg{width:20px;height:20px;}
+  .concept-title{font-family:'Quicksand',sans-serif;font-size:29px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+  .tag-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;}
+  .tag{font-size:12px;font-weight:700;padding:5px 11px;border-radius:10px;background:#F1ECE1;color:var(--sub);font-family:'Quicksand',sans-serif;}
+  .body-text{font-size:15px;color:var(--ink);line-height:1.65;margin-bottom:16px;}
+  .related-chip{
+    display:inline-block;padding:9px 14px;border-radius:22px;background:#fff;
+    border:1.5px solid var(--line);font-size:13.5px;font-weight:700;color:var(--accent-ink);
+    margin:0 7px 9px 0;font-family:'Nunito',sans-serif;
+  }
+  .cite{font-size:12px;color:var(--sub);border-top:1px solid var(--line);padding-top:12px;margin-top:8px;}
+  .edu-banner{
+    background:var(--accent-soft-bg);border:1px solid #CFE6DB;border-radius:14px;
+    padding:10px 13px;font-size:12.5px;color:var(--accent-ink);font-weight:700;
+    display:flex;align-items:center;gap:8px;margin-bottom:16px;font-family:'Quicksand',sans-serif;
+  }
+  .edu-banner svg{flex:0 0 auto;width:17px;height:17px;}
+
+  /* Chart lookup input */
+  .field-label{font-family:'Quicksand',sans-serif;font-size:12.5px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:0.04em;margin:18px 0 8px 2px;}
+  .field-label:first-child{margin-top:8px;}
+  .input-box{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px 16px;font-size:15px;color:var(--ink);}
+  .med-chip-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:9px;}
+  .med-chip{
+    display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:20px;
+    background:#fff;border:1.5px solid var(--line);font-size:14px;font-weight:700;color:var(--ink);
+    font-family:'Nunito',sans-serif;
+  }
+  .med-chip svg{width:14px;height:14px;color:var(--sub);}
+  .add-chip{
+    display:flex;align-items:center;gap:6px;padding:9px 16px;border-radius:20px;
+    border:1.5px dashed #C9BFAD;font-size:14px;font-weight:700;color:var(--sub);font-family:'Nunito',sans-serif;
+  }
+  .add-chip svg{width:14px;height:14px;}
+  .ephemeral-note{display:flex;align-items:center;justify-content:center;gap:6px;font-size:12.5px;color:var(--sub);margin:14px 0 4px 0;font-weight:600;}
+  .ephemeral-note svg{width:14px;height:14px;}
+
+  /* Chart lookup results */
+  .seg{display:flex;background:#EFE8DB;border-radius:14px;padding:3px;margin-bottom:16px;}
+  .seg div{flex:1;text-align:center;padding:9px 0;font-family:'Quicksand',sans-serif;font-size:13.5px;font-weight:700;border-radius:11px;color:var(--sub);}
+  .seg div.active{background:#fff;color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,0.06);}
+  .drug-card{background:#fff;border-radius:20px;padding:16px 18px;margin-bottom:14px;box-shadow:0 2px 10px rgba(58,53,46,0.05);}
+  .drug-name{font-family:'Quicksand',sans-serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+  .drug-why{font-size:12.5px;color:var(--accent-ink);font-weight:700;margin-bottom:9px;}
+  .drug-text{font-size:14.5px;color:var(--ink);line-height:1.55;}
+</style>
+</head>
+<body>
+<h1>Nursify — screens v2</h1>
+<div class="h1-sub">Softer palette, rounded type, line icons — iPhone 16 Pro Max (430×932pt)</div>
+<div class="grid">
+
+  <!-- 1. Onboarding -->
+  <div class="slot">
+    <div class="slot-label">Onboarding — specialty select</div>
+    <div class="phone"><div class="screen">
+      <div class="island"></div>
+      <div class="statusbar">
+        <span>9:41</span>
+        <div class="status-icons">
+          <svg viewBox="0 0 20 12" width="17" height="10" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="0.8"/><rect x="5" y="4.5" width="3" height="7.5" rx="0.8"/><rect x="10" y="2.5" width="3" height="9.5" rx="0.8"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.8"/></svg>
+          <svg viewBox="0 0 20 15" width="17" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 5.5a12 12 0 0 1 16 0"/><path d="M5 8.8a7.5 7.5 0 0 1 10 0"/><path d="M8 12a3.3 3.3 0 0 1 4 0"/><circle cx="10" cy="14.3" r="0.9" fill="currentColor" stroke="none"/></svg>
+          <svg viewBox="0 0 26 13" width="23" height="11" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="0.6" y="0.6" width="21" height="11.8" rx="3.2"/><rect x="2.3" y="2.3" width="14.5" height="8.4" rx="1.8" fill="currentColor" stroke="none"/><path d="M23.5 4v5" stroke-linecap="round" stroke-width="1.6"/></svg>
+        </div>
+      </div>
+      <div class="content scroll">
+        <div class="screen-title">What's your specialty?</div>
+        <div class="screen-sub">Select all that apply — you can change this anytime in Settings. This just helps us prioritize suggestions, nothing is locked in or hidden.</div>
+        <div class="chip-grid">
+          <div class="chip selected">Telemetry</div>
+          <div class="chip selected">Med-Surg</div>
+          <div class="chip">Oncology</div>
+          <div class="chip">ICU / Critical Care</div>
+          <div class="chip">ER</div>
+          <div class="chip">L&amp;D / Maternity</div>
+          <div class="chip">Pediatrics</div>
+          <div class="chip">NICU</div>
+          <div class="chip">Psych / Behavioral Health</div>
+          <div class="chip">OR / Perioperative</div>
+          <div class="chip">PACU</div>
+          <div class="chip">Renal / Dialysis</div>
+          <div class="chip">Rehab</div>
+          <div class="chip">Home Health / Hospice</div>
+          <div class="chip">Cardiac Cath Lab</div>
+          <div class="chip">Wound Care</div>
+          <div class="chip">Case Management</div>
+          <div class="chip">Float Pool</div>
+        </div>
+      </div>
+      <div style="padding:0 24px 26px 24px;">
+        <div class="warn-banner" style="background:var(--accent-soft-bg);border-color:#CFE6DB;color:var(--accent-ink);margin-bottom:14px;">
+          <svg class="icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.7" r="0.9" fill="currentColor" stroke="none"/></svg>
+          <div>Used only to personalize your suggestions — never shared, and nothing is hidden based on your picks.</div>
+        </div>
+        <div class="primary-btn">Continue</div>
+        <div class="helper-text">2 selected</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 2. Suggested for you -->
+  <div class="slot">
+    <div class="slot-label">Learn — suggested for you</div>
+    <div class="phone"><div class="screen">
+      <div class="island"></div>
+      <div class="statusbar">
+        <span>9:41</span>
+        <div class="status-icons">
+          <svg viewBox="0 0 20 12" width="17" height="10" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="0.8"/><rect x="5" y="4.5" width="3" height="7.5" rx="0.8"/><rect x="10" y="2.5" width="3" height="9.5" rx="0.8"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.8"/></svg>
+          <svg viewBox="0 0 20 15" width="17" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 5.5a12 12 0 0 1 16 0"/><path d="M5 8.8a7.5 7.5 0 0 1 10 0"/><path d="M8 12a3.3 3.3 0 0 1 4 0"/><circle cx="10" cy="14.3" r="0.9" fill="currentColor" stroke="none"/></svg>
+          <svg viewBox="0 0 26 13" width="23" height="11" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="0.6" y="0.6" width="21" height="11.8" rx="3.2"/><rect x="2.3" y="2.3" width="14.5" height="8.4" rx="1.8" fill="currentColor" stroke="none"/><path d="M23.5 4v5" stroke-linecap="round" stroke-width="1.6"/></svg>
+        </div>
+      </div>
+      <div class="content scroll">
+        <div class="greeting">Good morning, Jamie</div>
+
+        <div class="section-label">Due for review</div>
+        <div class="sugg-card">
+          <div class="sugg-top"><div class="sugg-title">Beta-blockers (class)</div><div class="badge due">Due</div></div>
+          <div class="sugg-why">Last reviewed 9 days ago — spaced review suggests today.</div>
+        </div>
+
+        <div class="section-label">New to explore</div>
+        <div class="sugg-card">
+          <div class="sugg-top"><div class="sugg-title">Furosemide ↔ fluid balance</div><div class="badge new">Gap</div></div>
+          <div class="sugg-why">Mentioned 3× in your notes but never explored in depth.</div>
+        </div>
+        <div class="sugg-card">
+          <div class="sugg-top"><div class="sugg-title">Potassium wasting</div><div class="badge new">Related</div></div>
+          <div class="sugg-why">Related to furosemide, which you reviewed yesterday.</div>
+        </div>
+        <div class="sugg-card">
+          <div class="sugg-top"><div class="sugg-title">Furosemide — treats → CHF</div><div class="badge practice">Practice</div></div>
+          <div class="sugg-why">Looked up 6× across different patients this month.</div>
+        </div>
+
+        <div class="section-label">Specialty focus · Telemetry</div>
+        <div class="sugg-card">
+          <div class="sugg-top"><div class="sugg-title">Cardiac rhythm basics</div><div class="badge core">Core</div></div>
+          <div class="sugg-why">Foundational for your selected specialty, not yet in your graph.</div>
+        </div>
+        <div class="sugg-card">
+          <div class="sugg-top"><div class="sugg-title">12-lead EKG interpretation</div><div class="badge core">Core</div></div>
+          <div class="sugg-why">Foundational for Telemetry, not yet in your graph.</div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 19v3"/><path d="M8 22h8"/></svg>Capture</div>
+        <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M8.1 7.2 10 16"/><path d="M15.9 7.2 14 16"/><path d="M8.4 6h7.2"/></svg>Learn</div>
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2.5"/><rect x="9" y="2" width="6" height="4" rx="1.3"/><path d="M8.5 11h7"/><path d="M8.5 14.5h7"/><path d="M8.5 18h4.5"/></svg>Chart</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 3. Capture -->
+  <div class="slot">
+    <div class="slot-label">Capture — voice note</div>
+    <div class="phone"><div class="screen">
+      <div class="island"></div>
+      <div class="statusbar">
+        <span>9:41</span>
+        <div class="status-icons">
+          <svg viewBox="0 0 20 12" width="17" height="10" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="0.8"/><rect x="5" y="4.5" width="3" height="7.5" rx="0.8"/><rect x="10" y="2.5" width="3" height="9.5" rx="0.8"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.8"/></svg>
+          <svg viewBox="0 0 20 15" width="17" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 5.5a12 12 0 0 1 16 0"/><path d="M5 8.8a7.5 7.5 0 0 1 10 0"/><path d="M8 12a3.3 3.3 0 0 1 4 0"/><circle cx="10" cy="14.3" r="0.9" fill="currentColor" stroke="none"/></svg>
+          <svg viewBox="0 0 26 13" width="23" height="11" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="0.6" y="0.6" width="21" height="11.8" rx="3.2"/><rect x="2.3" y="2.3" width="14.5" height="8.4" rx="1.8" fill="currentColor" stroke="none"/><path d="M23.5 4v5" stroke-linecap="round" stroke-width="1.6"/></svg>
+        </div>
+      </div>
+      <div class="content scroll">
+        <div class="screen-title" style="font-size:29px;">Capture</div>
+        <div class="warn-banner">
+          <svg class="icon" viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 3.8 2.9 18a2 2 0 0 0 1.7 3h14.8a2 2 0 0 0 1.7-3L13.4 3.8a2 2 0 0 0-3.4 0Z"/><path d="M12 9.5v4"/><circle cx="12" cy="16.3" r="0.9" fill="currentColor" stroke="none"/></svg>
+          <div><b>Possible patient info detected</b>Your last note may include identifying details. Review before it syncs.</div>
+        </div>
+        <div class="mic-wrap">
+          <div class="mic-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 19v3"/><path d="M8 22h8"/></svg></div>
+          <div class="wave">
+            <span style="height:9px"></span><span style="height:20px"></span><span style="height:28px"></span>
+            <span style="height:15px"></span><span style="height:24px"></span><span style="height:11px"></span>
+            <span style="height:22px"></span><span style="height:7px"></span>
+          </div>
+          <div class="rec-label">Recording · 0:07</div>
+        </div>
+
+        <div class="section-label">Today</div>
+        <div class="note-row">
+          <div class="note-text">"Pt on furosemide 40mg IV BID for CHF exacerbation — need to review why loop over thiazide here"</div>
+          <div class="note-time">8:52 AM</div>
+        </div>
+        <div class="note-row">
+          <div class="note-text">Typed: telemetry strips — reviewing 2nd degree AV block type I vs II</div>
+          <div class="note-time">7:15 AM</div>
+        </div>
+
+        <div class="section-label">Yesterday</div>
+        <div class="note-row">
+          <div class="note-text">"New admit report-off — going to look into metoprolol vs carvedilol dosing differences later"</div>
+          <div class="note-time">6:40 PM</div>
+        </div>
+        <div class="note-row">
+          <div class="note-text">Typed: preceptor mentioned daily weights + strict I&amp;Os for CHF patients</div>
+          <div class="note-time">2:05 PM</div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 19v3"/><path d="M8 22h8"/></svg>Capture</div>
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M8.1 7.2 10 16"/><path d="M15.9 7.2 14 16"/><path d="M8.4 6h7.2"/></svg>Learn</div>
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2.5"/><rect x="9" y="2" width="6" height="4" rx="1.3"/><path d="M8.5 11h7"/><path d="M8.5 14.5h7"/><path d="M8.5 18h4.5"/></svg>Chart</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 4. Concept detail -->
+  <div class="slot">
+    <div class="slot-label">Learn — concept detail</div>
+    <div class="phone"><div class="screen">
+      <div class="island"></div>
+      <div class="statusbar">
+        <span>9:41</span>
+        <div class="status-icons">
+          <svg viewBox="0 0 20 12" width="17" height="10" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="0.8"/><rect x="5" y="4.5" width="3" height="7.5" rx="0.8"/><rect x="10" y="2.5" width="3" height="9.5" rx="0.8"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.8"/></svg>
+          <svg viewBox="0 0 20 15" width="17" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 5.5a12 12 0 0 1 16 0"/><path d="M5 8.8a7.5 7.5 0 0 1 10 0"/><path d="M8 12a3.3 3.3 0 0 1 4 0"/><circle cx="10" cy="14.3" r="0.9" fill="currentColor" stroke="none"/></svg>
+          <svg viewBox="0 0 26 13" width="23" height="11" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="0.6" y="0.6" width="21" height="11.8" rx="3.2"/><rect x="2.3" y="2.3" width="14.5" height="8.4" rx="1.8" fill="currentColor" stroke="none"/><path d="M23.5 4v5" stroke-linecap="round" stroke-width="1.6"/></svg>
+        </div>
+      </div>
+      <div class="content scroll">
+        <div class="back-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Learn</div>
+        <div class="concept-title">Furosemide</div>
+        <div class="tag-row">
+          <div class="tag">Pharmacology</div>
+          <div class="tag">Loop diuretic</div>
+          <div class="tag">Telemetry</div>
+        </div>
+        <div class="edu-banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.7" r="0.9" fill="currentColor" stroke="none"/></svg>
+          Educational reference — not clinical decision support
+        </div>
+        <div class="body-text"><b>In short:</b> Helps the body get rid of extra fluid by making the kidneys release more sodium and water — commonly used when fluid buildup makes it hard to breathe or puts strain on the heart.</div>
+        <div class="body-text"><b>Nursing implications:</b> Monitor potassium and renal function, watch for orthostatic hypotension, track daily weights and I&amp;Os, assess for ototoxicity with rapid IV push.</div>
+        <div class="body-text"><b>Common brand name:</b> Lasix. Usually given IV push or PO depending on acuity and how quickly fluid needs to come off.</div>
+        <div class="section-label">Related concepts</div>
+        <div>
+          <span class="related-chip">CHF</span>
+          <span class="related-chip">Fluid balance</span>
+          <span class="related-chip">Potassium wasting</span>
+          <span class="related-chip">Loop diuretics (class)</span>
+          <span class="related-chip">Daily weights &amp; I&amp;Os</span>
+          <span class="related-chip">Ototoxicity</span>
+        </div>
+        <div class="cite">Source: MedlinePlus, StatPearls — last synced 2 days ago</div>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 19v3"/><path d="M8 22h8"/></svg>Capture</div>
+        <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M8.1 7.2 10 16"/><path d="M15.9 7.2 14 16"/><path d="M8.4 6h7.2"/></svg>Learn</div>
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2.5"/><rect x="9" y="2" width="6" height="4" rx="1.3"/><path d="M8.5 11h7"/><path d="M8.5 14.5h7"/><path d="M8.5 18h4.5"/></svg>Chart</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 5. Chart lookup input -->
+  <div class="slot">
+    <div class="slot-label">Chart lookup — input</div>
+    <div class="phone"><div class="screen">
+      <div class="island"></div>
+      <div class="statusbar">
+        <span>9:41</span>
+        <div class="status-icons">
+          <svg viewBox="0 0 20 12" width="17" height="10" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="0.8"/><rect x="5" y="4.5" width="3" height="7.5" rx="0.8"/><rect x="10" y="2.5" width="3" height="9.5" rx="0.8"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.8"/></svg>
+          <svg viewBox="0 0 20 15" width="17" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 5.5a12 12 0 0 1 16 0"/><path d="M5 8.8a7.5 7.5 0 0 1 10 0"/><path d="M8 12a3.3 3.3 0 0 1 4 0"/><circle cx="10" cy="14.3" r="0.9" fill="currentColor" stroke="none"/></svg>
+          <svg viewBox="0 0 26 13" width="23" height="11" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="0.6" y="0.6" width="21" height="11.8" rx="3.2"/><rect x="2.3" y="2.3" width="14.5" height="8.4" rx="1.8" fill="currentColor" stroke="none"/><path d="M23.5 4v5" stroke-linecap="round" stroke-width="1.6"/></svg>
+        </div>
+      </div>
+      <div class="content scroll">
+        <div class="screen-title" style="font-size:29px;">Chart Lookup</div>
+        <div class="screen-sub">Nothing here is saved to a patient record — for your reference only.</div>
+
+        <div class="field-label">Chief complaint</div>
+        <div class="input-box">CHF exacerbation, SOB</div>
+
+        <div class="field-label">Medications</div>
+        <div class="med-chip-row">
+          <div class="med-chip">Furosemide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5l14 14M19 5 5 19"/></svg></div>
+          <div class="med-chip">Metoprolol <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5l14 14M19 5 5 19"/></svg></div>
+          <div class="med-chip">Lisinopril <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5l14 14M19 5 5 19"/></svg></div>
+          <div class="add-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>Add drug</div>
+        </div>
+
+        <div class="field-label">Quick picks · common on Telemetry</div>
+        <div class="med-chip-row">
+          <div class="add-chip" style="border-style:solid;color:var(--accent-ink);border-color:#CFE6DB;">CHF exacerbation</div>
+          <div class="add-chip" style="border-style:solid;color:var(--accent-ink);border-color:#CFE6DB;">COPD flare</div>
+          <div class="add-chip" style="border-style:solid;color:var(--accent-ink);border-color:#CFE6DB;">Post-op pain</div>
+          <div class="add-chip" style="border-style:solid;color:var(--accent-ink);border-color:#CFE6DB;">Sepsis workup</div>
+        </div>
+      </div>
+      <div style="padding:0 24px 16px 24px;">
+        <div class="primary-btn">Get explanations</div>
+        <div class="ephemeral-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg>Ephemeral — chief complaint &amp; meds aren't stored</div>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 19v3"/><path d="M8 22h8"/></svg>Capture</div>
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M8.1 7.2 10 16"/><path d="M15.9 7.2 14 16"/><path d="M8.4 6h7.2"/></svg>Learn</div>
+        <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2.5"/><rect x="9" y="2" width="6" height="4" rx="1.3"/><path d="M8.5 11h7"/><path d="M8.5 14.5h7"/><path d="M8.5 18h4.5"/></svg>Chart</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- 6. Chart lookup results -->
+  <div class="slot">
+    <div class="slot-label">Chart lookup — results</div>
+    <div class="phone"><div class="screen">
+      <div class="island"></div>
+      <div class="statusbar">
+        <span>9:41</span>
+        <div class="status-icons">
+          <svg viewBox="0 0 20 12" width="17" height="10" fill="currentColor"><rect x="0" y="7" width="3" height="5" rx="0.8"/><rect x="5" y="4.5" width="3" height="7.5" rx="0.8"/><rect x="10" y="2.5" width="3" height="9.5" rx="0.8"/><rect x="15" y="0.5" width="3" height="11.5" rx="0.8"/></svg>
+          <svg viewBox="0 0 20 15" width="17" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 5.5a12 12 0 0 1 16 0"/><path d="M5 8.8a7.5 7.5 0 0 1 10 0"/><path d="M8 12a3.3 3.3 0 0 1 4 0"/><circle cx="10" cy="14.3" r="0.9" fill="currentColor" stroke="none"/></svg>
+          <svg viewBox="0 0 26 13" width="23" height="11" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="0.6" y="0.6" width="21" height="11.8" rx="3.2"/><rect x="2.3" y="2.3" width="14.5" height="8.4" rx="1.8" fill="currentColor" stroke="none"/><path d="M23.5 4v5" stroke-linecap="round" stroke-width="1.6"/></svg>
+        </div>
+      </div>
+      <div class="content scroll">
+        <div class="back-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>Chart</div>
+        <div class="edu-banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.7" r="0.9" fill="currentColor" stroke="none"/></svg>
+          Educational reference — not clinical decision support
+        </div>
+        <div class="seg"><div class="active">Short (layman's)</div><div>Long (technical)</div></div>
+
+        <div class="drug-card">
+          <div class="drug-name">Furosemide</div>
+          <div class="drug-why">Why: treats fluid overload from CHF exacerbation</div>
+          <div class="drug-text">Helps your body get rid of extra fluid that's making it hard to breathe.</div>
+        </div>
+        <div class="drug-card">
+          <div class="drug-name">Metoprolol</div>
+          <div class="drug-why">Why: controls heart rate &amp; reduces cardiac workload</div>
+          <div class="drug-text">Slows and steadies the heartbeat so the heart doesn't have to work as hard.</div>
+        </div>
+        <div class="drug-card">
+          <div class="drug-name">Lisinopril</div>
+          <div class="drug-why">Why: lowers blood pressure &amp; eases strain on the heart</div>
+          <div class="drug-text">Relaxes blood vessels to lower blood pressure and take pressure off the heart.</div>
+        </div>
+        <div class="drug-card">
+          <div class="drug-name">Potassium chloride</div>
+          <div class="drug-why">Why: replaces potassium lost from diuretic therapy</div>
+          <div class="drug-text">Furosemide causes the body to lose potassium along with fluid, so this tops it back up to a safe level.</div>
+        </div>
+      </div>
+      <div class="tabbar">
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 19v3"/><path d="M8 22h8"/></svg>Capture</div>
+        <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="12" cy="18" r="2.4"/><path d="M8.1 7.2 10 16"/><path d="M15.9 7.2 14 16"/><path d="M8.4 6h7.2"/></svg>Learn</div>
+        <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2.5"/><rect x="9" y="2" width="6" height="4" rx="1.3"/><path d="M8.5 11h7"/><path d="M8.5 14.5h7"/><path d="M8.5 18h4.5"/></svg>Chart</div>
+      </div>
+    </div></div>
+  </div>
+
+</div>
+</body>
+</html>
