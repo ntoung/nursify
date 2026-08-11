@@ -143,7 +143,7 @@ object NoteRepository {
             transcript = request.transcript,
             device = request.device,
             phiReviewed = request.phiReviewed,
-            createdAt = now.toString()
+            createdAt = now.toEpochMilli()
         )
     }
 }
@@ -167,7 +167,7 @@ object SearchHistoryRepository {
             conceptId = conceptId.toString(),
             conceptName = concept?.name ?: "Unknown",
             type = concept?.type ?: ConceptType.MEDICATION,
-            viewedAt = now.toString()
+            viewedAt = now.toEpochMilli()
         )
     }
 
@@ -179,7 +179,7 @@ object SearchHistoryRepository {
                 conceptId = row[SearchHistoryEntries.conceptId].toString(),
                 conceptName = concept?.name ?: "Unknown",
                 type = concept?.type ?: ConceptType.MEDICATION,
-                viewedAt = row[SearchHistoryEntries.viewedAt].toString()
+                viewedAt = row[SearchHistoryEntries.viewedAt].toEpochMilli()
             )
         }
     }

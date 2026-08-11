@@ -75,7 +75,10 @@ data class NoteDto(
     val transcript: String,
     val device: String,
     val phiReviewed: Boolean,
-    val createdAt: String
+    // Epoch millis, not Instant.toString() — that emits a variable number of
+    // fractional-second digits (0, 3, 6, or 9), which trips up naive iOS
+    // Codable date parsing. Epoch millis sidesteps the whole format question.
+    val createdAt: Long
 )
 
 @Serializable
@@ -113,5 +116,5 @@ data class SearchHistoryDto(
     val conceptId: String,
     val conceptName: String,
     val type: ConceptType,
-    val viewedAt: String
+    val viewedAt: Long // epoch millis — see NoteDto.createdAt comment
 )

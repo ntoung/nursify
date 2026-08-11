@@ -29,19 +29,24 @@ struct LearnView: View {
                     }
                     .padding(.top, 8)
 
-                    Text("🔥 \(appState.streakDays)-day streak · \(appState.concepts.count) concepts in your graph")
+                    Text("🔥 \(appState.streakDays)-day streak")
                         .font(Theme.Font.body(13, weight: .semibold))
                         .foregroundStyle(Theme.Color.sub)
                         .padding(.top, 6)
                         .padding(.bottom, 14)
 
-                    suggestionSection(title: "Due for review", items: due)
-                    suggestionSection(title: "New to explore", items: newToExplore)
-                    suggestionSection(title: "Specialty focus · Telemetry", items: specialtyFocus)
+                    if appState.suggestions.isEmpty {
+                        ProgressView().padding(.top, 20)
+                    } else {
+                        suggestionSection(title: "Due for review", items: due)
+                        suggestionSection(title: "New to explore", items: newToExplore)
+                        suggestionSection(title: "Specialty focus · Telemetry", items: specialtyFocus)
+                    }
                 }
                 .padding(24)
             }
             .background(Theme.Color.background.ignoresSafeArea())
+            .task { await appState.loadSuggestions() }
         }
     }
 

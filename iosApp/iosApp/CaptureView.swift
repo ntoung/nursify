@@ -7,7 +7,9 @@ import SwiftUI
 /// aren't wired up yet — `isRecording` just toggles UI state for now.
 struct CaptureView: View {
     @EnvironmentObject private var appState: AppState
-    @State private var isRecording = false
+    @State private var isComposing = false
+    @State private var draftText = ""
+    @State private var isSaving = false
 
     private var todayNotes: [Note] { appState.notes.filter { Calendar.current.isDateInToday($0.createdAt) } }
     private var earlierNotes: [Note] { appState.notes.filter { !Calendar.current.isDateInToday($0.createdAt) } }
@@ -47,38 +49,76 @@ struct CaptureView: View {
                     .padding(24)
                 }
 
-                HStack(spacing: 14) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(isRecording ? "Recording..." : "Tap to record")
-                            .font(Theme.Font.heading(13))
-                        if isRecording {
-                            Text("On-device transcription, screened for patient info before it ever syncs.")
-                                .font(Theme.Font.body(11.5))
-                                .foregroundStyle(Theme.Color.sub)
+                if isComposing {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Voice capture isn't implemented yet — type your note instead. It's sent to the server as-is (no PHI screening yet either).")
+                            .font(Theme.Font.body(11.5))
+                            .foregroundStyle(Theme.Color.sub)
+                        TextField("What's on your mind?", text: $draftText, axis: .vertical)
+                            .font(Theme.Font.body(14.5))
+                            .lineLimit(2...5)
+                            .padding(12)
+                            .background(Theme.Color.background)
+                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Theme.Color.line, lineWidth: 1.5))
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                        HStack {
+                            Button("Cancel") {
+                                isComposing = false
+                                draftText = ""
+                            }
+                            .font(Theme.Font.body(14, weight: .semibold))
+                            .foregroundStyle(Theme.Color.sub)
+                            Spacer()
+                            Button(isSaving ? "Saving..." : "Save") {
+                                Task { await save() }
+                            }
+                            .font(Theme.Font.body(14, weight: .bold))
+                            .foregroundStyle(Theme.Color.accentInk)
+                            .disabled(draftText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isSaving)
                         }
                     }
-                    Spacer()
-                    Button {
-                        isRecording.toggle()
-                    } label: {
-                        Image(systemName: isRecording ? "stop.fill" : "mic.fill")
-                            .foregroundStyle(.white)
-                            .frame(width: 52, height: 52)
-                            .background(
-                                LinearGradient(colors: [Color(hex: "F0917A"), Color(hex: "DE7259")], startPoint: .top, endPoint: .bottom)
-                            )
-                            .clipShape(Circle())
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 14)
+                    .background(SwiftUI.Color.white)
+                    .overlay(Rectangle().frame(height: 1).foregroundStyle(Theme.Color.line), alignment: .top)
+                } else {
+                    HStack(spacing: 14) {
+                        Text("Tap to add a note")
+                            .font(Theme.Font.heading(13))
+                        Spacer()
+                        Button {
+                            isComposing = true
+                        } label: {
+                            Image(systemName: "mic.fill")
+                                .foregroundStyle(.white)
+                                .frame(width: 52, height: 52)
+                                .background(
+                                    LinearGradient(colors: [Color(hex: "F0917A"), Color(hex: "DE7259")], startPoint: .top, endPoint: .bottom)
+                                )
+                                .clipShape(Circle())
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 14)
+                    .background(SwiftUI.Color.white)
+                    .overlay(Rectangle().frame(height: 1).foregroundStyle(Theme.Color.line), alignment: .top)
                 }
-                .padding(.horizontal, 24)
-                .padding(.vertical, 14)
-                .background(SwiftUI.Color.white)
-                .overlay(Rectangle().frame(height: 1).foregroundStyle(Theme.Color.line), alignment: .top)
             }
             .background(Theme.Color.background.ignoresSafeArea())
             .navigationTitle("Capture")
         }
+    }
+
+    private func save() async {
+        isSaving = true
+        // phiReviewed: false — honestly reflects that no PHI screening has
+        // run yet (REQUIREMENTS.md "Privacy guardrail" is not implemented),
+        // not a real cleared/uncleared flag.
+        await appState.createNote(transcript: draftText, device: .phone, phiReviewed: false)
+        isSaving = false
+        draftText = ""
+        isComposing = false
     }
 }
 
@@ -135,7 +175,7 @@ struct NoteDetailView: View {
                     ForEach(note.mentionedConcepts) { mention in
                         ConceptCard(
                             title: mention.conceptName,
-                            tags: [mention.type.rawValue],
+                            tags: [mention.type.displayName],
                             shortText: mention.shortExplanation,
                             longTitle: "Details",
                             longText: mention.longExplanation

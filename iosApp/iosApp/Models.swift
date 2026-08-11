@@ -2,22 +2,39 @@ import Foundation
 
 // MARK: - Content taxonomy (see REQUIREMENTS.md "Content taxonomy")
 
+// Raw values match the backend's wire format exactly (kotlinx.serialization's
+// default enum encoding is the constant name) so Codable can decode them
+// with no custom logic. `displayName` is the UI-friendly label — the two
+// used to be the same string, which broke once the app started decoding
+// real network responses instead of only ever constructing these locally.
 enum ConceptType: String, Codable, CaseIterable, Identifiable {
-    case medication = "Medication"
-    case procedure = "Procedure"
-    case condition = "Condition"
-    case labValue = "Lab Value"
-    case equipment = "Equipment"
-    case protocolOrderSet = "Protocol"
-    case anatomy = "Anatomy"
+    case medication = "MEDICATION"
+    case procedure = "PROCEDURE"
+    case condition = "CONDITION"
+    case labValue = "LAB_VALUE"
+    case equipment = "EQUIPMENT"
+    case protocolOrderSet = "PROTOCOL"
+    case anatomy = "ANATOMY"
 
     var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .medication: return "Medication"
+        case .procedure: return "Procedure"
+        case .condition: return "Condition"
+        case .labValue: return "Lab Value"
+        case .equipment: return "Equipment"
+        case .protocolOrderSet: return "Protocol"
+        case .anatomy: return "Anatomy"
+        }
+    }
 }
 
 enum AliasType: String, Codable {
-    case acronym
-    case brandName
-    case nickname
+    case acronym = "ACRONYM"
+    case brandName = "BRAND_NAME"
+    case nickname = "NICKNAME"
 }
 
 struct Alias: Identifiable, Codable, Hashable {
@@ -96,8 +113,18 @@ struct Concept: Identifiable, Codable, Hashable {
     var sections: ConceptSections
     var tags: [String]
     var aliases: [Alias]
-    var relatedConceptIDs: [UUID]
+    var relatedConceptIds: [UUID]
     var sourceCitation: String?
+}
+
+/// Lightweight result shape for search/category-browse — matches the
+/// backend's ConceptSummaryDto. Full detail (sections, related concepts,
+/// citation) is fetched separately by id once a concept is actually opened.
+struct ConceptSummary: Identifiable, Codable, Hashable {
+    let id: UUID
+    var type: ConceptType
+    var name: String
+    var sideEffectsPreview: String?
 }
 
 // MARK: - Capture (Feature A)
@@ -128,12 +155,56 @@ struct Note: Identifiable, Codable, Hashable {
 // MARK: - Chart lookup (Feature B) — LookupSession is client-local only,
 // never persisted to the backend. See SYSTEM_DESIGN.md "Chart lookup (Feature B)".
 
+// Custom Codable: the backend's MedicationExplanationDto has no "id" field
+// (it's not a persisted entity server-side) and does have "found", which
+// the naive synthesized version of this struct was missing entirely —
+// decoding a real chart-lookup response would have thrown keyNotFound("id").
 struct MedicationExplanation: Identifiable, Codable, Hashable {
     let id: UUID
     var name: String
     var relatedComplaints: [String]
     var shortExplanation: String
     var longExplanation: String?
+    var found: Bool
+
+    init(
+        id: UUID = UUID(),
+        name: String,
+        relatedComplaints: [String],
+        shortExplanation: String,
+        longExplanation: String? = nil,
+        found: Bool = true
+    ) {
+        self.id = id
+        self.name = name
+        self.relatedComplaints = relatedComplaints
+        self.shortExplanation = shortExplanation
+        self.longExplanation = longExplanation
+        self.found = found
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case name, relatedComplaints, shortExplanation, longExplanation, found
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = UUID()
+        name = try container.decode(String.self, forKey: .name)
+        relatedComplaints = try container.decode([String].self, forKey: .relatedComplaints)
+        shortExplanation = try container.decode(String.self, forKey: .shortExplanation)
+        longExplanation = try container.decodeIfPresent(String.self, forKey: .longExplanation)
+        found = try container.decodeIfPresent(Bool.self, forKey: .found) ?? true
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(relatedComplaints, forKey: .relatedComplaints)
+        try container.encode(shortExplanation, forKey: .shortExplanation)
+        try container.encodeIfPresent(longExplanation, forKey: .longExplanation)
+        try container.encode(found, forKey: .found)
+    }
 }
 
 struct LookupSession: Identifiable, Codable, Hashable {
@@ -205,7 +276,7 @@ struct Suggestion: Identifiable, Codable, Hashable {
 
 struct SearchHistoryEntry: Identifiable, Codable, Hashable {
     let id: UUID
-    var conceptID: UUID
+    var conceptId: UUID
     var conceptName: String
     var type: ConceptType
     var viewedAt: Date

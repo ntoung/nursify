@@ -29,7 +29,7 @@ enum MockData {
             ),
             tags: ["Pharmacology", "Loop diuretic", "Telemetry"],
             aliases: [Alias(id: UUID(), text: "Lasix", type: .brandName)],
-            relatedConceptIDs: [chfID, loopDiureticsClassID, potassiumLabID],
+            relatedConceptIds: [chfID, loopDiureticsClassID, potassiumLabID],
             sourceCitation: "Source: MedlinePlus, StatPearls — last synced 2 days ago"
         ),
         Concept(
@@ -46,7 +46,7 @@ enum MockData {
             ),
             tags: ["Pharmacology", "Beta-blocker"],
             aliases: [Alias(id: UUID(), text: "Lopressor", type: .brandName)],
-            relatedConceptIDs: [chfID],
+            relatedConceptIds: [chfID],
             sourceCitation: "Source: MedlinePlus — last synced 2 days ago"
         ),
         Concept(
@@ -63,7 +63,7 @@ enum MockData {
             ),
             tags: ["Pharmacology", "ACE inhibitor"],
             aliases: [Alias(id: UUID(), text: "Zestril", type: .brandName)],
-            relatedConceptIDs: [chfID],
+            relatedConceptIds: [chfID],
             sourceCitation: "Source: MedlinePlus — last synced 2 days ago"
         ),
         Concept(
@@ -80,7 +80,7 @@ enum MockData {
             ),
             tags: ["Pharmacology", "Electrolyte replacement"],
             aliases: [],
-            relatedConceptIDs: [furosemideID, potassiumLabID],
+            relatedConceptIds: [furosemideID, potassiumLabID],
             sourceCitation: "Source: MedlinePlus — last synced 2 days ago"
         ),
         Concept(
@@ -98,7 +98,7 @@ enum MockData {
                 Alias(id: UUID(), text: "CHF", type: .acronym),
                 Alias(id: UUID(), text: "Acute decompensated heart failure", type: .nickname)
             ],
-            relatedConceptIDs: [furosemideID, metoprololID, lisinoprilID],
+            relatedConceptIds: [furosemideID, metoprololID, lisinoprilID],
             sourceCitation: "Source: MedlinePlus, StatPearls"
         ),
         Concept(
@@ -113,7 +113,7 @@ enum MockData {
             ),
             tags: ["Pharmacology"],
             aliases: [],
-            relatedConceptIDs: [furosemideID],
+            relatedConceptIds: [furosemideID],
             sourceCitation: "Source: StatPearls"
         ),
         Concept(
@@ -131,7 +131,7 @@ enum MockData {
                 Alias(id: UUID(), text: "TAVR", type: .acronym),
                 Alias(id: UUID(), text: "Transcatheter Aortic Valve Replacement", type: .nickname)
             ],
-            relatedConceptIDs: [],
+            relatedConceptIds: [],
             sourceCitation: "Source: StatPearls"
         ),
         Concept(
@@ -145,7 +145,7 @@ enum MockData {
             ),
             tags: ["Lab values", "Telemetry"],
             aliases: [Alias(id: UUID(), text: "K+", type: .acronym)],
-            relatedConceptIDs: [furosemideID, potassiumChlorideID],
+            relatedConceptIds: [furosemideID, potassiumChlorideID],
             sourceCitation: "Source: MedlinePlus"
         )
     ]
@@ -201,10 +201,10 @@ enum MockData {
     ]
 
     static let searchHistory: [SearchHistoryEntry] = [
-        SearchHistoryEntry(id: UUID(), conceptID: furosemideID, conceptName: "Furosemide", type: .medication, viewedAt: Date().addingTimeInterval(-3600 * 2)),
-        SearchHistoryEntry(id: UUID(), conceptID: tavrID, conceptName: "TAVR", type: .procedure, viewedAt: Date().addingTimeInterval(-3600 * 22)),
-        SearchHistoryEntry(id: UUID(), conceptID: chfID, conceptName: "CHF Exacerbation", type: .condition, viewedAt: Date().addingTimeInterval(-3600 * 23)),
-        SearchHistoryEntry(id: UUID(), conceptID: potassiumLabID, conceptName: "Potassium", type: .labValue, viewedAt: Date().addingTimeInterval(-3600 * 48))
+        SearchHistoryEntry(id: UUID(), conceptId: furosemideID, conceptName: "Furosemide", type: .medication, viewedAt: Date().addingTimeInterval(-3600 * 2)),
+        SearchHistoryEntry(id: UUID(), conceptId: tavrID, conceptName: "TAVR", type: .procedure, viewedAt: Date().addingTimeInterval(-3600 * 22)),
+        SearchHistoryEntry(id: UUID(), conceptId: chfID, conceptName: "CHF Exacerbation", type: .condition, viewedAt: Date().addingTimeInterval(-3600 * 23)),
+        SearchHistoryEntry(id: UUID(), conceptId: potassiumLabID, conceptName: "Potassium", type: .labValue, viewedAt: Date().addingTimeInterval(-3600 * 48))
     ]
 
     static let lookupSessions: [LookupSession] = [

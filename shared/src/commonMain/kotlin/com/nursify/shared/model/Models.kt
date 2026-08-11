@@ -98,7 +98,7 @@ data class NoteDto(
     val transcript: String,
     val device: String,
     val phiReviewed: Boolean,
-    val createdAt: String
+    val createdAt: Long // epoch millis — matches backend/.../Models.kt
 )
 
 @Serializable
@@ -115,7 +115,7 @@ data class SearchHistoryEntry(
     val conceptId: String,
     val conceptName: String,
     val type: ConceptType,
-    val viewedAt: String
+    val viewedAt: Long // epoch millis — matches backend/.../Models.kt
 )
 
 enum class Specialty(val label: String) {

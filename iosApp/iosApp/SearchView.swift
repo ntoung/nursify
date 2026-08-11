@@ -1,19 +1,14 @@
 import SwiftUI
 
 /// The utility-focused tab: search + alias-aware autocomplete + category
-/// browse + recent/history. Deliberately has no suggestion feed — that's
-/// Learn's job. See REQUIREMENTS.md "Learn page — search, browse & history".
+/// browse + recent/history — all now backed by real calls to `backend/`
+/// via AppState/APIClient. See REQUIREMENTS.md "Learn page — search,
+/// browse & history".
 struct SearchView: View {
     @EnvironmentObject private var appState: AppState
-    @State private var query = "furosemide"
-
-    private var matchingConcepts: [Concept] {
-        guard !query.isEmpty else { return [] }
-        return appState.concepts.filter {
-            $0.name.localizedCaseInsensitiveContains(query) ||
-            $0.aliases.contains { $0.text.localizedCaseInsensitiveContains(query) }
-        }
-    }
+    @State private var query = ""
+    @State private var results: [ConceptSummary] = []
+    @State private var activeCategory: ConceptType?
 
     var body: some View {
         NavigationStack {
@@ -41,14 +36,29 @@ struct SearchView: View {
                     }
                     .padding(.top, 8)
 
-                    if !matchingConcepts.isEmpty {
+                    if let activeCategory {
+                        HStack {
+                            Text("Category: \(activeCategory.displayName)")
+                                .font(Theme.Font.body(12.5, weight: .semibold))
+                                .foregroundStyle(Theme.Color.accentInk)
+                            Spacer()
+                            Button("Clear") {
+                                self.activeCategory = nil
+                                results = []
+                            }
+                            .font(Theme.Font.body(12.5, weight: .semibold))
+                        }
+                        .padding(.top, 10)
+                    }
+
+                    if !results.isEmpty {
                         VStack(spacing: 0) {
-                            ForEach(matchingConcepts) { concept in
-                                NavigationLink(destination: ConceptDetailView(concept: concept)) {
-                                    AutocompleteRow(concept: concept)
+                            ForEach(results) { item in
+                                NavigationLink(destination: ConceptDetailView(conceptId: item.id)) {
+                                    AutocompleteRow(item: item)
                                 }
                                 .buttonStyle(.plain)
-                                if concept.id != matchingConcepts.last?.id {
+                                if item.id != results.last?.id {
                                     Divider().padding(.leading, 16)
                                 }
                             }
@@ -65,7 +75,8 @@ struct SearchView: View {
 
                     FlowLayout(spacing: 8) {
                         ForEach(ConceptType.allCases) { type in
-                            SelectableChip(text: type.rawValue, isSelected: false)
+                            SelectableChip(text: type.displayName, isSelected: activeCategory == type)
+                                .onTapGesture { selectCategory(type) }
                         }
                     }
 
@@ -73,10 +84,15 @@ struct SearchView: View {
                         .padding(.top, 22)
                         .padding(.bottom, 4)
 
-                    VStack(spacing: 0) {
-                        ForEach(appState.searchHistory.prefix(4)) { entry in
-                            if let concept = appState.concept(id: entry.conceptID) {
-                                NavigationLink(destination: ConceptDetailView(concept: concept)) {
+                    if appState.searchHistory.isEmpty {
+                        Text("Nothing viewed yet.")
+                            .font(Theme.Font.body(13.5))
+                            .foregroundStyle(Theme.Color.sub)
+                            .padding(.vertical, 8)
+                    } else {
+                        VStack(spacing: 0) {
+                            ForEach(appState.searchHistory.prefix(4)) { entry in
+                                NavigationLink(destination: ConceptDetailView(conceptId: entry.conceptId)) {
                                     RecentRow(entry: entry)
                                 }
                                 .buttonStyle(.plain)
@@ -85,27 +101,48 @@ struct SearchView: View {
                                 }
                             }
                         }
+                        .padding(.top, 4)
                     }
                 }
                 .padding(24)
             }
             .background(Theme.Color.background.ignoresSafeArea())
             .navigationTitle("Search")
+            .task { await appState.loadSearchHistory() }
+            .task(id: query) {
+                guard !query.isEmpty else { return }
+                activeCategory = nil
+                do {
+                    try await Task.sleep(nanoseconds: 300_000_000)
+                } catch {
+                    return
+                }
+                guard !Task.isCancelled else { return }
+                results = await appState.searchConcepts(query: query)
+            }
+        }
+    }
+
+    private func selectCategory(_ type: ConceptType) {
+        query = ""
+        activeCategory = type
+        Task {
+            results = await appState.conceptsByCategory(type)
         }
     }
 }
 
 private struct AutocompleteRow: View {
-    let concept: Concept
+    let item: ConceptSummary
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text(concept.name).font(Theme.Font.heading(14.5)).foregroundStyle(Theme.Color.ink)
+                Text(item.name).font(Theme.Font.heading(14.5)).foregroundStyle(Theme.Color.ink)
                 Spacer()
-                Text(concept.type.rawValue).font(Theme.Font.body(11, weight: .bold)).foregroundStyle(Theme.Color.sub)
+                Text(item.type.displayName).font(Theme.Font.body(11, weight: .bold)).foregroundStyle(Theme.Color.sub)
             }
-            if let sideEffects = concept.sections.sideEffects {
+            if let sideEffects = item.sideEffectsPreview {
                 HStack(spacing: 5) {
                     Image(systemName: "exclamationmark.triangle.fill").font(.system(size: 11))
                     Text(sideEffects).font(Theme.Font.body(12, weight: .semibold)).lineLimit(1)
@@ -125,7 +162,7 @@ private struct RecentRow: View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
                 Text(entry.conceptName).font(Theme.Font.heading(14.5)).foregroundStyle(Theme.Color.ink)
-                Text(entry.type.rawValue).font(Theme.Font.body(12, weight: .semibold)).foregroundStyle(Theme.Color.sub)
+                Text(entry.type.displayName).font(Theme.Font.body(12, weight: .semibold)).foregroundStyle(Theme.Color.sub)
             }
             Spacer()
             Text(entry.viewedAt.relativeDescription).font(Theme.Font.body(12, weight: .semibold)).foregroundStyle(Theme.Color.sub)
@@ -141,14 +178,12 @@ struct SearchHistoryView: View {
     var body: some View {
         List {
             ForEach(appState.searchHistory) { entry in
-                if let concept = appState.concept(id: entry.conceptID) {
-                    NavigationLink(destination: ConceptDetailView(concept: concept)) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(entry.conceptName).font(Theme.Font.heading(15))
-                            Text("\(entry.type.rawValue) · \(entry.viewedAt.relativeDescription)")
-                                .font(Theme.Font.body(12))
-                                .foregroundStyle(Theme.Color.sub)
-                        }
+                NavigationLink(destination: ConceptDetailView(conceptId: entry.conceptId)) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(entry.conceptName).font(Theme.Font.heading(15))
+                        Text("\(entry.type.displayName) · \(entry.viewedAt.relativeDescription)")
+                            .font(Theme.Font.body(12))
+                            .foregroundStyle(Theme.Color.sub)
                     }
                 }
             }
@@ -165,9 +200,12 @@ struct SearchHistoryView: View {
         .navigationTitle("History")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Clear") { appState.clearSearchHistory() }
+                Button("Clear") {
+                    Task { await appState.clearSearchHistory() }
+                }
             }
         }
+        .task { await appState.loadSearchHistory() }
     }
 }
 

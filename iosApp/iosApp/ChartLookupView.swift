@@ -9,6 +9,8 @@ struct ChartLookupInputView: View {
     @State private var complaints: [String] = ["CHF exacerbation", "Shortness of breath"]
     @State private var medications: [String] = ["Furosemide", "Metoprolol", "Lisinopril"]
     @State private var currentSession: LookupSession?
+    @State private var isLoading = false
+    @State private var loadError: String?
 
     private let quickComplaints = ["COPD flare", "Post-op pain", "Sepsis workup", "Chest pain"]
 
@@ -51,10 +53,14 @@ struct ChartLookupInputView: View {
             }
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 10) {
-                    PrimaryButton(title: "Get explanations") {
-                        let session = makeSession()
-                        appState.addLookupSession(session)
-                        currentSession = session
+                    if let loadError {
+                        Text(loadError)
+                            .font(Theme.Font.body(12.5, weight: .semibold))
+                            .foregroundStyle(Theme.Color.warnInk)
+                    }
+                    PrimaryButton(title: isLoading ? "Looking up..." : "Get explanations") {
+                        guard !isLoading else { return }
+                        Task { await performLookup() }
                     }
                     HStack(spacing: 6) {
                         Image(systemName: "lock.fill")
@@ -82,15 +88,15 @@ struct ChartLookupInputView: View {
         }
     }
 
-    private func makeSession() -> LookupSession {
-        let meds = medications.map { appState.medicationExplanation(for: $0, complaints: complaints) }
-        return LookupSession(
-            id: UUID(),
-            chiefComplaints: complaints,
-            medications: meds,
-            createdAt: Date(),
-            expiresAt: Date().addingTimeInterval(60 * 60 * 24)
-        )
+    private func performLookup() async {
+        isLoading = true
+        loadError = nil
+        defer { isLoading = false }
+        do {
+            currentSession = try await appState.performChartLookup(chiefComplaints: complaints, medicationNames: medications)
+        } catch {
+            loadError = "Couldn't reach the server: \(error.localizedDescription)"
+        }
     }
 
     @ViewBuilder

@@ -3,11 +3,55 @@ import SwiftUI
 /// Every concept type renders from this one view — common structure (tags,
 /// disclaimer, short explanation, related concepts, citation) plus
 /// type-specific sections. See REQUIREMENTS.md "Concept detail pages".
+///
+/// Takes an id rather than a full Concept: search/category-browse only
+/// return the lightweight ConceptSummary shape, so full detail (sections,
+/// related concepts, citation) is fetched by id when this view appears.
 struct ConceptDetailView: View {
     @EnvironmentObject private var appState: AppState
-    let concept: Concept
+    let conceptId: UUID
+
+    @State private var concept: Concept?
+    @State private var loadError: String?
 
     var body: some View {
+        Group {
+            if let concept {
+                content(for: concept)
+            } else if let loadError {
+                VStack(spacing: 12) {
+                    Text("Couldn't load this concept.")
+                        .font(Theme.Font.heading(15))
+                    Text(loadError)
+                        .font(Theme.Font.body(13))
+                        .foregroundStyle(Theme.Color.sub)
+                        .multilineTextAlignment(.center)
+                    Button("Retry") { Task { await load() } }
+                        .font(Theme.Font.body(14, weight: .semibold))
+                }
+                .padding(32)
+            } else {
+                ProgressView().padding(40)
+            }
+        }
+        .background(Theme.Color.background.ignoresSafeArea())
+        .navigationBarTitleDisplayMode(.inline)
+        .task(id: conceptId) { await load() }
+    }
+
+    private func load() async {
+        loadError = nil
+        do {
+            let loaded = try await appState.fetchConcept(id: conceptId)
+            concept = loaded
+            await appState.recordSearchHistory(conceptId: conceptId)
+        } catch {
+            loadError = error.localizedDescription
+        }
+    }
+
+    @ViewBuilder
+    private func content(for concept: Concept) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 if !concept.tags.isEmpty {
@@ -34,7 +78,7 @@ struct ConceptDetailView: View {
 
                 labeledParagraph("In short", concept.shortExplanation)
 
-                ForEach(typeSpecificSections, id: \.label) { section in
+                ForEach(typeSpecificSections(for: concept), id: \.label) { section in
                     if section.isHighlighted {
                         VStack(alignment: .leading, spacing: 6) {
                             SectionLabel(text: section.label)
@@ -47,24 +91,15 @@ struct ConceptDetailView: View {
                     }
                 }
 
-                if !concept.relatedConceptIDs.isEmpty {
+                if !concept.relatedConceptIds.isEmpty {
                     VStack(alignment: .leading, spacing: 8) {
                         SectionLabel(text: "Related concepts")
                         FlowLayout(spacing: 8) {
-                            ForEach(concept.relatedConceptIDs, id: \.self) { id in
-                                if let related = appState.concept(id: id) {
-                                    NavigationLink(destination: ConceptDetailView(concept: related)) {
-                                        Text(related.name)
-                                            .font(Theme.Font.body(13.5, weight: .bold))
-                                            .padding(.horizontal, 14)
-                                            .padding(.vertical, 9)
-                                            .background(SwiftUI.Color.white)
-                                            .foregroundStyle(Theme.Color.accentInk)
-                                            .overlay(Capsule().stroke(Theme.Color.line, lineWidth: 1.5))
-                                            .clipShape(Capsule())
-                                    }
-                                    .buttonStyle(.plain)
+                            ForEach(concept.relatedConceptIds, id: \.self) { relatedId in
+                                NavigationLink(destination: ConceptDetailView(conceptId: relatedId)) {
+                                    RelatedConceptChip(id: relatedId)
                                 }
+                                .buttonStyle(.plain)
                             }
                         }
                     }
@@ -79,10 +114,7 @@ struct ConceptDetailView: View {
             }
             .padding(24)
         }
-        .background(Theme.Color.background.ignoresSafeArea())
         .navigationTitle(concept.name)
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear { appState.recordSearchHistory(for: concept) }
     }
 
     @ViewBuilder
@@ -98,7 +130,7 @@ struct ConceptDetailView: View {
     }
 
     /// Mirrors the type→sections table in REQUIREMENTS.md "Concept detail pages".
-    private var typeSpecificSections: [DetailSection] {
+    private func typeSpecificSections(for concept: Concept) -> [DetailSection] {
         var sections: [DetailSection] = []
         let s = concept.sections
         switch concept.type {
@@ -133,9 +165,34 @@ struct ConceptDetailView: View {
     }
 }
 
+/// A related-concept chip only has an id up front — it shows a placeholder
+/// label until its own lightweight lookup resolves, rather than requiring
+/// the parent to have preloaded every related concept's name.
+private struct RelatedConceptChip: View {
+    @EnvironmentObject private var appState: AppState
+    let id: UUID
+    @State private var name: String?
+
+    var body: some View {
+        Text(name ?? "...")
+            .font(Theme.Font.body(13.5, weight: .bold))
+            .padding(.horizontal, 14)
+            .padding(.vertical, 9)
+            .background(SwiftUI.Color.white)
+            .foregroundStyle(Theme.Color.accentInk)
+            .overlay(Capsule().stroke(Theme.Color.line, lineWidth: 1.5))
+            .clipShape(Capsule())
+            .task {
+                if let concept = try? await appState.fetchConcept(id: id) {
+                    name = concept.name
+                }
+            }
+    }
+}
+
 #Preview {
     NavigationStack {
-        ConceptDetailView(concept: MockData.concepts[0])
+        ConceptDetailView(conceptId: MockData.concepts[0].id)
     }
     .environmentObject(AppState())
 }

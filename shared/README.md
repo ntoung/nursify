@@ -37,7 +37,7 @@ shared/
 
 ## Not yet done
 
-- **Not wired into `iosApp`.** The SwiftUI app still has its own hand-written Swift models (`iosApp/iosApp/Models.swift`) and no networking — it runs entirely on in-memory mock data. Actually consuming this module means building it as an `.xcframework` and adding it as an Xcode dependency, which needs Xcode/macOS. Until that happens, this module and the iOS app are two separate, currently-unconnected pieces that happen to model the same things.
+- **Still not wired into `iosApp`.** As of the iOS networking pass, `iosApp` now *does* talk to the backend — but directly, via its own `URLSession`-based `APIClient.swift`, not through this module's `ApiClient.kt`. Consuming this module means building it as an `.xcframework` and adding it as an Xcode dependency, which needs Xcode/macOS. Until that happens, `Models.kt` here and `iosApp/iosApp/Models.swift` are two hand-synced copies of the same shape, kept aligned manually (see the epoch-millis timestamp comment in both files for an example of a fix that had to be applied twice).
 - **No Android target.** Trivial to add (`androidTarget()`) once that roadmap phase starts — not added preemptively since there's no Android app to consume it yet.
 - **`PendingNote` outbox has no consumer yet.** The table and queries exist; nothing calls `ApiClient.createNote()` from a background sync loop yet.
 - **`ConceptCache` has no cache-population/invalidation policy yet** — the queries exist, nothing decides when to write to or read from the cache versus hitting the network directly.
