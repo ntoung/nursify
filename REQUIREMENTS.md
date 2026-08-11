@@ -43,17 +43,17 @@ nursify/
 First-open flow that asks the nurse a few questions about themselves so the app can personalize learning suggestions and content emphasis from the start, rather than starting from a blank/generic state.
 
 ### v1 scope
-- One question: **specialty/unit type** — e.g. Telemetry, Med-Surg, Oncology, ICU/Critical Care, ER, L&D/Maternity, Pediatrics, NICU, Psych/Behavioral Health, OR/Perioperative, PACU, Renal/Dialysis, Rehab, Home Health/Hospice.
-- **Multi-select** — a nurse can float across or work multiple units.
-- Fully **editable later** from settings — not a one-time lock-in.
-- No other onboarding questions in v1. An experience-level question was raised (see Open questions) but deliberately deferred, not ruled out.
+- **Specialty/unit type** — e.g. Telemetry, Med-Surg, Oncology, ICU/Critical Care, ER, L&D/Maternity, Pediatrics, NICU, Psych/Behavioral Health, OR/Perioperative, PACU, Renal/Dialysis, Rehab, Home Health/Hospice. **Multi-select** — a nurse can float across or work multiple units.
+- **Years of experience** — single-select bucket: New grad (<1yr), 1–3 years, 4–7 years, 8–15 years, 15+ years. Coarse buckets rather than an exact number — the point is calibrating depth/tone, not collecting precise tenure. Previously deferred (see Panel feedback) — reopened and added after two independent panel personas flagged that "layman's terms" and suggestion depth should scale with seniority, not just specialty.
+- Both fully **editable later** from settings — not a one-time lock-in.
 
 ### How it affects the app
-- **Personalizes, does not restrict.** Selected specialties bias:
+- **Personalizes, does not restrict.** Selected specialties and experience level bias:
   - Feature A's gap-detection/"what to review next" suggestions (e.g. a telemetry nurse sees cardiac-rhythm concepts suggested more often).
   - Which parts of the curated knowledge corpus get surfaced first in explanations.
-- Everything remains fully accessible regardless of selection — a nurse can capture/learn/look up anything, specialty just weights the suggestion ranking.
-- Stored as user profile data (`UserProfile.specialties: List<Specialty>`), separate from the note/graph/patient-lookup data — not itself part of the knowledge graph.
+  - **Explanation depth/tone** — experience level shifts how much scaffolding the "short" version includes and how technical the default framing is (a new grad and a 15-year veteran shouldn't get identically-worded explanations even for the same concept).
+- Everything remains fully accessible regardless of selection — a nurse can capture/learn/look up anything, specialty and experience just weight the suggestion ranking and default explanation tone.
+- Stored as user profile data (`UserProfile.specialties: List<Specialty>`, `UserProfile.experienceLevel: ExperienceBucket`), separate from the note/graph/patient-lookup data — not itself part of the knowledge graph.
 
 ## Content taxonomy
 
@@ -170,10 +170,20 @@ While reviewing a patient's chart, quickly understand *why* each prescribed drug
 - No OCR/photo capture, no EHR integration in v1.
 - EHR integration (FHIR API against Epic/Cerner) explicitly deferred — would require a HIPAA Business Associate Agreement and hospital IT/legal involvement. Noted as a possible future phase only.
 
-### Data retention — ephemeral by design
-- Nothing patient-specific persists. The combination of "this chief complaint + these drugs for this patient encounter" is **not stored**.
-- Only generic, de-identified drug/condition explanations are cached for reuse across patients (e.g. a cached explanation of "furosemide for CHF" is fine to keep; a record of "Patient X got furosemide on 2026-08-11" is not).
-- This keeps the feature out of HIPAA/PHI storage territory — nothing patient-identifiable is ever written to disk or backend.
+### Data retention — shift-scoped, not fully ephemeral
+Revised from an earlier fully-ephemeral design: a nurse may reasonably want to revisit a lookup later in the same shift (e.g. re-check what was said about metoprolol for the patient in the next room over) without needing to jot down patient details anywhere. Fully discarding every lookup made that harder than it needed to be, so lookups are now retained for the shift — without ever retaining anything patient-identifiable.
+
+- **What's retained**: a `LookupSession` per lookup — the chief complaint(s) entered, the medication list entered, and the generated short/long explanations, with a timestamp.
+- **What's never retained, by construction**: no patient name, MRN, date of birth, or room number — the input UI never collects these fields in the first place (see Input / data entry above), so there's nothing for a session record to leak. Chief complaint + medication list + timestamp, with no direct identifier attached, doesn't constitute PHI under HIPAA Safe Harbor — the same boundary the original design relied on, now applied to a retained record instead of a discarded one.
+- **Auto-expiry**: `LookupSession`s purge automatically after a rolling window (default ~24h, covering a full shift plus handoff) — "revisit during the shift" is the goal, not indefinite storage.
+- **Manual clear**: a "Clear history" action is available anytime, same pattern as the Learn page's search history.
+- **Local-only, not synced to the backend**: unlike Learn-page search history (general medical knowledge, lower stakes, fine to sync across devices), `LookupSession`s stay device-local given their proximity to real patient encounters — there's no reason to put them on a server at all.
+- The de-identified graph-feeding mechanic (below) is separate and unaffected: it's a permanent, cross-patient, generic concept-to-concept edge, distinct from the temporary, this-shift `LookupSession`.
+
+### History
+- A **History** button on the Chart Lookup screen opens a list of this shift's past lookups, each row showing the chief complaint(s), a medication-count summary, and a relative timestamp.
+- Tapping a row reopens that lookup's stored explanations directly — no re-fetching or re-generating, just replaying what was already shown.
+- Same list-of-rows pattern already established for the Learn page's search history, for consistency across the app.
 
 ### Output — two-tier explanation per medication
 For each prescribed drug, relative to the entered chief complaint:
@@ -233,7 +243,7 @@ Score each candidate suggestion from a blend of: overdue-ness (SRS), mention/edg
 6. Curated knowledge RAG — ingest MedlinePlus/CDC/StatPearls, chunk + embed into `pgvector`, ground explanations with citations.
 7. Knowledge graph — concept nodes/edges, dedupe/merge, graph browsing UI. Includes `Concept.type` taxonomy and `Alias` model (see Content taxonomy), per-type concept detail page templates (see Concept detail pages), and the Learn page search/category-browse/history UI.
 8. Learning suggestions — gap detection + spaced-repetition reminders (see Suggestion engine).
-9. Chart lookup (Feature B) — manual chief complaint + drug entry, short/long dual explanations, ephemeral by design.
+9. Chart lookup (Feature B) — manual chief complaint + drug entry, short/long dual explanations, shift-scoped local history (auto-expiring, no PHI retained).
 10. Apple Watch companion — native watchOS app for on-wrist voice capture, synced via Watch Connectivity.
 11. Polish — semantic + full-text search, tagging, export.
 12. Android phase (future) — Jetpack Compose UI atop the shared KMP module, once iOS is validated.
@@ -247,15 +257,14 @@ Reviewed by four simulated nurse personas of varying experience for realism/work
 - **ICU/charge nurse (18yr)** — wants a persistent, visually distinct "educational, not clinical decision support" disclaimer on every AI explanation, not just a one-time notice; thinks PHI guardrail needs to catch spoken conversational PHI, not just pattern-match names/MRNs; questions fully-ephemeral Feature B design since it means zero personal lookup history — wants an aggregate, patient-delinked count only.
 - **Nurse educator/preceptor (12yr)** — suggestion engine's spaced-repetition approach fits orientation programs well; wants concepts eventually mappable to existing frameworks (NCLEX categories, unit competency checklists, CCRN/CMSRN-style blueprints); also pushes back on deferring experience-level onboarding; asks whether citations will be source links only or quoted excerpts.
 
-**Resolved since this review**: capture-location assumption (doesn't matter, audio capture works anywhere); PHI screening (now a day-1 capture-time requirement, on-device); Feature B long-version content (nursing implications now required). Still open: experience-level onboarding (deferred, not ruled out — see below), bulk/multi-patient entry for Feature B, unit-specific protocol representation, persistent AI-content disclaimer, aggregate lookup history, competency-framework mapping, citation depth.
+**Resolved since this review**: capture-location assumption (doesn't matter, audio capture works anywhere); PHI screening (now a day-1 capture-time requirement, on-device); Feature B long-version content (nursing implications now required); experience-level onboarding (added as a coarse-bucket question alongside specialty); Feature B lookup history (now shift-scoped and revisitable, not fully ephemeral — see Data retention above; goes beyond the aggregate-count-only ask, since full session detail is more useful and still carries no PHI). Still open: bulk/multi-patient entry for Feature B, unit-specific protocol representation, persistent AI-content disclaimer, competency-framework mapping, citation depth.
 
 ## Open questions (unresolved)
 
-- **Experience-level onboarding signal**: deferred for now per product decision, revisit later. Two panel personas independently flagged that "layman's terms" and suggestion depth should calibrate to seniority, not just specialty.
 - **Bulk/multi-patient entry for Feature B**: one-drug-at-a-time manual entry may be too slow for a full patient assignment — worth a bulk-entry or reusable-combo flow.
 - **Unit-specific protocol representation**: how to represent floor/unit-specific order sets and protocols that generic open sources won't cover.
 - **Persistent AI-content disclaimer**: whether every AI explanation needs a visually distinct "educational, not clinical decision support" marker, not just a one-time onboarding notice.
-- **Feature B lookup history**: fully ephemeral (current design) vs. an aggregate, patient-delinked personal count (e.g. "looked up furosemide 12 times this month") with no encounter-level record.
+- **Shift history auto-expiry window**: is ~24h the right default, or should it be configurable / tied to an explicit "end shift" action instead of a fixed timer?
 - **Competency-framework mapping**: whether concepts should eventually map to existing frameworks (NCLEX categories, unit competency checklists, CCRN/CMSRN-style blueprints).
 - **Citation depth**: source title/link only vs. quoted excerpt from the source, for both Feature A and Feature B explanations.
 - **Backend hosting**: self-hosted (VPS/Fly.io/Cloud Run) vs. managed Postgres (Neon) + Cloud Run.
