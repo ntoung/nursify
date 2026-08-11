@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: nursify
+      POSTGRES_USER: nursify
+      POSTGRES_PASSWORD: nursify
+    ports:
+      - "5432:5432"
+    volumes:
+      - nursify_pg_data:/var/lib/postgresql/data
+
+volumes:
+  nursify_pg_data:

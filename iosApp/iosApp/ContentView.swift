@@ -1,23 +1,33 @@
 import SwiftUI
 
+/// Root view: shows Onboarding until completed, then the 4-tab structure
+/// (Capture, Search, Chart, Learn — ordered per mockups/v4, fast in-the-moment
+/// tools first, reflective Learn last).
 struct ContentView: View {
+    @StateObject private var appState = AppState()
+
     var body: some View {
-        TabView {
-            Text("Capture")
-                .tabItem {
-                    Label("Capture", systemImage: "mic.fill")
-                }
+        Group {
+            if appState.hasCompletedOnboarding {
+                TabView {
+                    CaptureView()
+                        .tabItem { Label("Capture", systemImage: "mic.fill") }
 
-            Text("Learning Graph")
-                .tabItem {
-                    Label("Learn", systemImage: "point.3.connected.trianglepath.dotted")
-                }
+                    SearchView()
+                        .tabItem { Label("Search", systemImage: "magnifyingglass") }
 
-            Text("Chart Lookup")
-                .tabItem {
-                    Label("Chart", systemImage: "list.bullet.clipboard")
+                    ChartLookupInputView()
+                        .tabItem { Label("Chart", systemImage: "list.bullet.clipboard") }
+
+                    LearnView()
+                        .tabItem { Label("Learn", systemImage: "point.3.connected.trianglepath.dotted") }
                 }
+                .tint(Theme.Color.accentInk)
+            } else {
+                OnboardingView()
+            }
         }
+        .environmentObject(appState)
     }
 }
 

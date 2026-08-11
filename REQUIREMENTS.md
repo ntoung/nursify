@@ -32,9 +32,10 @@ Three related but distinct feature areas: **(A) personal learning graph**, **(B)
 ```
 nursify/
   REQUIREMENTS.md
+  SYSTEM_DESIGN.md
   iosApp/          # native SwiftUI app (scaffolded — see iosApp/README.md)
   shared/          # KMP business-logic module (not yet scaffolded)
-  backend/         # Ktor backend (not yet scaffolded)
+  backend/         # Ktor backend (scaffolded and running — see backend/README.md)
 ```
 
 ## Onboarding / orientation
