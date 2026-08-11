@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Xcode / XcodeGen
+iosApp/*.xcodeproj/
+iosApp/*.xcworkspace/
+iosApp/DerivedData/
+iosApp/build/
+*.xcuserstate
+xcuserdata/
+
+# Swift Package Manager
+.swiftpm/
+.build/
+
+# Gradle / Kotlin
+.gradle/
+build/
+*.iml
+.idea/
+local.properties
+
+# Environment / secrets
+.env
+*.env.local
