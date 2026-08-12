@@ -21,6 +21,7 @@ fun Application.module() {
         json(Json {
             prettyPrint = true
             ignoreUnknownKeys = true
+            encodeDefaults = true
         })
     }
     install(StatusPages) {
