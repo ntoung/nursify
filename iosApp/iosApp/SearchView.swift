@@ -9,6 +9,7 @@ struct SearchView: View {
     @State private var query = ""
     @State private var results: [ConceptSummary] = []
     @State private var activeCategory: ConceptType?
+    @FocusState private var searchFieldFocused: Bool
 
     var body: some View {
         NavigationStack {
@@ -19,6 +20,18 @@ struct SearchView: View {
                             Image(systemName: "magnifyingglass").foregroundStyle(Theme.Color.sub)
                             TextField("Medications, procedures, conditions, TAVR...", text: $query)
                                 .font(Theme.Font.body(15, weight: .semibold))
+                                .focused($searchFieldFocused)
+                            if !query.isEmpty {
+                                Button {
+                                    query = ""
+                                    results = []
+                                    searchFieldFocused = false
+                                } label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundStyle(Theme.Color.sub)
+                                }
+                                .buttonStyle(.plain)
+                            }
                         }
                         .padding(13)
                         .background(SwiftUI.Color.white)
