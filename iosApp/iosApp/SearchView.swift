@@ -49,22 +49,7 @@ struct SearchView: View {
                     }
                     .padding(.top, 8)
 
-                    if let activeCategory {
-                        HStack {
-                            Text("Category: \(activeCategory.displayName)")
-                                .font(Theme.Font.body(12.5, weight: .semibold))
-                                .foregroundStyle(Theme.Color.accentInk)
-                            Spacer()
-                            Button("Clear") {
-                                self.activeCategory = nil
-                                results = []
-                            }
-                            .font(Theme.Font.body(12.5, weight: .semibold))
-                        }
-                        .padding(.top, 10)
-                    }
-
-                    if !results.isEmpty {
+                    if !query.isEmpty && !results.isEmpty {
                         VStack(spacing: 0) {
                             ForEach(results) { item in
                                 NavigationLink(destination: ConceptDetailView(conceptId: item.id)) {
@@ -93,30 +78,69 @@ struct SearchView: View {
                         }
                     }
 
-                    SectionLabel(text: "Recent")
-                        .padding(.top, 22)
-                        .padding(.bottom, 4)
+                    if let activeCategory {
+                        HStack {
+                            Text("Category: \(activeCategory.displayName)")
+                                .font(Theme.Font.body(12.5, weight: .semibold))
+                                .foregroundStyle(Theme.Color.accentInk)
+                            Spacer()
+                            Button("Clear") {
+                                self.activeCategory = nil
+                                results = []
+                            }
+                            .font(Theme.Font.body(12.5, weight: .semibold))
+                        }
+                        .padding(.top, 14)
 
-                    if appState.searchHistory.isEmpty {
-                        Text("Nothing viewed yet.")
-                            .font(Theme.Font.body(13.5))
-                            .foregroundStyle(Theme.Color.sub)
-                            .padding(.vertical, 8)
-                    } else {
-                        VStack(spacing: 0) {
-                            ForEach(appState.searchHistory.prefix(4)) { entry in
-                                NavigationLink(destination: ConceptDetailView(conceptId: entry.conceptId)) {
-                                    RecentRow(entry: entry)
-                                }
-                                .buttonStyle(.plain)
-                                if entry.id != appState.searchHistory.prefix(4).last?.id {
-                                    Divider()
+                        if !results.isEmpty {
+                            VStack(spacing: 0) {
+                                ForEach(results) { item in
+                                    NavigationLink(destination: ConceptDetailView(conceptId: item.id)) {
+                                        AutocompleteRow(item: item)
+                                    }
+                                    .buttonStyle(.plain)
+                                    if item.id != results.last?.id {
+                                        Divider().padding(.leading, 16)
+                                    }
                                 }
                             }
+                            .background(SwiftUI.Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 18))
+                            .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1))
+                            .padding(.top, 10)
                         }
-                        .padding(.top, 4)
+                    }
+
+                    if activeCategory == nil {
+                        VStack(alignment: .leading, spacing: 0) {
+                            SectionLabel(text: "Recent")
+                                .padding(.top, 22)
+                                .padding(.bottom, 4)
+
+                            if appState.searchHistory.isEmpty {
+                                Text("Nothing viewed yet.")
+                                    .font(Theme.Font.body(13.5))
+                                    .foregroundStyle(Theme.Color.sub)
+                                    .padding(.vertical, 8)
+                            } else {
+                                VStack(spacing: 0) {
+                                    ForEach(appState.searchHistory.prefix(4)) { entry in
+                                        NavigationLink(destination: ConceptDetailView(conceptId: entry.conceptId)) {
+                                            RecentRow(entry: entry)
+                                        }
+                                        .buttonStyle(.plain)
+                                        if entry.id != appState.searchHistory.prefix(4).last?.id {
+                                            Divider()
+                                        }
+                                    }
+                                }
+                                .padding(.top, 4)
+                            }
+                        }
+                        .transition(.opacity)
                     }
                 }
+                .animation(.easeInOut(duration: 0.25), value: activeCategory)
                 .padding(24)
             }
             .background(Theme.Color.background.ignoresSafeArea())
