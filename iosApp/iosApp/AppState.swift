@@ -21,8 +21,21 @@ final class AppState: ObservableObject {
 
     private let api: APIClient
 
+    /// Onboarding answers are device-local (no profile endpoint exists yet),
+    /// persisted to UserDefaults so they survive relaunch instead of asking
+    /// again every time the app opens.
+    private enum StorageKey {
+        static let hasCompletedOnboarding = "hasCompletedOnboarding"
+        static let userProfile = "userProfile"
+    }
+
     init(api: APIClient = .shared) {
         self.api = api
+        hasCompletedOnboarding = UserDefaults.standard.bool(forKey: StorageKey.hasCompletedOnboarding)
+        if let data = UserDefaults.standard.data(forKey: StorageKey.userProfile),
+           let profile = try? JSONDecoder().decode(UserProfile.self, from: data) {
+            userProfile = profile
+        }
     }
 
     /// Placeholder for the suggestion engine's streak stat — real value would
@@ -32,6 +45,10 @@ final class AppState: ObservableObject {
     func completeOnboarding(name: String, specialties: Set<Specialty>, experience: ExperienceLevel?) {
         userProfile = UserProfile(name: name, specialties: specialties, experienceLevel: experience)
         hasCompletedOnboarding = true
+        UserDefaults.standard.set(true, forKey: StorageKey.hasCompletedOnboarding)
+        if let data = try? JSONEncoder().encode(userProfile) {
+            UserDefaults.standard.set(data, forKey: StorageKey.userProfile)
+        }
     }
 
     // MARK: - Network-backed loads

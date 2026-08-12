@@ -10,12 +10,28 @@ struct LearnView: View {
     private var newToExplore: [Suggestion] { appState.suggestions.filter { [.gap, .related, .practice].contains($0.kind) } }
     private var specialtyFocus: [Suggestion] { appState.suggestions.filter { $0.kind == .core } }
 
+    private var greeting: String {
+        let hour = Calendar.current.component(.hour, from: Date())
+        let timeGreeting: String
+        switch hour {
+        case 0..<12: timeGreeting = "Good morning"
+        case 12..<17: timeGreeting = "Good afternoon"
+        default: timeGreeting = "Good evening"
+        }
+        let firstName = appState.userProfile.name
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .split(separator: " ")
+            .first
+        guard let firstName, !firstName.isEmpty else { return timeGreeting }
+        return "\(timeGreeting), Nurse \(firstName)"
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     HStack {
-                        Text("Good morning, Jamie")
+                        Text(greeting)
                             .font(Theme.Font.heading(25))
                         Spacer()
                         NavigationLink(destination: SearchView()) {
