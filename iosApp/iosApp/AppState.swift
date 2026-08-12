@@ -9,7 +9,7 @@ import SwiftUI
 @MainActor
 final class AppState: ObservableObject {
     @Published var hasCompletedOnboarding = false
-    @Published var userProfile = UserProfile(specialties: [], experienceLevel: nil)
+    @Published var userProfile = UserProfile(name: "", specialties: [], experienceLevel: nil)
 
     @Published var notes: [Note] = MockData.notes
     @Published var lookupSessions: [LookupSession] = MockData.lookupSessions
@@ -29,8 +29,8 @@ final class AppState: ObservableObject {
     /// come from ReviewSchedule state (see SYSTEM_DESIGN.md).
     let streakDays = 4
 
-    func completeOnboarding(specialties: Set<Specialty>, experience: ExperienceLevel?) {
-        userProfile = UserProfile(specialties: specialties, experienceLevel: experience)
+    func completeOnboarding(name: String, specialties: Set<Specialty>, experience: ExperienceLevel?) {
+        userProfile = UserProfile(name: name, specialties: specialties, experienceLevel: experience)
         hasCompletedOnboarding = true
     }
 

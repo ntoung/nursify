@@ -251,6 +251,7 @@ enum ExperienceLevel: String, Codable, CaseIterable, Identifiable {
 }
 
 struct UserProfile: Codable {
+    var name: String
     var specialties: Set<Specialty>
     var experienceLevel: ExperienceLevel?
 }
