@@ -6,9 +6,11 @@ import Foundation
 /// as an .xcframework in Xcode, which needs macOS. This is the pragmatic,
 /// verifiable-by-review interim: same endpoints, native Swift.
 ///
-/// Base URL assumes the Simulator talking to a backend running on the Mac's
-/// own `localhost:8080` (iOS's ATS loopback exception covers this with no
-/// Info.plist changes). A real device needs the Mac's LAN IP instead.
+/// Base URL points at the Mac's LAN IP so both the Simulator and a physical
+/// device on the same Wi-Fi network can reach the backend. `project.yml`
+/// carries the matching `NSAllowsLocalNetworking` ATS exception. If the
+/// Mac's IP changes (new network, DHCP renewal), update this and re-run
+/// `xcodegen generate`.
 enum APIError: Error, LocalizedError {
     case invalidResponse
     case server(status: Int)
@@ -22,7 +24,7 @@ enum APIError: Error, LocalizedError {
 }
 
 final class APIClient {
-    static let shared = APIClient(baseURL: URL(string: "http://localhost:8080")!)
+    static let shared = APIClient(baseURL: URL(string: "http://192.168.1.194:8081")!)
 
     private let baseURL: URL
     private let session: URLSession

@@ -6,6 +6,7 @@ iosApp/*.xcodeproj/
 iosApp/*.xcworkspace/
 iosApp/DerivedData/
 iosApp/build/
+iosApp/iosApp/Info.plist
 *.xcuserstate
 xcuserdata/
 

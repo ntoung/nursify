@@ -2,6 +2,8 @@
 
 Native SwiftUI iOS app (primary UI target). Scaffolded on Windows, so no `.xcodeproj` is checked in — generate it on macOS with [XcodeGen](https://github.com/yonaskolb/XcodeGen):
 
+Setting up a Mac from scratch (Xcode, signing, running on a physical device)? See [`SETUP.md`](../SETUP.md) at the repo root for the full walkthrough.
+
 ```sh
 brew install xcodegen
 cd iosApp
