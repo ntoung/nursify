@@ -2,11 +2,13 @@ import Foundation
 import SwiftUI
 
 /// Capture tab: notes list is primary; record control is a small, bottom-
-/// anchored bar (per the "shrink 50%, move to bottom" revision). Real
-/// on-device transcription + capture-time PHI screening (REQUIREMENTS.md)
-/// aren't wired up yet — `isRecording` just toggles UI state for now.
+/// anchored bar (per the "shrink 50%, move to bottom" revision). Voice
+/// capture uses on-device transcription (SpeechCapture); capture-time PHI
+/// screening (REQUIREMENTS.md "Privacy guardrail") is a separate follow-up —
+/// notes still save with phiReviewed: false below.
 struct CaptureView: View {
     @EnvironmentObject private var appState: AppState
+    @StateObject private var speech = SpeechCapture()
     @State private var isComposing = false
     @State private var draftText = ""
     @State private var isSaving = false
@@ -49,65 +51,138 @@ struct CaptureView: View {
                     .padding(24)
                 }
 
-                if isComposing {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Voice capture isn't implemented yet — type your note instead. It's sent to the server as-is (no PHI screening yet either).")
-                            .font(Theme.Font.body(11.5))
-                            .foregroundStyle(Theme.Color.sub)
-                        TextField("What's on your mind?", text: $draftText, axis: .vertical)
-                            .font(Theme.Font.body(14.5))
-                            .lineLimit(2...5)
-                            .padding(12)
-                            .background(Theme.Color.background)
-                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Theme.Color.line, lineWidth: 1.5))
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                        HStack {
-                            Button("Cancel") {
-                                isComposing = false
-                                draftText = ""
-                            }
-                            .font(Theme.Font.body(14, weight: .semibold))
-                            .foregroundStyle(Theme.Color.sub)
-                            Spacer()
-                            Button(isSaving ? "Saving..." : "Save") {
-                                Task { await save() }
-                            }
-                            .font(Theme.Font.body(14, weight: .bold))
-                            .foregroundStyle(Theme.Color.accentInk)
-                            .disabled(draftText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isSaving)
-                        }
-                    }
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 14)
-                    .background(SwiftUI.Color.white)
-                    .overlay(Rectangle().frame(height: 1).foregroundStyle(Theme.Color.line), alignment: .top)
+                if speech.isRecording {
+                    recordingBar
+                } else if isComposing {
+                    reviewBar
                 } else {
-                    HStack(spacing: 14) {
-                        Text("Tap to add a note")
-                            .font(Theme.Font.heading(13))
-                        Spacer()
-                        Button {
-                            isComposing = true
-                        } label: {
-                            Image(systemName: "mic.fill")
-                                .foregroundStyle(.white)
-                                .frame(width: 52, height: 52)
-                                .background(
-                                    LinearGradient(colors: [Color(hex: "F0917A"), Color(hex: "DE7259")], startPoint: .top, endPoint: .bottom)
-                                )
-                                .clipShape(Circle())
-                        }
-                        .buttonStyle(.plain)
-                    }
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 14)
-                    .background(SwiftUI.Color.white)
-                    .overlay(Rectangle().frame(height: 1).foregroundStyle(Theme.Color.line), alignment: .top)
+                    idleBar
                 }
             }
             .background(Theme.Color.background.ignoresSafeArea())
             .navigationTitle("Capture")
+            .alert(
+                "Recording issue",
+                isPresented: Binding(get: { speech.captureError != nil }, set: { if !$0 { speech.captureError = nil } }),
+                presenting: speech.captureError
+            ) { _ in
+                Button("OK") { speech.captureError = nil }
+            } message: { error in
+                Text(error.errorDescription ?? "Something went wrong.")
+            }
         }
+    }
+
+    private var idleBar: some View {
+        HStack(spacing: 14) {
+            Button {
+                isComposing = true
+                draftText = ""
+            } label: {
+                Image(systemName: "keyboard")
+                    .foregroundStyle(Theme.Color.sub)
+                    .frame(width: 40, height: 40)
+            }
+            .buttonStyle(.plain)
+
+            Text("Tap to add a note")
+                .font(Theme.Font.heading(13))
+            Spacer()
+            Button {
+                Task { await speech.start() }
+            } label: {
+                Image(systemName: "mic.fill")
+                    .foregroundStyle(.white)
+                    .frame(width: 52, height: 52)
+                    .background(
+                        LinearGradient(colors: [Color(hex: "F0917A"), Color(hex: "DE7259")], startPoint: .top, endPoint: .bottom)
+                    )
+                    .clipShape(Circle())
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 14)
+        .background(SwiftUI.Color.white)
+        .overlay(Rectangle().frame(height: 1).foregroundStyle(Theme.Color.line), alignment: .top)
+    }
+
+    private var recordingBar: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 8) {
+                Circle().fill(Color(hex: "DE7259")).frame(width: 8, height: 8)
+                Text("Listening...")
+                    .font(Theme.Font.body(12, weight: .semibold))
+                    .foregroundStyle(Theme.Color.sub)
+            }
+            Text(speech.liveTranscript.isEmpty ? "Start speaking..." : speech.liveTranscript)
+                .font(Theme.Font.body(14.5))
+                .foregroundStyle(speech.liveTranscript.isEmpty ? Theme.Color.sub : Theme.Color.ink)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(12)
+                .background(Theme.Color.background)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+            HStack {
+                Button("Cancel") {
+                    speech.stop()
+                    draftText = ""
+                    isComposing = false
+                }
+                .font(Theme.Font.body(14, weight: .semibold))
+                .foregroundStyle(Theme.Color.sub)
+                Spacer()
+                Button {
+                    draftText = speech.liveTranscript
+                    speech.stop()
+                    isComposing = true
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "stop.circle.fill")
+                        Text("Done")
+                    }
+                }
+                .font(Theme.Font.body(14, weight: .bold))
+                .foregroundStyle(Theme.Color.accentInk)
+            }
+        }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 14)
+        .background(SwiftUI.Color.white)
+        .overlay(Rectangle().frame(height: 1).foregroundStyle(Theme.Color.line), alignment: .top)
+    }
+
+    private var reviewBar: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Review before saving. No PHI screening yet, so double-check for patient-identifying details.")
+                .font(Theme.Font.body(11.5))
+                .foregroundStyle(Theme.Color.sub)
+            TextField("What's on your mind?", text: $draftText, axis: .vertical)
+                .font(Theme.Font.body(14.5))
+                .lineLimit(2...5)
+                .padding(12)
+                .background(Theme.Color.background)
+                .overlay(RoundedRectangle(cornerRadius: 12).stroke(Theme.Color.line, lineWidth: 1.5))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+            HStack {
+                Button("Cancel") {
+                    isComposing = false
+                    draftText = ""
+                }
+                .font(Theme.Font.body(14, weight: .semibold))
+                .foregroundStyle(Theme.Color.sub)
+                Spacer()
+                Button(isSaving ? "Saving..." : "Save") {
+                    Task { await save() }
+                }
+                .font(Theme.Font.body(14, weight: .bold))
+                .foregroundStyle(Theme.Color.accentInk)
+                .disabled(draftText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isSaving)
+            }
+        }
+        .padding(.horizontal, 24)
+        .padding(.vertical, 14)
+        .background(SwiftUI.Color.white)
+        .overlay(Rectangle().frame(height: 1).foregroundStyle(Theme.Color.line), alignment: .top)
     }
 
     private func save() async {
