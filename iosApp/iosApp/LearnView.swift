@@ -1,14 +1,12 @@
 import SwiftUI
 
-/// The curated/passive tab: personalized suggestion feed only, driven by the
-/// Suggestion Engine (see REQUIREMENTS.md / SYSTEM_DESIGN.md). Search lives
-/// in its own tab now — Learn keeps a small shortcut icon for convenience.
+/// The curated/passive tab. The personalized suggestion feed (driven by the
+/// Suggestion Engine in REQUIREMENTS.md / SYSTEM_DESIGN.md) isn't built yet, so
+/// rather than show placeholder content this shows an honest empty state until
+/// there's real activity to surface. Search lives in its own tab; Learn keeps a
+/// small shortcut icon for convenience.
 struct LearnView: View {
     @EnvironmentObject private var appState: AppState
-
-    private var due: [Suggestion] { appState.suggestions.filter { $0.kind == .due } }
-    private var newToExplore: [Suggestion] { appState.suggestions.filter { [.gap, .related, .practice].contains($0.kind) } }
-    private var specialtyFocus: [Suggestion] { appState.suggestions.filter { $0.kind == .core } }
 
     private var greeting: String {
         let hour = Calendar.current.component(.hour, from: Date())
@@ -45,57 +43,17 @@ struct LearnView: View {
                     }
                     .padding(.top, 8)
 
-                    Text("🔥 \(appState.streakDays)-day streak")
-                        .font(Theme.Font.body(13, weight: .semibold))
-                        .foregroundStyle(Theme.Color.sub)
-                        .padding(.top, 6)
-                        .padding(.bottom, 14)
-
-                    if appState.suggestions.isEmpty {
-                        ProgressView().padding(.top, 20)
-                    } else {
-                        suggestionSection(title: "Due for review", items: due)
-                        suggestionSection(title: "New to explore", items: newToExplore)
-                        suggestionSection(title: "Specialty focus · Telemetry", items: specialtyFocus)
-                    }
+                    EmptyStateView(
+                        icon: "sparkles",
+                        title: "Nothing to review yet",
+                        message: "As you capture notes and look concepts up, personalized suggestions and review reminders will show up here."
+                    )
+                    .padding(.top, 40)
                 }
                 .padding(24)
             }
             .background(Theme.Color.background.ignoresSafeArea())
-            .task { await appState.loadSuggestions() }
         }
-    }
-
-    @ViewBuilder
-    private func suggestionSection(title: String, items: [Suggestion]) -> some View {
-        if !items.isEmpty {
-            SectionLabel(text: title).padding(.top, 8).padding(.bottom, 8)
-            VStack(spacing: 12) {
-                ForEach(items) { SuggestionRow(suggestion: $0) }
-            }
-            .padding(.bottom, 8)
-        }
-    }
-}
-
-private struct SuggestionRow: View {
-    let suggestion: Suggestion
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack(alignment: .top) {
-                Text(suggestion.title).font(Theme.Font.heading(16.5))
-                Spacer()
-                SuggestionBadge(kind: suggestion.kind)
-            }
-            Text(suggestion.reason)
-                .font(Theme.Font.body(13.5))
-                .foregroundStyle(Theme.Color.sub)
-        }
-        .padding(16)
-        .background(SwiftUI.Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 22))
-        .shadow(color: .black.opacity(0.04), radius: 10, y: 2)
     }
 }
 
