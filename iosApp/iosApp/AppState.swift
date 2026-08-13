@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import Network
 
 /// Client state, now backed by real network calls to `backend/` via
 /// APIClient — see APIClient.swift for why this is native Swift rather than
@@ -11,15 +12,45 @@ final class AppState: ObservableObject {
     @Published var hasCompletedOnboarding = false
     @Published var userProfile = UserProfile(name: "", specialties: [], experienceLevel: nil)
 
-    @Published var notes: [Note] = MockData.notes
-    @Published var lookupSessions: [LookupSession] = MockData.lookupSessions
+    @Published var notes: [Note] = []
+    @Published var lookupSessions: [LookupSession] = SampleData.lookupSessions
 
     @Published var suggestions: [Suggestion] = []
     @Published var searchHistory: [SearchHistoryEntry] = []
 
+    /// Local ids of notes captured offline and still awaiting sync — drives the
+    /// "pending" indicator in the Capture list.
+    @Published private(set) var pendingNoteIds: Set<UUID> = []
+
     @Published var errorMessage: String?
 
+    /// A transcript just received from the Watch app (WatchConnectivityReceiver),
+    /// awaiting the same review/PHI-acknowledgment step as any other capture
+    /// before it's saved — see REQUIREMENTS.md "queued and finished/transcribed
+    /// on phone via Watch Connectivity." CaptureView clears this once it opens
+    /// the review sheet with this text.
+    @Published var pendingWatchDraft: String?
+
     private let api: APIClient
+
+    /// The concept corpus, served locally from the bundled snapshot so search,
+    /// browsing, and detail work fully offline. See ConceptLibrary.
+    let library: ConceptLibrary
+
+    /// Durable outbox of mutations made offline, replayed when the backend is
+    /// reachable again. See SyncQueue and flushOutbox().
+    private var syncQueue = SyncQueue()
+    private var isFlushing = false
+
+    /// Watches connectivity and flushes the outbox as soon as the network
+    /// returns — this is what makes "sync later" automatic.
+    private let pathMonitor = NWPathMonitor()
+
+    private static let notesFileURL: URL? = {
+        try? FileManager.default
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("Notes.json")
+    }()
 
     /// Onboarding answers are device-local (no profile endpoint exists yet),
     /// persisted to UserDefaults so they survive relaunch instead of asking
@@ -29,18 +60,100 @@ final class AppState: ObservableObject {
         static let userProfile = "userProfile"
     }
 
-    init(api: APIClient = .shared) {
+    init(api: APIClient = .shared, library: ConceptLibrary = .shared) {
         self.api = api
+        self.library = library
         hasCompletedOnboarding = UserDefaults.standard.bool(forKey: StorageKey.hasCompletedOnboarding)
         if let data = UserDefaults.standard.data(forKey: StorageKey.userProfile),
            let profile = try? JSONDecoder().decode(UserProfile.self, from: data) {
             userProfile = profile
         }
+        notes = AppState.loadNotes()
+        pendingNoteIds = syncQueue.pendingNoteIds
+        startConnectivityMonitoring()
     }
 
-    /// Placeholder for the suggestion engine's streak stat — real value would
-    /// come from ReviewSchedule state (see SYSTEM_DESIGN.md).
-    let streakDays = 4
+    /// Refreshes the offline concept library from the backend when reachable.
+    /// Safe to call on launch — it no-ops silently when offline, since the
+    /// bundled snapshot already backs every concept read.
+    func refreshLibrary() async {
+        await library.refresh()
+    }
+
+    // MARK: - Offline outbox (see SyncQueue)
+
+    private func startConnectivityMonitoring() {
+        pathMonitor.pathUpdateHandler = { [weak self] path in
+            guard path.status == .satisfied else { return }
+            Task { @MainActor in await self?.flushOutbox() }
+        }
+        pathMonitor.start(queue: DispatchQueue(label: "com.nursify.connectivity"))
+    }
+
+    /// Replays queued mutations in order, stopping at the first failure so the
+    /// remaining operations stay queued for the next attempt (launch, a later
+    /// action, or connectivity returning). Safe to call repeatedly.
+    func flushOutbox() async {
+        guard !isFlushing else { return }
+        isFlushing = true
+        defer { isFlushing = false }
+
+        var syncedAnyView = false
+        for op in syncQueue.operations {
+            do {
+                switch op.operation {
+                case .createNote(let localId, let transcript, let device, let phiReviewed):
+                    let captureDevice = CaptureDevice(rawValue: device) ?? .phone
+                    let response = try await api.createNote(transcript: transcript, device: captureDevice, phiReviewed: phiReviewed)
+                    reconcileNote(localId: localId, serverMentions: response.mentionedConcepts)
+                case .recordView(let conceptId):
+                    _ = try await api.recordSearchHistory(conceptId: conceptId)
+                    syncedAnyView = true
+                }
+                syncQueue.remove(op.id)
+                pendingNoteIds = syncQueue.pendingNoteIds
+            } catch {
+                // Offline or backend down — leave this and everything after it
+                // queued, preserving order, and try again later.
+                break
+            }
+        }
+
+        if syncedAnyView { await loadSearchHistory() }
+    }
+
+    /// Merge the server's authoritative concept mentions onto the optimistic
+    /// note once its creation syncs. Identity stays the local id (the client
+    /// never needs the server's note id), so nothing in the UI reflows.
+    private func reconcileNote(localId: UUID, serverMentions: [MentionedConcept]) {
+        guard let index = notes.firstIndex(where: { $0.id == localId }) else { return }
+        let existing = notes[index]
+        notes[index] = Note(
+            id: existing.id,
+            transcript: existing.transcript,
+            device: existing.device,
+            phiFlagged: existing.phiFlagged,
+            createdAt: existing.createdAt,
+            mentionedConcepts: serverMentions.isEmpty ? existing.mentionedConcepts : serverMentions
+        )
+        persistNotes()
+    }
+
+    private func persistNotes() {
+        guard let url = AppState.notesFileURL, let data = try? JSONEncoder().encode(notes) else { return }
+        try? data.write(to: url, options: .atomic)
+    }
+
+    /// Loads persisted notes. The list starts empty on a fresh install — the
+    /// Capture tab shows an empty state until the user records their own note.
+    private static func loadNotes() -> [Note] {
+        guard let url = notesFileURL, FileManager.default.fileExists(atPath: url.path),
+              let data = try? Data(contentsOf: url),
+              let notes = try? JSONDecoder().decode([Note].self, from: data) else {
+            return []
+        }
+        return notes
+    }
 
     func completeOnboarding(name: String, specialties: Set<Specialty>, experience: ExperienceLevel?) {
         userProfile = UserProfile(name: name, specialties: specialties, experienceLevel: experience)
@@ -53,55 +166,48 @@ final class AppState: ObservableObject {
 
     // MARK: - Network-backed loads
 
+    // Suggestions and synced search history are online-only personalization
+    // features (they live server-side). When offline they simply don't update —
+    // failures are swallowed rather than surfaced, so the offline-first concept
+    // experience stays clean instead of flashing network errors.
     func loadSuggestions() async {
-        do {
-            suggestions = try await api.suggestions()
-        } catch {
-            errorMessage = "Couldn't load suggestions: \(error.localizedDescription)"
+        let specialty = userProfile.specialties.map(\.rawValue).sorted().first
+        if let result = try? await api.suggestions(specialty: specialty) {
+            suggestions = result
         }
     }
 
     func loadSearchHistory() async {
-        do {
-            searchHistory = try await api.searchHistory()
-        } catch {
-            errorMessage = "Couldn't load search history: \(error.localizedDescription)"
+        if let result = try? await api.searchHistory() {
+            searchHistory = result
         }
     }
 
+    // Concept content is served from the offline library, so search, category
+    // browsing, and detail all work with no network. The library refreshes from
+    // the backend separately (see refreshLibrary()).
     func searchConcepts(query: String) async -> [ConceptSummary] {
-        guard !query.isEmpty else { return [] }
-        do {
-            return try await api.searchConcepts(query: query)
-        } catch {
-            errorMessage = "Search failed: \(error.localizedDescription)"
-            return []
-        }
+        library.search(query)
     }
 
     func conceptsByCategory(_ type: ConceptType) async -> [ConceptSummary] {
-        do {
-            return try await api.conceptsByCategory(type)
-        } catch {
-            errorMessage = "Couldn't load \(type.displayName): \(error.localizedDescription)"
-            return []
-        }
+        library.byCategory(type)
     }
 
     func fetchConcept(id: UUID) async throws -> Concept {
-        try await api.concept(id: id)
+        if let local = library.concept(id: id) { return local }
+        // Fallback for any id not in the bundled snapshot (shouldn't normally
+        // happen, but keeps deep links / stale references working when online).
+        return try await api.concept(id: id)
     }
 
-    /// Records a resolved concept view server-side, then refreshes the local
-    /// list — search history is synced (general medical-knowledge browsing,
-    /// not patient data), unlike chart-lookup history below.
+    /// Records a resolved concept view. Queued through the outbox so a view
+    /// registered offline still syncs later, rather than being dropped — search
+    /// history is general medical-knowledge browsing (not patient data), so
+    /// unlike chart-lookup history it's fine to sync.
     func recordSearchHistory(conceptId: UUID) async {
-        do {
-            _ = try await api.recordSearchHistory(conceptId: conceptId)
-            await loadSearchHistory()
-        } catch {
-            errorMessage = "Couldn't record view: \(error.localizedDescription)"
-        }
+        syncQueue.enqueue(.recordView(conceptId: conceptId))
+        await flushOutbox()
     }
 
     func clearSearchHistory() async {
@@ -113,15 +219,17 @@ final class AppState: ObservableObject {
         }
     }
 
-    // MARK: - Chart lookup — network call, but the resulting LookupSession
-    // stays local-only (see SYSTEM_DESIGN.md "Chart lookup (Feature B)").
+    // MARK: - Chart lookup — computed entirely from the offline library, so it
+    // works with no network and identically to the backend's stateless
+    // /chart-lookup. The resulting LookupSession stays device-local (PHI never
+    // leaves the device — see SYSTEM_DESIGN.md "Chart lookup (Feature B)").
 
-    func performChartLookup(chiefComplaints: [String], medicationNames: [String]) async throws -> LookupSession {
-        let response = try await api.chartLookup(chiefComplaints: chiefComplaints, medicationNames: medicationNames)
+    func performChartLookup(chiefComplaints: [String], medicationNames: [String]) -> LookupSession {
+        let medications = library.chartLookup(chiefComplaints: chiefComplaints, medicationNames: medicationNames)
         let session = LookupSession(
             id: UUID(),
-            chiefComplaints: response.chiefComplaints,
-            medications: response.medications,
+            chiefComplaints: chiefComplaints,
+            medications: medications,
             createdAt: Date(),
             expiresAt: Date().addingTimeInterval(60 * 60 * 24)
         )
@@ -133,23 +241,29 @@ final class AppState: ObservableObject {
         lookupSessions.removeAll()
     }
 
-    // MARK: - Capture — persists server-side; appended locally too since
-    // there's no GET /notes endpoint yet to re-fetch the list from.
+    // MARK: - Capture — offline-first via the outbox.
+    //
+    // A note is shown and persisted locally immediately (with concept mentions
+    // computed on-device from the library), then queued for server sync. It
+    // never depends on connectivity and never gets lost if the backend is
+    // unreachable — see SyncQueue / flushOutbox.
 
     func createNote(transcript: String, device: CaptureDevice, phiReviewed: Bool) async {
-        do {
-            let response = try await api.createNote(transcript: transcript, device: device, phiReviewed: phiReviewed)
-            let note = Note(
-                id: response.id,
-                transcript: response.transcript,
-                device: device,
-                phiFlagged: false,
-                createdAt: response.createdAt,
-                mentionedConcepts: [] // no AI pipeline yet — honestly empty, not faked
-            )
-            notes.insert(note, at: 0)
-        } catch {
-            errorMessage = "Couldn't save note: \(error.localizedDescription)"
-        }
+        let localId = UUID()
+        let note = Note(
+            id: localId,
+            transcript: transcript,
+            device: device,
+            phiFlagged: false,
+            createdAt: Date(),
+            mentionedConcepts: library.mentions(in: transcript)
+        )
+        notes.insert(note, at: 0)
+        persistNotes()
+
+        syncQueue.enqueue(.createNote(localId: localId, transcript: transcript, device: device.rawValue, phiReviewed: phiReviewed))
+        pendingNoteIds = syncQueue.pendingNoteIds
+
+        await flushOutbox()
     }
 }

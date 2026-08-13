@@ -70,10 +70,11 @@ struct ConceptDetailView: View {
 
                 EducationalDisclaimerBanner()
 
-                if let alias = concept.aliases.first {
-                    Text("Also known as: \(alias.text)")
+                if !concept.aliases.isEmpty {
+                    Text("Also known as: \(concept.aliases.map(\.text).joined(separator: ", "))")
                         .font(Theme.Font.body(12.5, weight: .semibold))
                         .foregroundStyle(Theme.Color.sub)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
 
                 labeledParagraph("In short", concept.shortExplanation)
@@ -102,6 +103,7 @@ struct ConceptDetailView: View {
                                 .buttonStyle(.plain)
                             }
                         }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
 
@@ -159,7 +161,8 @@ struct ConceptDetailView: View {
             if let v = s.triggerCriteria { sections.append(.init(label: "Trigger criteria", content: v, isHighlighted: true)) }
             if let v = s.steps { sections.append(.init(label: "Steps", content: v, isHighlighted: true)) }
         case .anatomy:
-            break
+            if let v = s.purpose { sections.append(.init(label: "Role in the body", content: v, isHighlighted: true)) }
+            if let v = s.careConsiderations { sections.append(.init(label: "Clinical relevance", content: v, isHighlighted: true)) }
         }
         return sections
     }
@@ -192,7 +195,7 @@ private struct RelatedConceptChip: View {
 
 #Preview {
     NavigationStack {
-        ConceptDetailView(conceptId: MockData.concepts[0].id)
+        ConceptDetailView(conceptId: ConceptLibrary.shared.concepts.first?.id ?? UUID())
     }
     .environmentObject(AppState())
 }

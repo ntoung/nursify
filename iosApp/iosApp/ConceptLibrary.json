@@ -1,0 +1,3712 @@
+[
+  {
+    "id": "3771eda7-13af-4312-922b-bab9cf78faec",
+    "type": "ANATOMY",
+    "name": "Cardiac Conduction System",
+    "shortExplanation": "The heart's built-in electrical wiring that sets the beat — starting at the SA node and traveling through the AV node to the ventricles.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": "Generate and coordinate each heartbeat. The SA node (natural pacemaker) fires, the impulse pauses at the AV node to let the ventricles fill, then travels down the bundle of His and Purkinje fibers to contract the ventricles.",
+      "careConsiderations": "Where the signal fails maps to the arrhythmia: SA node problems cause bradycardia; AV node/His block causes heart block; abnormal ventricular foci cause VT/VF. This system is the target of pacemakers, ablation, and rate/rhythm drugs.",
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Telemetry",
+      "Anatomy"
+    ],
+    "aliases": [
+      {
+        "id": "f59af083-1a5a-400f-a993-836ed32f90c4",
+        "text": "SA Node",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "1f4711f7-bc90-49aa-ad3a-2bee12529c2e",
+        "text": "AV Node",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "428c4431-edd2-414b-9286-28fb8c7ac8a8",
+    "type": "ANATOMY",
+    "name": "Coronary Arteries",
+    "shortExplanation": "The vessels that supply the heart muscle itself with oxygen-rich blood — the ones that get blocked in a heart attack.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": "Deliver oxygenated blood to the myocardium. The left main branches into the LAD (anterior wall) and circumflex (lateral wall); the right coronary artery (RCA) supplies the inferior wall and, in most people, the SA and AV nodes.",
+      "careConsiderations": "ECG lead groupings map to territories (inferior II/III/aVF ≈ RCA; anterior V1–V4 ≈ LAD; lateral I/aVL/V5–V6 ≈ circumflex), which helps localize an infarct; RCA involvement often causes bradycardia and heart block.",
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Anatomy"
+    ],
+    "aliases": [
+      {
+        "id": "e90c3714-d16a-4e6a-9831-acc254be7280",
+        "text": "LAD",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "1ace2190-42af-43ef-98c4-9e99bbcc0c0a",
+        "text": "RCA",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "c23304a4-617b-4ae6-82c4-5cdf5cd5093b",
+        "text": "Widow-maker",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "3771eda7-13af-4312-922b-bab9cf78faec"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "dac96350-9053-41e2-bcab-02f50912aae2",
+    "type": "ANATOMY",
+    "name": "Heart Chambers",
+    "shortExplanation": "The heart's four rooms — two atria that receive blood and two ventricles that pump it — working as a right and left pump in series.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": "Move blood through the body. The right atrium and ventricle receive deoxygenated blood and pump it to the lungs; the left atrium and ventricle receive oxygenated blood and pump it to the body — the left ventricle does the hardest work.",
+      "careConsiderations": "Right-sided failure shows as systemic congestion (JVD, peripheral edema); left-sided failure shows as pulmonary congestion (crackles, dyspnea); the left ventricle's function is summarized by the ejection fraction.",
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Anatomy"
+    ],
+    "aliases": [
+      {
+        "id": "74f1566d-f5f9-4c70-aaa3-28f274200393",
+        "text": "LV",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "c2c60793-41ba-4562-9aac-c71970a6e1bb",
+        "text": "RV",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "75ee3f5c-bb37-4cf9-9e80-0ab893b309a5",
+    "type": "ANATOMY",
+    "name": "Heart Valves",
+    "shortExplanation": "The four one-way valves that keep blood moving in the right direction through the heart — the mitral, tricuspid, aortic, and pulmonic valves.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": "Prevent backflow as the heart pumps. The tricuspid and mitral (AV) valves sit between atria and ventricles; the pulmonic and aortic (semilunar) valves guard the outflow to the lungs and body.",
+      "careConsiderations": "Valves can narrow (stenosis) or leak (regurgitation), each producing a characteristic murmur; severe disease is treated with repair or replacement (surgical or transcatheter, e.g. TAVR); prosthetic valves often require anticoagulation and raise endocarditis risk.",
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Anatomy"
+    ],
+    "aliases": [
+      {
+        "id": "46f86e88-23fd-4600-b405-e2f152e26cd2",
+        "text": "Mitral Valve",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "b0144a74-f503-4f23-93d6-0fa79fc6c74b",
+        "text": "Aortic Valve",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "b866c724-e6ba-4c95-860a-24b783d22b7e",
+    "type": "CONDITION",
+    "name": "Acute Coronary Syndrome",
+    "shortExplanation": "A blocked or critically narrowed coronary artery starving heart muscle of oxygen — the umbrella term for unstable angina, NSTEMI, and STEMI (heart attack).",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Chest pressure or pain (often radiating to the arm/jaw), shortness of breath, diaphoresis, nausea; women, older adults, and diabetics may present atypically.",
+      "typicalTreatments": "Aspirin plus a second antiplatelet, anticoagulation, nitroglycerin, oxygen if hypoxic, statin; emergent cardiac catheterization (PCI) for STEMI; serial troponins and ECGs.",
+      "riskFactors": "Smoking, hypertension, diabetes, high cholesterol, family history, older age, obesity.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Telemetry"
+    ],
+    "aliases": [
+      {
+        "id": "39d71ac7-c0a9-43c2-82fe-bbd30296b55e",
+        "text": "ACS",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "b3e315b3-d01b-41c9-b8a1-0cc6ec895508",
+        "text": "MI",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "6d631ca9-daf9-414f-8f1b-b74977d42ed8",
+        "text": "STEMI",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "6e37c16b-0380-498c-91a9-42782701280c",
+        "text": "NSTEMI",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "4be4244e-a1e3-4e96-856a-9d097a12abe0",
+        "text": "Heart Attack",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "2768a63c-dff1-44af-b7ec-b96f56957754",
+        "text": "Myocardial Infarction",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "d5bc2554-5e95-4c29-acb4-98ec1db8a739",
+      "dac583d4-b0c5-4ba3-bf95-216b04c136d0",
+      "428c4431-edd2-414b-9286-28fb8c7ac8a8"
+    ],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "37c606e0-84ff-41f6-91d6-149324108626",
+    "type": "CONDITION",
+    "name": "Aortic Stenosis",
+    "shortExplanation": "The aortic valve narrows and stiffens, forcing the heart to work harder to push blood out — leading to chest pain, fainting, and heart failure as it worsens.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Exertional chest pain, syncope, and dyspnea; a harsh systolic ejection murmur radiating to the carotids; narrowed pulse pressure in severe disease.",
+      "typicalTreatments": "Valve replacement when symptomatic or severe — surgical (SAVR) or transcatheter (TAVR); careful management of blood pressure and volume; avoid abrupt vasodilation.",
+      "riskFactors": "Older age (calcific degeneration), bicuspid aortic valve, rheumatic heart disease, chronic kidney disease.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology"
+    ],
+    "aliases": [
+      {
+        "id": "07fa92b6-bfab-4bb9-9f58-103d83cadd37",
+        "text": "AS",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [
+      "75ee3f5c-bb37-4cf9-9e80-0ab893b309a5",
+      "53a5c757-e298-4ae8-bfca-e6795f2fe3a4"
+    ],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "df5baf9f-1143-451c-a762-fe6429e77bed",
+    "type": "CONDITION",
+    "name": "Atrial Fibrillation",
+    "shortExplanation": "An irregular, often rapid heart rhythm originating in the atria that increases the risk of stroke and can reduce the heart's pumping efficiency.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Irregularly irregular pulse, palpitations, fatigue, sometimes asymptomatic and found incidentally on telemetry.",
+      "typicalTreatments": "Rate control (beta-blockers, amiodarone), rhythm control (antiarrhythmics, cardioversion), anticoagulation (warfarin or other agents) to reduce stroke risk.",
+      "riskFactors": "Advanced age, hypertension, heart failure, hyperthyroidism, excessive alcohol use.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Telemetry"
+    ],
+    "aliases": [
+      {
+        "id": "bd27c1c3-5c00-4c8f-922d-661fe1bfc0ab",
+        "text": "AFib",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "3771eda7-13af-4312-922b-bab9cf78faec"
+    ],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "7800c2f7-6bb1-4d7c-8554-9c14eb07a193",
+    "type": "CONDITION",
+    "name": "Cardiac Arrest",
+    "shortExplanation": "The heart abruptly stops pumping effectively, so blood flow to the brain and body ceases — reversible only with immediate CPR and ACLS.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Sudden unresponsiveness, no pulse, and no normal breathing (or only gasping). Underlying rhythm may be shockable (VF/pulseless VT) or non-shockable (asystole/PEA).",
+      "typicalTreatments": "Immediate high-quality CPR, defibrillation for shockable rhythms, epinephrine per ACLS, advanced airway, and identifying/treating reversible causes (the Hs and Ts).",
+      "riskFactors": "Coronary artery disease/MI, heart failure, severe electrolyte disturbance, hypoxia, drug overdose, prior arrest.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care"
+    ],
+    "aliases": [
+      {
+        "id": "670f28dd-576f-4850-877c-264c4121e790",
+        "text": "Code Blue",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "4e149e59-9691-49a3-b47f-02b17cc8a735",
+        "text": "PEA",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "5df79632-a553-44dd-ad54-7450aa1a7121",
+        "text": "Asystole",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "443fe2ad-b8f9-4df3-8acc-8cc6245dfb4f",
+      "40b037b9-4e1f-4c49-8fdf-d1f8baf11a4f"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "ce3211e0-8ac0-4881-bd69-8e9947b2d552",
+    "type": "CONDITION",
+    "name": "Cardiac Tamponade",
+    "shortExplanation": "Fluid building up in the sac around the heart squeezes it so it can't fill properly — a life-threatening emergency that drops blood pressure fast.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Beck's triad (hypotension, muffled heart sounds, distended neck veins), pulsus paradoxus, tachycardia, dyspnea, low-voltage ECG or electrical alternans.",
+      "typicalTreatments": "Emergent pericardiocentesis or surgical drainage, IV fluids as a temporizing measure to support filling, treat the underlying cause.",
+      "riskFactors": "Pericarditis, chest trauma, recent cardiac procedure, malignancy, aortic dissection, post-MI wall rupture.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care"
+    ],
+    "aliases": [
+      {
+        "id": "308e4b59-aa25-409e-94cf-dc6a97f1ac1d",
+        "text": "Tamponade",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "88b91834-69fb-4f03-8cbc-cddc401c8e31"
+    ],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "fc0846df-ea95-4e1a-90ea-9807bd642a91",
+    "type": "CONDITION",
+    "name": "Cardiogenic Shock",
+    "shortExplanation": "The heart is too weak to pump enough blood to meet the body's needs — organs start to fail from poor perfusion. Most often follows a large heart attack.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Hypotension, cool/mottled extremities, weak pulses, altered mental status, low urine output, pulmonary congestion, rising lactate.",
+      "typicalTreatments": "Treat the cause (e.g. urgent revascularization for MI), inotropes (dobutamine), vasopressors, and mechanical support such as an intra-aortic balloon pump in severe cases.",
+      "riskFactors": "Large myocardial infarction, advanced heart failure, severe arrhythmia, acute valve failure.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "b866c724-e6ba-4c95-860a-24b783d22b7e"
+    ],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "2267cbf3-95a5-45c7-8d67-9b8271d4d49d",
+    "type": "CONDITION",
+    "name": "CHF Exacerbation",
+    "shortExplanation": "Acute worsening of heart failure symptoms, often from fluid overload.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Dyspnea, orthopnea, crackles on lung auscultation, jugular venous distension, peripheral edema.",
+      "typicalTreatments": "Loop diuretics (furosemide), beta-blockers, ACE inhibitors/ARBs, fluid and sodium restriction.",
+      "riskFactors": "Prior heart failure, uncontrolled hypertension, medication/dietary non-adherence.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Telemetry"
+    ],
+    "aliases": [
+      {
+        "id": "b02b5d63-9951-4b3c-951d-6c71fcfaf7b6",
+        "text": "CHF",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [
+      "dac96350-9053-41e2-bcab-02f50912aae2"
+    ],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "f03ec7c1-9cbd-42b1-ab0c-51cbf57e3f9c",
+    "type": "CONDITION",
+    "name": "COPD Exacerbation",
+    "shortExplanation": "Acute worsening of chronic obstructive pulmonary disease symptoms — increased shortness of breath, cough, and sputum production, often triggered by infection.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Increased dyspnea, wheezing, increased sputum production or change in sputum color, use of accessory muscles, low oxygen saturation.",
+      "typicalTreatments": "Bronchodilators (albuterol), corticosteroids, supplemental oxygen, antibiotics if infection is suspected, possibly BiPAP or intubation in severe cases.",
+      "riskFactors": "Smoking history, respiratory infection, air pollution exposure, poor medication adherence.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pulmonology"
+    ],
+    "aliases": [
+      {
+        "id": "816fe8b7-8a03-42f8-9ec2-768b25975f0f",
+        "text": "COPD",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "d6c7e5dd-1b91-4f0a-93fc-c7d10d273a7c",
+    "type": "CONDITION",
+    "name": "Diabetic Ketoacidosis",
+    "shortExplanation": "A serious complication of diabetes where the body produces high levels of blood acids (ketones) due to insufficient insulin — a medical emergency requiring prompt treatment.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Hyperglycemia, fruity-smelling breath, nausea/vomiting, abdominal pain, rapid breathing (Kussmaul respirations), altered mental status in severe cases.",
+      "typicalTreatments": "IV fluids, IV insulin infusion, potassium replacement (insulin drives potassium into cells), correction of the underlying trigger (e.g. infection, missed insulin doses).",
+      "riskFactors": "Missed insulin doses, infection, new-onset type 1 diabetes, physiologic stress (illness, surgery).",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Endocrine"
+    ],
+    "aliases": [
+      {
+        "id": "c3529d7c-b378-414f-a32d-81026b6a444f",
+        "text": "DKA",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "4e803d9d-74d4-45ad-8e2f-51bca85bb896",
+    "type": "CONDITION",
+    "name": "Hypertensive Crisis",
+    "shortExplanation": "Severely elevated blood pressure. When it starts damaging organs (brain, heart, kidneys) it's an emergency needing carefully controlled lowering.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Very high BP (often >180/120); emergency if with target-organ signs: headache, vision changes, chest pain, shortness of breath, confusion, or neuro deficits.",
+      "typicalTreatments": "Hypertensive emergency: IV agents (e.g. nicardipine, labetalol) with gradual, controlled BP reduction to avoid hypoperfusion; hypertensive urgency: oral agents and close follow-up.",
+      "riskFactors": "Poorly controlled or untreated hypertension, medication non-adherence, kidney disease, stimulant use.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care"
+    ],
+    "aliases": [
+      {
+        "id": "6d2f2c95-1a65-4375-b201-168078ad087e",
+        "text": "HTN",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "c82aedee-dd50-4289-ab8c-640bc1d70707",
+        "text": "Hypertensive Emergency",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "2581b6a6-8d22-435b-954a-e87b425a2148",
+    "type": "CONDITION",
+    "name": "Infective Endocarditis",
+    "shortExplanation": "An infection of the heart's inner lining or valves, usually bacterial — dangerous because clumps of infection can break off and travel through the body.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Fever, new or changed heart murmur, fatigue; classic embolic/immune signs (Janeway lesions, Osler nodes, splinter hemorrhages), positive blood cultures, vegetations on echo.",
+      "typicalTreatments": "Prolonged IV antibiotics guided by cultures, blood cultures before antibiotics, surgery for valve destruction or persistent infection, monitor for embolic complications.",
+      "riskFactors": "Prosthetic heart valve, IV drug use, structural heart disease, indwelling lines, prior endocarditis.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Infectious Disease"
+    ],
+    "aliases": [
+      {
+        "id": "faf6fdbb-81e3-4773-a3f6-8ebba53cb2e5",
+        "text": "IE",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "db210545-52c0-4842-94e0-660589190340",
+        "text": "Endocarditis",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "75ee3f5c-bb37-4cf9-9e80-0ab893b309a5",
+      "49bbed10-cc36-415b-9c95-0424e7d1683c"
+    ],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "88b91834-69fb-4f03-8cbc-cddc401c8e31",
+    "type": "CONDITION",
+    "name": "Pericarditis",
+    "shortExplanation": "Inflammation of the sac around the heart, causing sharp chest pain that often eases when sitting forward. Usually treatable, but can lead to fluid buildup.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Sharp, pleuritic chest pain relieved by leaning forward, a pericardial friction rub, and diffuse ST elevation with PR depression on ECG.",
+      "typicalTreatments": "NSAIDs and colchicine, treat the underlying cause, monitor for progression to a pericardial effusion or tamponade.",
+      "riskFactors": "Recent viral infection, recent MI (Dressler syndrome), cardiac surgery, autoimmune disease, uremia.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "092ffe4e-92ed-4210-a155-4d6c01890b18",
+    "type": "CONDITION",
+    "name": "Pulmonary Embolism",
+    "shortExplanation": "A blockage in a lung artery, usually caused by a blood clot that traveled from the legs (DVT) — a potentially life-threatening emergency.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Sudden shortness of breath, chest pain (often pleuritic), tachycardia, low oxygen saturation, sometimes hemoptysis.",
+      "typicalTreatments": "Anticoagulation (heparin, then often transitioned to an oral anticoagulant), thrombolytics in severe/massive PE, supportive oxygen therapy.",
+      "riskFactors": "Immobility, recent surgery, DVT history, cancer, pregnancy, clotting disorders.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pulmonology",
+      "Critical Care"
+    ],
+    "aliases": [
+      {
+        "id": "059a4527-e148-4d93-a401-10fa8bd2f7d7",
+        "text": "PE",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "5d04f094-b602-462c-b5bb-df950f379c09",
+    "type": "CONDITION",
+    "name": "Sepsis",
+    "shortExplanation": "A life-threatening response to infection that can lead to organ dysfunction and shock if not treated quickly.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Fever or hypothermia, tachycardia, tachypnea, altered mental status, hypotension in severe cases (septic shock).",
+      "typicalTreatments": "Broad-spectrum antibiotics, IV fluid resuscitation, vasopressors if hypotension persists, source control of the underlying infection.",
+      "riskFactors": "Immunosuppression, indwelling catheters/lines, recent surgery, advanced age, chronic illness.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Critical Care",
+      "Infectious Disease"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "5c0dfae9-9257-4aed-b787-fb00e10bac01",
+    "type": "CONDITION",
+    "name": "Symptomatic Bradycardia",
+    "shortExplanation": "A heart rate too slow to meet the body's needs — often from a conduction problem (heart block) — causing dizziness, fatigue, or low blood pressure.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Heart rate typically <60 with symptoms: lightheadedness, fatigue, syncope, hypotension, chest pain, or shortness of breath. ECG may show sinus bradycardia or AV block.",
+      "typicalTreatments": "Atropine first-line, transcutaneous pacing if atropine fails, dopamine or epinephrine infusion; permanent pacemaker for persistent high-grade block.",
+      "riskFactors": "Inferior MI, degenerative conduction disease, medications (beta-blockers, calcium channel blockers, digoxin), hyperkalemia, increased vagal tone.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Telemetry"
+    ],
+    "aliases": [
+      {
+        "id": "0e945aee-55f1-4d90-a4d6-031f31b7f31c",
+        "text": "Heart Block",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "d153ee92-4d7c-442f-a7ba-38cc703e8a0c",
+        "text": "AV Block",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "3771eda7-13af-4312-922b-bab9cf78faec"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "443fe2ad-b8f9-4df3-8acc-8cc6245dfb4f",
+    "type": "CONDITION",
+    "name": "Ventricular Fibrillation",
+    "shortExplanation": "The ventricles quiver chaotically instead of pumping, so there's no effective heartbeat — a form of cardiac arrest that requires immediate CPR and defibrillation.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Sudden loss of pulse and consciousness; ECG shows disorganized, irregular waveforms with no identifiable QRS complexes.",
+      "typicalTreatments": "Immediate high-quality CPR and defibrillation (a shockable rhythm), epinephrine and amiodarone per ACLS, and treatment of reversible causes.",
+      "riskFactors": "Acute MI/ischemia, cardiomyopathy, severe electrolyte imbalance, prolonged QT, prior cardiac arrest.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Telemetry"
+    ],
+    "aliases": [
+      {
+        "id": "d2e73ca0-8e84-48c3-a3e4-ddcb04983308",
+        "text": "VF",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "e2252dd5-0112-48ea-be8b-05e361c655b2",
+        "text": "V-Fib",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "40b037b9-4e1f-4c49-8fdf-d1f8baf11a4f",
+    "type": "CONDITION",
+    "name": "Ventricular Tachycardia",
+    "shortExplanation": "A fast rhythm arising from the ventricles — it can be stable, or become pulseless and life-threatening. Treatment depends on whether the patient has a pulse and is stable.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": "Palpitations, chest pain, shortness of breath, lightheadedness; may deteriorate to loss of pulse. ECG shows a wide-complex, regular, fast rhythm.",
+      "typicalTreatments": "Pulseless VT: CPR and defibrillation per ACLS. Unstable with a pulse: synchronized cardioversion. Stable: antiarrhythmics such as amiodarone.",
+      "riskFactors": "Prior MI/scar, cardiomyopathy, electrolyte abnormalities, prolonged QT, structural heart disease.",
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Telemetry"
+    ],
+    "aliases": [
+      {
+        "id": "8585e375-9bf5-4eef-87e7-f2c34194b751",
+        "text": "VT",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "21a99a9a-ba2d-4e27-b8f4-211fd5b515f2",
+        "text": "V-Tach",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "9e180b56-9fee-474a-9d38-dcc1eeb1bb33",
+    "type": "EQUIPMENT",
+    "name": "12-Lead ECG",
+    "shortExplanation": "A recording of the heart's electrical activity from 12 angles — the key bedside test for diagnosing a heart attack and identifying arrhythmias.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": "Capture a detailed electrical snapshot of the heart to detect ischemia/infarction, arrhythmias, conduction blocks, and electrolyte effects.",
+      "careConsiderations": "Place limb and precordial leads in correct anatomic positions (misplacement mimics pathology); prep skin for a clean signal; minimize motion artifact; get it within 10 minutes for chest pain and compare with prior tracings.",
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Telemetry",
+      "Equipment"
+    ],
+    "aliases": [
+      {
+        "id": "e352e41a-22d2-4926-9f29-73525751250f",
+        "text": "ECG",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "5bd82757-e60a-4dd9-aa1c-211c84977ed3",
+        "text": "EKG",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [
+      "b866c724-e6ba-4c95-860a-24b783d22b7e",
+      "3771eda7-13af-4312-922b-bab9cf78faec"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "f8740737-2a3e-4309-838c-06001a608cbf",
+    "type": "EQUIPMENT",
+    "name": "Cardiac Telemetry Monitor",
+    "shortExplanation": "Continuous wireless heart-rhythm monitoring that lets staff watch for arrhythmias in real time from a central station.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": "Continuously track heart rhythm and rate to catch arrhythmias, ischemic changes, or dangerous rate changes early.",
+      "careConsiderations": "Place and change electrodes on clean, dry skin; know each patient's alarm parameters and respond to alarms (avoid alarm fatigue); ensure leads stay connected and the battery is charged; correlate any rhythm change with the patient's symptoms and a 12-lead ECG.",
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Telemetry",
+      "Equipment"
+    ],
+    "aliases": [
+      {
+        "id": "4994057d-1d3d-4606-8908-64dc038bc46d",
+        "text": "Tele",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "761a999e-d9a0-44ed-9e0f-025de803b958",
+        "text": "Cardiac Monitor",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "df5baf9f-1143-451c-a762-fe6429e77bed",
+      "40b037b9-4e1f-4c49-8fdf-d1f8baf11a4f"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "78087ee8-021d-44c0-adde-c56d32a4f150",
+    "type": "EQUIPMENT",
+    "name": "Defibrillator",
+    "shortExplanation": "The device that delivers a shock to the heart — used unsynchronized to defibrillate arrest rhythms, or synchronized to cardiovert unstable ones; many also pace.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": "Deliver a controlled electrical shock to terminate life-threatening arrhythmias (defibrillation for VF/pulseless VT; synchronized cardioversion for unstable tachyarrhythmias) and provide transcutaneous pacing.",
+      "careConsiderations": "Ensure pads have good skin contact and clear everyone before discharge (\"I'm clear, you're clear\"); select sync mode for cardioversion but not for defibrillation; keep it charged and checked each shift; remove medication patches and avoid pad placement over an implanted device.",
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Equipment"
+    ],
+    "aliases": [
+      {
+        "id": "ca373bce-cfae-4233-bb7c-3851dd2b43a8",
+        "text": "AED",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "2a36bfdc-3344-4bf1-abe7-debe6bf2a379",
+        "text": "Crash Cart Defibrillator",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "4c2798a6-f151-4ea5-94a6-d547ff2c49c7",
+      "92a0fcf2-33b3-4cb7-919e-19c44bd0ef5e"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "f6b4939d-65fc-45a4-adbd-5128d637dff5",
+    "type": "EQUIPMENT",
+    "name": "Intra-Aortic Balloon Pump",
+    "shortExplanation": "A balloon in the aorta that inflates and deflates with the heartbeat to boost coronary blood flow and ease the heart's workload — used in severe heart failure or cardiogenic shock.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": "Provide temporary mechanical circulatory support — inflating in diastole to improve coronary perfusion and deflating in systole to reduce afterload, increasing cardiac output.",
+      "careConsiderations": "Verify timing to the cardiac cycle (inflation on the dicrotic notch), keep the affected leg straight and monitor distal pulses/perfusion, watch the insertion site for bleeding, monitor platelets and for limb/renal ischemia, and never let the balloon sit idle (clot risk).",
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Equipment"
+    ],
+    "aliases": [
+      {
+        "id": "a03554d3-3811-4249-9d5f-0a494ceeb5bf",
+        "text": "IABP",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "d0fc4b46-a3e3-4306-bada-97618e225c62",
+        "text": "Balloon Pump",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "fc0846df-ea95-4e1a-90ea-9807bd642a91"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "48f5a647-c396-465e-9922-bdb4d8b5a180",
+    "type": "LAB_VALUE",
+    "name": "BNP",
+    "shortExplanation": "A hormone released when the heart's chambers are stretched by fluid overload — helps confirm and gauge the severity of heart failure.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": "Typically <100 pg/mL for BNP; NT-proBNP cutoffs are higher and rise with age. Interpreted alongside the clinical picture.",
+      "abnormalMeaning": "Elevated levels suggest cardiac wall stretch from heart failure/volume overload; higher values generally mean more severe decompensation. Levels can also rise with renal dysfunction and are lower in obesity.",
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Lab values",
+      "Cardiology"
+    ],
+    "aliases": [
+      {
+        "id": "da507875-9e35-406a-a0f9-f15ff0a592ae",
+        "text": "B-type Natriuretic Peptide",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "0b835ebd-ab8c-4125-9de7-f40951619ffb",
+        "text": "NT-proBNP",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "2267cbf3-95a5-45c7-8d67-9b8271d4d49d"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "0a642dbe-1be9-4f27-a88d-6c3bda894b47",
+    "type": "LAB_VALUE",
+    "name": "Digoxin Level",
+    "shortExplanation": "A blood level checked to keep digoxin in its narrow safe range — too high risks toxicity and dangerous arrhythmias.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": "Roughly 0.5–2.0 ng/mL, with lower targets (about 0.5–0.9) often preferred in heart failure. Drawn at least 6 hours after the dose.",
+      "abnormalMeaning": "Elevated levels (worsened by hypokalemia, hypomagnesemia, and renal impairment) point to toxicity — nausea, visual changes, and arrhythmias. Interpret alongside symptoms and potassium.",
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Lab values",
+      "Cardiology"
+    ],
+    "aliases": [
+      {
+        "id": "9958778b-8f1d-41ab-bc30-0c1f0305ded5",
+        "text": "Dig Level",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "9235f416-fa9c-4e41-9d5f-af3b9dbc0809",
+    "type": "LAB_VALUE",
+    "name": "Glucose",
+    "shortExplanation": "Blood sugar level — closely monitored in patients with diabetes, on insulin therapy, or during critical illness.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": "Roughly 70–100 mg/dL fasting; targets differ for hospitalized/critically ill patients and vary by institution protocol.",
+      "abnormalMeaning": "Low (hypoglycemia): shakiness, confusion, risk of loss of consciousness if severe. High (hyperglycemia): can indicate poor diabetes control or acute illness stress response; markedly elevated with ketosis suggests DKA.",
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Lab values",
+      "Endocrine"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "d6c7e5dd-1b91-4f0a-93fc-c7d10d273a7c"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "6305d0c9-087e-4a7b-b939-8a3d9540238b",
+    "type": "LAB_VALUE",
+    "name": "INR",
+    "shortExplanation": "A standardized measure of how long blood takes to clot — used to monitor and dose warfarin therapy.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": "About 0.8–1.1 without anticoagulation; therapeutic range on warfarin is usually 2.0–3.0 depending on indication.",
+      "abnormalMeaning": "Too low: inadequate anticoagulation, clot risk. Too high: bleeding risk — may require holding warfarin or reversal with vitamin K.",
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Lab values"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "aa7911a7-9c54-4f9a-bb20-8bf205012e7f",
+    "type": "LAB_VALUE",
+    "name": "Lactate",
+    "shortExplanation": "A blood marker that rises when tissues aren't getting enough oxygen — trended to gauge severity and response to treatment in sepsis and shock.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": "Typically <2 mmol/L.",
+      "abnormalMeaning": "Elevated lactate suggests tissue hypoperfusion; a downward trend with treatment suggests improving perfusion, while a persistently high or rising lactate is a poor prognostic sign.",
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Lab values",
+      "Critical Care"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "5d04f094-b602-462c-b5bb-df950f379c09"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "b2894f71-fe7e-45c3-9d7e-5c91c6eaf9f9",
+    "type": "LAB_VALUE",
+    "name": "Lipid Panel",
+    "shortExplanation": "A cholesterol blood test used to estimate cardiovascular risk and guide statin therapy — LDL is the main treatment target.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": "LDL is risk-dependent (often a goal <100 mg/dL, or <70 for high-risk patients); HDL >40–50 mg/dL; triglycerides <150 mg/dL.",
+      "abnormalMeaning": "High LDL and triglycerides with low HDL raise atherosclerotic risk; used to start or intensify statin therapy after events like ACS.",
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Lab values",
+      "Cardiology"
+    ],
+    "aliases": [
+      {
+        "id": "697065e1-b9b5-443a-884e-132e983a2ef4",
+        "text": "LDL",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "ac498a5a-9862-4c56-9c05-b291391b5e24",
+        "text": "HDL",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "c3bf9d4b-3c45-4b3d-92eb-e7121fd050b7",
+        "text": "Cholesterol Panel",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "f7348d0b-bbd7-41ed-a270-1b2a43e3a35b",
+    "type": "LAB_VALUE",
+    "name": "Magnesium",
+    "shortExplanation": "An electrolyte essential for stable heart rhythm and muscle function — low levels raise the risk of dangerous arrhythmias.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": "About 1.7–2.2 mg/dL (varies by lab).",
+      "abnormalMeaning": "Low (hypomagnesemia): increases arrhythmia risk (including torsades de pointes) and worsens hypokalemia and digoxin toxicity. High (hypermagnesemia): can cause weakness, hypotension, and bradycardia.",
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Lab values",
+      "Cardiology",
+      "Telemetry"
+    ],
+    "aliases": [
+      {
+        "id": "09250ba2-013a-461d-98eb-11037748ff2e",
+        "text": "Mag",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "29de3401-49c1-4c29-9a30-23fc01ded447",
+        "text": "Mg",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [
+      "40b037b9-4e1f-4c49-8fdf-d1f8baf11a4f"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "bb204141-32d0-432b-83f0-8a51820cd2d4",
+    "type": "LAB_VALUE",
+    "name": "Potassium",
+    "shortExplanation": "An electrolyte critical for heart and muscle function — closely monitored in patients on diuretics.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": "3.5–5.0 mEq/L",
+      "abnormalMeaning": "Low: muscle weakness, arrhythmia risk — common with loop diuretics. High: cardiac arrhythmia risk.",
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Lab values",
+      "Telemetry"
+    ],
+    "aliases": [
+      {
+        "id": "c132012b-afb4-421f-a335-0ddc69781eac",
+        "text": "K+",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "d5bc2554-5e95-4c29-acb4-98ec1db8a739",
+    "type": "LAB_VALUE",
+    "name": "Troponin",
+    "shortExplanation": "A protein released into the blood when heart muscle is damaged — the key lab value used to help diagnose a heart attack.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": "Typically <0.04 ng/mL, but the exact cutoff and assay type vary by lab — trended serially rather than interpreted from a single value.",
+      "abnormalMeaning": "Elevated and rising troponin suggests myocardial injury; the pattern of rise/fall over serial measurements helps distinguish acute injury from other causes of elevation (e.g. renal failure, sepsis).",
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Lab values",
+      "Cardiology"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "a18862f3-b564-4cd5-a25d-6766df9ac7ce",
+    "type": "MEDICATION",
+    "name": "Adenosine",
+    "shortExplanation": "A very fast-acting drug that briefly \"pauses\" the heart to break certain rapid rhythms (SVT) and reset a normal beat.",
+    "sections": {
+      "mechanism": "Transiently blocks AV node conduction, interrupting reentrant SVT. Extremely short half-life (seconds) — must be given as a rapid IV push followed immediately by a saline flush, ideally at a site close to the heart.",
+      "sideEffects": "Brief flushing, chest tightness, a sense of impending doom, a short sinus pause — all typically last seconds.",
+      "adverseEffects": "Transient asystole, bronchospasm in asthmatics, brief high-grade AV block.",
+      "nursingImplications": "Give as fast IV push with an immediate flush (two-syringe or stopcock technique); warn the patient about the brief uncomfortable feeling; have continuous ECG running and a defibrillator nearby.",
+      "commonBrandName": "Adenocard.",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Antiarrhythmic",
+      "Cardiology",
+      "Critical Care"
+    ],
+    "aliases": [
+      {
+        "id": "f8d396ad-01c0-4053-a78d-0a43a686cb37",
+        "text": "SVT",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "e5514e80-9d9b-40c9-b3b8-5e12331192e1",
+        "text": "Adenocard",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "3771eda7-13af-4312-922b-bab9cf78faec"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "1c33efa6-6791-400b-b423-2166e2a9d020",
+    "type": "MEDICATION",
+    "name": "Albuterol",
+    "shortExplanation": "A fast-acting inhaled medication that opens the airways to make breathing easier — commonly used during a COPD or asthma flare.",
+    "sections": {
+      "mechanism": "Short-acting beta-2 agonist — relaxes bronchial smooth muscle. Onset within minutes, often given via nebulizer or inhaler during acute exacerbations.",
+      "sideEffects": "Tremor, tachycardia, nervousness.",
+      "adverseEffects": "Significant tachyarrhythmia in sensitive patients, hypokalemia with frequent dosing.",
+      "nursingImplications": "Monitor heart rate, especially with frequent/repeated dosing; assess respiratory status before and after administration.",
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Bronchodilator"
+    ],
+    "aliases": [
+      {
+        "id": "d41e8aa3-b86c-43f0-9184-4e0f44015316",
+        "text": "Ventolin",
+        "type": "BRAND_NAME"
+      },
+      {
+        "id": "e4eb7a6a-757c-4488-9ca6-cab617ef6693",
+        "text": "ProAir",
+        "type": "BRAND_NAME"
+      },
+      {
+        "id": "e3639699-39b2-4db9-ac43-71e900c5d748",
+        "text": "Proventil",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "f03ec7c1-9cbd-42b1-ab0c-51cbf57e3f9c"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "2220299a-1444-4c3d-b669-02f6b755e6b7",
+    "type": "MEDICATION",
+    "name": "Amiodarone",
+    "shortExplanation": "An antiarrhythmic medication used to control or convert abnormal heart rhythms, most often atrial fibrillation.",
+    "sections": {
+      "mechanism": "Class III antiarrhythmic — prolongs the cardiac action potential, affecting multiple ion channels. Long half-life (weeks); IV loading followed by oral maintenance is common.",
+      "sideEffects": "Nausea, photosensitivity, injection site phlebitis (IV).",
+      "adverseEffects": "Pulmonary toxicity, thyroid dysfunction (hyper- or hypothyroidism), liver toxicity, bradycardia/hypotension with IV administration.",
+      "nursingImplications": "Monitor heart rate/rhythm and blood pressure during IV administration; monitor liver and thyroid function with long-term use.",
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Antiarrhythmic"
+    ],
+    "aliases": [
+      {
+        "id": "0cf18fd7-629d-4520-81d5-5ebc9c056152",
+        "text": "Cordarone",
+        "type": "BRAND_NAME"
+      },
+      {
+        "id": "2513dd3e-c1f3-4f38-a86e-df77da75e964",
+        "text": "Pacerone",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "df5baf9f-1143-451c-a762-fe6429e77bed",
+      "40b037b9-4e1f-4c49-8fdf-d1f8baf11a4f",
+      "443fe2ad-b8f9-4df3-8acc-8cc6245dfb4f"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "85b8aca1-2008-47ed-8a21-34af7dd33f71",
+    "type": "MEDICATION",
+    "name": "Apixaban",
+    "shortExplanation": "An oral anticoagulant (DOAC) used to prevent strokes in atrial fibrillation and to treat clots — no routine INR monitoring needed, unlike warfarin.",
+    "sections": {
+      "mechanism": "Directly inhibits factor Xa. Predictable dosing without routine coagulation monitoring; shorter half-life than warfarin.",
+      "sideEffects": "Bruising, minor bleeding.",
+      "adverseEffects": "Major bleeding (GI, intracranial); reversal with andexanet alfa when available.",
+      "nursingImplications": "Reinforce not to skip doses (short half-life means clot risk returns quickly); assess for bleeding; note dose reductions for age, weight, and renal function; usually held before procedures per orders.",
+      "commonBrandName": "Eliquis.",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Anticoagulant",
+      "Cardiology"
+    ],
+    "aliases": [
+      {
+        "id": "d54a9e4c-4e39-4e8e-8451-f43613cfa368",
+        "text": "DOAC",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "5f61dc5c-6c32-4840-8d07-c4db5cc7d072",
+        "text": "NOAC",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "664ffeba-e418-4d15-bd02-37802915b55d",
+        "text": "Eliquis",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "df5baf9f-1143-451c-a762-fe6429e77bed"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "70d42656-be84-416c-adea-0ecd1ac15e34",
+    "type": "MEDICATION",
+    "name": "Aspirin",
+    "shortExplanation": "An antiplatelet that makes platelets less sticky — given early in a suspected heart attack and taken long-term to prevent clots in the coronary arteries.",
+    "sections": {
+      "mechanism": "Irreversibly inhibits cyclooxygenase (COX-1), blocking thromboxane A2 and reducing platelet aggregation for the life of the platelet. In suspected ACS, a non-enteric 162–325 mg tablet is chewed for rapid absorption.",
+      "sideEffects": "GI upset, easy bruising, minor bleeding.",
+      "adverseEffects": "GI bleeding/ulceration, allergic reaction/bronchospasm, Reye syndrome in children with viral illness.",
+      "nursingImplications": "Have the patient chew (don't swallow whole) in suspected MI for faster onset; assess for bleeding and GI symptoms; ask about aspirin allergy before giving.",
+      "commonBrandName": "Bayer, Ecotrin. Often written as ASA.",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Antiplatelet",
+      "Cardiology"
+    ],
+    "aliases": [
+      {
+        "id": "7f9f0ca7-0c87-4b05-9e86-4f626ce5a376",
+        "text": "ASA",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "626e6e23-ff4b-49f2-bbe9-42e834001d00",
+        "text": "Acetylsalicylic Acid",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "8565c085-16da-4d45-b148-27930883d56b",
+        "text": "Bayer",
+        "type": "BRAND_NAME"
+      },
+      {
+        "id": "a531a5cc-478f-4b86-9584-0992c6da44f0",
+        "text": "Ecotrin",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "b866c724-e6ba-4c95-860a-24b783d22b7e"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "43e4ccac-8577-4ba3-8308-ed028ffab7bc",
+    "type": "MEDICATION",
+    "name": "Atorvastatin",
+    "shortExplanation": "A statin that lowers cholesterol — used to slow plaque buildup in arteries and reduce the risk of heart attack and stroke.",
+    "sections": {
+      "mechanism": "Inhibits HMG-CoA reductase, the rate-limiting enzyme in hepatic cholesterol synthesis, lowering LDL and stabilizing atherosclerotic plaque. High-intensity dosing is standard after ACS.",
+      "sideEffects": "Muscle aches, GI upset, headache.",
+      "adverseEffects": "Myopathy/rhabdomyolysis (muscle pain with dark urine), elevated liver enzymes.",
+      "nursingImplications": "Ask about new muscle pain or weakness; monitor liver function per orders; typically dosed in the evening; counsel to avoid large amounts of grapefruit juice.",
+      "commonBrandName": "Lipitor.",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Statin",
+      "Cardiology"
+    ],
+    "aliases": [
+      {
+        "id": "104940e9-560d-49ce-9919-0fc2ad3d7653",
+        "text": "Statin",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "be6767de-b7b8-448a-8dbb-49f8d191ceeb",
+        "text": "Lipitor",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "b866c724-e6ba-4c95-860a-24b783d22b7e",
+      "b2894f71-fe7e-45c3-9d7e-5c91c6eaf9f9"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "c3352fbf-c175-4927-8ce1-ba1416e79220",
+    "type": "MEDICATION",
+    "name": "Atropine",
+    "shortExplanation": "Speeds up a dangerously slow heart rate by blocking the vagal \"brake\" on the heart — first-line drug for symptomatic bradycardia.",
+    "sections": {
+      "mechanism": "Anticholinergic — blocks muscarinic receptors, reducing vagal tone and increasing sinus node firing and AV conduction. ACLS dose is 1 mg IV every 3–5 minutes (max 3 mg) for symptomatic bradycardia.",
+      "sideEffects": "Dry mouth, blurred vision, urinary retention, tachycardia, flushing.",
+      "adverseEffects": "Excessive tachycardia worsening myocardial ischemia; confusion/delirium especially in older adults; may be ineffective in high-grade (infranodal) heart block.",
+      "nursingImplications": "Push rapidly (slow push can paradoxically slow the heart); monitor rhythm and heart rate response; prepare transcutaneous pacing as a backup if atropine fails.",
+      "commonBrandName": "Generic atropine.",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Anticholinergic",
+      "Cardiology",
+      "Critical Care"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "5c0dfae9-9257-4aed-b787-fb00e10bac01"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "701d22a9-e8d1-4159-b3f7-67130a528762",
+    "type": "MEDICATION",
+    "name": "Clopidogrel",
+    "shortExplanation": "An antiplatelet often paired with aspirin (dual antiplatelet therapy) after a stent or heart attack to keep the coronary arteries from re-clotting.",
+    "sections": {
+      "mechanism": "Irreversibly blocks the platelet P2Y12 ADP receptor, inhibiting aggregation. A prodrug activated in the liver — effect is reduced in poor CYP2C19 metabolizers.",
+      "sideEffects": "Bruising, minor bleeding, GI upset.",
+      "adverseEffects": "Major bleeding; rarely thrombotic thrombocytopenic purpura (TTP).",
+      "nursingImplications": "Emphasize adherence after coronary stenting (stopping early risks stent thrombosis); assess for bleeding; note it's usually held several days before surgery per orders.",
+      "commonBrandName": "Plavix.",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Antiplatelet",
+      "Cardiology"
+    ],
+    "aliases": [
+      {
+        "id": "690caab4-0561-473c-81eb-a50964cace57",
+        "text": "DAPT",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "d44230ac-12c2-41a0-9bd0-a506e4d543bc",
+        "text": "Plavix",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "b866c724-e6ba-4c95-860a-24b783d22b7e",
+      "dac583d4-b0c5-4ba3-bf95-216b04c136d0"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "6a0c461f-29eb-4c79-b876-cb88e7a940c8",
+    "type": "MEDICATION",
+    "name": "Digoxin",
+    "shortExplanation": "Strengthens the heart's contraction and slows the heart rate — used in some heart failure and atrial fibrillation patients. Has a narrow safety margin.",
+    "sections": {
+      "mechanism": "Inhibits the Na-K-ATPase pump, increasing intracellular calcium (positive inotropy) and enhancing vagal tone to slow AV conduction. Narrow therapeutic index — levels and potassium matter.",
+      "sideEffects": "Nausea, anorexia, visual changes (yellow-green halos), bradycardia.",
+      "adverseEffects": "Digoxin toxicity — worsened by hypokalemia, hypomagnesemia, and renal impairment — causing dangerous arrhythmias; reversed with digoxin immune Fab.",
+      "nursingImplications": "Check apical pulse for a full minute and hold for bradycardia (commonly <60) per parameters; monitor potassium, magnesium, and renal function; know signs of toxicity.",
+      "commonBrandName": "Lanoxin. Often called \"dig.\"",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Cardiac glycoside",
+      "Cardiology"
+    ],
+    "aliases": [
+      {
+        "id": "9160578c-27a1-4871-bc41-328f333be12d",
+        "text": "Dig",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "4cc67ba2-fbc6-43c7-a24e-1674b4bc2da6",
+        "text": "Lanoxin",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "df5baf9f-1143-451c-a762-fe6429e77bed",
+      "0a642dbe-1be9-4f27-a88d-6c3bda894b47",
+      "bb204141-32d0-432b-83f0-8a51820cd2d4"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "4e8b13a0-0491-4625-aa59-da8b40d9693b",
+    "type": "MEDICATION",
+    "name": "Diltiazem",
+    "shortExplanation": "A calcium channel blocker used to slow a fast heart rate (e.g. in atrial fibrillation) and lower blood pressure.",
+    "sections": {
+      "mechanism": "Non-dihydropyridine calcium channel blocker — slows AV node conduction (rate control) and relaxes vascular smooth muscle. IV for acute rate control, PO for maintenance.",
+      "sideEffects": "Hypotension, bradycardia, peripheral edema, headache.",
+      "adverseEffects": "Symptomatic bradycardia or heart block; worsening heart failure in reduced ejection fraction; hypotension with IV use.",
+      "nursingImplications": "Monitor heart rate and blood pressure closely during IV administration; avoid combining with IV beta-blockers (additive AV block); hold per bradycardia/hypotension parameters.",
+      "commonBrandName": "Cardizem, Cartia XT.",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Calcium channel blocker",
+      "Cardiology"
+    ],
+    "aliases": [
+      {
+        "id": "d5ee5e40-60fd-4c2e-a38b-8e97f9838fc8",
+        "text": "CCB",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "8c44305a-a7a1-4b77-8bf0-31b8d06d6a82",
+        "text": "Cardizem",
+        "type": "BRAND_NAME"
+      },
+      {
+        "id": "985fa77e-4351-4baf-8d7c-6480e91475d5",
+        "text": "Cartia XT",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "df5baf9f-1143-451c-a762-fe6429e77bed",
+      "4e803d9d-74d4-45ad-8e2f-51bca85bb896"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "55364135-fa62-4f57-bf1a-97e578a3ff51",
+    "type": "MEDICATION",
+    "name": "Dobutamine",
+    "shortExplanation": "An inotrope that strengthens the heart's pumping — used when a weak heart can't maintain adequate output, as in cardiogenic shock or decompensated heart failure.",
+    "sections": {
+      "mechanism": "Primarily a beta-1 agonist — increases contractility and cardiac output with modest effect on systemic vascular resistance (can lower blood pressure via beta-2 vasodilation).",
+      "sideEffects": "Tachycardia, palpitations, mild blood pressure changes.",
+      "adverseEffects": "Tachyarrhythmias, increased myocardial oxygen demand and ischemia, hypotension.",
+      "nursingImplications": "Continuous ECG and blood pressure monitoring (ideally arterial line); titrate to hemodynamic goals; watch for arrhythmias and ischemic chest pain.",
+      "commonBrandName": "Generic dobutamine.",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Inotrope",
+      "Cardiology",
+      "Critical Care"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "fc0846df-ea95-4e1a-90ea-9807bd642a91",
+      "2267cbf3-95a5-45c7-8d67-9b8271d4d49d"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "8cc1e5f0-e923-47de-8033-c8cbe978e1d9",
+    "type": "MEDICATION",
+    "name": "Epinephrine",
+    "shortExplanation": "A powerful medication that stimulates the heart and blood vessels — a cornerstone drug in cardiac arrest and anaphylaxis.",
+    "sections": {
+      "mechanism": "Alpha- and beta-adrenergic agonist — increases heart rate, contractility, and systemic vascular resistance. In cardiac arrest, 1 mg IV/IO every 3–5 minutes per ACLS.",
+      "sideEffects": "Tachycardia, palpitations, anxiety, tremor, hypertension.",
+      "adverseEffects": "Tachyarrhythmias, severe hypertension, myocardial ischemia; tissue necrosis with extravasation of concentrated infusions.",
+      "nursingImplications": "Know the concentration and route — arrest dosing (1 mg of 1:10,000 IV) differs sharply from anaphylaxis dosing (IM); double-check the code-cart dose; monitor rhythm and blood pressure continuously.",
+      "commonBrandName": "Adrenalin. Often called \"epi.\"",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Vasopressor",
+      "Cardiology",
+      "Critical Care"
+    ],
+    "aliases": [
+      {
+        "id": "e9ecbf57-1db7-4740-855b-a4f82093d0d7",
+        "text": "Epi",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "4acebf86-f17c-4fcc-90ff-e2f0222cfc72",
+        "text": "Adrenalin",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "7800c2f7-6bb1-4d7c-8554-9c14eb07a193"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "6a226e9b-3568-4ece-883d-82436c254843",
+    "type": "MEDICATION",
+    "name": "Furosemide",
+    "shortExplanation": "Helps the body get rid of extra fluid by making the kidneys release more sodium and water — commonly used when fluid buildup makes it hard to breathe or puts strain on the heart.",
+    "sections": {
+      "mechanism": "Loop diuretic — inhibits the Na-K-2Cl cotransporter in the loop of Henle. Watch for hypokalemia, hypotension, and ototoxicity with rapid IV push.",
+      "sideEffects": "Increased urination, dehydration, low potassium (hypokalemia), dizziness or low blood pressure.",
+      "adverseEffects": "Hearing changes or ringing in the ears (ototoxicity) with rapid IV push; severe electrolyte imbalance; allergic reaction in patients with sulfa sensitivity.",
+      "nursingImplications": "Monitor potassium and renal function, watch for orthostatic hypotension, track daily weights and I&Os.",
+      "commonBrandName": "Lasix. Usually given IV push or PO depending on acuity.",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Loop diuretic",
+      "Telemetry"
+    ],
+    "aliases": [
+      {
+        "id": "f2cfbaa5-b70b-40be-a991-aab94eb056dd",
+        "text": "Lasix",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "2267cbf3-95a5-45c7-8d67-9b8271d4d49d",
+      "607bea72-b000-4c63-84a9-dd2aa21a3407",
+      "bb204141-32d0-432b-83f0-8a51820cd2d4"
+    ],
+    "sourceCitation": "Source: MedlinePlus, StatPearls"
+  },
+  {
+    "id": "fc439f85-aba6-4471-9c10-961d7d7d294c",
+    "type": "MEDICATION",
+    "name": "Heparin",
+    "shortExplanation": "An anticoagulant that prevents blood clots from forming or growing larger — used for DVT/PE treatment and prevention.",
+    "sections": {
+      "mechanism": "Potentiates antithrombin III, inactivating thrombin and factor Xa. IV (unfractionated) requires continuous infusion with frequent aPTT monitoring; subcutaneous dosing used for prophylaxis.",
+      "sideEffects": "Bruising, bleeding, injection site irritation (subQ).",
+      "adverseEffects": "Heparin-induced thrombocytopenia (HIT) — a serious immune reaction; major bleeding, especially with supratherapeutic aPTT.",
+      "nursingImplications": "Monitor aPTT (IV) or anti-Xa levels, platelet counts (watch for HIT), signs of bleeding. Have protamine sulfate available as reversal agent.",
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Anticoagulant"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "092ffe4e-92ed-4210-a155-4d6c01890b18"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "de6562f4-651f-4f16-b6e8-c99756ae6157",
+    "type": "MEDICATION",
+    "name": "Insulin",
+    "shortExplanation": "A hormone that lowers blood glucose by helping cells absorb sugar from the blood — used to manage diabetes and to treat diabetic ketoacidosis (DKA).",
+    "sections": {
+      "mechanism": "Rapid-acting forms (e.g. lispro) peak quickly and are short-lived; long-acting forms (e.g. glargine) give steady basal coverage. IV regular insulin is used in DKA for rapid, titratable effect.",
+      "sideEffects": "Hypoglycemia, injection site reactions, weight gain.",
+      "adverseEffects": "Severe hypoglycemia (confusion, seizure, loss of consciousness); hypokalemia with IV insulin therapy (drives potassium intracellularly).",
+      "nursingImplications": "Monitor blood glucose closely, especially with IV infusions; monitor potassium during DKA treatment; know the onset/peak/duration of the specific formulation in use.",
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Endocrine"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "d6c7e5dd-1b91-4f0a-93fc-c7d10d273a7c",
+      "9235f416-fa9c-4e41-9d5f-af3b9dbc0809",
+      "bb204141-32d0-432b-83f0-8a51820cd2d4"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "7d9a4eec-78a4-4d00-ba88-77529a2fcc31",
+    "type": "MEDICATION",
+    "name": "Lisinopril",
+    "shortExplanation": "Relaxes blood vessels to lower blood pressure and take pressure off the heart.",
+    "sections": {
+      "mechanism": "ACE inhibitor — blocks conversion of angiotensin I to II.",
+      "sideEffects": "Dry cough, dizziness, elevated potassium.",
+      "adverseEffects": "Angioedema (rare but serious), hyperkalemia, acute kidney injury in volume-depleted patients.",
+      "nursingImplications": "Monitor blood pressure and potassium; watch for signs of angioedema.",
+      "commonBrandName": "Zestril / Prinivil.",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "ACE inhibitor"
+    ],
+    "aliases": [
+      {
+        "id": "46297672-3ec5-4878-bda7-2e66518ad35a",
+        "text": "Zestril",
+        "type": "BRAND_NAME"
+      },
+      {
+        "id": "458e0b5f-282c-4f32-9a00-439302dfc1eb",
+        "text": "Prinivil",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "2267cbf3-95a5-45c7-8d67-9b8271d4d49d",
+      "4e803d9d-74d4-45ad-8e2f-51bca85bb896"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "607bea72-b000-4c63-84a9-dd2aa21a3407",
+    "type": "MEDICATION",
+    "name": "Loop Diuretics (class)",
+    "shortExplanation": "The drug class furosemide belongs to — more potent than thiazide diuretics.",
+    "sections": {
+      "mechanism": "Act on the thick ascending limb of the loop of Henle rather than the distal tubule, producing a stronger diuretic effect.",
+      "sideEffects": "Electrolyte depletion (potassium, magnesium, sodium), dehydration.",
+      "adverseEffects": "Ototoxicity with rapid IV administration, especially at high doses.",
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "d138c71f-afca-4d56-b5e2-e044f1038569",
+    "type": "MEDICATION",
+    "name": "Metoprolol",
+    "shortExplanation": "Slows and steadies the heartbeat so the heart doesn't have to work as hard.",
+    "sections": {
+      "mechanism": "Beta-1 selective blocker — reduces heart rate and myocardial oxygen demand.",
+      "sideEffects": "Fatigue, dizziness, cold extremities, slowed heart rate.",
+      "adverseEffects": "Symptomatic bradycardia, heart block, bronchospasm in susceptible patients.",
+      "nursingImplications": "Check apical pulse and blood pressure before administration.",
+      "commonBrandName": "Lopressor (tartrate) / Toprol-XL (succinate).",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Beta-blocker"
+    ],
+    "aliases": [
+      {
+        "id": "4f0f982c-222b-4828-a69a-a40ce7f9ee87",
+        "text": "Lopressor",
+        "type": "BRAND_NAME"
+      },
+      {
+        "id": "a27a6306-490f-484e-b9c4-37585238a72e",
+        "text": "Toprol-XL",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "2267cbf3-95a5-45c7-8d67-9b8271d4d49d",
+      "df5baf9f-1143-451c-a762-fe6429e77bed"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "b2f4721f-80fc-4584-a976-425a1269b8ad",
+    "type": "MEDICATION",
+    "name": "Nitroglycerin",
+    "shortExplanation": "A vasodilator that relieves chest pain (angina) by widening blood vessels and reducing the heart's workload.",
+    "sections": {
+      "mechanism": "Releases nitric oxide, relaxing vascular smooth muscle — venodilation lowers preload (the main effect) with some coronary vasodilation. Available sublingual, IV, and topical.",
+      "sideEffects": "Headache, flushing, dizziness, hypotension.",
+      "adverseEffects": "Severe hypotension, especially with volume depletion, right-ventricular/inferior MI, or recent PDE-5 inhibitor (e.g. sildenafil) use — a dangerous interaction.",
+      "nursingImplications": "Check blood pressure before and after each dose; sublingual angina dosing is one tab every 5 minutes up to 3 doses — call for help if pain persists; titrate IV to pain and BP.",
+      "commonBrandName": "Nitrostat, Nitro-Dur. Often called NTG or \"nitro.\"",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Vasodilator",
+      "Cardiology"
+    ],
+    "aliases": [
+      {
+        "id": "260e1a0c-4faa-4296-98bf-e46a9246b9cc",
+        "text": "NTG",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "a4d6cf37-7ef9-461b-9574-c067d1b252a6",
+        "text": "SL Nitro",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "c7de5e9f-3bfe-47e3-804b-033e7ba12e04",
+        "text": "Nitrostat",
+        "type": "BRAND_NAME"
+      },
+      {
+        "id": "6e5078da-aee8-4a53-b4e7-4ae4d537d6d5",
+        "text": "Nitro-Dur",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "b866c724-e6ba-4c95-860a-24b783d22b7e"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "7325ff82-9ae1-4c84-8ded-234b35670b25",
+    "type": "MEDICATION",
+    "name": "Norepinephrine",
+    "shortExplanation": "A medication that raises blood pressure by tightening blood vessels — used when fluids alone aren't maintaining adequate blood pressure, especially in septic shock.",
+    "sections": {
+      "mechanism": "Potent alpha-1 agonist (with some beta-1 activity) causing vasoconstriction and increased cardiac contractility. First-line vasopressor in septic shock.",
+      "sideEffects": "Reflex bradycardia, headache.",
+      "adverseEffects": "Peripheral/digital ischemia with prolonged or high-dose use, especially with extravasation — should be given via central line when possible; arrhythmia.",
+      "nursingImplications": "Continuous BP monitoring, ideally via arterial line; assess extremities/IV site for signs of extravasation; titrate to MAP goal per orders.",
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Vasopressor",
+      "Critical Care"
+    ],
+    "aliases": [
+      {
+        "id": "421c2f1c-2de6-4fe6-ba2d-b4d24c33ca22",
+        "text": "Levophed",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "5d04f094-b602-462c-b5bb-df950f379c09"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "8f4ad1de-9087-401b-ba79-4e67b28f723d",
+    "type": "MEDICATION",
+    "name": "Potassium Chloride",
+    "shortExplanation": "Furosemide causes the body to lose potassium along with fluid, so this tops it back up to a safe level.",
+    "sections": {
+      "mechanism": "Electrolyte replacement. IV formulations must always be diluted and infused at a controlled rate.",
+      "sideEffects": "GI upset (oral form), infusion site discomfort (IV form).",
+      "adverseEffects": "Cardiac arrhythmia if infused too quickly or given undiluted IV.",
+      "nursingImplications": "Verify potassium level and renal function before administering.",
+      "commonBrandName": "K-Dur, Klor-Con (oral forms).",
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Electrolyte replacement"
+    ],
+    "aliases": [
+      {
+        "id": "db60706b-85db-40bd-bdd4-01aa66343b87",
+        "text": "K-Dur",
+        "type": "BRAND_NAME"
+      },
+      {
+        "id": "8a535650-aacd-43f1-9f4a-7db6d7d6decf",
+        "text": "Klor-Con",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "6a226e9b-3568-4ece-883d-82436c254843",
+      "bb204141-32d0-432b-83f0-8a51820cd2d4"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "49bbed10-cc36-415b-9c95-0424e7d1683c",
+    "type": "MEDICATION",
+    "name": "Vancomycin",
+    "shortExplanation": "A broad-spectrum antibiotic used to treat serious infections, including resistant bacteria — often started empirically while cultures are pending in suspected sepsis.",
+    "sections": {
+      "mechanism": "Inhibits bacterial cell wall synthesis; effective against many gram-positive organisms including MRSA. Requires trough-level monitoring for dosing and renal function tracking.",
+      "sideEffects": "Redness/flushing with rapid infusion (\"red man syndrome\"), phlebitis at the infusion site.",
+      "adverseEffects": "Nephrotoxicity, ototoxicity, severe infusion reactions if given too quickly.",
+      "nursingImplications": "Infuse slowly over at least 60 minutes, monitor trough levels and renal function, watch for signs of red man syndrome.",
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Antibiotic"
+    ],
+    "aliases": [
+      {
+        "id": "c6766f8e-f0a0-4135-8673-ade25eda5545",
+        "text": "Vancocin",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "5d04f094-b602-462c-b5bb-df950f379c09"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "6ed29dd8-3a23-40af-9553-22aed1506893",
+    "type": "MEDICATION",
+    "name": "Warfarin",
+    "shortExplanation": "An oral anticoagulant used for long-term prevention of blood clots, commonly in atrial fibrillation or after a DVT/PE.",
+    "sections": {
+      "mechanism": "Inhibits vitamin K-dependent clotting factors (II, VII, IX, X). Requires regular INR monitoring due to a narrow therapeutic window and many drug/food interactions.",
+      "sideEffects": "Bruising, minor bleeding.",
+      "adverseEffects": "Major bleeding (GI, intracranial) especially if INR is supratherapeutic; skin necrosis (rare, early therapy).",
+      "nursingImplications": "Monitor INR regularly, educate on consistent vitamin K intake, watch for interacting medications.",
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pharmacology",
+      "Anticoagulant"
+    ],
+    "aliases": [
+      {
+        "id": "263c87d1-ec3f-4c65-b745-3a695fecd46c",
+        "text": "Coumadin",
+        "type": "BRAND_NAME"
+      },
+      {
+        "id": "3fc89f7a-ff36-4c91-b83f-438019806131",
+        "text": "Jantoven",
+        "type": "BRAND_NAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "df5baf9f-1143-451c-a762-fe6429e77bed",
+      "6305d0c9-087e-4a7b-b939-8a3d9540238b"
+    ],
+    "sourceCitation": "Source: MedlinePlus"
+  },
+  {
+    "id": "b1a4dbd2-439e-42c2-a52e-5544be458823",
+    "type": "PROCEDURE",
+    "name": "Arterial Line Insertion",
+    "shortExplanation": "Placement of a catheter into an artery (commonly radial) for continuous blood pressure monitoring and frequent blood draws without repeated needle sticks.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Need for beat-to-beat blood pressure monitoring, e.g. while titrating a vasopressor, or frequent arterial blood gas sampling.",
+      "whatToMonitor": "Waveform quality, distal perfusion/pulses of the cannulated limb, insertion site for bleeding, accidental disconnection (risk of significant blood loss).",
+      "medicationsUsed": [
+        "Local anesthetic"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Critical Care",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "0e42a9d2-811a-4f8d-9cd4-1e99c13d6fda",
+        "text": "A-line",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "7325ff82-9ae1-4c84-8ded-234b35670b25"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "8830fbee-27ef-4da5-9d39-c81252cdef46",
+    "type": "PROCEDURE",
+    "name": "Cardiac Ablation",
+    "shortExplanation": "A catheter is guided to the heart to burn (radiofrequency) or freeze (cryo) the small area of tissue causing an abnormal rhythm — destroying the faulty electrical pathway so a normal rhythm can hold.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Recurrent or drug-refractory arrhythmias such as atrial fibrillation, SVT, or ventricular tachycardia originating from an identifiable focus.",
+      "whatToMonitor": "Access site (usually femoral) for bleeding or hematoma, cardiac rhythm for recurrence or new arrhythmia, signs of cardiac tamponade (hypotension, muffled heart sounds, JVD), distal pulses.",
+      "medicationsUsed": [
+        "Procedural sedation",
+        "Heparin",
+        "Antiarrhythmics"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "e3c9d41c-8794-456a-88f5-2da21c238d57",
+        "text": "Catheter Ablation",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "89beac2e-597f-414a-be49-639fc7b15e1a",
+        "text": "Heart Cauterization",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "df5baf9f-1143-451c-a762-fe6429e77bed"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "30973fb0-fa8c-48fd-a941-eda6eda4dcb9",
+    "type": "PROCEDURE",
+    "name": "Cardiac Stress Test",
+    "shortExplanation": "Monitors the heart while it's made to work harder — by exercise or medication — to reveal blocked coronary arteries that don't cause symptoms at rest.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Suspected coronary artery disease — evaluating exertional chest pain or risk before certain procedures.",
+      "whatToMonitor": "ECG for ischemic changes, blood pressure and heart rate response, chest pain or shortness of breath — stop the test for significant symptoms or ECG changes.",
+      "medicationsUsed": [
+        "Pharmacologic stress agents (e.g. regadenoson, dobutamine)"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "b33db95b-6c33-4527-96af-c8587569008a",
+        "text": "Stress Test",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "b866c724-e6ba-4c95-860a-24b783d22b7e"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "b6a6fcbb-12b1-4a25-a178-cfc097c47bcd",
+    "type": "PROCEDURE",
+    "name": "Central Line Insertion",
+    "shortExplanation": "Placement of a catheter into a large central vein for reliable IV access — used for vasopressors, certain medications, or when peripheral access is inadequate.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Need for reliable central venous access, e.g. to safely administer vasopressors in septic shock.",
+      "whatToMonitor": "Insertion site for bleeding/infection, chest x-ray to confirm placement and rule out pneumothorax, signs of catheter-related bloodstream infection.",
+      "medicationsUsed": [
+        "Local anesthetic",
+        "Norepinephrine (once placed)"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Critical Care",
+      "Procedure"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "7325ff82-9ae1-4c84-8ded-234b35670b25"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "f9e60502-8457-41d2-9e01-1d0cbc3a40ca",
+    "type": "PROCEDURE",
+    "name": "Chest Tube Placement",
+    "shortExplanation": "Insertion of a tube into the pleural space to drain air, blood, or fluid and re-expand the lung — commonly used for pneumothorax or significant pleural effusion.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Pneumothorax or large pleural effusion causing respiratory compromise.",
+      "whatToMonitor": "Drainage amount/color, air leak (bubbling in the water seal chamber), respiratory status, insertion site for bleeding/infection, subcutaneous emphysema.",
+      "medicationsUsed": [
+        "Local anesthetic",
+        "Sedation (if needed)"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Procedure"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "2d226b10-4e42-4ed6-b187-35873a442628",
+    "type": "PROCEDURE",
+    "name": "Coronary Artery Bypass Graft",
+    "shortExplanation": "Open-heart surgery that reroutes blood around blocked coronary arteries using a healthy vessel taken from elsewhere in the body — restoring blood supply to heart muscle beyond the blockage.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Severe multi-vessel or left main coronary disease that isn't well suited to stenting, often with angina or reduced heart function.",
+      "whatToMonitor": "Hemodynamics and cardiac rhythm (arrhythmias are common postoperatively), chest tube output, sternal incision and graft harvest sites for bleeding/infection, respiratory status and pain control, neuro status after bypass.",
+      "medicationsUsed": [
+        "General anesthesia",
+        "Heparin",
+        "Vasopressors/inotropes",
+        "Antiplatelet agents"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "94ae6c8a-e921-4bcd-9696-f1ebc227820a",
+        "text": "CABG",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "7e98ac46-b028-418e-80da-8903094e592a",
+        "text": "Heart Bypass Surgery",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "336a6279-1724-4cff-aa9c-c26d11654907",
+        "text": "Open-Heart Bypass",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "b866c724-e6ba-4c95-860a-24b783d22b7e"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "4c2798a6-f151-4ea5-94a6-d547ff2c49c7",
+    "type": "PROCEDURE",
+    "name": "Defibrillation",
+    "shortExplanation": "An unsynchronized electrical shock delivered to a pulseless, chaotic rhythm (VF or pulseless VT) to stop it and give the heart a chance to restart a normal rhythm.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Ventricular fibrillation or pulseless ventricular tachycardia — a shockable cardiac arrest rhythm requiring immediate defibrillation.",
+      "whatToMonitor": "Rhythm and pulse immediately after each shock, quality of CPR between shocks, airway and oxygenation, skin at pad sites.",
+      "medicationsUsed": [
+        "Epinephrine",
+        "Amiodarone"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "951d29f9-60d3-46ce-be5d-14d2d132e590",
+        "text": "Defib",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "f7c37bd1-63fb-484f-abeb-00868a475bc7",
+        "text": "Unsynchronized Cardioversion",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "443fe2ad-b8f9-4df3-8acc-8cc6245dfb4f",
+      "40b037b9-4e1f-4c49-8fdf-d1f8baf11a4f"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "53a5c757-e298-4ae8-bfca-e6795f2fe3a4",
+    "type": "PROCEDURE",
+    "name": "Echocardiogram",
+    "shortExplanation": "An ultrasound of the heart that shows how well it pumps, how the valves move, and whether there's fluid around it — a painless bedside or lab test.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Need to assess heart function (ejection fraction), valve disease, wall motion after MI, or a pericardial effusion.",
+      "whatToMonitor": "For a transthoracic study, no special monitoring; for a transesophageal (TEE) study, airway, sedation level, and gag reflex/NPO status before eating.",
+      "medicationsUsed": [
+        "Procedural sedation (TEE only)"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "bb23d41e-9f17-4a65-bd67-cf2a5b0d082d",
+        "text": "Echo",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "732545dc-4b4b-472d-bc5e-3dd3521ead99",
+        "text": "TTE",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "a440fb1f-3be5-409d-886b-0b2cea8110cd",
+        "text": "TEE",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "557bea5d-6b73-4158-ba40-d87d6e403eef",
+        "text": "EF",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [
+      "2267cbf3-95a5-45c7-8d67-9b8271d4d49d",
+      "dac96350-9053-41e2-bcab-02f50912aae2"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "c236b783-9f56-4fbc-a48f-13c4a2554ec1",
+    "type": "PROCEDURE",
+    "name": "Endotracheal Intubation",
+    "shortExplanation": "Placement of a breathing tube into the trachea to secure the airway and allow mechanical ventilation — used in respiratory failure or when a patient can't protect their own airway.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Respiratory failure or inability to protect the airway.",
+      "whatToMonitor": "Tube placement (breath sounds, capnography, chest x-ray), oxygen saturation, blood pressure during and after the procedure, signs of accidental extubation.",
+      "medicationsUsed": [
+        "Sedation",
+        "Paralytic agents"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Critical Care",
+      "Procedure"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "f03ec7c1-9cbd-42b1-ab0c-51cbf57e3f9c"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "bbf48033-b6f2-4c01-ab81-eb395359ca62",
+    "type": "PROCEDURE",
+    "name": "Foley Catheter Insertion",
+    "shortExplanation": "Placement of an indwelling urinary catheter to drain the bladder and allow accurate output monitoring.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Urinary retention, need for precise hourly output monitoring (e.g. in shock or with diuretic therapy), or immobility complicating toileting.",
+      "whatToMonitor": "Urine color/clarity/amount, signs of catheter-associated UTI (CAUTI), skin integrity around the insertion site, bladder distension if the catheter appears blocked.",
+      "medicationsUsed": [
+        "Lubricant/anesthetic gel"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Med-Surg",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "b7c15d80-6e37-4480-9358-68db1f89c2c9",
+        "text": "Urinary Catheter",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "a8dea6a9-ab17-46ac-8104-0970b326565c",
+    "type": "PROCEDURE",
+    "name": "Hemodialysis",
+    "shortExplanation": "Filters waste, excess fluid, and electrolytes from the blood using an external machine — used when the kidneys can no longer do this on their own.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Acute kidney injury or end-stage renal disease with dangerous fluid overload, electrolyte imbalance, or uremia.",
+      "whatToMonitor": "Blood pressure during treatment (intradialytic hypotension is common), fluid removal amount versus goal, vascular access site (fistula/graft/catheter) patency and infection signs, post-dialysis electrolytes.",
+      "medicationsUsed": [
+        "Heparin (line/circuit anticoagulation)"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Renal / Dialysis",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "75d4ef5b-ca96-4488-9485-565dd5ea2770",
+        "text": "HD",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [
+      "bb204141-32d0-432b-83f0-8a51820cd2d4"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "b82fd943-5bad-4004-b4c3-5d331bee07db",
+    "type": "PROCEDURE",
+    "name": "ICD Placement",
+    "shortExplanation": "Implantation of a device that continuously watches the heart rhythm and delivers a shock automatically if a life-threatening arrhythmia occurs.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "High risk of sudden cardiac death — e.g. survived cardiac arrest, reduced ejection fraction, or dangerous ventricular arrhythmias.",
+      "whatToMonitor": "Implant pocket for bleeding/hematoma or infection, arm movement restrictions on the implant side, device function and any delivered shocks, signs of lead dislodgement.",
+      "medicationsUsed": [
+        "Local anesthetic",
+        "Procedural sedation"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "074d5211-cf79-4528-a95a-88abab8f449b",
+        "text": "ICD",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "91b560d1-f812-4775-ac5e-fcf28c0e44ec",
+        "text": "Implantable Cardioverter-Defibrillator",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "ceb6659c-6e7f-41be-aefe-2d54ed6cc2b7",
+        "text": "AICD",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [
+      "443fe2ad-b8f9-4df3-8acc-8cc6245dfb4f",
+      "40b037b9-4e1f-4c49-8fdf-d1f8baf11a4f"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "5b0fe1d6-5858-4805-9af2-84f72ed8621e",
+    "type": "PROCEDURE",
+    "name": "Lumbar Puncture",
+    "shortExplanation": "Needle sampling of cerebrospinal fluid from the lower spine — used to diagnose conditions like meningitis or to relieve elevated pressure around the brain.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Suspected CNS infection (e.g. meningitis) or need to measure/relieve elevated intracranial pressure.",
+      "whatToMonitor": "Post-procedure headache (positional, from CSF leak), neuro checks, insertion site for bleeding or CSF leakage.",
+      "medicationsUsed": [
+        "Local anesthetic"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Neurology",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "09b0e0b2-a574-472b-a15d-530a75984ebd",
+        "text": "LP",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "bf6b8e99-5514-4a1a-b1fc-d878f42024e2",
+        "text": "Spinal Tap",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "0c356c0a-d8cf-4090-914a-466974370bde",
+    "type": "PROCEDURE",
+    "name": "Nasogastric Tube Insertion",
+    "shortExplanation": "Placement of a tube through the nose into the stomach for gastric decompression, medication delivery, or short-term enteral feeding.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Bowel obstruction requiring decompression, inability to take oral intake, or need for short-term enteral nutrition/medication access.",
+      "whatToMonitor": "Placement confirmation (x-ray and/or aspirate pH), drainage amount/color, nasal and throat skin integrity, aspiration risk during feeds.",
+      "medicationsUsed": [
+        "Topical anesthetic (nasal/throat)"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Med-Surg",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "a0c4c551-0113-4970-b89d-e4e28d465fa3",
+        "text": "NGT",
+        "type": "ACRONYM"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "e579b4a8-9118-4020-93a1-ba19a9324e6a",
+    "type": "PROCEDURE",
+    "name": "Pacemaker Insertion",
+    "shortExplanation": "Implantation of a small device under the skin with leads into the heart that deliver electrical impulses to keep the heart beating at an adequate rate.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Symptomatic bradycardia, high-grade heart block, or another conduction problem where the heart's own rate is too slow to meet the body's needs.",
+      "whatToMonitor": "Insertion pocket for bleeding/hematoma or infection, heart rate and rhythm to confirm capture, arm movement restrictions on the implant side, signs of lead dislodgement (hiccups, failure to pace).",
+      "medicationsUsed": [
+        "Local anesthetic",
+        "Procedural sedation"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Procedure"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "5c0dfae9-9257-4aed-b787-fb00e10bac01"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "9a455697-6f24-45b6-8122-3639f80dfc5d",
+    "type": "PROCEDURE",
+    "name": "Packed Red Blood Cell Transfusion",
+    "shortExplanation": "Infusion of donor red blood cells to treat significant blood loss or anemia that's causing symptoms or instability.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Symptomatic anemia or acute blood loss where the patient's own red cell count is too low to meet oxygen delivery needs.",
+      "whatToMonitor": "Vital signs closely (especially the first 15 minutes), signs of transfusion reaction (fever, chills, rash, back pain, dyspnea) — stop the transfusion immediately and notify the provider if suspected.",
+      "medicationsUsed": [
+        "Normal saline (co-administered line)"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Med-Surg",
+      "Critical Care",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "f7aa3967-f9d6-4ed0-89d7-41b09695b4da",
+        "text": "PRBC",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "4c370743-964e-4bfb-bf7b-2e5b3cfe3887",
+        "text": "Blood Transfusion",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "bcc6242e-4f4b-441b-94c3-d4d618bd8e33",
+    "type": "PROCEDURE",
+    "name": "Paracentesis",
+    "shortExplanation": "Needle drainage of fluid from the abdominal cavity — relieves pressure from ascites and can help identify its cause.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Large-volume ascites causing abdominal distension, discomfort, or respiratory compromise; or ascites of unclear cause needing diagnostic sampling.",
+      "whatToMonitor": "Vital signs for hypotension from fluid shifts (especially with large-volume taps), insertion site for leakage, need for albumin replacement after large-volume removal.",
+      "medicationsUsed": [
+        "Local anesthetic",
+        "Albumin (with large-volume taps)"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Med-Surg",
+      "Procedure"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "a11ccfd1-2bb0-4262-bb14-5479957f807c",
+    "type": "PROCEDURE",
+    "name": "PEG Tube Placement",
+    "shortExplanation": "Endoscopic placement of a feeding tube directly through the abdominal wall into the stomach — used when a patient needs long-term enteral nutrition.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Inability to safely swallow or take adequate oral nutrition long-term (e.g. after stroke, in progressive neurologic disease).",
+      "whatToMonitor": "Stoma site for infection/leakage, tube placement before each feed, feeding tolerance (nausea, distension), skin integrity around the site.",
+      "medicationsUsed": [
+        "Procedural sedation"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Med-Surg",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "863bd1f0-ae6e-49db-9faa-0bcfce790ee4",
+        "text": "Percutaneous Endoscopic Gastrostomy",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "dac583d4-b0c5-4ba3-bf95-216b04c136d0",
+    "type": "PROCEDURE",
+    "name": "Percutaneous Coronary Intervention",
+    "shortExplanation": "Threading a catheter through an artery to open a blocked coronary vessel — a balloon widens the narrowing and a stent is usually left behind to hold it open, restoring blood flow to the heart.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "A blocked or critically narrowed coronary artery, most urgently in an acute heart attack (STEMI) where fast reperfusion limits heart muscle damage.",
+      "whatToMonitor": "Access site (radial/femoral) for bleeding or hematoma, distal pulses of the cannulated limb, chest pain and ECG changes (possible re-occlusion or stent thrombosis), renal function after contrast dye.",
+      "medicationsUsed": [
+        "Antiplatelet agents (aspirin, clopidogrel/ticagrelor)",
+        "Heparin",
+        "Contrast dye"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "fdd1545c-d1d0-4ae0-bdf9-dfdf2fd58a93",
+        "text": "PCI",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "a9f674e0-ed4b-4b50-a53e-91ba4fb7100a",
+        "text": "Coronary Angioplasty",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "1b8fb006-18cf-4866-85db-598fd6df7d2c",
+        "text": "Stent Placement",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "2e3eb03e-b28a-45c6-8fac-104abd6f42ad",
+        "text": "Cardiac Catheterization",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "b866c724-e6ba-4c95-860a-24b783d22b7e"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "b2facaaa-4342-4232-a731-f8f97ed850a4",
+    "type": "PROCEDURE",
+    "name": "Pericardiocentesis",
+    "shortExplanation": "Needle drainage of fluid from the sac around the heart — relieves pressure that keeps the heart from filling and pumping, most urgently in cardiac tamponade.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Pericardial effusion causing tamponade physiology (hypotension, muffled heart sounds, distended neck veins), or an effusion of unclear cause needing diagnostic sampling.",
+      "whatToMonitor": "Blood pressure and heart rate for rapid improvement or re-accumulation, ECG changes, insertion site for bleeding, signs of recurring tamponade.",
+      "medicationsUsed": [
+        "Local anesthetic",
+        "Procedural sedation"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Procedure"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "ce3211e0-8ac0-4881-bd69-8e9947b2d552"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "1628ef6c-948f-471b-987c-de4eae55cb5b",
+    "type": "PROCEDURE",
+    "name": "PICC Line Insertion",
+    "shortExplanation": "Placement of a long catheter through an arm vein that terminates near the heart — used for extended IV access without repeated peripheral sticks.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Need for extended IV access, e.g. multi-week antibiotic courses or medications that irritate peripheral veins.",
+      "whatToMonitor": "Insertion site for infection/phlebitis, arm swelling or pain (possible thrombosis), catheter tip position confirmed by x-ray.",
+      "medicationsUsed": [
+        "Local anesthetic",
+        "Vancomycin (common indication)"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Med-Surg",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "dba8fca9-927e-43f1-92ac-aedd752f7636",
+        "text": "Peripherally Inserted Central Catheter",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "49bbed10-cc36-415b-9c95-0424e7d1683c"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "92a0fcf2-33b3-4cb7-919e-19c44bd0ef5e",
+    "type": "PROCEDURE",
+    "name": "Synchronized Cardioversion",
+    "shortExplanation": "A timed electrical shock delivered to reset an abnormal heart rhythm back to a normal pattern — used when a fast, unstable rhythm needs to be corrected quickly.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Unstable or persistent symptomatic tachyarrhythmia, commonly atrial fibrillation, that hasn't responded to (or can't wait for) medication alone.",
+      "whatToMonitor": "Rhythm and pulse immediately before/after, sedation level and airway, skin at pad placement sites, blood pressure.",
+      "medicationsUsed": [
+        "Procedural sedation"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Procedure"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "df5baf9f-1143-451c-a762-fe6429e77bed"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "530f6753-1109-4607-b1b2-20438b539bee",
+    "type": "PROCEDURE",
+    "name": "TAVR",
+    "shortExplanation": "A minimally invasive procedure that replaces a narrowed aortic valve without open-heart surgery.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Severe aortic stenosis in patients who are poor candidates for open surgical valve replacement.",
+      "whatToMonitor": "Access site for bleeding/hematoma, rhythm changes, blood pressure, signs of stroke.",
+      "medicationsUsed": [
+        "Anticoagulation",
+        "Sedation reversal agents"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Cardiology",
+      "Cardiac Cath Lab"
+    ],
+    "aliases": [
+      {
+        "id": "3f44b692-82a3-4306-97af-ce4d925a1786",
+        "text": "Transcatheter Aortic Valve Replacement",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "37c606e0-84ff-41f6-91d6-149324108626"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "7452774f-7120-4ea4-8584-259140c4cbda",
+    "type": "PROCEDURE",
+    "name": "Thoracentesis",
+    "shortExplanation": "Needle drainage of fluid from the space around the lung — done to relieve breathing difficulty or to diagnose the cause of a pleural effusion.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Pleural effusion causing respiratory compromise, or an effusion of unclear cause needing diagnostic sampling.",
+      "whatToMonitor": "Respiratory status during and after the procedure, signs of pneumothorax (sudden dyspnea, decreased breath sounds), insertion site for bleeding.",
+      "medicationsUsed": [
+        "Local anesthetic"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Pulmonology",
+      "Procedure"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "d7a527a5-43a1-4276-9591-c918b8220eb4",
+    "type": "PROCEDURE",
+    "name": "Tracheostomy",
+    "shortExplanation": "Surgical creation of an airway opening in the neck directly into the trachea — used when a patient needs prolonged mechanical ventilation or has an upper airway obstruction.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": "Anticipated prolonged mechanical ventilation, or upper airway obstruction that an endotracheal tube can't safely address long-term.",
+      "whatToMonitor": "Stoma site for bleeding/infection, cuff pressure, secretion volume and suctioning needs, signs of accidental decannulation.",
+      "medicationsUsed": [
+        "Sedation",
+        "Local/general anesthesia"
+      ],
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": null,
+      "steps": null
+    },
+    "tags": [
+      "Critical Care",
+      "Procedure"
+    ],
+    "aliases": [
+      {
+        "id": "2d82699e-2cdf-4924-869e-3358024ce65c",
+        "text": "Trach",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "c236b783-9f56-4fbc-a48f-13c4a2554ec1"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "bcccd9e6-c81a-4de3-b7dc-ee5ce8535ab6",
+    "type": "PROTOCOL",
+    "name": "ACLS Cardiac Arrest Algorithm",
+    "shortExplanation": "The standardized team response to cardiac arrest — high-quality CPR, rhythm checks, shocks for shockable rhythms, and timed medications.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": "Pulseless patient — confirmed cardiac arrest. Rhythm sorted into shockable (VF/pulseless VT) or non-shockable (asystole/PEA).",
+      "steps": "Start high-quality CPR and attach the monitor/defibrillator. Shockable: defibrillate, resume CPR, give epinephrine every 3–5 min, add amiodarone, shock with each rhythm check. Non-shockable: CPR with epinephrine every 3–5 min. Throughout, search for and treat reversible causes (the Hs and Ts) and minimize interruptions in compressions."
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Protocol"
+    ],
+    "aliases": [
+      {
+        "id": "25670eae-a12b-42be-a065-26911d227ae0",
+        "text": "ACLS",
+        "type": "ACRONYM"
+      },
+      {
+        "id": "e375c057-7c47-433f-8a5e-e73af85b720c",
+        "text": "Code Blue Algorithm",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "7800c2f7-6bb1-4d7c-8554-9c14eb07a193",
+      "4c2798a6-f151-4ea5-94a6-d547ff2c49c7",
+      "8cc1e5f0-e923-47de-8033-c8cbe978e1d9",
+      "2220299a-1444-4c3d-b669-02f6b755e6b7"
+    ],
+    "sourceCitation": "Source: American Heart Association, StatPearls"
+  },
+  {
+    "id": "8d8e5039-fbe9-4a86-bc55-c4a4b8e83295",
+    "type": "PROTOCOL",
+    "name": "Chest Pain Protocol",
+    "shortExplanation": "A standardized first response to new chest pain to quickly identify or rule out a heart attack.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": "New or ongoing chest pain or an anginal equivalent (e.g. unexplained dyspnea, especially in higher-risk patients).",
+      "steps": "Get a 12-lead ECG within 10 minutes, draw troponin (trended serially), apply continuous cardiac monitoring, establish IV access, and consider the initial \"MONA\" measures — aspirin, nitroglycerin, oxygen if hypoxic, and pain control — while escalating to the STEMI pathway if ECG shows ST elevation."
+    },
+    "tags": [
+      "Cardiology",
+      "Telemetry",
+      "Protocol"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "b866c724-e6ba-4c95-860a-24b783d22b7e",
+      "d5bc2554-5e95-4c29-acb4-98ec1db8a739",
+      "9e180b56-9fee-474a-9d38-dcc1eeb1bb33",
+      "b2f4721f-80fc-4584-a976-425a1269b8ad"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "5b361b8c-5472-4109-b02a-024bfc4e8739",
+    "type": "PROTOCOL",
+    "name": "Sepsis Bundle",
+    "shortExplanation": "A standardized set of time-sensitive actions performed when sepsis is suspected, designed to improve survival by acting quickly.",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": "Suspected infection plus signs of organ dysfunction or meeting systemic inflammatory criteria, per unit/hospital sepsis screening tool.",
+      "steps": "Draw blood cultures before antibiotics, measure lactate, start broad-spectrum antibiotics promptly, begin IV fluid resuscitation, reassess and add vasopressors if hypotension persists after fluids."
+    },
+    "tags": [
+      "Critical Care",
+      "Protocol"
+    ],
+    "aliases": [],
+    "relatedConceptIds": [
+      "5d04f094-b602-462c-b5bb-df950f379c09",
+      "aa7911a7-9c54-4f9a-bb20-8bf205012e7f",
+      "49bbed10-cc36-415b-9c95-0424e7d1683c",
+      "7325ff82-9ae1-4c84-8ded-234b35670b25"
+    ],
+    "sourceCitation": "Source: StatPearls"
+  },
+  {
+    "id": "0512a39f-ff31-4c08-be2c-6471190bdab7",
+    "type": "PROTOCOL",
+    "name": "STEMI Protocol",
+    "shortExplanation": "A time-critical pathway to reopen a blocked coronary artery fast in a full-thickness heart attack — \"time is muscle.\"",
+    "sections": {
+      "mechanism": null,
+      "sideEffects": null,
+      "adverseEffects": null,
+      "nursingImplications": null,
+      "commonBrandName": null,
+      "targetConcern": null,
+      "whatToMonitor": null,
+      "medicationsUsed": null,
+      "presentation": null,
+      "typicalTreatments": null,
+      "riskFactors": null,
+      "normalRange": null,
+      "abnormalMeaning": null,
+      "purpose": null,
+      "careConsiderations": null,
+      "triggerCriteria": "ST-elevation on a 12-lead ECG with ischemic symptoms — activates the cath lab immediately.",
+      "steps": "Obtain a 12-lead ECG within 10 minutes of arrival, activate the cath lab, give aspirin and a second antiplatelet plus anticoagulation, manage pain/ischemia, and get the patient to PCI with a door-to-balloon time under 90 minutes (fibrinolytics if timely PCI isn't available)."
+    },
+    "tags": [
+      "Cardiology",
+      "Critical Care",
+      "Protocol"
+    ],
+    "aliases": [
+      {
+        "id": "b1988586-694f-4031-a16e-0a0184e93d95",
+        "text": "Door-to-Balloon",
+        "type": "NICKNAME"
+      },
+      {
+        "id": "cd7ea4ea-b98f-42ba-8019-7016a8322aab",
+        "text": "Cath Lab Activation",
+        "type": "NICKNAME"
+      }
+    ],
+    "relatedConceptIds": [
+      "b866c724-e6ba-4c95-860a-24b783d22b7e",
+      "dac583d4-b0c5-4ba3-bf95-216b04c136d0",
+      "70d42656-be84-416c-adea-0ecd1ac15e34",
+      "9e180b56-9fee-474a-9d38-dcc1eeb1bb33"
+    ],
+    "sourceCitation": "Source: American Heart Association, StatPearls"
+  }
+]

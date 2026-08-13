@@ -136,7 +136,7 @@ enum CaptureDevice: String, Codable {
 
 struct MentionedConcept: Identifiable, Codable, Hashable {
     let id: UUID
-    var conceptID: UUID
+    var conceptId: UUID
     var conceptName: String
     var type: ConceptType
     var shortExplanation: String

@@ -6,11 +6,10 @@ import Foundation
 /// as an .xcframework in Xcode, which needs macOS. This is the pragmatic,
 /// verifiable-by-review interim: same endpoints, native Swift.
 ///
-/// Base URL points at the Mac's LAN IP so both the Simulator and a physical
-/// device on the same Wi-Fi network can reach the backend. `project.yml`
-/// carries the matching `NSAllowsLocalNetworking` ATS exception. If the
-/// Mac's IP changes (new network, DHCP renewal), update this and re-run
-/// `xcodegen generate`.
+/// Base URL is configurable (see `resolveBaseURL`) rather than hardcoded, so
+/// the same binary can point at a dev machine, staging, or production without
+/// code edits. `project.yml` carries the matching `NSAllowsLocalNetworking`
+/// ATS exception for plaintext HTTP to a LAN dev backend.
 enum APIError: Error, LocalizedError {
     case invalidResponse
     case server(status: Int)
@@ -24,16 +23,42 @@ enum APIError: Error, LocalizedError {
 }
 
 final class APIClient {
-    static let shared = APIClient(baseURL: URL(string: "http://192.168.1.194:8081")!)
+    static let shared = APIClient(baseURL: APIClient.resolveBaseURL())
+
+    /// Resolves the backend base URL, most-specific first:
+    ///  1. A runtime override in UserDefaults under `APIBaseURL` — also settable
+    ///     without a rebuild via an Xcode scheme launch arg or
+    ///     `simctl launch … -APIBaseURL http://host:port` (great for QA).
+    ///  2. The build-time `APIBaseURL` value from Info.plist, set per
+    ///     configuration in `project.yml` (dev vs. staging vs. production).
+    ///  3. A hardcoded LAN default for a fresh dev checkout.
+    static func resolveBaseURL() -> URL {
+        if let override = UserDefaults.standard.string(forKey: "APIBaseURL"),
+           let url = URL(string: override.trimmingCharacters(in: .whitespaces)), url.scheme != nil {
+            return url
+        }
+        if let configured = Bundle.main.object(forInfoDictionaryKey: "APIBaseURL") as? String,
+           let url = URL(string: configured.trimmingCharacters(in: .whitespaces)), url.scheme != nil {
+            return url
+        }
+        return URL(string: "http://192.168.1.194:8081")!
+    }
 
     private let baseURL: URL
     private let session: URLSession
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
 
-    init(baseURL: URL, session: URLSession = .shared) {
+    init(baseURL: URL, session: URLSession? = nil) {
         self.baseURL = baseURL
-        self.session = session
+        if let session {
+            self.session = session
+        } else {
+            let config = URLSessionConfiguration.default
+            config.timeoutIntervalForRequest = 15
+            config.waitsForConnectivity = false
+            self.session = URLSession(configuration: config)
+        }
 
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .millisecondsSince1970
@@ -60,6 +85,13 @@ final class APIClient {
         try await get(baseURL.appendingPathComponent("concepts/\(id.uuidString)"))
     }
 
+    /// The full corpus with complete detail in a single request — used by
+    /// ConceptLibrary to refresh its offline snapshot when the backend is
+    /// reachable, rather than issuing per-category + per-id calls.
+    func allConcepts() async throws -> [Concept] {
+        try await get(baseURL.appendingPathComponent("concepts"))
+    }
+
     // MARK: - Chart lookup (stateless — nothing persisted server-side)
 
     struct ChartLookupRequestBody: Encodable {
@@ -77,7 +109,8 @@ final class APIClient {
         return try await post(baseURL.appendingPathComponent("chart-lookup"), body: body)
     }
 
-    // MARK: - Notes (persist-only — no AI augmentation pipeline yet)
+    // MARK: - Notes (keyword-matched concept mentions; see backend
+    // ConceptRepository.findMentions for why this isn't real LLM extraction)
 
     struct NoteCreateBody: Encodable {
         let transcript: String
@@ -91,6 +124,7 @@ final class APIClient {
         let device: String
         let phiReviewed: Bool
         let createdAt: Date
+        let mentionedConcepts: [MentionedConcept]
     }
 
     func createNote(transcript: String, device: CaptureDevice, phiReviewed: Bool) async throws -> NoteResponseBody {
@@ -100,8 +134,12 @@ final class APIClient {
 
     // MARK: - Suggestions
 
-    func suggestions() async throws -> [Suggestion] {
-        try await get(baseURL.appendingPathComponent("suggestions"))
+    func suggestions(specialty: String? = nil) async throws -> [Suggestion] {
+        var components = URLComponents(url: baseURL.appendingPathComponent("suggestions"), resolvingAgainstBaseURL: false)!
+        if let specialty {
+            components.queryItems = [URLQueryItem(name: "specialty", value: specialty)]
+        }
+        return try await get(components.url!)
     }
 
     // MARK: - Search history (synced — general medical-knowledge browsing,
