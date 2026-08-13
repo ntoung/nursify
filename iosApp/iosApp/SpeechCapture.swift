@@ -3,9 +3,10 @@ import Foundation
 import Speech
 
 /// Real mic capture + on-device transcription for Capture (REQUIREMENTS.md
-/// "Capture" / "Privacy guardrail" — on-device transcription so nothing
-/// unfiltered leaves the phone before PHI screening, which isn't wired up
-/// yet; see the follow-up note in CaptureView).
+/// "Capture" / "Privacy guardrail" - on-device transcription so the
+/// transcript stays local until it passes the on-device PHIScreener heuristic
+/// check and nurse review in CaptureView's draft step, before anything is
+/// sent to the backend).
 @MainActor
 final class SpeechCapture: ObservableObject {
     enum CaptureError: LocalizedError {
@@ -128,6 +129,40 @@ final class SpeechCapture: ObservableObject {
         await withCheckedContinuation { continuation in
             SFSpeechRecognizer.requestAuthorization { status in
                 continuation.resume(returning: status == .authorized)
+            }
+        }
+    }
+
+    /// One-shot, on-device transcription of a pre-recorded audio file — used
+    /// for Watch-recorded memos (WatchConnectivityReceiver), as opposed to the
+    /// live mic transcription above used for phone dictation. Requires speech
+    /// permission to already be granted (the phone's Capture flow requests it
+    /// on first live dictation; a watch-only user who's never dictated on the
+    /// phone hits `.speechDenied` here and the memo transcription silently
+    /// fails — an accepted v1 gap called out in WatchConnectivityReceiver).
+    static func transcribeFile(at url: URL) async throws -> String {
+        guard let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US")),
+              recognizer.supportsOnDeviceRecognition else {
+            throw CaptureError.onDeviceUnavailable
+        }
+        guard SFSpeechRecognizer.authorizationStatus() == .authorized else {
+            throw CaptureError.speechDenied
+        }
+
+        let request = SFSpeechURLRecognitionRequest(url: url)
+        request.requiresOnDeviceRecognition = true
+        // One-shot only: a URL request's callback can otherwise fire more than
+        // once (partial results before the final one), which would resume this
+        // continuation twice and crash.
+        request.shouldReportPartialResults = false
+
+        return try await withCheckedThrowingContinuation { continuation in
+            recognizer.recognitionTask(with: request) { result, error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else if let result, result.isFinal {
+                    continuation.resume(returning: result.bestTranscription.formattedString)
+                }
             }
         }
     }

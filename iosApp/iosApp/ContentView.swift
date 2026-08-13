@@ -28,6 +28,13 @@ struct ContentView: View {
             }
         }
         .environmentObject(appState)
+        // On launch: refresh the offline concept library and replay any
+        // mutations queued while offline. Both no-op silently when unreachable.
+        .task {
+            WatchConnectivityReceiver.shared.appState = appState
+            await appState.flushOutbox()
+            await appState.refreshLibrary()
+        }
     }
 }
 
