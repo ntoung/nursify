@@ -11,6 +11,12 @@ struct SearchView: View {
     @State private var activeCategory: ConceptType?
     @FocusState private var searchFieldFocused: Bool
 
+    private var trimmedQuery: String { query.trimmingCharacters(in: .whitespacesAndNewlines) }
+
+    /// Combined key so the fetch re-runs when either the query or the active
+    /// topic scope changes.
+    private var searchKey: String { "\(trimmedQuery)|\(activeCategory?.rawValue ?? "")" }
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -21,17 +27,6 @@ struct SearchView: View {
                             TextField("Medications, procedures, conditions, TAVR...", text: $query)
                                 .font(Theme.Font.body(15, weight: .semibold))
                                 .focused($searchFieldFocused)
-                            if !query.isEmpty {
-                                Button {
-                                    query = ""
-                                    results = []
-                                    searchFieldFocused = false
-                                } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .foregroundStyle(Theme.Color.sub)
-                                }
-                                .buttonStyle(.plain)
-                            }
                         }
                         .padding(13)
                         .background(SwiftUI.Color.white)
@@ -49,95 +44,35 @@ struct SearchView: View {
                     }
                     .padding(.top, 8)
 
-                    if !query.isEmpty && !results.isEmpty {
-                        VStack(spacing: 0) {
-                            ForEach(results) { item in
-                                NavigationLink(destination: ConceptDetailView(conceptId: item.id)) {
-                                    AutocompleteRow(item: item)
-                                }
-                                .buttonStyle(.plain)
-                                if item.id != results.last?.id {
-                                    Divider().padding(.leading, 16)
-                                }
-                            }
-                        }
-                        .background(SwiftUI.Color.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 18))
-                        .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1))
-                        .padding(.top, 10)
-                    }
-
                     SectionLabel(text: "Browse by topic")
                         .padding(.top, 22)
-                        .padding(.bottom, 6)
+                        .padding(.bottom, 8)
 
-                    FlowLayout(spacing: 8) {
-                        ForEach(ConceptType.allCases) { type in
-                            SelectableChip(text: type.displayName, isSelected: activeCategory == type)
-                                .onTapGesture { selectCategory(type) }
+                    // Single-row carousel; bleeds to the screen edges past the
+                    // parent's 24pt padding so chips scroll edge-to-edge.
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            ForEach(ConceptType.allCases) { type in
+                                SelectableChip(text: type.displayName, isSelected: activeCategory == type)
+                                    .onTapGesture { selectCategory(type) }
+                            }
                         }
+                        .padding(.horizontal, 24)
+                    }
+                    .padding(.horizontal, -24)
+
+                    if !results.isEmpty {
+                        resultsList
+                    } else if !trimmedQuery.isEmpty || activeCategory != nil {
+                        Text("No concepts found.")
+                            .font(Theme.Font.body(13.5))
+                            .foregroundStyle(Theme.Color.sub)
+                            .padding(.vertical, 12)
                     }
 
-                    if let activeCategory {
-                        HStack {
-                            Text("Category: \(activeCategory.displayName)")
-                                .font(Theme.Font.body(12.5, weight: .semibold))
-                                .foregroundStyle(Theme.Color.accentInk)
-                            Spacer()
-                            Button("Clear") {
-                                self.activeCategory = nil
-                                results = []
-                            }
-                            .font(Theme.Font.body(12.5, weight: .semibold))
-                        }
-                        .padding(.top, 14)
-
-                        if !results.isEmpty {
-                            VStack(spacing: 0) {
-                                ForEach(results) { item in
-                                    NavigationLink(destination: ConceptDetailView(conceptId: item.id)) {
-                                        AutocompleteRow(item: item)
-                                    }
-                                    .buttonStyle(.plain)
-                                    if item.id != results.last?.id {
-                                        Divider().padding(.leading, 16)
-                                    }
-                                }
-                            }
-                            .background(SwiftUI.Color.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 18))
-                            .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1))
-                            .padding(.top, 10)
-                        }
-                    }
-
-                    if activeCategory == nil {
-                        VStack(alignment: .leading, spacing: 0) {
-                            SectionLabel(text: "Recent")
-                                .padding(.top, 22)
-                                .padding(.bottom, 4)
-
-                            if appState.searchHistory.isEmpty {
-                                Text("Nothing viewed yet.")
-                                    .font(Theme.Font.body(13.5))
-                                    .foregroundStyle(Theme.Color.sub)
-                                    .padding(.vertical, 8)
-                            } else {
-                                VStack(spacing: 0) {
-                                    ForEach(appState.searchHistory.prefix(4)) { entry in
-                                        NavigationLink(destination: ConceptDetailView(conceptId: entry.conceptId)) {
-                                            RecentRow(entry: entry)
-                                        }
-                                        .buttonStyle(.plain)
-                                        if entry.id != appState.searchHistory.prefix(4).last?.id {
-                                            Divider()
-                                        }
-                                    }
-                                }
-                                .padding(.top, 4)
-                            }
-                        }
-                        .transition(.opacity)
+                    if trimmedQuery.isEmpty && activeCategory == nil {
+                        recentSection
+                            .transition(.opacity)
                     }
                 }
                 .animation(.easeInOut(duration: 0.25), value: activeCategory)
@@ -146,25 +81,86 @@ struct SearchView: View {
             .background(Theme.Color.background.ignoresSafeArea())
             .navigationTitle("Search")
             .task { await appState.loadSearchHistory() }
-            .task(id: query) {
-                guard !query.isEmpty else { return }
-                activeCategory = nil
-                do {
-                    try await Task.sleep(nanoseconds: 300_000_000)
-                } catch {
-                    return
+            .task(id: searchKey) { await runSearch() }
+        }
+    }
+
+    @ViewBuilder
+    private var resultsList: some View {
+        VStack(spacing: 0) {
+            ForEach(results) { item in
+                NavigationLink(destination: ConceptDetailView(conceptId: item.id)) {
+                    AutocompleteRow(item: item)
                 }
-                guard !Task.isCancelled else { return }
-                results = await appState.searchConcepts(query: query)
+                .buttonStyle(.plain)
+                if item.id != results.last?.id {
+                    Divider().padding(.leading, 16)
+                }
+            }
+        }
+        .background(SwiftUI.Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 18))
+        .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1))
+        .padding(.top, 10)
+    }
+
+    @ViewBuilder
+    private var recentSection: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            SectionLabel(text: "Recent")
+                .padding(.top, 22)
+                .padding(.bottom, 4)
+
+            if appState.searchHistory.isEmpty {
+                Text("Nothing viewed yet.")
+                    .font(Theme.Font.body(13.5))
+                    .foregroundStyle(Theme.Color.sub)
+                    .padding(.vertical, 8)
+            } else {
+                VStack(spacing: 0) {
+                    ForEach(appState.searchHistory.prefix(4)) { entry in
+                        NavigationLink(destination: ConceptDetailView(conceptId: entry.conceptId)) {
+                            RecentRow(entry: entry)
+                        }
+                        .buttonStyle(.plain)
+                        if entry.id != appState.searchHistory.prefix(4).last?.id {
+                            Divider()
+                        }
+                    }
+                }
+                .padding(.top, 4)
             }
         }
     }
 
     private func selectCategory(_ type: ConceptType) {
-        query = ""
-        activeCategory = type
-        Task {
-            results = await appState.conceptsByCategory(type)
+        searchFieldFocused = false
+        activeCategory = (activeCategory == type) ? nil : type
+    }
+
+    /// Fetches results for the current query + topic scope. With a query, it
+    /// searches (debounced) and filters to the active topic if one is set;
+    /// with no query it browses the active topic, or clears to show Recent.
+    private func runSearch() async {
+        if trimmedQuery.isEmpty {
+            if let activeCategory {
+                results = await appState.conceptsByCategory(activeCategory)
+            } else {
+                results = []
+            }
+            return
+        }
+        do {
+            try await Task.sleep(nanoseconds: 300_000_000)
+        } catch {
+            return
+        }
+        guard !Task.isCancelled else { return }
+        let fetched = await appState.searchConcepts(query: trimmedQuery)
+        if let activeCategory {
+            results = fetched.filter { $0.type == activeCategory }
+        } else {
+            results = fetched
         }
     }
 }
