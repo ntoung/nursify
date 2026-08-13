@@ -16,9 +16,17 @@ struct OnboardingView: View {
     @State private var name = ""
     @State private var selectedExperience: ExperienceLevel?
     @State private var selectedSpecialties: Set<Specialty> = []
+    @State private var specialtyQuery = ""
     @FocusState private var nameFieldFocused: Bool
+    @FocusState private var specialtySearchFocused: Bool
 
     private var trimmedName: String { name.trimmingCharacters(in: .whitespacesAndNewlines) }
+
+    private var filteredSpecialties: [Specialty] {
+        let query = specialtyQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return Specialty.allCases }
+        return Specialty.allCases.filter { $0.rawValue.localizedCaseInsensitiveContains(query) }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -179,6 +187,7 @@ struct OnboardingView: View {
                             .onTapGesture { selectedExperience = level }
                     }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(24)
             }
 
@@ -202,11 +211,42 @@ struct OnboardingView: View {
                         .foregroundStyle(Theme.Color.sub)
                         .padding(.bottom, 8)
 
-                    FlowLayout(spacing: 10) {
-                        ForEach(Specialty.allCases) { specialty in
-                            SelectableChip(text: specialty.rawValue, isSelected: selectedSpecialties.contains(specialty))
-                                .onTapGesture { toggle(specialty) }
+                    HStack(spacing: 10) {
+                        Image(systemName: "magnifyingglass").foregroundStyle(Theme.Color.sub)
+                        TextField("Search specialties...", text: $specialtyQuery)
+                            .font(Theme.Font.body(15, weight: .semibold))
+                            .focused($specialtySearchFocused)
+                            .autocorrectionDisabled()
+                        if !specialtyQuery.isEmpty {
+                            Button {
+                                specialtyQuery = ""
+                                specialtySearchFocused = false
+                            } label: {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundStyle(Theme.Color.sub)
+                            }
+                            .buttonStyle(.plain)
                         }
+                    }
+                    .padding(13)
+                    .background(SwiftUI.Color.white)
+                    .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1.5))
+                    .clipShape(RoundedRectangle(cornerRadius: 18))
+                    .padding(.bottom, 4)
+
+                    if filteredSpecialties.isEmpty {
+                        Text("No specialties match \u{201C}\(specialtyQuery)\u{201D}.")
+                            .font(Theme.Font.body(13.5))
+                            .foregroundStyle(Theme.Color.sub)
+                            .padding(.vertical, 8)
+                    } else {
+                        FlowLayout(spacing: 10) {
+                            ForEach(filteredSpecialties) { specialty in
+                                SelectableChip(text: specialty.rawValue, isSelected: selectedSpecialties.contains(specialty))
+                                    .onTapGesture { toggle(specialty) }
+                            }
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
                 .padding(24)
