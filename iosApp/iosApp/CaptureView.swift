@@ -15,6 +15,7 @@ struct CaptureView: View {
     @State private var isSaving = false
     @State private var phiFindings: [PHIFinding] = []
     @State private var phiAcknowledged = false
+    @State private var draftDevice: CaptureDevice = .phone
 
     private var todayNotes: [Note] { appState.notes.filter { Calendar.current.isDateInToday($0.createdAt) } }
     private var earlierNotes: [Note] { appState.notes.filter { !Calendar.current.isDateInToday($0.createdAt) } }
@@ -90,20 +91,24 @@ struct CaptureView: View {
             } message: {
                 Text(appState.errorMessage ?? "Something went wrong.")
             }
-            .onChange(of: appState.pendingWatchDraft) { _, newValue in
-                guard let newValue else { return }
-                draftText = newValue
-                isComposing = true
-                appState.pendingWatchDraft = nil
+            .onChange(of: appState.pendingWatchDrafts.count) { _, _ in
+                openNextWatchDraftIfAvailable()
             }
             .onAppear {
-                if let watchDraft = appState.pendingWatchDraft {
-                    draftText = watchDraft
-                    isComposing = true
-                    appState.pendingWatchDraft = nil
-                }
+                openNextWatchDraftIfAvailable()
             }
         }
+    }
+
+    /// Opens the review sheet with the oldest queued watch note, unless one's
+    /// already open — never interrupts a note the nurse is mid-reviewing.
+    /// Called on appear, whenever a new watch note finishes, and after
+    /// Save/Cancel so a backlog gets worked through one at a time.
+    private func openNextWatchDraftIfAvailable() {
+        guard !isComposing, let next = appState.popNextPendingWatchDraft() else { return }
+        draftText = next
+        draftDevice = .watch
+        isComposing = true
     }
 
     private var idleBar: some View {
@@ -111,6 +116,7 @@ struct CaptureView: View {
             Button {
                 isComposing = true
                 draftText = ""
+                draftDevice = .phone
             } label: {
                 Image(systemName: "keyboard")
                     .foregroundStyle(Theme.Color.sub)
@@ -167,6 +173,7 @@ struct CaptureView: View {
                 Button {
                     draftText = speech.liveTranscript
                     speech.stop()
+                    draftDevice = .phone
                     isComposing = true
                 } label: {
                     HStack(spacing: 6) {
@@ -218,6 +225,7 @@ struct CaptureView: View {
                     draftText = ""
                     phiFindings = []
                     phiAcknowledged = false
+                    openNextWatchDraftIfAvailable()
                 }
                 .font(Theme.Font.body(14, weight: .semibold))
                 .foregroundStyle(Theme.Color.sub)
@@ -285,12 +293,14 @@ struct CaptureView: View {
         // phiReviewed: true - reachable only when the Save button is
         // enabled, i.e. either the on-device PHIScreener found nothing, or
         // the nurse explicitly acknowledged reviewing the flagged content.
-        await appState.createNote(transcript: draftText, device: .phone, phiReviewed: true)
+        await appState.createNote(transcript: draftText, device: draftDevice, phiReviewed: true)
         isSaving = false
         draftText = ""
         isComposing = false
         phiFindings = []
         phiAcknowledged = false
+        draftDevice = .phone
+        openNextWatchDraftIfAvailable()
     }
 }
 

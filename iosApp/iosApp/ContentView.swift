@@ -29,11 +29,15 @@ struct ContentView: View {
         }
         .environmentObject(appState)
         // On launch: refresh the offline concept library and replay any
-        // mutations queued while offline. Both no-op silently when unreachable.
+        // mutations queued while offline (both no-op silently when
+        // unreachable), and prime speech-recognition permission so a Watch
+        // recording finished before ever dictating on the phone still
+        // transcribes — see SpeechCapture.requestSpeechPermissionIfNeeded.
         .task {
             WatchConnectivityReceiver.shared.appState = appState
             await appState.flushOutbox()
             await appState.refreshLibrary()
+            await SpeechCapture.requestSpeechPermissionIfNeeded()
         }
     }
 }

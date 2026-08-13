@@ -24,12 +24,20 @@ final class AppState: ObservableObject {
 
     @Published var errorMessage: String?
 
-    /// A transcript just received from the Watch app (WatchConnectivityReceiver),
-    /// awaiting the same review/PHI-acknowledgment step as any other capture
-    /// before it's saved — see REQUIREMENTS.md "queued and finished/transcribed
-    /// on phone via Watch Connectivity." CaptureView clears this once it opens
-    /// the review sheet with this text.
-    @Published var pendingWatchDraft: String?
+    /// Finished watch notes (WatchConnectivityReceiver) awaiting the same
+    /// review/PHI-acknowledgment step as any other capture before they're
+    /// saved — see REQUIREMENTS.md "queued and finished/transcribed on phone
+    /// via Watch Connectivity." A FIFO queue rather than a single optional:
+    /// a nurse can finish a second watch note before reviewing the first, and
+    /// this way the second never silently overwrites/loses the first — each
+    /// is reviewed in turn. CaptureView pops the next one when it's ready.
+    @Published var pendingWatchDrafts: [String] = []
+
+    /// Removes and returns the oldest queued watch note, if any.
+    func popNextPendingWatchDraft() -> String? {
+        guard !pendingWatchDrafts.isEmpty else { return nil }
+        return pendingWatchDrafts.removeFirst()
+    }
 
     private let api: APIClient
 

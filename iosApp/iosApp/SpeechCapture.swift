@@ -133,13 +133,23 @@ final class SpeechCapture: ObservableObject {
         }
     }
 
+    /// Primes speech-recognition permission on app launch (see ContentView),
+    /// so a nurse who records on the Watch before ever dictating on the phone
+    /// still gets a working transcription — without this, `transcribeFile`
+    /// below would only ever see permission granted after a first *live*
+    /// phone dictation, since that's the only other place it's requested.
+    /// A no-op if already determined (granted or denied): this never
+    /// re-prompts, it only covers the still-undetermined case.
+    static func requestSpeechPermissionIfNeeded() async {
+        guard SFSpeechRecognizer.authorizationStatus() == .notDetermined else { return }
+        await withCheckedContinuation { continuation in
+            SFSpeechRecognizer.requestAuthorization { _ in continuation.resume() }
+        }
+    }
+
     /// One-shot, on-device transcription of a pre-recorded audio file — used
     /// for Watch-recorded memos (WatchConnectivityReceiver), as opposed to the
-    /// live mic transcription above used for phone dictation. Requires speech
-    /// permission to already be granted (the phone's Capture flow requests it
-    /// on first live dictation; a watch-only user who's never dictated on the
-    /// phone hits `.speechDenied` here and the memo transcription silently
-    /// fails — an accepted v1 gap called out in WatchConnectivityReceiver).
+    /// live mic transcription above used for phone dictation.
     static func transcribeFile(at url: URL) async throws -> String {
         guard let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US")),
               recognizer.supportsOnDeviceRecognition else {
