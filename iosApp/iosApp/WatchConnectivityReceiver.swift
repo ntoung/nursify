@@ -65,6 +65,51 @@ final class WatchConnectivityReceiver: NSObject, ObservableObject {
         tryFlush(sessionId)
     }
 
+    // MARK: - Ask mode — a single spoken term, answered immediately over
+    // `sendMessageData`'s reply handler rather than the queued file/userInfo
+    // transfers above. Resolved entirely offline against the bundled concept
+    // library (same one Search uses), reusing whole-term mention matching:
+    // a query like "what's TAVR" contains "TAVR" as a matchable term the same
+    // way a note transcript would, so there's no separate query-parsing path
+    // to build or keep in sync with the note side.
+
+    private func handleAskQuery(audioData: Data, replyHandler: @escaping (Data) -> Void) {
+        Task {
+            let url = FileManager.default.temporaryDirectory
+                .appendingPathComponent(UUID().uuidString)
+                .appendingPathExtension("m4a")
+            defer { try? FileManager.default.removeItem(at: url) }
+
+            let response: AskResponse
+            do {
+                try audioData.write(to: url)
+                let transcript = try await SpeechCapture.transcribeFile(at: url)
+                response = resolveAskQuery(transcript: transcript)
+            } catch {
+                response = AskResponse(found: false, termName: nil, shortExplanation: nil, longExplanation: nil)
+            }
+            replyHandler((try? JSONEncoder().encode(response)) ?? Data())
+        }
+    }
+
+    private func resolveAskQuery(transcript: String) -> AskResponse {
+        guard let match = ConceptLibrary.shared.mentions(in: transcript).first else {
+            return AskResponse(found: false, termName: nil, shortExplanation: nil, longExplanation: nil)
+        }
+        // Fire-and-forget: logs the lookup to the same synced search history
+        // Search-tab lookups use, so it shows up under Recent there too.
+        // Not on the reply's critical path — the watch shouldn't wait on a
+        // network round-trip just to log history.
+        let conceptId = match.conceptId
+        Task { await appState?.recordSearchHistory(conceptId: conceptId) }
+        return AskResponse(
+            found: true,
+            termName: match.conceptName,
+            shortExplanation: match.shortExplanation,
+            longExplanation: match.longExplanation
+        )
+    }
+
     private func tryFlush(_ sessionId: String) {
         guard let buffer = sessionBuffers[sessionId],
               let expected = buffer.expectedCount,
@@ -110,6 +155,12 @@ extension WatchConnectivityReceiver: WCSessionDelegate {
               let totalCount = userInfo["totalCount"] as? Int else { return }
         Task { @MainActor in
             WatchConnectivityReceiver.shared.markSessionComplete(sessionId: sessionId, totalCount: totalCount)
+        }
+    }
+
+    nonisolated func session(_ session: WCSession, didReceiveMessageData messageData: Data, replyHandler: @escaping (Data) -> Void) {
+        Task { @MainActor in
+            WatchConnectivityReceiver.shared.handleAskQuery(audioData: messageData, replyHandler: replyHandler)
         }
     }
 }

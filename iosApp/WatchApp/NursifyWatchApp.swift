@@ -4,7 +4,7 @@ import SwiftUI
 struct NursifyWatchApp: App {
     var body: some Scene {
         WindowGroup {
-            WatchCaptureView()
+            WatchRootView()
         }
     }
 }

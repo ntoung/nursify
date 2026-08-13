@@ -13,9 +13,30 @@ import WatchConnectivity
 /// clip count once the nurse taps Done. The phone (WatchConnectivityReceiver)
 /// buffers clips per session and only surfaces a note for review once it has
 /// every clip the completion marker says to expect — see that file for why.
+///
+/// Ask mode (a single spoken term, answered immediately) is a different
+/// transaction shape entirely — a live request/reply, not a durable queued
+/// background one — so it uses `sendMessageData` instead, which requires
+/// `isReachable` and fails fast rather than queuing. That's the right
+/// tradeoff here: a query answered minutes later, after the nurse has moved
+/// on, isn't useful the way a delayed note capture still is.
 @MainActor
 final class WatchConnectivityManager: NSObject, ObservableObject {
     static let shared = WatchConnectivityManager()
+
+    enum AskError: LocalizedError {
+        case notReachable
+        case invalidReply
+
+        var errorDescription: String? {
+            switch self {
+            case .notReachable:
+                return "Can't reach your phone right now. Make sure the Nursify app is open nearby and try again."
+            case .invalidReply:
+                return "Got an unexpected reply from your phone. Try again."
+            }
+        }
+    }
 
     @Published private(set) var pendingTransferCount = 0
 
@@ -46,6 +67,24 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
             "sessionId": id.uuidString,
             "totalCount": clipCount
         ])
+    }
+
+    /// Sends a single spoken query to the phone and waits for its answer.
+    func ask(fileAt url: URL) async throws -> AskResponse {
+        guard let session, session.isReachable else { throw AskError.notReachable }
+        let audioData = try Data(contentsOf: url)
+
+        return try await withCheckedThrowingContinuation { continuation in
+            session.sendMessageData(audioData) { replyData in
+                guard let response = try? JSONDecoder().decode(AskResponse.self, from: replyData) else {
+                    continuation.resume(throwing: AskError.invalidReply)
+                    return
+                }
+                continuation.resume(returning: response)
+            } errorHandler: { error in
+                continuation.resume(throwing: error)
+            }
+        }
     }
 
     private func refreshPendingCount() {
