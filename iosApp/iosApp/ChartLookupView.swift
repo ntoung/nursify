@@ -10,7 +10,11 @@ struct ChartLookupInputView: View {
     @State private var medications: [String] = ["Furosemide", "Metoprolol", "Lisinopril"]
     @State private var currentSession: LookupSession?
     @State private var isLoading = false
-    @State private var loadError: String?
+    @State private var isAddingComplaint = false
+    @State private var isAddingMedication = false
+    @State private var newComplaintText = ""
+    @State private var newMedicationText = ""
+    @FocusState private var addFieldFocused: Bool
 
     private let quickComplaints = ["COPD flare", "Post-op pain", "Sepsis workup", "Chest pain"]
 
@@ -24,8 +28,20 @@ struct ChartLookupInputView: View {
                         .padding(.top, 4)
                         .padding(.bottom, 4)
 
-                    editableChipSection(title: "Chief complaints", items: $complaints)
-                    editableChipSection(title: "Medications", items: $medications)
+                    editableChipSection(
+                        title: "Chief complaints",
+                        placeholder: "Add complaint",
+                        items: $complaints,
+                        isAdding: $isAddingComplaint,
+                        draftText: $newComplaintText
+                    )
+                    editableChipSection(
+                        title: "Medications",
+                        placeholder: "Add drug",
+                        items: $medications,
+                        isAdding: $isAddingMedication,
+                        draftText: $newMedicationText
+                    )
 
                     SectionLabel(text: "Quick picks · common on Telemetry")
                         .padding(.top, 18)
@@ -47,17 +63,13 @@ struct ChartLookupInputView: View {
                             .buttonStyle(.plain)
                         }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(24)
                 .padding(.bottom, 90)
             }
             .safeAreaInset(edge: .bottom) {
                 VStack(spacing: 10) {
-                    if let loadError {
-                        Text(loadError)
-                            .font(Theme.Font.body(12.5, weight: .semibold))
-                            .foregroundStyle(Theme.Color.warnInk)
-                    }
                     PrimaryButton(title: isLoading ? "Looking up..." : "Get explanations") {
                         guard !isLoading else { return }
                         Task { await performLookup() }
@@ -90,17 +102,19 @@ struct ChartLookupInputView: View {
 
     private func performLookup() async {
         isLoading = true
-        loadError = nil
         defer { isLoading = false }
-        do {
-            currentSession = try await appState.performChartLookup(chiefComplaints: complaints, medicationNames: medications)
-        } catch {
-            loadError = "Couldn't reach the server: \(error.localizedDescription)"
-        }
+        // Served from the offline concept library — no network, so this can't fail.
+        currentSession = appState.performChartLookup(chiefComplaints: complaints, medicationNames: medications)
     }
 
     @ViewBuilder
-    private func editableChipSection(title: String, items: Binding<[String]>) -> some View {
+    private func editableChipSection(
+        title: String,
+        placeholder: String,
+        items: Binding<[String]>,
+        isAdding: Binding<Bool>,
+        draftText: Binding<String>
+    ) -> some View {
         SectionLabel(text: title).padding(.top, 14).padding(.bottom, 8)
         FlowLayout(spacing: 9) {
             ForEach(items.wrappedValue, id: \.self) { item in
@@ -118,7 +132,55 @@ struct ChartLookupInputView: View {
                 .overlay(Capsule().stroke(Theme.Color.line, lineWidth: 1.5))
                 .clipShape(Capsule())
             }
+
+            if isAdding.wrappedValue {
+                HStack(spacing: 6) {
+                    TextField(placeholder, text: draftText)
+                        .font(Theme.Font.body(14, weight: .semibold))
+                        .frame(minWidth: 100)
+                        .focused($addFieldFocused)
+                        .onSubmit { commitAdd(items: items, draftText: draftText, isAdding: isAdding) }
+                    Button {
+                        commitAdd(items: items, draftText: draftText, isAdding: isAdding)
+                    } label: {
+                        Image(systemName: "checkmark").font(.system(size: 11, weight: .bold)).foregroundStyle(Theme.Color.accentInk)
+                    }
+                    .buttonStyle(.plain)
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 9)
+                .background(SwiftUI.Color.white)
+                .overlay(Capsule().stroke(Theme.Color.accent, lineWidth: 1.5))
+                .clipShape(Capsule())
+            } else {
+                Button {
+                    isAdding.wrappedValue = true
+                    addFieldFocused = true
+                } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "plus").font(.system(size: 12, weight: .bold))
+                        Text(placeholder)
+                    }
+                    .font(Theme.Font.body(14, weight: .bold))
+                    .foregroundStyle(Theme.Color.sub)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 9)
+                    .overlay(Capsule().stroke(Color(hex: "C9BFAD"), style: StrokeStyle(lineWidth: 1.5, dash: [4, 3])))
+                    .clipShape(Capsule())
+                }
+                .buttonStyle(.plain)
+            }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func commitAdd(items: Binding<[String]>, draftText: Binding<String>, isAdding: Binding<Bool>) {
+        let trimmed = draftText.wrappedValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmed.isEmpty, !items.wrappedValue.contains(trimmed) {
+            items.wrappedValue.append(trimmed)
+        }
+        draftText.wrappedValue = ""
+        isAdding.wrappedValue = false
     }
 }
 
