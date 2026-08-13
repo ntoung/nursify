@@ -179,3 +179,30 @@ struct ConceptCard: View {
         }
     }
 }
+
+/// Shared empty-state placeholder — an icon, a title, and a short explanation.
+/// Used wherever a list starts out with nothing to show (Capture notes, Learn
+/// feed) so those screens read as intentionally empty rather than broken.
+struct EmptyStateView: View {
+    let icon: String
+    let title: String
+    let message: String
+
+    var body: some View {
+        VStack(spacing: 12) {
+            Image(systemName: icon)
+                .font(.system(size: 40, weight: .regular))
+                .foregroundStyle(Theme.Color.sub)
+            Text(title)
+                .font(Theme.Font.heading(18))
+                .foregroundStyle(Theme.Color.ink)
+            Text(message)
+                .font(Theme.Font.body(14))
+                .foregroundStyle(Theme.Color.sub)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 24)
+        .padding(.vertical, 48)
+    }
+}
