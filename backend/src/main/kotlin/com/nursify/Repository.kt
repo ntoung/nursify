@@ -69,6 +69,20 @@ object ConceptRepository {
         rowToDto(row)
     }
 
+    /**
+     * Resolve a term to a concept by exact (case-insensitive) name first, then
+     * by any exact alias — so chart lookup matches brand names and common
+     * abbreviations too (e.g. "Lasix" or "ASA" -> the curated concept), not
+     * just the canonical name.
+     */
+    fun findByNameOrAliasIgnoreCase(term: String): ConceptDto? = transaction {
+        findByNameIgnoreCase(term)?.let { return@transaction it }
+        val aliasRow = Aliases.selectAll()
+            .firstOrNull { it[Aliases.aliasText].equals(term, ignoreCase = true) }
+            ?: return@transaction null
+        Concepts.select { Concepts.id eq aliasRow[Aliases.conceptId] }.singleOrNull()?.let { rowToDto(it) }
+    }
+
     fun search(query: String): List<ConceptSummaryDto> = transaction {
         val lowerQuery = query.lowercase()
         val matchingConceptIds = Aliases.selectAll()
@@ -89,6 +103,16 @@ object ConceptRepository {
             }
     }
 
+    /**
+     * Full corpus with complete detail (sections, aliases, related ids) in one
+     * shot — backs the iOS app's offline-first bundled library and its periodic
+     * snapshot sync, so the whole concept library can be pulled in a single
+     * request rather than N+1 category + by-id calls.
+     */
+    fun findAll(): List<ConceptDto> = transaction {
+        Concepts.selectAll().map { rowToDto(it) }.sortedBy { it.name.lowercase() }
+    }
+
     fun byCategory(type: ConceptType): List<ConceptSummaryDto> = transaction {
         Concepts.select { Concepts.type eq type.name }.map { row ->
             ConceptSummaryDto(
@@ -96,6 +120,24 @@ object ConceptRepository {
                 type = ConceptType.valueOf(row[Concepts.type]),
                 name = row[Concepts.name]
             )
+        }
+    }
+
+    /**
+     * Whole-word/phrase keyword matching against the curated corpus (concept
+     * names + aliases) — stands in for real NLP/LLM entity extraction
+     * (SYSTEM_DESIGN.md "AI/ML pipeline architecture", Roadmap Phase 5, not
+     * built yet: no LLM/embeddings integration exists in this codebase).
+     * Matches whole terms only (not mid-word substrings), so short aliases
+     * like "PE" or "HD" don't fire on unrelated words like "experience" or
+     * "shed" — but this is still a blunt keyword match, not comprehension, so
+     * false positives/negatives on ambiguous phrasing are expected until a
+     * real extraction pipeline replaces this.
+     */
+    fun findMentions(transcript: String): List<ConceptDto> = transaction {
+        findAll().filter { concept ->
+            containsWholeTerm(transcript, concept.name) ||
+                concept.aliases.any { containsWholeTerm(transcript, it.text) }
         }
     }
 
@@ -123,6 +165,28 @@ object ConceptRepository {
     }
 }
 
+// Negative-lookbehind/lookahead on alphanumeric chars rather than \b: \b
+// mishandles terms ending in a symbol (e.g. alias "K+"), since \b only fires
+// at a word/non-word transition and both "+" and a following space are
+// non-word characters.
+private fun containsWholeTerm(text: String, term: String): Boolean {
+    val trimmed = term.trim()
+    if (trimmed.isEmpty()) return false
+    val pattern = Regex("(?i)(?<![A-Za-z0-9])${Regex.escape(trimmed)}(?![A-Za-z0-9])")
+    return pattern.containsMatchIn(text)
+}
+
+/** Mirrors the type -> primary-detail-field priority in the iOS concept detail page. */
+private fun longExplanationFor(type: ConceptType, sections: ConceptSections): String? = when (type) {
+    ConceptType.MEDICATION -> sections.nursingImplications ?: sections.sideEffects
+    ConceptType.PROCEDURE -> sections.whatToMonitor ?: sections.targetConcern
+    ConceptType.CONDITION -> sections.presentation ?: sections.typicalTreatments
+    ConceptType.LAB_VALUE -> sections.abnormalMeaning ?: sections.normalRange
+    ConceptType.EQUIPMENT -> sections.careConsiderations ?: sections.purpose
+    ConceptType.PROTOCOL -> sections.steps ?: sections.triggerCriteria
+    ConceptType.ANATOMY -> null
+}
+
 object NoteRepository {
     fun create(request: NoteCreateRequest): NoteDto = transaction {
         val id = UUID.randomUUID()
@@ -134,16 +198,40 @@ object NoteRepository {
             it[Notes.phiReviewed] = request.phiReviewed
             it[Notes.createdAt] = now
         }
-        // TODO: enqueue async AI augmentation (transcript cleanup -> concept
-        // extraction -> dedup embedding -> RAG explanation -> edge creation).
-        // Not implemented — needs a real LLM/embeddings integration.
-        // See SYSTEM_DESIGN.md "AI/ML pipeline architecture".
+
+        // Concept identification: keyword/alias matching against the curated
+        // corpus — see ConceptRepository.findMentions for why this stands in
+        // for real extraction. Persisted as note->concept `mentions` edges
+        // (NoteMentions) per REQUIREMENTS.md's knowledge graph model.
+        val mentions = ConceptRepository.findMentions(request.transcript)
+        mentions.forEach { concept ->
+            NoteMentions.insert {
+                it[NoteMentions.noteId] = id
+                it[NoteMentions.conceptId] = UUID.fromString(concept.id)
+                it[NoteMentions.createdAt] = now
+            }
+        }
+
+        // TODO: transcript cleanup, dedup embedding, RAG-grounded explanation
+        // generation, and concept<->concept edge creation still need a real
+        // LLM/embeddings integration. See SYSTEM_DESIGN.md "AI/ML pipeline
+        // architecture".
         NoteDto(
             id = id.toString(),
             transcript = request.transcript,
             device = request.device,
             phiReviewed = request.phiReviewed,
-            createdAt = now.toEpochMilli()
+            createdAt = now.toEpochMilli(),
+            mentionedConcepts = mentions.map { concept ->
+                MentionedConceptDto(
+                    id = concept.id,
+                    conceptId = concept.id,
+                    conceptName = concept.name,
+                    type = concept.type,
+                    shortExplanation = concept.shortExplanation,
+                    longExplanation = longExplanationFor(concept.type, concept.sections)
+                )
+            }
         )
     }
 }

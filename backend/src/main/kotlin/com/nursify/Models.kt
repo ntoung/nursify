@@ -70,6 +70,16 @@ data class NoteCreateRequest(
 )
 
 @Serializable
+data class MentionedConceptDto(
+    val id: String,
+    val conceptId: String,
+    val conceptName: String,
+    val type: ConceptType,
+    val shortExplanation: String,
+    val longExplanation: String? = null
+)
+
+@Serializable
 data class NoteDto(
     val id: String,
     val transcript: String,
@@ -78,7 +88,8 @@ data class NoteDto(
     // Epoch millis, not Instant.toString() — that emits a variable number of
     // fractional-second digits (0, 3, 6, or 9), which trips up naive iOS
     // Codable date parsing. Epoch millis sidesteps the whole format question.
-    val createdAt: Long
+    val createdAt: Long,
+    val mentionedConcepts: List<MentionedConceptDto> = emptyList()
 )
 
 @Serializable
