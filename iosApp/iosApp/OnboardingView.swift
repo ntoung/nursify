@@ -1,13 +1,20 @@
 import SwiftUI
 
 /// Multi-page onboarding: a welcome/logo page followed by one question per
-/// page (name, experience, specialties), each with its own Continue action.
-/// Replaces the earlier single-page specialty+experience form.
+/// page (name, experience, specialties), each with its own Continue action,
+/// ending on a one-time educational-disclaimer acknowledgment. Replaces the
+/// earlier single-page specialty+experience form.
+///
+/// The disclaimer used to repeat on every concept-detail/chart-lookup screen
+/// (REQUIREMENTS.md's original "persistent, not one-time" call, from panel
+/// feedback flagging a single notice as insufficient) — moved here as a
+/// deliberate reversal of that decision.
 private enum OnboardingStep: Int, CaseIterable {
     case welcome
     case name
     case experience
     case specialties
+    case disclaimer
 }
 
 struct OnboardingView: View {
@@ -39,6 +46,7 @@ struct OnboardingView: View {
             case .name: namePage
             case .experience: experiencePage
             case .specialties: specialtiesPage
+            case .disclaimer: disclaimerPage
             }
         }
         .background(Theme.Color.background.ignoresSafeArea())
@@ -263,17 +271,41 @@ struct OnboardingView: View {
                 .background(Theme.Color.accentSoftBackground)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
 
-                PrimaryButton(title: "Continue") {
-                    appState.completeOnboarding(
-                        name: trimmedName,
-                        specialties: selectedSpecialties,
-                        experience: selectedExperience
-                    )
-                }
+                PrimaryButton(title: "Continue") { advance() }
+            }
+            .padding(24)
+        }
+    }
 
-                Text("\(selectedSpecialties.count) specialties · \(selectedExperience?.rawValue ?? "not set")")
-                    .font(Theme.Font.body(13))
-                    .foregroundStyle(Theme.Color.sub)
+    // MARK: - Page 5: Educational disclaimer acknowledgment
+
+    private var disclaimerPage: some View {
+        VStack(spacing: 0) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("One more thing")
+                            .font(Theme.Font.heading(28))
+                        Text("Please read this before you get started.")
+                            .font(Theme.Font.body(15))
+                            .foregroundStyle(Theme.Color.sub)
+                    }
+
+                    EducationalDisclaimerBanner()
+
+                    Text("Nursify's AI-generated explanations are grounded in trusted, open medical sources and cite where they come from — but they're for your own learning and quick reference only. They're never a substitute for your clinical judgment, your facility's protocols, or guidance from a provider.")
+                        .font(Theme.Font.body(15))
+                        .foregroundStyle(Theme.Color.ink)
+                }
+                .padding(24)
+            }
+
+            PrimaryButton(title: "Get Started") {
+                appState.completeOnboarding(
+                    name: trimmedName,
+                    specialties: selectedSpecialties,
+                    experience: selectedExperience
+                )
             }
             .padding(24)
         }

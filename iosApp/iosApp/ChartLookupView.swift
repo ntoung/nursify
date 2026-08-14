@@ -271,7 +271,6 @@ struct ChartLookupResultsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
-                EducationalDisclaimerBanner()
                 Text("Short version always shown — tap a medication for mechanism, side effects & nursing implications.")
                     .font(Theme.Font.body(15.5))
                     .foregroundStyle(Theme.Color.sub)

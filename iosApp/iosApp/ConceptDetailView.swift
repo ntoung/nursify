@@ -9,6 +9,7 @@ import SwiftUI
 /// related concepts, citation) is fetched by id when this view appears.
 struct ConceptDetailView: View {
     @EnvironmentObject private var appState: AppState
+    @Environment(\.dismiss) private var dismiss
     let conceptId: UUID
 
     @State private var concept: Concept?
@@ -54,6 +55,31 @@ struct ConceptDetailView: View {
     private func content(for concept: Concept) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
+                // Back chevron sits in line with the title (no wasted nav-bar
+                // space), title + aliases read as one unit beside it.
+                HStack(alignment: .firstTextBaseline, spacing: 10) {
+                    Button { dismiss() } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 18, weight: .bold))
+                            .foregroundStyle(Theme.Color.ink)
+                    }
+                    .buttonStyle(.plain)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(concept.name)
+                            .font(Theme.Font.heading(26, weight: .bold))
+                            .foregroundStyle(Theme.Color.ink)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        if !concept.aliases.isEmpty {
+                            Text(concept.aliases.map(\.text).joined(separator: " · "))
+                                .font(Theme.Font.body(12.5, weight: .semibold))
+                                .foregroundStyle(Theme.Color.sub)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                }
+
                 if !concept.tags.isEmpty {
                     HStack(spacing: 7) {
                         ForEach(concept.tags, id: \.self) { tag in
@@ -68,16 +94,10 @@ struct ConceptDetailView: View {
                     }
                 }
 
-                EducationalDisclaimerBanner()
-
-                if !concept.aliases.isEmpty {
-                    Text("Also known as: \(concept.aliases.map(\.text).joined(separator: ", "))")
-                        .font(Theme.Font.body(12.5, weight: .semibold))
-                        .foregroundStyle(Theme.Color.sub)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-
-                labeledParagraph("In short", concept.shortExplanation)
+                Text(concept.shortExplanation)
+                    .font(Theme.Font.body(15.5))
+                    .foregroundStyle(Theme.Color.ink)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 ForEach(typeSpecificSections(for: concept), id: \.label) { section in
                     if section.isHighlighted {
@@ -116,7 +136,10 @@ struct ConceptDetailView: View {
             }
             .padding(24)
         }
-        .navigationTitle(concept.name)
+        // Hidden nav bar: the in-content header carries the back button + title
+        // in line, so there's no separate nav-bar row taking vertical space.
+        .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
     }
 
     @ViewBuilder

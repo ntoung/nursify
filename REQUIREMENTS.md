@@ -47,6 +47,7 @@ First-open flow that asks the nurse a few questions about themselves so the app 
 - **Specialty/unit type** — e.g. Telemetry, Med-Surg, Oncology, ICU/Critical Care, ER, L&D/Maternity, Pediatrics, NICU, Psych/Behavioral Health, OR/Perioperative, PACU, Renal/Dialysis, Rehab, Home Health/Hospice. **Multi-select** — a nurse can float across or work multiple units.
 - **Years of experience** — single-select bucket: New grad (<1yr), 1–3 years, 4–7 years, 8–15 years, 15+ years. Coarse buckets rather than an exact number — the point is calibrating depth/tone, not collecting precise tenure. Previously deferred (see Panel feedback) — reopened and added after two independent panel personas flagged that "layman's terms" and suggestion depth should scale with seniority, not just specialty.
 - Both fully **editable later** from settings — not a one-time lock-in.
+- **Educational-disclaimer acknowledgment** — final step before entering the app: the same "educational reference, not clinical decision support" language, shown once here rather than repeated on every concept detail/chart lookup page. See Concept detail pages and Panel feedback for why this reverses the original per-page-banner decision.
 
 ### How it affects the app
 - **Personalizes, does not restrict.** Selected specialties and experience level bias:
@@ -89,7 +90,7 @@ Every concept, regardless of type, has its own page — reachable via search, ca
 ### Common structure (every type)
 - Title, type badge, alias line if applicable (e.g. "Also known as: TAVR").
 - Tags — each tag is a tappable link to a filtered view of every concept sharing it (same mechanism as the Learn page's category chips).
-- Persistent educational disclaimer banner ("educational reference, not clinical decision support" — shown on every page, not a one-time notice).
+- Educational-disclaimer acknowledgment ("educational reference, not clinical decision support") — shown once, as the final onboarding step, not repeated per page. Reverses the panel-review call below for a persistent per-page banner; revisit if real usage shows nurses need the reminder in the moment, not just at setup.
 - Short explanation.
 - Related concepts — chips linking to other concept pages via graph edges; tapping one navigates to that concept's own detail page, not just a preview.
 - Source citations.
@@ -258,13 +259,12 @@ Reviewed by four simulated nurse personas of varying experience for realism/work
 - **ICU/charge nurse (18yr)** — wants a persistent, visually distinct "educational, not clinical decision support" disclaimer on every AI explanation, not just a one-time notice; thinks PHI guardrail needs to catch spoken conversational PHI, not just pattern-match names/MRNs; questions fully-ephemeral Feature B design since it means zero personal lookup history — wants an aggregate, patient-delinked count only.
 - **Nurse educator/preceptor (12yr)** — suggestion engine's spaced-repetition approach fits orientation programs well; wants concepts eventually mappable to existing frameworks (NCLEX categories, unit competency checklists, CCRN/CMSRN-style blueprints); also pushes back on deferring experience-level onboarding; asks whether citations will be source links only or quoted excerpts.
 
-**Resolved since this review**: capture-location assumption (doesn't matter, audio capture works anywhere); PHI screening (now a day-1 capture-time requirement, on-device); Feature B long-version content (nursing implications now required); experience-level onboarding (added as a coarse-bucket question alongside specialty); Feature B lookup history (now shift-scoped and revisitable, not fully ephemeral — see Data retention above; goes beyond the aggregate-count-only ask, since full session detail is more useful and still carries no PHI). Still open: bulk/multi-patient entry for Feature B, unit-specific protocol representation, persistent AI-content disclaimer, competency-framework mapping, citation depth.
+**Resolved since this review**: capture-location assumption (doesn't matter, audio capture works anywhere); PHI screening (now a day-1 capture-time requirement, on-device); Feature B long-version content (nursing implications now required); experience-level onboarding (added as a coarse-bucket question alongside specialty); Feature B lookup history (now shift-scoped and revisitable, not fully ephemeral — see Data retention above; goes beyond the aggregate-count-only ask, since full session detail is more useful and still carries no PHI); persistent AI-content disclaimer (decided the other way from this panel's ask — see Concept detail pages and Onboarding; now a one-time onboarding acknowledgment, not a per-page banner). Still open: bulk/multi-patient entry for Feature B, unit-specific protocol representation, competency-framework mapping, citation depth.
 
 ## Open questions (unresolved)
 
 - **Bulk/multi-patient entry for Feature B**: one-drug-at-a-time manual entry may be too slow for a full patient assignment — worth a bulk-entry or reusable-combo flow.
 - **Unit-specific protocol representation**: how to represent floor/unit-specific order sets and protocols that generic open sources won't cover.
-- **Persistent AI-content disclaimer**: whether every AI explanation needs a visually distinct "educational, not clinical decision support" marker, not just a one-time onboarding notice.
 - **Shift history auto-expiry window**: is ~24h the right default, or should it be configurable / tied to an explicit "end shift" action instead of a fixed timer?
 - **Competency-framework mapping**: whether concepts should eventually map to existing frameworks (NCLEX categories, unit competency checklists, CCRN/CMSRN-style blueprints).
 - **Citation depth**: source title/link only vs. quoted excerpt from the source, for both Feature A and Feature B explanations.
