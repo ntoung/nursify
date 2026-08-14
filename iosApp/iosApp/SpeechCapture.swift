@@ -1,4 +1,5 @@
 import AVFoundation
+import CallKit
 import Foundation
 import Speech
 
@@ -8,11 +9,12 @@ import Speech
 /// check and nurse review in CaptureView's draft step, before anything is
 /// sent to the backend).
 @MainActor
-final class SpeechCapture: ObservableObject {
+final class SpeechCapture: NSObject, ObservableObject {
     enum CaptureError: LocalizedError {
         case micDenied
         case speechDenied
         case onDeviceUnavailable
+        case callInProgress
         case audioSessionFailed(Error)
         case recognitionFailed(Error)
 
@@ -24,6 +26,11 @@ final class SpeechCapture: ObservableObject {
                 return "Speech recognition access is off. Enable it in Settings to transcribe voice notes."
             case .onDeviceUnavailable:
                 return "On-device transcription isn't available for the current language on this device."
+            case .callInProgress:
+                // No third-party app can take over the microphone from an
+                // active call — that's an intentional OS-level boundary, not
+                // something to work around. Typed notes are the fallback.
+                return "Recording isn't available during a call. End your call, then try again — or tap the keyboard icon to type your note instead."
             case .audioSessionFailed(let error):
                 return "Couldn't start recording: \(error.localizedDescription). Try again — if it keeps happening, another app may be using the microphone."
             case .recognitionFailed(let error):
@@ -35,17 +42,29 @@ final class SpeechCapture: ObservableObject {
     @Published private(set) var isRecording = false
     @Published private(set) var liveTranscript = ""
     @Published var captureError: CaptureError?
+    /// Whether a phone/FaceTime call is currently active — CaptureView uses
+    /// this to disable the record button and explain why up front, rather
+    /// than letting the nurse tap it and hit a bare "Session activation
+    /// failed" with no context.
+    @Published private(set) var isCallActive: Bool
 
     private let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
     private let audioEngine = AVAudioEngine()
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
+    private let callObserver = CXCallObserver()
     /// Guards against a rapid double-tap on the record button re-entering
     /// `start()` while the first call is still mid-flight: without this, the
     /// second call's `captureError = nil` at the top would silently wipe out
     /// an error alert the first call had just shown, making it look like the
     /// alert "flashes and disappears" rather than a real failure happening.
     private var isStarting = false
+
+    override init() {
+        isCallActive = callObserver.calls.contains { !$0.hasEnded }
+        super.init()
+        callObserver.setDelegate(self, queue: .main)
+    }
 
     func start() async {
         await start(isRetry: false)
@@ -82,6 +101,10 @@ final class SpeechCapture: ObservableObject {
             captureError = .onDeviceUnavailable
             return
         }
+        guard !isCallActive else {
+            captureError = .callInProgress
+            return
+        }
 
         let session = AVAudioSession.sharedInstance()
         do {
@@ -93,7 +116,12 @@ final class SpeechCapture: ObservableObject {
             try session.setCategory(.record, mode: .measurement, options: .duckOthers)
             try session.setActive(true, options: .notifyOthersOnDeactivation)
         } catch {
-            captureError = .audioSessionFailed(error)
+            // A call that started in the moment between the guard above and
+            // this activation attempt is the single most common real-world
+            // cause of this failing — worth re-checking so the error is
+            // still specific rather than a generic "Session activation
+            // failed" in that narrow race window.
+            captureError = isCallActive ? .callInProgress : .audioSessionFailed(error)
             return
         }
 
@@ -235,6 +263,14 @@ final class SpeechCapture: ObservableObject {
                     continuation.resume(returning: result.bestTranscription.formattedString)
                 }
             }
+        }
+    }
+}
+
+extension SpeechCapture: CXCallObserverDelegate {
+    nonisolated func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
+        Task { @MainActor in
+            self.isCallActive = callObserver.calls.contains { !$0.hasEnded }
         }
     }
 }

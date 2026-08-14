@@ -124,8 +124,9 @@ struct CaptureView: View {
             }
             .buttonStyle(.plain)
 
-            Text("Tap to add a note")
+            Text(speech.isCallActive ? "Recording unavailable during a call" : "Tap to add a note")
                 .font(Theme.Font.heading(13))
+                .foregroundStyle(speech.isCallActive ? Theme.Color.sub : Theme.Color.ink)
             Spacer()
             Button {
                 Task { await speech.start() }
@@ -134,11 +135,14 @@ struct CaptureView: View {
                     .foregroundStyle(.white)
                     .frame(width: 52, height: 52)
                     .background(
-                        LinearGradient(colors: [Color(hex: "F0917A"), Color(hex: "DE7259")], startPoint: .top, endPoint: .bottom)
+                        speech.isCallActive
+                            ? AnyShapeStyle(Theme.Color.sub)
+                            : AnyShapeStyle(LinearGradient(colors: [Color(hex: "F0917A"), Color(hex: "DE7259")], startPoint: .top, endPoint: .bottom))
                     )
                     .clipShape(Circle())
             }
             .buttonStyle(.plain)
+            .disabled(speech.isCallActive)
         }
         .padding(.horizontal, 24)
         .padding(.vertical, 14)
