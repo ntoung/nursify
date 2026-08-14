@@ -1,13 +1,80 @@
 import Foundation
 import SwiftUI
 
-/// Chart tab: input (chief complaints + medications as editable chips) ->
-/// results (tap-to-expand ConceptCards). History is shift-scoped and,
-/// per SYSTEM_DESIGN.md, lives only in AppState/on-device — never synced.
+/// Charts tab root: a list of this shift's past lookups, shift-scoped and,
+/// per SYSTEM_DESIGN.md, living only in AppState/on-device — never synced.
+/// "New Chart" presents ChartLookupInputView as a sheet, always starting
+/// empty; tapping a past chart pushes straight to its stored results.
+struct ChartsListView: View {
+    @EnvironmentObject private var appState: AppState
+    @State private var isPresentingNewChart = false
+
+    var body: some View {
+        NavigationStack {
+            Group {
+                if appState.lookupSessions.isEmpty {
+                    EmptyStateView(
+                        icon: "list.bullet.clipboard",
+                        title: "No charts yet",
+                        message: "Look up a chief complaint and medications to see why each drug is prescribed. Tap New Chart to get started."
+                    )
+                } else {
+                    List {
+                        ForEach(appState.lookupSessions) { session in
+                            NavigationLink(destination: ChartLookupResultsView(session: session)) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(session.chiefComplaints.joined(separator: ", "))
+                                        .font(Theme.Font.heading(14.5))
+                                    Text("\(session.medications.count) medications · \(session.createdAt.relativeDescription)")
+                                        .font(Theme.Font.body(12.5))
+                                        .foregroundStyle(Theme.Color.sub)
+                                }
+                            }
+                        }
+                    }
+                    .scrollContentBackground(.hidden)
+                }
+            }
+            .background(Theme.Color.background.ignoresSafeArea())
+            .navigationTitle("Charts")
+            .toolbar {
+                if !appState.lookupSessions.isEmpty {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Clear") { appState.clearLookupHistory() }
+                    }
+                }
+            }
+            .safeAreaInset(edge: .bottom) {
+                VStack(spacing: 10) {
+                    PrimaryButton(title: "New Chart") {
+                        isPresentingNewChart = true
+                    }
+                    HStack(spacing: 6) {
+                        Image(systemName: "lock.fill")
+                        Text("Kept for this shift only — no patient identifiers ever stored")
+                    }
+                    .font(Theme.Font.body(12.5, weight: .semibold))
+                    .foregroundStyle(Theme.Color.sub)
+                }
+                .padding(.horizontal, 24)
+                .padding(.vertical, 14)
+                .background(Theme.Color.background)
+            }
+            .sheet(isPresented: $isPresentingNewChart) {
+                ChartLookupInputView()
+            }
+        }
+    }
+}
+
+/// New-chart entry sheet: input (chief complaints + medications as editable
+/// chips) -> results (tap-to-expand ConceptCards). Always opens empty —
+/// ChartsListView presents a fresh instance each time.
 struct ChartLookupInputView: View {
     @EnvironmentObject private var appState: AppState
-    @State private var complaints: [String] = ["CHF exacerbation", "Shortness of breath"]
-    @State private var medications: [String] = ["Furosemide", "Metoprolol", "Lisinopril"]
+    @Environment(\.dismiss) private var dismiss
+    @State private var complaints: [String] = []
+    @State private var medications: [String] = []
     @State private var currentSession: LookupSession?
     @State private var isLoading = false
     @State private var isAddingComplaint = false
@@ -74,6 +141,8 @@ struct ChartLookupInputView: View {
                         guard !isLoading else { return }
                         Task { await performLookup() }
                     }
+                    .disabled(isLoading || medications.isEmpty)
+                    .opacity(medications.isEmpty ? 0.5 : 1)
                     HStack(spacing: 6) {
                         Image(systemName: "lock.fill")
                         Text("Kept for this shift only — no patient identifiers ever stored")
@@ -86,11 +155,15 @@ struct ChartLookupInputView: View {
                 .background(Theme.Color.background)
             }
             .background(Theme.Color.background.ignoresSafeArea())
-            .navigationTitle("Chart Lookup")
+            .navigationTitle("New Chart")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(destination: ChartLookupHistoryView()) {
-                        Image(systemName: "clock")
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .foregroundStyle(Theme.Color.sub)
                     }
                 }
             }
@@ -184,41 +257,6 @@ struct ChartLookupInputView: View {
     }
 }
 
-struct ChartLookupHistoryView: View {
-    @EnvironmentObject private var appState: AppState
-
-    var body: some View {
-        List {
-            ForEach(appState.lookupSessions) { session in
-                NavigationLink(destination: ChartLookupResultsView(session: session)) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(session.chiefComplaints.joined(separator: ", "))
-                            .font(Theme.Font.heading(14.5))
-                        Text("\(session.medications.count) medications · \(session.createdAt.relativeDescription)")
-                            .font(Theme.Font.body(12.5))
-                            .foregroundStyle(Theme.Color.sub)
-                    }
-                }
-            }
-        }
-        .overlay {
-            if appState.lookupSessions.isEmpty {
-                Text("No lookups yet this shift.")
-                    .font(Theme.Font.body(14))
-                    .foregroundStyle(Theme.Color.sub)
-            }
-        }
-        .scrollContentBackground(.hidden)
-        .background(Theme.Color.background)
-        .navigationTitle("History")
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("Clear") { appState.clearLookupHistory() }
-            }
-        }
-    }
-}
-
 struct ChartLookupResultsView: View {
     let session: LookupSession
 
@@ -249,5 +287,5 @@ struct ChartLookupResultsView: View {
 }
 
 #Preview {
-    ChartLookupInputView().environmentObject(AppState())
+    ChartsListView().environmentObject(AppState())
 }
