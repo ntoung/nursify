@@ -60,6 +60,10 @@
         {
           "text": "Paracetamol",
           "type": "NICKNAME"
+        },
+        {
+          "text": "Ofirmev",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -492,6 +496,10 @@
         {
           "text": "Adenocard",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Adenoscan",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -790,6 +798,37 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "alprazolam",
+      "type": "MEDICATION",
+      "name": "Alprazolam",
+      "shortExplanation": "A short-acting benzodiazepine used for anxiety and panic disorder.",
+      "sections": {
+        "mechanism": "Enhances the inhibitory neurotransmitter GABA at the GABA-A receptor, producing sedation, anxiety relief, and muscle relaxation.",
+        "sideEffects": "Drowsiness, dizziness, fatigue, impaired coordination, and memory problems.",
+        "adverseEffects": "Respiratory depression and profound sedation, especially with opioids or alcohol; tolerance, dependence, and withdrawal seizures with abrupt discontinuation.",
+        "nursingImplications": "Assess sedation and fall risk and avoid combining with opioids or alcohol. Do not stop abruptly; taper to prevent withdrawal. Flumazenil is a reversal agent but is used cautiously because it can precipitate seizures. Teach caution with driving.",
+        "commonBrandName": "Xanax"
+      },
+      "tags": [
+        "Pharmacology",
+        "Psychiatry"
+      ],
+      "aliases": [
+        {
+          "text": "Xanax",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "lorazepam",
+        "diazepam",
+        "clonazepam",
+        "flumazenil",
+        "delirium"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "alteplase",
       "type": "MEDICATION",
       "name": "Alteplase (tPA)",
@@ -915,6 +954,10 @@
         {
           "text": "Pacerone",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Nexterone",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -1003,6 +1046,37 @@
       ],
       "related": [
         "otitis-media"
+      ],
+      "sourceCitation": "Source: MedlinePlus, DailyMed"
+    },
+    {
+      "key": "amoxicillin-clavulanate",
+      "type": "MEDICATION",
+      "name": "Amoxicillin-Clavulanate",
+      "shortExplanation": "A combination oral antibiotic pairing amoxicillin with clavulanate to treat sinus, ear, respiratory, skin, and urinary infections including some resistant bacteria.",
+      "sections": {
+        "mechanism": "Amoxicillin is a penicillin that inhibits bacterial cell-wall synthesis; clavulanate is a beta-lactamase inhibitor that protects amoxicillin from enzymes that would otherwise inactivate it, broadening coverage.",
+        "sideEffects": "Diarrhea, nausea, vomiting, and vaginal yeast infection; diarrhea is more common than with amoxicillin alone.",
+        "adverseEffects": "Allergic reactions including anaphylaxis, Clostridioides difficile colitis, and rare cholestatic liver injury.",
+        "nursingImplications": "Screen for penicillin allergy. Give with food to reduce GI upset. Teach patients to complete the full course and report persistent diarrhea, which may signal C. difficile. Monitor for rash or signs of allergic reaction.",
+        "commonBrandName": "Augmentin"
+      },
+      "tags": [
+        "Pharmacology",
+        "Infectious disease"
+      ],
+      "aliases": [
+        {
+          "text": "Augmentin",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "amoxicillin",
+        "otitis-media",
+        "pneumonia",
+        "cellulitis",
+        "clostridioides-difficile-infection"
       ],
       "sourceCitation": "Source: MedlinePlus, DailyMed"
     },
@@ -1140,6 +1214,36 @@
       "related": [
         "diverticulitis",
         "cholecystitis"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "aripiprazole",
+      "type": "MEDICATION",
+      "name": "Aripiprazole",
+      "shortExplanation": "An atypical antipsychotic used for schizophrenia, bipolar disorder, and as add-on for depression, available orally and as a long-acting injection.",
+      "sections": {
+        "mechanism": "A partial agonist at dopamine D2 and serotonin 5-HT1A receptors and an antagonist at 5-HT2A, stabilizing dopamine activity with generally less sedation and metabolic effect than some other agents.",
+        "sideEffects": "Akathisia (restlessness), insomnia, anxiety, nausea, and headache.",
+        "adverseEffects": "Extrapyramidal symptoms and tardive dyskinesia, neuroleptic malignant syndrome, metabolic changes, impulse-control problems (such as compulsive gambling), and increased mortality in elderly patients with dementia-related psychosis.",
+        "nursingImplications": "Assess for akathisia, which patients may find distressing, and for other movement effects. Monitor weight, glucose, and lipids. Ask about new impulsive behaviors. The long-acting injection supports adherence; do not stop abruptly.",
+        "commonBrandName": "Abilify, Abilify Maintena"
+      },
+      "tags": [
+        "Pharmacology",
+        "Psychiatry"
+      ],
+      "aliases": [
+        {
+          "text": "Abilify",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "quetiapine",
+        "olanzapine",
+        "risperidone",
+        "neuroleptic-malignant-syndrome"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
@@ -1309,6 +1413,14 @@
         {
           "text": "Ecotrin",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Bufferin",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "St. Joseph",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -1345,6 +1457,37 @@
         "ipratropium",
         "peak-flow-meter",
         "pediatric-asthma-exacerbation"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "atenolol",
+      "type": "MEDICATION",
+      "name": "Atenolol",
+      "shortExplanation": "A cardioselective beta-blocker used for hypertension, angina, and some arrhythmias.",
+      "sections": {
+        "mechanism": "Selectively blocks beta-1 adrenergic receptors in the heart, lowering heart rate, contractility, and blood pressure and reducing myocardial oxygen demand.",
+        "sideEffects": "Fatigue, dizziness, bradycardia, cold extremities, and depression.",
+        "adverseEffects": "Marked bradycardia and hypotension, worsening heart block, and rebound hypertension or angina if stopped abruptly; it is largely renally cleared, so it accumulates in kidney impairment.",
+        "nursingImplications": "Check heart rate and blood pressure before dosing and hold and notify the provider for significant bradycardia or hypotension. Do not stop abruptly; taper. Teach diabetic patients that it can mask signs of hypoglycemia except sweating.",
+        "commonBrandName": "Tenormin"
+      },
+      "tags": [
+        "Pharmacology",
+        "Cardiology"
+      ],
+      "aliases": [
+        {
+          "text": "Tenormin",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "metoprolol",
+        "carvedilol",
+        "essential-hypertension",
+        "atrial-fibrillation",
+        "symptomatic-bradycardia"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
@@ -1427,7 +1570,13 @@
       "related": [
         "symptomatic-bradycardia"
       ],
-      "sourceCitation": "Source: StatPearls"
+      "sourceCitation": "Source: StatPearls",
+      "aliases": [
+        {
+          "text": "AtroPen",
+          "type": "BRAND_NAME"
+        }
+      ]
     },
     {
       "key": "av-fistula-graft-care",
@@ -1459,6 +1608,44 @@
       "related": [
         "hemodialysis",
         "chronic-kidney-disease"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "azithromycin",
+      "type": "MEDICATION",
+      "name": "Azithromycin",
+      "shortExplanation": "A macrolide antibiotic used for respiratory infections, some sexually transmitted infections, and skin infections, often given as a short course such as a Z-Pak.",
+      "sections": {
+        "mechanism": "Binds the bacterial 50S ribosomal subunit to inhibit protein synthesis, giving a broad but generally bacteriostatic effect with a long tissue half-life.",
+        "sideEffects": "Nausea, diarrhea, abdominal pain, and headache.",
+        "adverseEffects": "QT-interval prolongation with risk of arrhythmia, hepatotoxicity, and rare severe allergic or skin reactions.",
+        "nursingImplications": "Review the ECG and other QT-prolonging drugs and correct low potassium or magnesium. Can be taken with or without food. Teach patients to finish the course and report palpitations or jaundice.",
+        "commonBrandName": "Zithromax, Z-Pak, Zmax"
+      },
+      "tags": [
+        "Pharmacology",
+        "Infectious disease"
+      ],
+      "aliases": [
+        {
+          "text": "Zithromax",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Z-Pak",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Zmax",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "pneumonia",
+        "chronic-obstructive-pulmonary-disease",
+        "magnesium",
+        "potassium"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
@@ -1572,6 +1759,10 @@
         {
           "text": "Beta",
           "type": "NICKNAME"
+        },
+        {
+          "text": "Celestone",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -1616,6 +1807,40 @@
         "mechanical-ventilator"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "bisacodyl",
+      "type": "MEDICATION",
+      "name": "Bisacodyl",
+      "shortExplanation": "A stimulant laxative available as oral tablets or a rectal suppository for constipation or bowel preparation.",
+      "sections": {
+        "mechanism": "Stimulates the colonic mucosa to increase peristalsis and promotes fluid accumulation in the bowel.",
+        "sideEffects": "Abdominal cramping, nausea, and rectal burning with the suppository.",
+        "adverseEffects": "Fluid and electrolyte disturbances with overuse and laxative dependence with chronic use.",
+        "nursingImplications": "Oral tablets act in about 6 to 12 hours; suppositories work within about an hour. Do not crush enteric-coated tablets or give with antacids or milk, which can cause premature dissolution and cramping. Encourage fluids.",
+        "commonBrandName": "Dulcolax, Correctol"
+      },
+      "tags": [
+        "Pharmacology",
+        "Gastroenterology"
+      ],
+      "aliases": [
+        {
+          "text": "Dulcolax",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Correctol",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "senna",
+        "docusate",
+        "polyethylene-glycol",
+        "colonoscopy"
+      ],
+      "sourceCitation": "Source: MedlinePlus"
     },
     {
       "key": "bladder-scanner",
@@ -1893,6 +2118,18 @@
         {
           "text": "Symbicort",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Rhinocort",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Entocort EC",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Uceris",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -1902,6 +2139,75 @@
         "albuterol"
       ],
       "sourceCitation": "Source: DailyMed, MedlinePlus"
+    },
+    {
+      "key": "bupropion",
+      "type": "MEDICATION",
+      "name": "Bupropion",
+      "shortExplanation": "An atypical antidepressant also used for smoking cessation, notable for not causing sexual side effects or weight gain.",
+      "sections": {
+        "mechanism": "Inhibits reuptake of dopamine and norepinephrine; it does not act primarily on serotonin, which explains its different side-effect profile.",
+        "sideEffects": "Insomnia, dry mouth, headache, agitation, and decreased appetite.",
+        "adverseEffects": "Lowers the seizure threshold (contraindicated in seizure disorders, eating disorders, and abrupt alcohol or sedative withdrawal), hypertension, and possible increased suicidal thoughts early in treatment.",
+        "nursingImplications": "Screen for seizure risk and eating disorders before use. Give doses earlier in the day to limit insomnia and do not crush extended-release tablets. Monitor blood pressure and mood. Teach that it may take weeks to work.",
+        "commonBrandName": "Wellbutrin, Zyban, Aplenzin"
+      },
+      "tags": [
+        "Pharmacology",
+        "Psychiatry"
+      ],
+      "aliases": [
+        {
+          "text": "Wellbutrin",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Zyban",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Aplenzin",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "sertraline",
+        "fluoxetine",
+        "escitalopram"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "butalbital-acetaminophen-caffeine",
+      "type": "MEDICATION",
+      "name": "Butalbital-Acetaminophen-Caffeine",
+      "shortExplanation": "An oral combination product for tension (muscle-contraction) headache that blends a barbiturate, acetaminophen, and caffeine.",
+      "sections": {
+        "mechanism": "Butalbital is a barbiturate that depresses the central nervous system and relaxes muscle contraction; acetaminophen relieves pain; caffeine is a stimulant that enhances analgesia and constricts cerebral vessels.",
+        "sideEffects": "Drowsiness, dizziness, lightheadedness, nausea, and abdominal pain.",
+        "adverseEffects": "Habit formation and dependence with the barbiturate, medication-overuse (rebound) headache, sedation, and acetaminophen hepatotoxicity if the daily limit is exceeded; withdrawal can occur with abrupt discontinuation.",
+        "nursingImplications": "Reserve for intermittent use because of dependence and rebound-headache risk. Track total daily acetaminophen. Caution against driving until effects are known and against combining with alcohol or other sedatives. Taper rather than stop abruptly after prolonged use.",
+        "commonBrandName": "Fioricet, Esgic"
+      },
+      "tags": [
+        "Pharmacology",
+        "Neuro"
+      ],
+      "aliases": [
+        {
+          "text": "Fioricet",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Esgic",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "acetaminophen",
+        "caffeine-citrate"
+      ],
+      "sourceCitation": "Source: MedlinePlus, DailyMed"
     },
     {
       "key": "c-reactive-protein",
@@ -2301,6 +2607,10 @@
         {
           "text": "Coreg",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Coreg CR",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -2534,6 +2844,37 @@
       "sourceCitation": "Source: CDC, StatPearls"
     },
     {
+      "key": "cephalexin",
+      "type": "MEDICATION",
+      "name": "Cephalexin",
+      "shortExplanation": "A first-generation oral cephalosporin antibiotic used for skin, soft-tissue, respiratory, and urinary infections.",
+      "sections": {
+        "mechanism": "A beta-lactam that inhibits bacterial cell-wall synthesis, producing a bactericidal effect against many gram-positive and some gram-negative organisms.",
+        "sideEffects": "Diarrhea, nausea, abdominal pain, and vaginal yeast infection.",
+        "adverseEffects": "Allergic reactions (cross-reactivity is possible with penicillin allergy, especially severe reactions) and C. difficile colitis.",
+        "nursingImplications": "Ask about penicillin and cephalosporin allergy. May be given with food to reduce GI upset. Teach patients to finish the full course and report persistent diarrhea or rash.",
+        "commonBrandName": "Keflex"
+      },
+      "tags": [
+        "Pharmacology",
+        "Infectious disease"
+      ],
+      "aliases": [
+        {
+          "text": "Keflex",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "cellulitis",
+        "urinary-tract-infection",
+        "cefazolin",
+        "amoxicillin",
+        "clostridioides-difficile-infection"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "cerebral-lobes",
       "type": "ANATOMY",
       "name": "Cerebral Lobes",
@@ -2559,6 +2900,34 @@
         "increased-intracranial-pressure"
       ],
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "cetirizine",
+      "type": "MEDICATION",
+      "name": "Cetirizine",
+      "shortExplanation": "A once-daily second-generation antihistamine for allergic rhinitis and hives, effective with relatively low sedation.",
+      "sections": {
+        "mechanism": "Selectively blocks peripheral histamine H1 receptors, relieving allergy symptoms with limited central nervous system penetration.",
+        "sideEffects": "Mild drowsiness (more than some other second-generation agents), dry mouth, and fatigue.",
+        "adverseEffects": "Generally well tolerated; more sedation than loratadine in some patients but far less anticholinergic effect than first-generation antihistamines.",
+        "nursingImplications": "Give once daily, typically in the evening if it causes drowsiness. Teach caution with driving until effects are known. Preferred over diphenhydramine in older adults.",
+        "commonBrandName": "Zyrtec"
+      },
+      "tags": [
+        "Pharmacology",
+        "Allergy"
+      ],
+      "aliases": [
+        {
+          "text": "Zyrtec",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "loratadine",
+        "diphenhydramine"
+      ],
+      "sourceCitation": "Source: MedlinePlus"
     },
     {
       "key": "chemotherapy",
@@ -2956,6 +3325,66 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "clindamycin",
+      "type": "MEDICATION",
+      "name": "Clindamycin",
+      "shortExplanation": "A lincosamide antibiotic used for skin and soft-tissue infections (including some MRSA), dental and anaerobic infections, and as a penicillin alternative in allergy.",
+      "sections": {
+        "mechanism": "Binds the bacterial 50S ribosomal subunit to inhibit protein synthesis; it has good activity against gram-positive and anaerobic organisms.",
+        "sideEffects": "Diarrhea, nausea, abdominal pain, and a metallic taste.",
+        "adverseEffects": "One of the antibiotics most strongly associated with Clostridioides difficile colitis; esophageal irritation and rare severe skin reactions.",
+        "nursingImplications": "Have patients take oral doses with a full glass of water and remain upright to prevent esophageal irritation. Monitor for and teach patients to report new or persistent diarrhea, which may signal C. difficile. Complete the full course.",
+        "commonBrandName": "Cleocin"
+      },
+      "tags": [
+        "Pharmacology",
+        "Infectious disease"
+      ],
+      "aliases": [
+        {
+          "text": "Cleocin",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "cellulitis",
+        "mrsa-infection",
+        "clostridioides-difficile-infection",
+        "osteomyelitis"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "clonazepam",
+      "type": "MEDICATION",
+      "name": "Clonazepam",
+      "shortExplanation": "A long-acting benzodiazepine used for panic disorder and certain seizure disorders.",
+      "sections": {
+        "mechanism": "Enhances GABA activity at the GABA-A receptor, raising the seizure threshold and producing anxiolytic and sedative effects.",
+        "sideEffects": "Drowsiness, dizziness, fatigue, impaired coordination, and depression.",
+        "adverseEffects": "Respiratory depression and oversedation, especially with opioids or alcohol; tolerance, dependence, and withdrawal seizures with abrupt discontinuation.",
+        "nursingImplications": "Assess sedation, mood, and fall risk. Avoid combining with opioids or alcohol and do not stop abruptly. Teach caution with driving and report worsening depression or suicidal thoughts.",
+        "commonBrandName": "Klonopin"
+      },
+      "tags": [
+        "Pharmacology",
+        "Neuro"
+      ],
+      "aliases": [
+        {
+          "text": "Klonopin",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "alprazolam",
+        "diazepam",
+        "epilepsy",
+        "flumazenil"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "clopidogrel",
       "type": "MEDICATION",
       "name": "Clopidogrel",
@@ -3018,6 +3447,44 @@
         "pantoprazole"
       ],
       "sourceCitation": "Source: CDC, StatPearls"
+    },
+    {
+      "key": "codeine-acetaminophen",
+      "type": "MEDICATION",
+      "name": "Codeine-Acetaminophen",
+      "shortExplanation": "A combination oral analgesic pairing the opioid codeine with acetaminophen for mild to moderate pain.",
+      "sections": {
+        "mechanism": "Codeine is metabolized to morphine and acts on mu-opioid receptors to reduce pain; acetaminophen adds non-opioid analgesic and antipyretic effect.",
+        "sideEffects": "Constipation, drowsiness, nausea, dizziness, and lightheadedness.",
+        "adverseEffects": "Respiratory depression, sedation, and dependence; ultra-rapid metabolizers can develop dangerously high morphine levels, and acetaminophen overdose causes hepatotoxicity. Contraindicated in children after tonsillectomy or adenoidectomy.",
+        "nursingImplications": "Monitor pain, respiratory rate, and sedation. Track total daily acetaminophen. Anticipate constipation and manage bowels. Avoid in young children and breastfeeding mothers because of variable metabolism. Keep naloxone available.",
+        "commonBrandName": "Tylenol with Codeine (Tylenol #3, Tylenol #4)"
+      },
+      "tags": [
+        "Pharmacology",
+        "Pain Management"
+      ],
+      "aliases": [
+        {
+          "text": "Tylenol #3",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Tylenol #4",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Tylenol with Codeine",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "acetaminophen",
+        "morphine",
+        "naloxone",
+        "hydrocodone-acetaminophen"
+      ],
+      "sourceCitation": "Source: MedlinePlus, DailyMed"
     },
     {
       "key": "colonoscopy",
@@ -3449,6 +3916,38 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "cyclobenzaprine",
+      "type": "MEDICATION",
+      "name": "Cyclobenzaprine",
+      "shortExplanation": "A skeletal muscle relaxant used short term for muscle spasm from acute musculoskeletal conditions.",
+      "sections": {
+        "mechanism": "Acts centrally in the brainstem to reduce tonic motor activity, relieving muscle spasm; it is structurally related to tricyclic antidepressants.",
+        "sideEffects": "Drowsiness, dry mouth, dizziness, and fatigue.",
+        "adverseEffects": "Anticholinergic effects, serotonin syndrome when combined with other serotonergic drugs, and additive sedation with CNS depressants; caution in the elderly and in heart disease.",
+        "nursingImplications": "Recommend short-term use, typically two to three weeks. Assess sedation and fall risk and advise caution with driving and alcohol. Avoid with MAO inhibitors and use cautiously with other serotonergic agents.",
+        "commonBrandName": "Flexeril, Amrix"
+      },
+      "tags": [
+        "Pharmacology",
+        "Pain Management"
+      ],
+      "aliases": [
+        {
+          "text": "Flexeril",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Amrix",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "serotonin-syndrome",
+        "diazepam"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "d-dimer",
       "type": "LAB_VALUE",
       "name": "D-dimer",
@@ -3476,6 +3975,37 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "dabigatran",
+      "type": "MEDICATION",
+      "name": "Dabigatran",
+      "shortExplanation": "A direct oral anticoagulant (direct thrombin inhibitor) used to prevent stroke in atrial fibrillation and to treat venous thromboembolism.",
+      "sections": {
+        "mechanism": "Directly and reversibly inhibits thrombin (factor IIa), preventing conversion of fibrinogen to fibrin and blocking clot formation.",
+        "sideEffects": "Dyspepsia and gastritis-like stomach upset, and bruising.",
+        "adverseEffects": "Major bleeding including gastrointestinal hemorrhage; bleeding risk rises with renal impairment because the drug is largely cleared by the kidneys.",
+        "nursingImplications": "Instruct patients to swallow capsules whole and keep them in the original bottle because they degrade with moisture. Do not stop abruptly. Idarucizumab is the specific reversal agent for life-threatening bleeding. Assess renal function.",
+        "commonBrandName": "Pradaxa"
+      },
+      "tags": [
+        "Pharmacology",
+        "Cardiology"
+      ],
+      "aliases": [
+        {
+          "text": "Pradaxa",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "rivaroxaban",
+        "apixaban",
+        "warfarin",
+        "atrial-fibrillation",
+        "deep-vein-thrombosis"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "dantrolene",
       "type": "MEDICATION",
       "name": "Dantrolene",
@@ -3498,6 +4028,10 @@
         },
         {
           "text": "Ryanodex",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Revonto",
           "type": "BRAND_NAME"
         }
       ],
@@ -3653,6 +4187,14 @@
         {
           "text": "Desmopressin Acetate",
           "type": "NICKNAME"
+        },
+        {
+          "text": "Stimate",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Nocdurna",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -3773,6 +4315,37 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "diazepam",
+      "type": "MEDICATION",
+      "name": "Diazepam",
+      "shortExplanation": "A long-acting benzodiazepine used for anxiety, muscle spasm, seizures, and alcohol withdrawal.",
+      "sections": {
+        "mechanism": "Potentiates GABA at the GABA-A receptor, producing sedation, anxiolysis, muscle relaxation, and anticonvulsant effects.",
+        "sideEffects": "Drowsiness, fatigue, muscle weakness, ataxia, and dizziness.",
+        "adverseEffects": "Respiratory depression and oversedation, particularly with opioids or alcohol; dependence and withdrawal, including seizures, with abrupt discontinuation. Its long half-life can cause accumulation in older adults.",
+        "nursingImplications": "Monitor respiratory rate, sedation, and fall risk. Avoid abrupt discontinuation after prolonged use. Use cautiously in the elderly and in liver disease. Flumazenil can reverse it but may precipitate seizures.",
+        "commonBrandName": "Valium"
+      },
+      "tags": [
+        "Pharmacology",
+        "Neuro"
+      ],
+      "aliases": [
+        {
+          "text": "Valium",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "lorazepam",
+        "alprazolam",
+        "alcohol-withdrawal",
+        "status-epilepticus",
+        "flumazenil"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "digoxin",
       "type": "MEDICATION",
       "name": "Digoxin",
@@ -3856,6 +4429,14 @@
         {
           "text": "Cartia XT",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Tiazac",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Cardizem CD",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -3863,6 +4444,36 @@
         "hypertensive-crisis"
       ],
       "sourceCitation": "Source: MedlinePlus"
+    },
+    {
+      "key": "diphenhydramine",
+      "type": "MEDICATION",
+      "name": "Diphenhydramine",
+      "shortExplanation": "A first-generation antihistamine used for allergies, allergic reactions, sleep, and motion sickness.",
+      "sections": {
+        "mechanism": "Blocks histamine H1 receptors to relieve allergy symptoms and crosses into the brain, producing sedation and antiemetic effect.",
+        "sideEffects": "Drowsiness, dry mouth, blurred vision, urinary retention, and constipation.",
+        "adverseEffects": "Strong anticholinergic effects causing confusion, delirium, and falls, especially in older adults; paradoxical excitation in children and additive CNS depression with sedatives.",
+        "nursingImplications": "Assess sedation and fall risk and avoid in older adults when possible because of anticholinergic burden. May be given for allergic reactions or as premedication. Teach caution with driving and combining with alcohol or other sedatives.",
+        "commonBrandName": "Benadryl"
+      },
+      "tags": [
+        "Pharmacology",
+        "Allergy"
+      ],
+      "aliases": [
+        {
+          "text": "Benadryl",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "loratadine",
+        "cetirizine",
+        "promethazine",
+        "delirium"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
       "key": "discharge-planning",
@@ -3937,6 +4548,40 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "docusate",
+      "type": "MEDICATION",
+      "name": "Docusate",
+      "shortExplanation": "A stool softener used to prevent constipation and straining, often alongside opioids.",
+      "sections": {
+        "mechanism": "An emollient (surfactant) laxative that lets water and fat penetrate stool, softening it so it passes more easily.",
+        "sideEffects": "Mild abdominal cramping, throat irritation with the liquid form, and diarrhea.",
+        "adverseEffects": "Generally well tolerated; limited effectiveness for established constipation, so it works better as prevention than treatment.",
+        "nursingImplications": "Encourage fluids, fiber, and activity to support bowel function. Commonly paired with opioids or bedrest to prevent constipation. Advise that it may take one to three days to work and is not for rapid relief.",
+        "commonBrandName": "Colace, Docusate Sodium, Surfak"
+      },
+      "tags": [
+        "Pharmacology",
+        "Gastroenterology"
+      ],
+      "aliases": [
+        {
+          "text": "Colace",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Surfak",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "senna",
+        "bisacodyl",
+        "polyethylene-glycol",
+        "lactulose"
+      ],
+      "sourceCitation": "Source: MedlinePlus"
+    },
+    {
       "key": "doxorubicin",
       "type": "MEDICATION",
       "name": "Doxorubicin",
@@ -3995,6 +4640,18 @@
         {
           "text": "Doxy",
           "type": "NICKNAME"
+        },
+        {
+          "text": "Doryx",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Oracea",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Monodox",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -4003,6 +4660,41 @@
         "mrsa-infection"
       ],
       "sourceCitation": "Source: DailyMed, StatPearls"
+    },
+    {
+      "key": "duloxetine",
+      "type": "MEDICATION",
+      "name": "Duloxetine",
+      "shortExplanation": "A serotonin-norepinephrine reuptake inhibitor (SNRI) used for depression, anxiety, and several chronic pain conditions including diabetic neuropathy and fibromyalgia.",
+      "sections": {
+        "mechanism": "Inhibits reuptake of both serotonin and norepinephrine, improving mood and modulating pain pathways.",
+        "sideEffects": "Nausea, dry mouth, constipation, drowsiness, and decreased appetite.",
+        "adverseEffects": "Serotonin syndrome, elevated blood pressure, hepatotoxicity (avoid in significant liver disease or heavy alcohol use), increased bleeding risk, and discontinuation symptoms if stopped abruptly.",
+        "nursingImplications": "Instruct patients to swallow capsules whole and not to stop suddenly. Monitor blood pressure, mood, and suicidality early in therapy. Useful for combined depression and neuropathic pain. Review serotonergic drug interactions.",
+        "commonBrandName": "Cymbalta"
+      },
+      "tags": [
+        "Pharmacology",
+        "Psychiatry"
+      ],
+      "aliases": [
+        {
+          "text": "Cymbalta",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "SNRI",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "escitalopram",
+        "sertraline",
+        "pregabalin",
+        "gabapentin",
+        "serotonin-syndrome"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
       "key": "echocardiogram",
@@ -4089,6 +4781,42 @@
         "epilepsy",
         "status-epilepticus",
         "encephalitis"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "empagliflozin",
+      "type": "MEDICATION",
+      "name": "Empagliflozin",
+      "shortExplanation": "An oral SGLT2 inhibitor that lowers blood glucose and also benefits heart failure and chronic kidney disease.",
+      "sections": {
+        "mechanism": "Blocks the sodium-glucose cotransporter 2 in the kidney's proximal tubule, causing glucose and sodium to be excreted in the urine, which lowers glucose and produces a mild diuretic effect.",
+        "sideEffects": "Genital yeast infections, urinary tract infections, increased urination, and thirst.",
+        "adverseEffects": "Volume depletion and hypotension, euglycemic diabetic ketoacidosis (ketoacidosis with only modestly elevated glucose), and rare serious genital infection (Fournier gangrene).",
+        "nursingImplications": "Give in the morning. Encourage hydration and teach genital hygiene and UTI symptom awareness. Hold before major surgery per protocol because of DKA risk. Note that urine glucose testing is unreliable on this drug; monitor blood glucose and renal function.",
+        "commonBrandName": "Jardiance"
+      },
+      "tags": [
+        "Pharmacology",
+        "Endocrine"
+      ],
+      "aliases": [
+        {
+          "text": "Jardiance",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "SGLT2 inhibitor",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "metformin",
+        "glipizide",
+        "semaglutide",
+        "chf-exacerbation",
+        "chronic-kidney-disease",
+        "diabetic-ketoacidosis"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
@@ -4356,6 +5084,14 @@
         {
           "text": "Adrenalin",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "EpiPen",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Auvi-Q",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -4390,6 +5126,10 @@
         },
         {
           "text": "Procrit",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Retacrit",
           "type": "BRAND_NAME"
         }
       ],
@@ -4428,6 +5168,71 @@
         "osteomyelitis"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "escitalopram",
+      "type": "MEDICATION",
+      "name": "Escitalopram",
+      "shortExplanation": "A selective serotonin reuptake inhibitor (SSRI) used for depression and generalized anxiety disorder.",
+      "sections": {
+        "mechanism": "Blocks serotonin reuptake at the synapse, increasing serotonin available to nerve cells to improve mood and anxiety over several weeks.",
+        "sideEffects": "Nausea, headache, insomnia or drowsiness, sexual dysfunction, and dry mouth.",
+        "adverseEffects": "Serotonin syndrome when combined with other serotonergic drugs, QT prolongation at higher doses, hyponatremia, increased bleeding risk with NSAIDs or anticoagulants, and possible increased suicidal thoughts early in treatment, especially in younger patients.",
+        "nursingImplications": "Teach that full benefit takes several weeks and not to stop abruptly to avoid discontinuation symptoms. Monitor mood and suicidal ideation early on. Review serotonergic and QT-prolonging drugs and monitor sodium in at-risk patients.",
+        "commonBrandName": "Lexapro"
+      },
+      "tags": [
+        "Pharmacology",
+        "Psychiatry"
+      ],
+      "aliases": [
+        {
+          "text": "Lexapro",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "SSRI",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "sertraline",
+        "fluoxetine",
+        "duloxetine",
+        "serotonin-syndrome",
+        "hyponatremia"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "esomeprazole",
+      "type": "MEDICATION",
+      "name": "Esomeprazole",
+      "shortExplanation": "A proton pump inhibitor used for GERD, erosive esophagitis, and ulcer prevention or treatment.",
+      "sections": {
+        "mechanism": "The S-isomer of omeprazole; irreversibly inhibits the gastric proton pump to suppress acid secretion.",
+        "sideEffects": "Headache, diarrhea, nausea, abdominal pain, and flatulence.",
+        "adverseEffects": "With prolonged use: low magnesium, vitamin B12 deficiency, increased fracture risk, and C. difficile infection.",
+        "nursingImplications": "Give at least 30 to 60 minutes before a meal. Delayed-release capsules can be opened and sprinkled on applesauce if needed. Reassess long-term need and monitor magnesium with extended therapy.",
+        "commonBrandName": "Nexium"
+      },
+      "tags": [
+        "Pharmacology",
+        "Gastroenterology"
+      ],
+      "aliases": [
+        {
+          "text": "Nexium",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "gerd",
+        "peptic-ulcer-disease",
+        "omeprazole",
+        "pantoprazole"
+      ],
+      "sourceCitation": "Source: MedlinePlus, DailyMed"
     },
     {
       "key": "esophageal-varices",
@@ -4511,6 +5316,10 @@
       "aliases": [
         {
           "text": "Pepcid",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Pepcid AC",
           "type": "BRAND_NAME"
         }
       ],
@@ -4600,6 +5409,18 @@
       "aliases": [
         {
           "text": "Sublimaze",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Duragesic",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Actiq",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Fentora",
           "type": "BRAND_NAME"
         }
       ],
@@ -4722,6 +5543,14 @@
         {
           "text": "G-CSF",
           "type": "ACRONYM"
+        },
+        {
+          "text": "Zarxio",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Nivestym",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -4817,6 +5646,40 @@
         "midazolam"
       ],
       "sourceCitation": "Source: StatPearls, DailyMed"
+    },
+    {
+      "key": "fluoxetine",
+      "type": "MEDICATION",
+      "name": "Fluoxetine",
+      "shortExplanation": "A long-acting SSRI used for depression, obsessive-compulsive disorder, panic disorder, and bulimia.",
+      "sections": {
+        "mechanism": "Inhibits serotonin reuptake, increasing synaptic serotonin; it has an unusually long half-life and active metabolite.",
+        "sideEffects": "Nausea, insomnia, headache, nervousness, and sexual dysfunction.",
+        "adverseEffects": "Serotonin syndrome with other serotonergic drugs, QT prolongation, hyponatremia, increased bleeding risk, and possible increased suicidal thoughts early in treatment, especially in younger patients.",
+        "nursingImplications": "Teach that effect builds over several weeks; its long half-life self-tapers but also prolongs drug interactions after stopping. Monitor mood and suicidality early. Review serotonergic drugs, including tramadol and MAO inhibitors.",
+        "commonBrandName": "Prozac, Sarafem"
+      },
+      "tags": [
+        "Pharmacology",
+        "Psychiatry"
+      ],
+      "aliases": [
+        {
+          "text": "Prozac",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Sarafem",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "sertraline",
+        "escitalopram",
+        "bupropion",
+        "serotonin-syndrome"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
       "key": "fluticasone",
@@ -4964,6 +5827,10 @@
       "aliases": [
         {
           "text": "Neurontin",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Gralise",
           "type": "BRAND_NAME"
         }
       ],
@@ -5133,6 +6000,37 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "glipizide",
+      "type": "MEDICATION",
+      "name": "Glipizide",
+      "shortExplanation": "An oral sulfonylurea that lowers blood glucose in type 2 diabetes by stimulating insulin release.",
+      "sections": {
+        "mechanism": "Stimulates pancreatic beta cells to secrete more insulin by closing ATP-sensitive potassium channels; requires functioning beta cells to work.",
+        "sideEffects": "Hypoglycemia, weight gain, nausea, and dizziness.",
+        "adverseEffects": "Prolonged hypoglycemia, especially in older adults, with skipped meals, or in renal impairment; rare allergic skin reactions.",
+        "nursingImplications": "Give about 30 minutes before a meal and ensure the patient eats. Monitor blood glucose and teach hypoglycemia recognition and treatment. Use cautiously in the elderly and in kidney or liver disease.",
+        "commonBrandName": "Glucotrol, Glucotrol XL"
+      },
+      "tags": [
+        "Pharmacology",
+        "Endocrine"
+      ],
+      "aliases": [
+        {
+          "text": "Glucotrol",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "metformin",
+        "insulin",
+        "hypoglycemia",
+        "glucose",
+        "empagliflozin"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "glucagon",
       "type": "MEDICATION",
       "name": "Glucagon",
@@ -5156,6 +6054,10 @@
         },
         {
           "text": "Baqsimi",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Gvoke",
           "type": "BRAND_NAME"
         }
       ],
@@ -5721,6 +6623,45 @@
       "sourceCitation": "Source: DailyMed, MedlinePlus"
     },
     {
+      "key": "hydrocodone-acetaminophen",
+      "type": "MEDICATION",
+      "name": "Hydrocodone-Acetaminophen",
+      "shortExplanation": "A combination oral opioid pain reliever pairing hydrocodone with acetaminophen, used for moderate to moderately severe pain.",
+      "sections": {
+        "mechanism": "Hydrocodone is an opioid agonist that binds central mu-opioid receptors to reduce pain perception; acetaminophen adds non-opioid analgesic and antipyretic effect.",
+        "sideEffects": "Constipation, drowsiness, dizziness, nausea, lightheadedness, and euphoria.",
+        "adverseEffects": "Respiratory depression, sedation, and dependence with opioid overuse; hepatotoxicity from the acetaminophen component if the daily acetaminophen limit is exceeded.",
+        "nursingImplications": "Assess pain, respiratory rate, and sedation before and after dosing. Count total daily acetaminophen from all sources to stay under the maximum. Screen bowel function and start a stool softener. Have naloxone available and teach non-opioid measures.",
+        "commonBrandName": "Norco, Vicodin, Lortab"
+      },
+      "tags": [
+        "Pharmacology",
+        "Pain Management"
+      ],
+      "aliases": [
+        {
+          "text": "Norco",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Vicodin",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Lortab",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "acetaminophen",
+        "oxycodone",
+        "morphine",
+        "naloxone",
+        "opioid-withdrawal"
+      ],
+      "sourceCitation": "Source: MedlinePlus, DailyMed"
+    },
+    {
       "key": "hydrocortisone",
       "type": "MEDICATION",
       "name": "Hydrocortisone",
@@ -5775,6 +6716,10 @@
       "aliases": [
         {
           "text": "Dilaudid",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Exalgo",
           "type": "BRAND_NAME"
         }
       ],
@@ -6162,6 +7107,14 @@
         {
           "text": "Motrin",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Caldolor",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "NeoProfen",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -6428,6 +7381,84 @@
       "sourceCitation": "Source: MedlinePlus"
     },
     {
+      "key": "insulin-glargine",
+      "type": "MEDICATION",
+      "name": "Insulin Glargine",
+      "shortExplanation": "A long-acting basal insulin that provides steady background glucose control over roughly 24 hours.",
+      "sections": {
+        "mechanism": "A recombinant long-acting insulin analog that precipitates after subcutaneous injection and is released slowly, giving a relatively peakless, prolonged glucose-lowering effect.",
+        "sideEffects": "Injection-site reactions, weight gain, and lipohypertrophy with repeated use of the same site.",
+        "adverseEffects": "Hypoglycemia and, less commonly, hypokalemia; hypoglycemia risk rises when meals are missed or with other glucose-lowering drugs.",
+        "nursingImplications": "Give subcutaneously once daily at the same time and rotate sites. Do not mix in a syringe with other insulins and do not give IV. It provides basal coverage, so it is not for correcting acute high glucose. Monitor blood glucose and teach hypoglycemia recognition.",
+        "commonBrandName": "Lantus, Basaglar, Toujeo"
+      },
+      "tags": [
+        "Pharmacology",
+        "Endocrine"
+      ],
+      "aliases": [
+        {
+          "text": "Lantus",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Basaglar",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Toujeo",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "insulin",
+        "insulin-lispro",
+        "hypoglycemia",
+        "glucose",
+        "diabetic-ketoacidosis"
+      ],
+      "sourceCitation": "Source: MedlinePlus, DailyMed"
+    },
+    {
+      "key": "insulin-lispro",
+      "type": "MEDICATION",
+      "name": "Insulin Lispro",
+      "shortExplanation": "A rapid-acting insulin analog given at mealtimes to control the rise in blood glucose after eating.",
+      "sections": {
+        "mechanism": "A rapid-acting insulin analog with quick onset and short duration that promotes cellular glucose uptake, covering the glucose load of a meal.",
+        "sideEffects": "Injection-site reactions, weight gain, and lipohypertrophy.",
+        "adverseEffects": "Hypoglycemia, which can occur quickly because of the rapid onset, and hypokalemia.",
+        "nursingImplications": "Give subcutaneously within about 15 minutes before or just after eating, and ensure food is available. Used for mealtime and correction dosing and in insulin pumps. Monitor blood glucose and act promptly on hypoglycemia. Confirm dose and product carefully given look-alike names.",
+        "commonBrandName": "Humalog, Admelog, Lyumjev"
+      },
+      "tags": [
+        "Pharmacology",
+        "Endocrine"
+      ],
+      "aliases": [
+        {
+          "text": "Humalog",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Admelog",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Lyumjev",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "insulin",
+        "insulin-glargine",
+        "hypoglycemia",
+        "sliding-scale-insulin",
+        "glucose"
+      ],
+      "sourceCitation": "Source: MedlinePlus, DailyMed"
+    },
+    {
       "key": "intra-aortic-balloon-pump",
       "type": "EQUIPMENT",
       "name": "Intra-Aortic Balloon Pump",
@@ -6607,6 +7638,10 @@
         {
           "text": "Isordil",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Monoket",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -6714,6 +7749,36 @@
       "sourceCitation": "Source: StatPearls, DailyMed"
     },
     {
+      "key": "ketorolac",
+      "type": "MEDICATION",
+      "name": "Ketorolac",
+      "shortExplanation": "A potent injectable and oral NSAID used short term for moderate to severe acute pain.",
+      "sections": {
+        "mechanism": "Inhibits cyclooxygenase (COX-1 and COX-2), reducing prostaglandin synthesis to relieve pain and inflammation without opioid effects.",
+        "sideEffects": "Nausea, dyspepsia, drowsiness, and injection-site pain.",
+        "adverseEffects": "GI bleeding and ulceration, acute kidney injury, bleeding from platelet inhibition, and fluid retention; risk rises with duration, so combined use is limited to about 5 days.",
+        "nursingImplications": "Limit to short-term use and avoid in renal impairment, active bleeding, or peptic ulcer disease. Assess renal function and bleeding risk and give with food if oral. Useful as an opioid-sparing analgesic; monitor urine output.",
+        "commonBrandName": "Toradol"
+      },
+      "tags": [
+        "Pharmacology",
+        "Pain Management"
+      ],
+      "aliases": [
+        {
+          "text": "Toradol",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "ibuprofen",
+        "naproxen",
+        "acute-kidney-injury",
+        "gastrointestinal-bleed"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "lactate",
       "type": "LAB_VALUE",
       "name": "Lactate",
@@ -6755,7 +7820,17 @@
         "cirrhosis",
         "ammonia"
       ],
-      "sourceCitation": "Source: MedlinePlus, DailyMed"
+      "sourceCitation": "Source: MedlinePlus, DailyMed",
+      "aliases": [
+        {
+          "text": "Kristalose",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Enulose",
+          "type": "BRAND_NAME"
+        }
+      ]
     },
     {
       "key": "levetiracetam",
@@ -6781,6 +7856,14 @@
         {
           "text": "LEV",
           "type": "ACRONYM"
+        },
+        {
+          "text": "Keppra XR",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Spritam",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -6815,6 +7898,14 @@
         {
           "text": "Carbidopa-levodopa",
           "type": "NICKNAME"
+        },
+        {
+          "text": "Rytary",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Duopa",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -6880,6 +7971,18 @@
         {
           "text": "T4",
           "type": "ACRONYM"
+        },
+        {
+          "text": "Tirosint",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Unithroid",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Euthyrox",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -6975,6 +8078,10 @@
         {
           "text": "Lithium carbonate",
           "type": "NICKNAME"
+        },
+        {
+          "text": "Eskalith",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -7061,6 +8168,67 @@
         "Pharmacology"
       ],
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "loperamide",
+      "type": "MEDICATION",
+      "name": "Loperamide",
+      "shortExplanation": "An over-the-counter antidiarrheal that slows gut motility to reduce the frequency of loose stools.",
+      "sections": {
+        "mechanism": "Acts on opioid receptors in the intestinal wall to slow peristalsis and increase transit time, allowing more water reabsorption; it does not cross into the brain at normal doses.",
+        "sideEffects": "Constipation, abdominal cramping, dizziness, and dry mouth.",
+        "adverseEffects": "At high (misused) doses it can cause serious cardiac arrhythmias and QT prolongation. It can worsen infectious or inflammatory diarrhea and precipitate toxic megacolon.",
+        "nursingImplications": "Avoid in bloody diarrhea, high fever, or suspected C. difficile or other invasive infection. Teach patients not to exceed the labeled dose and to seek care if diarrhea persists beyond about 48 hours or worsens.",
+        "commonBrandName": "Imodium"
+      },
+      "tags": [
+        "Pharmacology",
+        "Gastroenterology"
+      ],
+      "aliases": [
+        {
+          "text": "Imodium",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "clostridioides-difficile-infection",
+        "ulcerative-colitis",
+        "crohn-disease"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "loratadine",
+      "type": "MEDICATION",
+      "name": "Loratadine",
+      "shortExplanation": "A once-daily second-generation antihistamine for allergic rhinitis and hives that causes little drowsiness.",
+      "sections": {
+        "mechanism": "Selectively blocks peripheral histamine H1 receptors with minimal central penetration, relieving allergy symptoms without much sedation.",
+        "sideEffects": "Headache, dry mouth, and mild drowsiness in some people.",
+        "adverseEffects": "Generally well tolerated; far fewer anticholinergic and sedative effects than first-generation antihistamines.",
+        "nursingImplications": "Give once daily and note it can be taken during the day because it is non-sedating for most patients. Teach that it controls symptoms rather than curing allergies. Preferred over diphenhydramine in older adults.",
+        "commonBrandName": "Claritin, Alavert"
+      },
+      "tags": [
+        "Pharmacology",
+        "Allergy"
+      ],
+      "aliases": [
+        {
+          "text": "Claritin",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Alavert",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "cetirizine",
+        "diphenhydramine"
+      ],
+      "sourceCitation": "Source: MedlinePlus"
     },
     {
       "key": "lorazepam",
@@ -7353,6 +8521,18 @@
         {
           "text": "Glucophage",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Fortamet",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Glumetza",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Riomet",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -7426,6 +8606,45 @@
         "preeclampsia"
       ],
       "sourceCitation": "Source: DailyMed, StatPearls"
+    },
+    {
+      "key": "methylprednisolone",
+      "type": "MEDICATION",
+      "name": "Methylprednisolone",
+      "shortExplanation": "A corticosteroid given orally or IV to reduce inflammation in conditions such as asthma or COPD flares, severe allergic reactions, and autoimmune disease.",
+      "sections": {
+        "mechanism": "A synthetic glucocorticoid that suppresses inflammation and immune activity by altering gene expression and reducing inflammatory mediators.",
+        "sideEffects": "Increased appetite, insomnia, mood changes, fluid retention, and elevated blood glucose.",
+        "adverseEffects": "Hyperglycemia, infection risk, GI bleeding, hypertension, and, with prolonged use, adrenal suppression, osteoporosis, and Cushingoid changes; abrupt withdrawal after longer courses can cause adrenal crisis.",
+        "nursingImplications": "Monitor blood glucose, blood pressure, and signs of infection. Give oral doses with food. Do not stop prolonged therapy abruptly; taper. The IV form (Solu-Medrol) and oral taper pack (Medrol Dosepak) are common; teach not to skip doses.",
+        "commonBrandName": "Medrol, Solu-Medrol, Depo-Medrol"
+      },
+      "tags": [
+        "Pharmacology",
+        "Endocrine"
+      ],
+      "aliases": [
+        {
+          "text": "Medrol",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Solu-Medrol",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Depo-Medrol",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "prednisone",
+        "hydrocortisone",
+        "adrenal-insufficiency",
+        "copd-exacerbation",
+        "asthma"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
       "key": "metoclopramide",
@@ -7536,6 +8755,10 @@
       "aliases": [
         {
           "text": "Versed",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Nayzilam",
           "type": "BRAND_NAME"
         }
       ],
@@ -7664,6 +8887,22 @@
         {
           "text": "MSO4",
           "type": "ACRONYM"
+        },
+        {
+          "text": "MS Contin",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Kadian",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Roxanol",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Duramorph",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -7855,6 +9094,18 @@
         {
           "text": "Narcan",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Kloxxado",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Zimhi",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Evzio",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -7862,6 +9113,44 @@
         "capnography-monitor"
       ],
       "sourceCitation": "Source: MedlinePlus, DailyMed"
+    },
+    {
+      "key": "naproxen",
+      "type": "MEDICATION",
+      "name": "Naproxen",
+      "shortExplanation": "A long-acting NSAID for pain, inflammation, and fever, available over the counter and by prescription.",
+      "sections": {
+        "mechanism": "Inhibits cyclooxygenase enzymes to reduce prostaglandin production, relieving pain, inflammation, and fever.",
+        "sideEffects": "Stomach upset, heartburn, nausea, and dizziness.",
+        "adverseEffects": "GI bleeding and ulceration, kidney injury, fluid retention with worsening hypertension or heart failure, and increased cardiovascular risk; can raise bleeding risk with anticoagulants.",
+        "nursingImplications": "Give with food or milk. Use the lowest effective dose for the shortest time and avoid in renal impairment, active GI bleeding, or heart failure. Monitor blood pressure and renal function on chronic use and review anticoagulant interactions.",
+        "commonBrandName": "Aleve, Naprosyn, Anaprox"
+      },
+      "tags": [
+        "Pharmacology",
+        "Pain Management"
+      ],
+      "aliases": [
+        {
+          "text": "Aleve",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Naprosyn",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Anaprox",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "ibuprofen",
+        "ketorolac",
+        "aspirin",
+        "gastrointestinal-bleed"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
       "key": "nasal-cannula",
@@ -8266,6 +9555,39 @@
       "sourceCitation": "Source: DailyMed, StatPearls"
     },
     {
+      "key": "nitrofurantoin",
+      "type": "MEDICATION",
+      "name": "Nitrofurantoin",
+      "shortExplanation": "An oral antibiotic used specifically for uncomplicated urinary tract infections and UTI prophylaxis.",
+      "sections": {
+        "mechanism": "Concentrated in the urine, it is reduced by bacterial enzymes to reactive intermediates that damage bacterial DNA, ribosomes, and other components; it is effective in the bladder but not for kidney or systemic infection.",
+        "sideEffects": "Nausea, headache, and harmless brown discoloration of the urine.",
+        "adverseEffects": "Acute and chronic pulmonary reactions (cough, dyspnea, pulmonary fibrosis with long-term use), hepatotoxicity, and peripheral neuropathy; less effective and higher-risk in significant renal impairment.",
+        "nursingImplications": "Give with food to improve absorption and reduce GI upset. Avoid in poor kidney function. Teach patients that urine may turn brown and to report new cough, shortness of breath, or numbness and tingling. Not used for pyelonephritis.",
+        "commonBrandName": "Macrobid, Macrodantin"
+      },
+      "tags": [
+        "Pharmacology",
+        "Infectious disease"
+      ],
+      "aliases": [
+        {
+          "text": "Macrobid",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Macrodantin",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "urinary-tract-infection",
+        "catheter-associated-uti",
+        "sulfamethoxazole-trimethoprim"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "nitroglycerin",
       "type": "MEDICATION",
       "name": "Nitroglycerin",
@@ -8297,6 +9619,18 @@
         },
         {
           "text": "Nitro-Dur",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Nitrolingual",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Nitro-Bid",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "NitroMist",
           "type": "BRAND_NAME"
         }
       ],
@@ -8416,6 +9750,18 @@
         {
           "text": "Sandostatin",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Sandostatin LAR",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Bynfezia",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Mycapssa",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -8456,6 +9802,45 @@
       "sourceCitation": "Source: MedlinePlus, DailyMed"
     },
     {
+      "key": "omeprazole",
+      "type": "MEDICATION",
+      "name": "Omeprazole",
+      "shortExplanation": "A proton pump inhibitor taken by mouth for heartburn, GERD, and peptic ulcer disease.",
+      "sections": {
+        "mechanism": "Irreversibly inhibits the gastric H+/K+ ATPase (proton pump) of parietal cells, markedly reducing stomach acid production.",
+        "sideEffects": "Headache, abdominal pain, nausea, diarrhea, and flatulence.",
+        "adverseEffects": "With long-term use: low magnesium, vitamin B12 deficiency, increased fracture risk, C. difficile infection, and reduced effect of clopidogrel through CYP2C19 inhibition.",
+        "nursingImplications": "Give before the first meal of the day, and instruct patients to swallow delayed-release capsules whole. Reassess the need for long-term therapy. Monitor magnesium on prolonged use and review interactions such as with clopidogrel.",
+        "commonBrandName": "Prilosec, Zegerid"
+      },
+      "tags": [
+        "Pharmacology",
+        "Gastroenterology"
+      ],
+      "aliases": [
+        {
+          "text": "Prilosec",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Zegerid",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "PPI",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "gerd",
+        "peptic-ulcer-disease",
+        "pantoprazole",
+        "esomeprazole",
+        "famotidine"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "ondansetron",
       "type": "MEDICATION",
       "name": "Ondansetron",
@@ -8475,6 +9860,10 @@
       "aliases": [
         {
           "text": "Zofran",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Zuplenz",
           "type": "BRAND_NAME"
         }
       ],
@@ -8689,6 +10078,14 @@
         {
           "text": "Percocet",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Roxicodone",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Xtampza ER",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -8697,6 +10094,49 @@
         "acetaminophen"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "oxycodone-acetaminophen",
+      "type": "MEDICATION",
+      "name": "Oxycodone-Acetaminophen",
+      "shortExplanation": "A combination oral opioid analgesic pairing oxycodone with acetaminophen, commonly prescribed for moderate to severe pain including after surgery.",
+      "sections": {
+        "mechanism": "Oxycodone is a mu-opioid receptor agonist that blunts pain perception; acetaminophen provides additional non-opioid analgesia and fever reduction.",
+        "sideEffects": "Constipation, nausea, drowsiness, dizziness, pruritus, and lightheadedness.",
+        "adverseEffects": "Respiratory depression, oversedation, hypotension, and physical dependence; acetaminophen-related hepatotoxicity if the daily limit is exceeded.",
+        "nursingImplications": "Monitor pain, respiratory rate, blood pressure, and sedation level. Track total daily acetaminophen across all products. Anticipate constipation and start bowel management. Keep naloxone accessible and educate on safe storage and dependence risk.",
+        "commonBrandName": "Percocet, Roxicet, Endocet"
+      },
+      "tags": [
+        "Pharmacology",
+        "Pain Management"
+      ],
+      "aliases": [
+        {
+          "text": "Percocet",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Roxicet",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Endocet",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Perc",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "oxycodone",
+        "acetaminophen",
+        "hydrocodone-acetaminophen",
+        "naloxone",
+        "postoperative-nausea-vomiting"
+      ],
+      "sourceCitation": "Source: MedlinePlus, DailyMed"
     },
     {
       "key": "supplemental-oxygen",
@@ -9353,6 +10793,14 @@
         {
           "text": "Neo",
           "type": "NICKNAME"
+        },
+        {
+          "text": "Vazculep",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Sudafed PE",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -9381,6 +10829,10 @@
       "aliases": [
         {
           "text": "Dilantin",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Phenytek",
           "type": "BRAND_NAME"
         }
       ],
@@ -9830,6 +11282,14 @@
         {
           "text": "Klor-Con",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "K-Tab",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Micro-K",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -9858,6 +11318,14 @@
         {
           "text": "Steroid",
           "type": "NICKNAME"
+        },
+        {
+          "text": "Deltasone",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Rayos",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -9894,6 +11362,36 @@
         "eclampsia",
         "hellp-syndrome",
         "magnesium-sulfate"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "pregabalin",
+      "type": "MEDICATION",
+      "name": "Pregabalin",
+      "shortExplanation": "An oral medication for neuropathic pain, fibromyalgia, and as an add-on for seizures.",
+      "sections": {
+        "mechanism": "Binds the alpha-2-delta subunit of voltage-gated calcium channels, reducing release of excitatory neurotransmitters and dampening abnormal nerve signaling.",
+        "sideEffects": "Dizziness, drowsiness, peripheral edema, weight gain, and blurred vision.",
+        "adverseEffects": "Respiratory depression when combined with opioids or other CNS depressants, mood changes, and dependence with withdrawal on abrupt discontinuation; it is a controlled substance.",
+        "nursingImplications": "Assess pain and sedation and fall risk. Do not stop abruptly; taper to avoid withdrawal. Use cautiously with opioids and adjust dose in renal impairment. Teach caution with driving.",
+        "commonBrandName": "Lyrica"
+      },
+      "tags": [
+        "Pharmacology",
+        "Neuro"
+      ],
+      "aliases": [
+        {
+          "text": "Lyrica",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "gabapentin",
+        "duloxetine",
+        "diabetic-foot-ulcer",
+        "epilepsy"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
@@ -10025,6 +11523,36 @@
         "piperacillin-tazobactam"
       ],
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "promethazine",
+      "type": "MEDICATION",
+      "name": "Promethazine",
+      "shortExplanation": "A first-generation antihistamine used for nausea and vomiting, motion sickness, allergies, and sedation.",
+      "sections": {
+        "mechanism": "Blocks histamine H1 receptors and central dopamine receptors, giving antihistamine, antiemetic, and sedative effects.",
+        "sideEffects": "Drowsiness, dry mouth, dizziness, and blurred vision.",
+        "adverseEffects": "Severe tissue injury and gangrene if extravasated or given intra-arterially, so IV use is high-risk; respiratory depression in young children (contraindicated under age 2), extrapyramidal symptoms, and anticholinergic effects.",
+        "nursingImplications": "For IV use, dilute well, give slowly through a running line, and monitor the site closely for burning or pain, stopping immediately if it occurs. Assess sedation and fall risk. Avoid in very young children.",
+        "commonBrandName": "Phenergan"
+      },
+      "tags": [
+        "Pharmacology",
+        "Gastroenterology"
+      ],
+      "aliases": [
+        {
+          "text": "Phenergan",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "ondansetron",
+        "metoclopramide",
+        "diphenhydramine",
+        "postoperative-nausea-vomiting"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
       "key": "propofol",
@@ -10253,6 +11781,37 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "quetiapine",
+      "type": "MEDICATION",
+      "name": "Quetiapine",
+      "shortExplanation": "An atypical (second-generation) antipsychotic used for schizophrenia, bipolar disorder, and as add-on for depression, often sedating at low doses.",
+      "sections": {
+        "mechanism": "Blocks dopamine D2 and serotonin 5-HT2A receptors, and its antihistamine activity contributes to sedation.",
+        "sideEffects": "Sedation, dizziness, orthostatic hypotension, dry mouth, and weight gain.",
+        "adverseEffects": "Metabolic effects (weight gain, high glucose and lipids), QT prolongation, extrapyramidal symptoms and tardive dyskinesia (less than older agents), neuroleptic malignant syndrome, and increased mortality in elderly patients with dementia-related psychosis.",
+        "nursingImplications": "Monitor for orthostatic hypotension and fall risk, especially early. Track weight, glucose, and lipids on ongoing therapy. Watch for extrapyramidal symptoms and signs of neuroleptic malignant syndrome. Avoid abrupt discontinuation.",
+        "commonBrandName": "Seroquel, Seroquel XR"
+      },
+      "tags": [
+        "Pharmacology",
+        "Psychiatry"
+      ],
+      "aliases": [
+        {
+          "text": "Seroquel",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "olanzapine",
+        "risperidone",
+        "aripiprazole",
+        "haloperidol",
+        "neuroleptic-malignant-syndrome"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "racemic-epinephrine",
       "type": "MEDICATION",
       "name": "Racemic Epinephrine",
@@ -10273,6 +11832,10 @@
         {
           "text": "Racemic epi",
           "type": "NICKNAME"
+        },
+        {
+          "text": "Asthmanefrin",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -10551,6 +12114,14 @@
         {
           "text": "anti-D",
           "type": "NICKNAME"
+        },
+        {
+          "text": "WinRho",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Rhophylac",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -10608,6 +12179,14 @@
         {
           "text": "Risperdal",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Risperdal Consta",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Perseris",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -10616,6 +12195,42 @@
         "neuroleptic-malignant-syndrome"
       ],
       "sourceCitation": "Source: MedlinePlus, DailyMed"
+    },
+    {
+      "key": "rivaroxaban",
+      "type": "MEDICATION",
+      "name": "Rivaroxaban",
+      "shortExplanation": "A direct oral anticoagulant (factor Xa inhibitor) used to prevent stroke in atrial fibrillation and to treat and prevent venous thromboembolism.",
+      "sections": {
+        "mechanism": "Directly inhibits factor Xa in the clotting cascade, reducing thrombin generation and clot formation without requiring routine coagulation monitoring.",
+        "sideEffects": "Bruising, minor bleeding, and nausea.",
+        "adverseEffects": "Major bleeding, including gastrointestinal and intracranial hemorrhage; increased clotting risk if stopped abruptly, and higher spinal hematoma risk with neuraxial procedures.",
+        "nursingImplications": "Give treatment doses with food for absorption. Monitor for bleeding and do not stop abruptly without provider guidance. Andexanet alfa is a reversal agent for life-threatening bleeding. Assess renal function and review interacting drugs.",
+        "commonBrandName": "Xarelto"
+      },
+      "tags": [
+        "Pharmacology",
+        "Cardiology"
+      ],
+      "aliases": [
+        {
+          "text": "Xarelto",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "DOAC",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "apixaban",
+        "warfarin",
+        "dabigatran",
+        "atrial-fibrillation",
+        "deep-vein-thrombosis",
+        "pulmonary-embolism"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
       "key": "rocuronium",
@@ -10721,6 +12336,86 @@
         "atropine"
       ],
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "semaglutide",
+      "type": "MEDICATION",
+      "name": "Semaglutide",
+      "shortExplanation": "A GLP-1 receptor agonist used for type 2 diabetes and, at higher doses, for weight management, given by weekly injection or daily tablet.",
+      "sections": {
+        "mechanism": "Mimics the incretin hormone GLP-1: stimulates glucose-dependent insulin release, suppresses glucagon, slows gastric emptying, and increases satiety.",
+        "sideEffects": "Nausea, vomiting, diarrhea, constipation, and decreased appetite, usually greatest when the dose is increased.",
+        "adverseEffects": "Pancreatitis, gallbladder disease, and a boxed warning for thyroid C-cell tumors seen in rodents; low hypoglycemia risk alone but higher when combined with insulin or a sulfonylurea.",
+        "nursingImplications": "Inject subcutaneously once weekly (or give the oral form on an empty stomach with a sip of water). Titrate slowly to limit GI effects. Teach patients to report severe abdominal pain. Hold per protocol before procedures because delayed gastric emptying raises aspiration risk.",
+        "commonBrandName": "Ozempic, Wegovy, Rybelsus"
+      },
+      "tags": [
+        "Pharmacology",
+        "Endocrine"
+      ],
+      "aliases": [
+        {
+          "text": "Ozempic",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Wegovy",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Rybelsus",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "GLP-1 agonist",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "metformin",
+        "empagliflozin",
+        "insulin",
+        "glucose",
+        "hemoglobin-a1c"
+      ],
+      "sourceCitation": "Source: MedlinePlus, DailyMed"
+    },
+    {
+      "key": "senna",
+      "type": "MEDICATION",
+      "name": "Senna",
+      "shortExplanation": "A stimulant laxative used for constipation, including opioid-induced constipation.",
+      "sections": {
+        "mechanism": "A plant-derived stimulant laxative whose active compounds irritate the intestinal lining to increase peristalsis and fluid secretion into the bowel.",
+        "sideEffects": "Abdominal cramping, diarrhea, and harmless brown discoloration of the urine.",
+        "adverseEffects": "Fluid and electrolyte loss with overuse, and dependence on the laxative with chronic use.",
+        "nursingImplications": "Often paired with a stool softener for opioid-induced constipation. Give at bedtime because effect typically occurs in 6 to 12 hours. Encourage fluids and monitor for cramping and diarrhea.",
+        "commonBrandName": "Senokot, Ex-Lax, Senna-Lax"
+      },
+      "tags": [
+        "Pharmacology",
+        "Gastroenterology"
+      ],
+      "aliases": [
+        {
+          "text": "Senokot",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Ex-Lax",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Sennosides",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "docusate",
+        "bisacodyl",
+        "polyethylene-glycol"
+      ],
+      "sourceCitation": "Source: MedlinePlus"
     },
     {
       "key": "sepsis",
@@ -11118,6 +12813,41 @@
       "sourceCitation": "Source: DailyMed, StatPearls"
     },
     {
+      "key": "simethicone",
+      "type": "MEDICATION",
+      "name": "Simethicone",
+      "shortExplanation": "An over-the-counter anti-gas agent that relieves bloating and pressure from excess gastrointestinal gas.",
+      "sections": {
+        "mechanism": "An antifoaming agent that lowers the surface tension of gas bubbles so they coalesce and are more easily passed; it is not absorbed systemically.",
+        "sideEffects": "Generally none; occasional mild loose stools.",
+        "adverseEffects": "Essentially none because it is not absorbed; it does not prevent gas formation, only helps eliminate trapped gas.",
+        "nursingImplications": "Give after meals and at bedtime as needed. Chewable tablets should be chewed thoroughly. Often used for postoperative or functional bloating; set expectations that it relieves symptoms rather than treating an underlying cause.",
+        "commonBrandName": "Gas-X, Mylicon, Phazyme"
+      },
+      "tags": [
+        "Pharmacology",
+        "Gastroenterology"
+      ],
+      "aliases": [
+        {
+          "text": "Gas-X",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Mylicon",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Phazyme",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "gerd"
+      ],
+      "sourceCitation": "Source: MedlinePlus"
+    },
+    {
       "key": "simple-face-mask",
       "type": "EQUIPMENT",
       "name": "Simple Face Mask",
@@ -11251,6 +12981,10 @@
         {
           "text": "Kayexalate",
           "type": "BRAND_NAME"
+        },
+        {
+          "text": "Kionex",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -11342,6 +13076,10 @@
       "aliases": [
         {
           "text": "Aldactone",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "CaroSpir",
           "type": "BRAND_NAME"
         }
       ],
@@ -11555,6 +13293,10 @@
         {
           "text": "Suxamethonium",
           "type": "NICKNAME"
+        },
+        {
+          "text": "Quelicin",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -11656,6 +13398,49 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "sulfamethoxazole-trimethoprim",
+      "type": "MEDICATION",
+      "name": "Sulfamethoxazole-Trimethoprim",
+      "shortExplanation": "A combination oral or IV antibiotic used for urinary tract infections, certain skin infections including MRSA, and Pneumocystis pneumonia prophylaxis.",
+      "sections": {
+        "mechanism": "Sulfamethoxazole and trimethoprim block sequential steps in bacterial folic acid synthesis, together impairing DNA production and giving a synergistic bactericidal effect.",
+        "sideEffects": "Nausea, rash, photosensitivity, and loss of appetite.",
+        "adverseEffects": "Severe skin reactions (Stevens-Johnson syndrome), hyperkalemia, elevated creatinine, hematologic suppression, and increased warfarin effect. Sulfa allergy is a contraindication.",
+        "nursingImplications": "Ask about sulfa allergy before giving. Encourage generous fluid intake and sun protection. Monitor potassium, renal function, and CBC on prolonged therapy, and INR in patients on warfarin. Teach patients to report rash promptly.",
+        "commonBrandName": "Bactrim, Septra, Co-trimoxazole"
+      },
+      "tags": [
+        "Pharmacology",
+        "Infectious disease"
+      ],
+      "aliases": [
+        {
+          "text": "Bactrim",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Septra",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "TMP-SMX",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Co-trimoxazole",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "urinary-tract-infection",
+        "mrsa-infection",
+        "cellulitis",
+        "warfarin",
+        "hyperkalemia"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "surfactant",
       "type": "MEDICATION",
       "name": "Surfactant (Exogenous)",
@@ -11680,6 +13465,18 @@
         {
           "text": "Poractant",
           "type": "NICKNAME"
+        },
+        {
+          "text": "Survanta",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Curosurf",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Infasurf",
+          "type": "BRAND_NAME"
         }
       ],
       "related": [
@@ -11891,6 +13688,36 @@
         "aortic-stenosis"
       ],
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "temazepam",
+      "type": "MEDICATION",
+      "name": "Temazepam",
+      "shortExplanation": "An intermediate-acting benzodiazepine used short term for insomnia.",
+      "sections": {
+        "mechanism": "Potentiates GABA at the GABA-A receptor to promote sedation and sleep onset and maintenance.",
+        "sideEffects": "Daytime drowsiness, dizziness, headache, and grogginess on waking.",
+        "adverseEffects": "Respiratory depression with other CNS depressants, complex sleep behaviors, next-day impairment, and dependence with withdrawal on abrupt discontinuation.",
+        "nursingImplications": "Give at bedtime with enough time for sleep, and ensure a safe environment because of fall and confusion risk, especially in older adults. Avoid alcohol and other sedatives. Recommend short-term use and taper after prolonged use.",
+        "commonBrandName": "Restoril"
+      },
+      "tags": [
+        "Pharmacology",
+        "Psychiatry"
+      ],
+      "aliases": [
+        {
+          "text": "Restoril",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "zolpidem",
+        "trazodone",
+        "diazepam",
+        "flumazenil"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
       "key": "tension-pneumothorax",
@@ -12151,6 +13978,41 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "tramadol",
+      "type": "MEDICATION",
+      "name": "Tramadol",
+      "shortExplanation": "A centrally acting oral analgesic for moderate pain that combines weak opioid activity with effects on serotonin and norepinephrine.",
+      "sections": {
+        "mechanism": "Binds mu-opioid receptors and inhibits reuptake of serotonin and norepinephrine, modulating pain signaling through both pathways.",
+        "sideEffects": "Nausea, dizziness, constipation, headache, drowsiness, and dry mouth.",
+        "adverseEffects": "Seizures (especially at higher doses or with lowered seizure threshold), serotonin syndrome when combined with other serotonergic drugs, respiratory depression, and dependence.",
+        "nursingImplications": "Assess pain and sedation and screen for seizure history and serotonergic medications. Watch for agitation, tremor, hyperthermia, or clonus suggesting serotonin syndrome. Avoid abrupt discontinuation. Keep naloxone available, recognizing it only partially reverses tramadol.",
+        "commonBrandName": "Ultram, ConZip"
+      },
+      "tags": [
+        "Pharmacology",
+        "Pain Management"
+      ],
+      "aliases": [
+        {
+          "text": "Ultram",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "ConZip",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "serotonin-syndrome",
+        "morphine",
+        "naloxone",
+        "sertraline",
+        "duloxetine"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "transient-ischemic-attack",
       "type": "CONDITION",
       "name": "Transient Ischemic Attack",
@@ -12214,6 +14076,40 @@
         "glasgow-coma-scale",
         "mannitol",
         "hypertonic-saline"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "trazodone",
+      "type": "MEDICATION",
+      "name": "Trazodone",
+      "shortExplanation": "An antidepressant most often used at low doses off-label as a sleep aid, and at higher doses for depression.",
+      "sections": {
+        "mechanism": "Blocks serotonin reuptake and antagonizes certain serotonin and histamine receptors; the sedating antihistamine effect underlies its use for sleep.",
+        "sideEffects": "Drowsiness, dizziness, dry mouth, orthostatic hypotension, and blurred vision.",
+        "adverseEffects": "Priapism (a urologic emergency), serotonin syndrome when combined with other serotonergic drugs, QT prolongation, and orthostatic falls.",
+        "nursingImplications": "Give at bedtime and rise slowly to limit orthostatic hypotension. Institute fall precautions. Teach male patients that a prolonged or painful erection requires emergency care. Watch for serotonin syndrome with other serotonergic agents.",
+        "commonBrandName": "Desyrel, Oleptro"
+      },
+      "tags": [
+        "Pharmacology",
+        "Psychiatry"
+      ],
+      "aliases": [
+        {
+          "text": "Desyrel",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Oleptro",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "zolpidem",
+        "temazepam",
+        "sertraline",
+        "serotonin-syndrome"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
@@ -12529,6 +14425,10 @@
       "aliases": [
         {
           "text": "Vancocin",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Firvanq",
           "type": "BRAND_NAME"
         }
       ],
@@ -12885,6 +14785,39 @@
         "pressure-injury",
         "negative-pressure-wound-therapy",
         "diabetic-foot-ulcer"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "zolpidem",
+      "type": "MEDICATION",
+      "name": "Zolpidem",
+      "shortExplanation": "A non-benzodiazepine sedative-hypnotic (a Z-drug) used short term for insomnia.",
+      "sections": {
+        "mechanism": "Selectively binds the benzodiazepine site on the GABA-A receptor to promote sleep with relatively less muscle-relaxant and anticonvulsant effect.",
+        "sideEffects": "Daytime drowsiness, dizziness, headache, and a metallic taste.",
+        "adverseEffects": "Complex sleep behaviors such as sleep-walking, driving, or eating with no memory of the event; next-morning impairment and falls, especially in older adults.",
+        "nursingImplications": "Give immediately before bed with at least 7 to 8 hours available for sleep, and only when the patient will stay in bed. Institute fall precautions. Avoid alcohol and other CNS depressants. Teach to stop and report any complex sleep behaviors.",
+        "commonBrandName": "Ambien, Ambien CR, Edluar"
+      },
+      "tags": [
+        "Pharmacology",
+        "Neuro"
+      ],
+      "aliases": [
+        {
+          "text": "Ambien",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Edluar",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "temazepam",
+        "trazodone",
+        "delirium"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     }
