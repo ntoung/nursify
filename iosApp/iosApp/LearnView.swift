@@ -3,8 +3,7 @@ import SwiftUI
 /// The curated/passive tab. The personalized suggestion feed (driven by the
 /// Suggestion Engine in REQUIREMENTS.md / SYSTEM_DESIGN.md) isn't built yet, so
 /// rather than show placeholder content this shows an honest empty state until
-/// there's real activity to surface. Search lives in its own tab; Learn keeps a
-/// small shortcut icon for convenience.
+/// there's real activity to surface. Search lives in its own tab.
 struct LearnView: View {
     @EnvironmentObject private var appState: AppState
 
@@ -28,20 +27,9 @@ struct LearnView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    HStack {
-                        Text(greeting)
-                            .font(Theme.Font.heading(25))
-                        Spacer()
-                        NavigationLink(destination: SearchView()) {
-                            Image(systemName: "magnifyingglass")
-                                .foregroundStyle(Theme.Color.sub)
-                                .frame(width: 40, height: 40)
-                                .background(SwiftUI.Color.white)
-                                .overlay(Circle().stroke(Theme.Color.line, lineWidth: 1.5))
-                                .clipShape(Circle())
-                        }
-                    }
-                    .padding(.top, 8)
+                    Text(greeting)
+                        .font(Theme.Font.heading(25))
+                        .padding(.top, 8)
 
                     EmptyStateView(
                         icon: "sparkles",

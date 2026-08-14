@@ -160,10 +160,18 @@ struct ChartLookupInputView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
+                        // If a complaint/medication text field is focused, a
+                        // toolbar tap can otherwise just dismiss the keyboard
+                        // instead of triggering the button — resigning focus
+                        // explicitly here means one tap always closes this.
+                        addFieldFocused = false
                         dismiss()
                     } label: {
                         Image(systemName: "xmark")
+                            .font(.system(size: 15, weight: .semibold))
                             .foregroundStyle(Theme.Color.sub)
+                            .frame(width: 44, height: 44)
+                            .contentShape(Rectangle())
                     }
                 }
             }
