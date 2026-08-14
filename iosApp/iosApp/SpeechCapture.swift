@@ -150,6 +150,16 @@ final class SpeechCapture: NSObject, ObservableObject {
         task = recognizer.recognitionTask(with: request) { [weak self] result, error in
             guard let self else { return }
             Task { @MainActor in
+                // stop() (Done/Cancel) already ran teardownAudio() synchronously,
+                // which cancels `task` and sets isRecording false before this
+                // async callback gets a chance to run. Cancelling a task that
+                // was mid-recognition commonly surfaces here as a spurious
+                // "No speech detected" error — trailing noise from our own
+                // deliberate teardown, not a real failure. The transcript was
+                // already captured from liveTranscript before stop() was
+                // called, so there's nothing left to do if we're here late.
+                guard self.isRecording else { return }
+
                 if let result {
                     self.liveTranscript = result.bestTranscription.formattedString
                 }
