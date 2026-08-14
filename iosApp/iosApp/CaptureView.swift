@@ -207,10 +207,10 @@ struct CaptureView: View {
 
     private var reviewBar: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Review before saving.")
+            Text("Note")
                 .font(Theme.Font.body(11.5))
                 .foregroundStyle(Theme.Color.sub)
-            TextField("What's on your mind?", text: $draftText, axis: .vertical)
+            TextField("What do you want to remember?", text: $draftText, axis: .vertical)
                 .font(Theme.Font.body(14.5))
                 .lineLimit(2...5)
                 .padding(12)
@@ -225,15 +225,11 @@ struct CaptureView: View {
                     }
                 }
 
-            if phiFindings.isEmpty {
-                Text("Screened - no PHI detected.")
-                    .font(Theme.Font.body(11.5, weight: .semibold))
-                    .foregroundStyle(Theme.Color.accentInk)
-            } else {
+            if !phiFindings.isEmpty {
                 phiWarningCard
             }
 
-            HStack {
+            HStack(spacing: 10) {
                 Button("Cancel") {
                     isComposing = false
                     draftText = ""
@@ -241,14 +237,29 @@ struct CaptureView: View {
                     phiAcknowledged = false
                     openNextWatchDraftIfAvailable()
                 }
-                .font(Theme.Font.body(14, weight: .semibold))
+                .font(Theme.Font.body(14, weight: .bold))
                 .foregroundStyle(Theme.Color.sub)
+                .padding(.horizontal, 18)
+                .padding(.vertical, 11)
+                .background(SwiftUI.Color.white)
+                .overlay(Capsule().stroke(Theme.Color.line, lineWidth: 1.5))
+                .clipShape(Capsule())
                 Spacer()
                 Button(isSaving ? "Saving..." : "Save") {
                     Task { await save() }
                 }
                 .font(Theme.Font.body(14, weight: .bold))
-                .foregroundStyle(Theme.Color.accentInk)
+                .foregroundStyle(.white)
+                .padding(.horizontal, 22)
+                .padding(.vertical, 11)
+                .background(Theme.Color.accent)
+                .clipShape(Capsule())
+                .opacity(
+                    draftText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                        || isSaving
+                        || (!phiFindings.isEmpty && !phiAcknowledged)
+                        ? 0.4 : 1
+                )
                 .disabled(
                     draftText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                         || isSaving
