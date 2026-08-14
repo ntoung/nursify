@@ -180,22 +180,33 @@ private struct AutocompleteRow: View {
     let item: ConceptSummary
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                Text(item.name).font(Theme.Font.heading(14.5)).foregroundStyle(Theme.Color.ink)
-                Spacer()
-                Text(item.type.displayName).font(Theme.Font.body(11, weight: .bold)).foregroundStyle(Theme.Color.sub)
-            }
-            if let sideEffects = item.sideEffectsPreview {
-                HStack(spacing: 5) {
-                    Image(systemName: "exclamationmark.triangle.fill").font(.system(size: 11))
-                    Text(sideEffects).font(Theme.Font.body(12, weight: .semibold)).lineLimit(1)
-                }
-                .foregroundStyle(Theme.Color.warnInk)
-            }
+        // Two lines: the exact match (alias if the search hit an alias, else the
+        // name) as the title, then a lighter description line folding in the
+        // canonical name (for alias hits), type, and any side-effect preview.
+        VStack(alignment: .leading, spacing: 3) {
+            Text(item.matchedAlias ?? item.name)
+                .font(Theme.Font.heading(17, weight: .semibold))
+                .foregroundStyle(Theme.Color.ink)
+                .lineLimit(1)
+            description.lineLimit(1)
         }
-        .padding(12)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 12)
+        .padding(.horizontal, 16)
         .contentShape(Rectangle())
+    }
+
+    private var description: Text {
+        let primary = item.matchedAlias != nil ? "\(item.name) · \(item.type.displayName)" : item.type.displayName
+        var text = Text(primary)
+            .font(Theme.Font.body(13.5))
+            .foregroundColor(Theme.Color.sub)
+        if let sideEffects = item.sideEffectsPreview {
+            text = text
+                + Text("  ·  ").font(Theme.Font.body(13.5)).foregroundColor(Theme.Color.sub)
+                + Text(sideEffects).font(Theme.Font.body(12.5, weight: .semibold)).foregroundColor(Theme.Color.warnInk)
+        }
+        return text
     }
 }
 

@@ -44,12 +44,16 @@ final class ConceptLibrary: ObservableObject {
     func search(_ query: String) -> [ConceptSummary] {
         let q = query.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
         guard !q.isEmpty else { return [] }
-        return concepts
-            .filter { concept in
-                concept.name.lowercased().contains(q)
-                    || concept.aliases.contains { $0.text.lowercased().contains(q) }
-            }
-            .map(Self.summary)
+        return concepts.compactMap { concept in
+            let nameMatch = concept.name.lowercased().contains(q)
+            let aliasMatch = concept.aliases.first { $0.text.lowercased().contains(q) }
+            guard nameMatch || aliasMatch != nil else { return nil }
+            var summary = Self.summary(concept)
+            // Surface the matched alias only when the name itself didn't match,
+            // so brand/abbreviation searches show the term the nurse typed.
+            if !nameMatch, let aliasMatch { summary.matchedAlias = aliasMatch.text }
+            return summary
+        }
     }
 
     func byCategory(_ type: ConceptType) -> [ConceptSummary] {

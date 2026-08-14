@@ -125,6 +125,11 @@ struct ConceptSummary: Identifiable, Codable, Hashable {
     var type: ConceptType
     var name: String
     var sideEffectsPreview: String?
+    /// Set when a search matched via an alias (e.g. a brand name) rather than
+    /// the canonical name, so the result can surface the term the nurse typed
+    /// (e.g. "Fioricet" -> Butalbital-Acetaminophen-Caffeine). Not sent by the
+    /// backend; populated by the offline library search.
+    var matchedAlias: String?
 }
 
 // MARK: - Capture (Feature A)
