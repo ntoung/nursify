@@ -9,4 +9,8 @@ struct AskResponse: Codable {
     let termName: String?
     let shortExplanation: String?
     let longExplanation: String?
+    /// Set only on a genuine failure to hear/transcribe the query — distinct
+    /// from `found == false` with this nil, which means transcription worked
+    /// but nothing matched. See the phone-side copy of this file for why.
+    let errorMessage: String?
 }

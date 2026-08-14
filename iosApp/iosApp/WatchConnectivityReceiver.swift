@@ -86,7 +86,13 @@ final class WatchConnectivityReceiver: NSObject, ObservableObject {
                 let transcript = try await SpeechCapture.transcribeFile(at: url)
                 response = resolveAskQuery(transcript: transcript)
             } catch {
-                response = AskResponse(found: false, termName: nil, shortExplanation: nil, longExplanation: nil)
+                response = AskResponse(
+                    found: false,
+                    termName: nil,
+                    shortExplanation: nil,
+                    longExplanation: nil,
+                    errorMessage: "Couldn't hear that clearly. Try again."
+                )
             }
             replyHandler((try? JSONEncoder().encode(response)) ?? Data())
         }
@@ -94,7 +100,7 @@ final class WatchConnectivityReceiver: NSObject, ObservableObject {
 
     private func resolveAskQuery(transcript: String) -> AskResponse {
         guard let match = ConceptLibrary.shared.mentions(in: transcript).first else {
-            return AskResponse(found: false, termName: nil, shortExplanation: nil, longExplanation: nil)
+            return AskResponse(found: false, termName: nil, shortExplanation: nil, longExplanation: nil, errorMessage: nil)
         }
         // Fire-and-forget: logs the lookup to the same synced search history
         // Search-tab lookups use, so it shows up under Recent there too.
@@ -106,7 +112,8 @@ final class WatchConnectivityReceiver: NSObject, ObservableObject {
             found: true,
             termName: match.conceptName,
             shortExplanation: match.shortExplanation,
-            longExplanation: match.longExplanation
+            longExplanation: match.longExplanation,
+            errorMessage: nil
         )
     }
 
@@ -120,7 +127,21 @@ final class WatchConnectivityReceiver: NSObject, ObservableObject {
             .sorted { $0.key < $1.key }
             .map(\.value)
             .joined(separator: " ")
-        guard !joined.isEmpty else { return }
+
+        guard !joined.isEmpty else {
+            // Every clip in this note failed to transcribe (denied
+            // permission, no on-device model, or nothing but silence was
+            // recorded). Previously this just vanished with no trace at all
+            // — a nurse who recorded a note on the Watch would see it marked
+            // "sent" there and then nothing would ever show up on the phone,
+            // with no way to tell whether it was still in flight or lost for
+            // good. Surfacing it here at least makes the loss visible.
+            appState?.errorMessage = "A voice note from your Watch couldn't be transcribed and was lost. Try recording again closer to your phone."
+            return
+        }
+        if !buffer.failedSequences.isEmpty {
+            appState?.errorMessage = "Part of a Watch note couldn't be transcribed — review it carefully before saving."
+        }
         appState?.pendingWatchDrafts.append(joined)
     }
 }

@@ -9,4 +9,11 @@ struct AskResponse: Codable {
     let termName: String?
     let shortExplanation: String?
     let longExplanation: String?
+    /// Set only on a genuine failure to hear/transcribe the query (denied
+    /// permission, no on-device model, silence) — distinct from `found ==
+    /// false` with this nil, which means transcription worked fine but no
+    /// concept matched. Without this, both cases showed the same "couldn't
+    /// find a match" message, which is actively misleading when the real
+    /// problem is that nothing was heard at all.
+    let errorMessage: String?
 }

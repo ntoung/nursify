@@ -14,6 +14,7 @@ final class SpeechCapture: ObservableObject {
         case speechDenied
         case onDeviceUnavailable
         case audioSessionFailed(Error)
+        case recognitionFailed(Error)
 
         var errorDescription: String? {
             switch self {
@@ -24,7 +25,9 @@ final class SpeechCapture: ObservableObject {
             case .onDeviceUnavailable:
                 return "On-device transcription isn't available for the current language on this device."
             case .audioSessionFailed(let error):
-                return "Couldn't start recording: \(error.localizedDescription)"
+                return "Couldn't start recording: \(error.localizedDescription). Try again — if it keeps happening, another app may be using the microphone."
+            case .recognitionFailed(let error):
+                return "Recording stopped unexpectedly: \(error.localizedDescription)"
             }
         }
     }
@@ -37,10 +40,25 @@ final class SpeechCapture: ObservableObject {
     private let audioEngine = AVAudioEngine()
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
+    /// Guards against a rapid double-tap on the record button re-entering
+    /// `start()` while the first call is still mid-flight: without this, the
+    /// second call's `captureError = nil` at the top would silently wipe out
+    /// an error alert the first call had just shown, making it look like the
+    /// alert "flashes and disappears" rather than a real failure happening.
+    private var isStarting = false
 
     func start() async {
-        guard !isRecording else { return }
+        guard !isRecording, !isStarting else { return }
+        isStarting = true
+        defer { isStarting = false }
         captureError = nil
+
+        // Defensive reset: guarantees a clean engine/session slate even if a
+        // previous attempt left things partially set up (e.g. backgrounded
+        // mid-recording, or a prior setActive succeeded but a later step
+        // failed) — stale state here is a real cause of "Session activation
+        // failed" on the next attempt.
+        teardownAudio()
 
         guard await requestMicPermission() else {
             captureError = .micDenied
@@ -57,6 +75,11 @@ final class SpeechCapture: ObservableObject {
 
         let session = AVAudioSession.sharedInstance()
         do {
+            // Deactivate first to release any stale route before requesting a
+            // fresh activation — activating directly over a lingering session
+            // is a real cause of setActive(true) intermittently throwing
+            // "Session activation failed".
+            try? session.setActive(false, options: .notifyOthersOnDeactivation)
             try session.setCategory(.record, mode: .measurement, options: .duckOthers)
             try session.setActive(true, options: .notifyOthersOnDeactivation)
         } catch {
@@ -92,7 +115,14 @@ final class SpeechCapture: ObservableObject {
                 if let result {
                     self.liveTranscript = result.bestTranscription.formattedString
                 }
-                if error != nil || result?.isFinal == true {
+                // Surfacing this is what makes silent recognition failures
+                // (e.g. no on-device audio route, a mid-recording interruption)
+                // visible instead of the recording bar just quietly reverting
+                // to idle with no explanation.
+                if let error {
+                    self.captureError = .recognitionFailed(error)
+                    self.teardownAudio()
+                } else if result?.isFinal == true {
                     self.teardownAudio()
                 }
             }

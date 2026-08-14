@@ -119,7 +119,7 @@ struct WatchAskView: View {
                     .multilineTextAlignment(.center)
             }
         } else {
-            Text("Couldn't find a match for that")
+            Text(response.errorMessage ?? "Couldn't find a match for that")
                 .font(.caption2)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
