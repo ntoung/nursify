@@ -48,10 +48,20 @@ final class SpeechCapture: ObservableObject {
     private var isStarting = false
 
     func start() async {
+        await start(isRetry: false)
+    }
+
+    /// `isRetry` marks the one silent automatic retry below — kept as a call
+    /// argument rather than stored state so every fresh top-level `start()`
+    /// gets its own retry chance, instead of a device that needed one retry
+    /// once never getting another for the rest of the app's lifetime.
+    private func start(isRetry: Bool) async {
         guard !isRecording, !isStarting else { return }
         isStarting = true
         defer { isStarting = false }
-        captureError = nil
+        if !isRetry {
+            captureError = nil
+        }
 
         // Defensive reset: guarantees a clean engine/session slate even if a
         // previous attempt left things partially set up (e.g. backgrounded
@@ -115,13 +125,23 @@ final class SpeechCapture: ObservableObject {
                 if let result {
                     self.liveTranscript = result.bestTranscription.formattedString
                 }
-                // Surfacing this is what makes silent recognition failures
-                // (e.g. no on-device audio route, a mid-recording interruption)
-                // visible instead of the recording bar just quietly reverting
-                // to idle with no explanation.
                 if let error {
-                    self.captureError = .recognitionFailed(error)
+                    // The on-device recognizer can transiently fail to attach
+                    // right as the audio session activates — most visible on
+                    // the very first recording after a fresh install/launch.
+                    // If we never got so much as a partial result before this
+                    // error, treat it as that transient init failure and
+                    // retry once, silently, rather than surfacing it — a real
+                    // failure (denied permission mid-flight, interruption
+                    // partway through real speech) will have produced at
+                    // least some transcript first, so this won't mask those.
+                    let neverGotAnyTranscript = self.liveTranscript.isEmpty
                     self.teardownAudio()
+                    if !isRetry && neverGotAnyTranscript {
+                        Task { await self.start(isRetry: true) }
+                    } else {
+                        self.captureError = .recognitionFailed(error)
+                    }
                 } else if result?.isFinal == true {
                     self.teardownAudio()
                 }
@@ -177,9 +197,9 @@ final class SpeechCapture: ObservableObject {
         }
     }
 
-    /// One-shot, on-device transcription of a pre-recorded audio file — used
-    /// for Watch-recorded memos (WatchConnectivityReceiver), as opposed to the
-    /// live mic transcription above used for phone dictation.
+    /// Transcription of a pre-recorded audio file — used for Watch-recorded
+    /// clips (WatchConnectivityReceiver, both note capture and Ask mode), as
+    /// opposed to the live mic transcription above used for phone dictation.
     static func transcribeFile(at url: URL) async throws -> String {
         guard let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US")),
               recognizer.supportsOnDeviceRecognition else {
@@ -189,6 +209,17 @@ final class SpeechCapture: ObservableObject {
             throw CaptureError.speechDenied
         }
 
+        // Same transient on-device-recognizer-init failure as the live path
+        // in `start()` above can happen here too (a fresh SFSpeechRecognizer
+        // instance is created per call) — one silent retry before giving up.
+        do {
+            return try await attemptTranscribeFile(at: url, recognizer: recognizer)
+        } catch {
+            return try await attemptTranscribeFile(at: url, recognizer: recognizer)
+        }
+    }
+
+    private static func attemptTranscribeFile(at url: URL, recognizer: SFSpeechRecognizer) async throws -> String {
         let request = SFSpeechURLRecognitionRequest(url: url)
         request.requiresOnDeviceRecognition = true
         // One-shot only: a URL request's callback can otherwise fire more than
