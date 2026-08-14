@@ -36,6 +36,20 @@ final class ConceptLibrary: ObservableObject {
         self.byId = Dictionary(loaded.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
     }
 
+    /// Every concept name + alias (brand names, abbreviations, nicknames) —
+    /// fed to `SFSpeechRecognitionRequest.contextualStrings` so on-device
+    /// transcription is biased toward correctly recognizing medical terms it
+    /// has no other reason to know, instead of "correcting" a rare word
+    /// toward a common one that merely sounds similar (e.g. the brand name
+    /// "Fioricet" getting heard as "fire"). See SpeechCapture.
+    ///
+    /// Deduplicated: many aliases (e.g. "EKG") repeat verbatim across
+    /// concepts, and Apple's docs don't specify how repeats affect biasing,
+    /// so there's no reason to hand the recognizer the same string twice.
+    var contextualStrings: [String] {
+        Array(Set(concepts.flatMap { [$0.name] + $0.aliases.map(\.text) }))
+    }
+
     // MARK: - Offline reads (mirror the backend's query semantics)
 
     /// Case-insensitive substring match on the concept name or any of its

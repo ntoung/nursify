@@ -59,6 +59,15 @@ final class SpeechCapture: NSObject, ObservableObject {
     /// an error alert the first call had just shown, making it look like the
     /// alert "flashes and disappears" rather than a real failure happening.
     private var isStarting = false
+    /// Text finalized from completed recognition segments during the
+    /// current recording. On-device dictation auto-finalizes (`isFinal`)
+    /// after a few seconds of silence, not only at `endAudio()` — so a
+    /// pause mid-recording ends the current segment on its own, and the
+    /// next segment's `bestTranscription` only covers what's said after
+    /// that point. Without stitching segments together here, a pause would
+    /// silently drop everything said before it instead of one continuous
+    /// recording lasting until the nurse taps Done.
+    private var committedTranscript = ""
 
     override init() {
         isCallActive = callObserver.calls.contains { !$0.hasEnded }
@@ -125,16 +134,17 @@ final class SpeechCapture: NSObject, ObservableObject {
             return
         }
 
-        let request = SFSpeechAudioBufferRecognitionRequest()
-        request.shouldReportPartialResults = true
-        request.requiresOnDeviceRecognition = true
-        self.request = request
-
         liveTranscript = ""
+        committedTranscript = ""
         let inputNode = audioEngine.inputNode
         let format = inputNode.outputFormat(forBus: 0)
-        inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { [weak request] buffer, _ in
-            request?.append(buffer)
+        // Reads self.request each call (rather than capturing the request
+        // instance up front) so buffers keep flowing to whichever segment's
+        // request is current once beginSegment(...) below swaps it out —
+        // the mic and engine only start once per recording, segments chain
+        // underneath without a restart.
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { [weak self] buffer, _ in
+            self?.request?.append(buffer)
         }
 
         audioEngine.prepare()
@@ -147,6 +157,25 @@ final class SpeechCapture: NSObject, ObservableObject {
         }
 
         isRecording = true
+        beginSegment(recognizer: recognizer, isRetry: isRetry)
+    }
+
+    /// Starts one recognition segment against the already-running audio
+    /// engine. When the segment auto-finalizes (silence-triggered `isFinal`,
+    /// not the nurse tapping Done), its text is folded into
+    /// `committedTranscript` and a fresh segment starts immediately —
+    /// stitching what would otherwise look like the transcript resetting
+    /// after every pause into one continuous recording.
+    private func beginSegment(recognizer: SFSpeechRecognizer, isRetry: Bool) {
+        let request = SFSpeechAudioBufferRecognitionRequest()
+        request.shouldReportPartialResults = true
+        request.requiresOnDeviceRecognition = true
+        request.taskHint = .dictation
+        // Biases recognition toward the curated corpus's medical vocabulary
+        // (drug names, brand names, abbreviations) — see ConceptLibrary.
+        request.contextualStrings = ConceptLibrary.shared.contextualStrings
+        self.request = request
+
         task = recognizer.recognitionTask(with: request) { [weak self] result, error in
             guard let self else { return }
             Task { @MainActor in
@@ -161,7 +190,14 @@ final class SpeechCapture: NSObject, ObservableObject {
                 guard self.isRecording else { return }
 
                 if let result {
-                    self.liveTranscript = result.bestTranscription.formattedString
+                    let segmentText = result.bestTranscription.formattedString
+                    if segmentText.isEmpty {
+                        self.liveTranscript = self.committedTranscript
+                    } else if self.committedTranscript.isEmpty {
+                        self.liveTranscript = segmentText
+                    } else {
+                        self.liveTranscript = self.committedTranscript + " " + segmentText
+                    }
                 }
                 if let error {
                     // The on-device recognizer can transiently fail to attach
@@ -181,7 +217,14 @@ final class SpeechCapture: NSObject, ObservableObject {
                         self.captureError = .recognitionFailed(error)
                     }
                 } else if result?.isFinal == true {
-                    self.teardownAudio()
+                    // Auto-finalized from silence, not a real stop: fold this
+                    // segment's text into the running total and immediately
+                    // chain into a new segment on the same still-running
+                    // audio engine, instead of tearing the recording down.
+                    self.committedTranscript = self.liveTranscript
+                    self.request = nil
+                    self.task = nil
+                    self.beginSegment(recognizer: recognizer, isRetry: isRetry)
                 }
             }
         }
@@ -260,6 +303,10 @@ final class SpeechCapture: NSObject, ObservableObject {
     private static func attemptTranscribeFile(at url: URL, recognizer: SFSpeechRecognizer) async throws -> String {
         let request = SFSpeechURLRecognitionRequest(url: url)
         request.requiresOnDeviceRecognition = true
+        request.taskHint = .dictation
+        // Same medical-vocabulary bias as the live path in start() — see
+        // ConceptLibrary.contextualStrings.
+        request.contextualStrings = ConceptLibrary.shared.contextualStrings
         // One-shot only: a URL request's callback can otherwise fire more than
         // once (partial results before the final one), which would resume this
         // continuation twice and crash.

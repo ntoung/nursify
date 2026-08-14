@@ -175,10 +175,20 @@ struct CaptureView: View {
                 .foregroundStyle(Theme.Color.sub)
                 Spacer()
                 Button {
-                    draftText = speech.liveTranscript
+                    let transcript = speech.liveTranscript
                     speech.stop()
+                    draftText = transcript
                     draftDevice = .phone
-                    isComposing = true
+                    if PHIScreener.scan(transcript).isEmpty {
+                        // Nothing to review — Done is enough, no separate
+                        // manual Save tap for the common case.
+                        Task { await save() }
+                    } else {
+                        // Flagged content still requires the nurse to review
+                        // and acknowledge before it's saved (REQUIREMENTS.md
+                        // "Privacy guardrail") — reviewBar's onAppear re-scans.
+                        isComposing = true
+                    }
                 } label: {
                     HStack(spacing: 6) {
                         Image(systemName: "stop.circle.fill")
