@@ -27,6 +27,17 @@ struct SearchView: View {
                             TextField("Medications, procedures, conditions, TAVR...", text: $query)
                                 .font(Theme.Font.body(15, weight: .semibold))
                                 .focused($searchFieldFocused)
+                            if !query.isEmpty {
+                                Button {
+                                    query = ""
+                                    results = []
+                                    searchFieldFocused = false
+                                } label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundStyle(Theme.Color.sub)
+                                }
+                                .buttonStyle(.plain)
+                            }
                         }
                         .padding(13)
                         .background(SwiftUI.Color.white)
