@@ -22,6 +22,7 @@ object Concepts : Table("concepts") {
     val shortExplanation = text("short_explanation")
     val sectionsJson = text("sections_json")
     val tagsJson = text("tags_json")
+    val pronunciation = text("pronunciation").nullable()
     val sourceCitation = text("source_citation").nullable()
     val createdAt = timestamp("created_at")
 

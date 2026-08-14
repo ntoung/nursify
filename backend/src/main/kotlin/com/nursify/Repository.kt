@@ -19,6 +19,7 @@ object ConceptRepository {
         shortExplanation: String,
         sections: ConceptSections,
         tags: List<String>,
+        pronunciation: String?,
         sourceCitation: String?
     ) = transaction {
         Concepts.insert {
@@ -28,6 +29,7 @@ object ConceptRepository {
             it[Concepts.shortExplanation] = shortExplanation
             it[Concepts.sectionsJson] = json.encodeToString(sections)
             it[Concepts.tagsJson] = json.encodeToString(tags)
+            it[Concepts.pronunciation] = pronunciation
             it[Concepts.sourceCitation] = sourceCitation
             it[Concepts.createdAt] = Instant.now()
         }
@@ -160,6 +162,7 @@ object ConceptRepository {
             tags = tags,
             aliases = aliases,
             relatedConceptIds = relatedIds,
+            pronunciation = row[Concepts.pronunciation],
             sourceCitation = row[Concepts.sourceCitation]
         )
     }

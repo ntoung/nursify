@@ -77,6 +77,25 @@ struct ConceptDetailView: View {
                                 .foregroundStyle(Theme.Color.sub)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
+
+                        // Tap-to-hear pronunciation, with the written respelling
+                        // beside it when one exists.
+                        HStack(spacing: 6) {
+                            Button { Pronouncer.shared.speak(concept.name) } label: {
+                                Image(systemName: "speaker.wave.2.fill")
+                                    .font(.system(size: 13, weight: .semibold))
+                            }
+                            .buttonStyle(.plain)
+                            .foregroundStyle(Theme.Color.accentInk)
+
+                            if let pronunciation = concept.pronunciation {
+                                Text(pronunciation)
+                                    .font(Theme.Font.body(12.5))
+                                    .italic()
+                                    .foregroundStyle(Theme.Color.sub)
+                            }
+                        }
+                        .padding(.top, 2)
                     }
                 }
 

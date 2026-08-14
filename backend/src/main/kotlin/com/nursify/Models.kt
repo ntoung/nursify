@@ -51,6 +51,7 @@ data class ConceptDto(
     val tags: List<String>,
     val aliases: List<AliasDto> = emptyList(),
     val relatedConceptIds: List<String> = emptyList(),
+    val pronunciation: String? = null,
     val sourceCitation: String? = null
 )
 

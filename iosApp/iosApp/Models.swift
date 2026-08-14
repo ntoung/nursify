@@ -114,6 +114,9 @@ struct Concept: Identifiable, Codable, Hashable {
     var tags: [String]
     var aliases: [Alias]
     var relatedConceptIds: [UUID]
+    /// Written phonetic respelling (e.g. "byoo-TAL-bih-tal"), shown under the
+    /// title alongside a tap-to-hear button. Optional; not every concept needs one.
+    var pronunciation: String?
     var sourceCitation: String?
 }
 
