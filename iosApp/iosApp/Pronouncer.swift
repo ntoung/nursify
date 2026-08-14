@@ -12,6 +12,10 @@ final class Pronouncer {
     func speak(_ text: String) {
         // Cancel anything in flight so rapid taps don't queue up behind each other.
         if synthesizer.isSpeaking { synthesizer.stopSpeaking(at: .immediate) }
+        // Play through the media channel (ducking other audio) so it's audible
+        // even when the phone's mute switch is on.
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.duckOthers])
+        try? AVAudioSession.sharedInstance().setActive(true)
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
         // Slightly slower than default so multi-syllable drug names are clearer.
