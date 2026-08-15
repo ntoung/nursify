@@ -620,6 +620,7 @@ struct NewEntryView: View {
 /// here updates immediately instead of showing stale content.
 struct JournalEntryDetailView: View {
     @EnvironmentObject private var appState: AppState
+    @Environment(\.dismiss) private var dismiss
     let noteId: UUID?
     let lookupSessionId: UUID?
     @State private var isPresentingAddMedication = false
@@ -633,16 +634,24 @@ struct JournalEntryDetailView: View {
         return appState.lookupSessions.first { $0.id == lookupSessionId }
     }
 
-    private var title: String {
-        switch (note != nil, lookupSession != nil) {
-        case (true, true): return "Entry"
-        case (true, false): return "Note"
-        default: return "Results"
+    /// Same text the Journal list row shows as its title — a note's
+    /// transcript when there is one, otherwise the chart lookup's
+    /// complaint/medication summary — so the detail page reads as "the
+    /// thing you just tapped," not a generic "Results" label.
+    private var displayTitle: String {
+        if let note {
+            return note.transcript
+        } else if let lookupSession {
+            return "\(lookupSession.chiefComplaints.joined(separator: ", ")) · \(lookupSession.medications.count) medications"
         }
+        return "Entry"
     }
 
     var body: some View {
         List {
+            header
+                .plainRow()
+
             if let note {
                 Section {
                     noteCard(note)
@@ -669,10 +678,6 @@ struct JournalEntryDetailView: View {
             }
             if let lookupSession {
                 Section {
-                    Text("Short version always shown — tap a medication for mechanism, side effects & nursing implications.")
-                        .font(Theme.Font.body(13.5))
-                        .foregroundStyle(Theme.Color.sub)
-                        .plainRow()
                     ForEach(lookupSession.medications) { med in
                         ConceptCard(
                             title: med.name,
@@ -701,15 +706,33 @@ struct JournalEntryDetailView: View {
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(Theme.Color.background.ignoresSafeArea())
-        .navigationTitle(title)
-        .navigationBarTitleDisplayMode(.inline)
-        // The Journal list hides its nav bar; force this pushed view's bar
-        // back so the system back button is present.
-        .toolbar(.visible, for: .navigationBar)
+        // In-content header (back chevron inline with the title) replaces
+        // the system nav bar — same pattern as ConceptDetailView. Keep new
+        // detail-style pages consistent with this going forward rather than
+        // each picking its own back-button treatment.
+        .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
         .sheet(isPresented: $isPresentingAddMedication) {
             if let lookupSession {
                 AddMedicationView(session: lookupSession)
             }
+        }
+    }
+
+    private var header: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Button { dismiss() } label: {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 18, weight: .bold))
+                    .foregroundStyle(Theme.Color.ink)
+            }
+            .buttonStyle(.plain)
+
+            Text(displayTitle)
+                .font(Theme.Font.heading(26, weight: .bold))
+                .foregroundStyle(Theme.Color.ink)
+                .lineLimit(3)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
@@ -740,7 +763,7 @@ struct JournalEntryDetailView: View {
             HStack(spacing: 10) {
                 Image(systemName: "plus.circle.fill")
                     .font(.system(size: 19))
-                Text("Add another medication")
+                Text("Add more...")
                     .font(Theme.Font.heading(15))
                 Spacer()
             }
@@ -765,7 +788,7 @@ struct JournalEntryDetailView: View {
 private extension View {
     func plainRow() -> some View {
         self
-            .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 0))
+            .listRowInsets(EdgeInsets(top: 6, leading: 24, bottom: 6, trailing: 24))
             .listRowSeparator(.hidden)
             .listRowBackground(SwiftUI.Color.clear)
     }
