@@ -1,14 +1,11 @@
 import SwiftUI
 
-/// Home tab (renamed from Learn) — greeting, level/points, badge shelf,
-/// usage summary, and a lightweight "learning tidbit" card. See
-/// GAMIFICATION_ADR.md. The personalized suggestion feed (the real
-/// Suggestion Engine) still isn't built — the learning-tidbit card here is
-/// an explicit cheap placeholder for it, not a competing implementation.
+/// Home tab (renamed from Learn) — greeting, level/points, badge shelf, and
+/// usage summary. See GAMIFICATION_ADR.md. The "learning tidbit" card that
+/// used to live here moved to the top of the Journal tab.
 struct HomeView: View {
     @EnvironmentObject private var appState: AppState
     @State private var summaryPeriod: SummaryPeriod = .week
-    @State private var learningTidbit: Concept?
 
     private var greeting: String {
         let hour = Calendar.current.component(.hour, from: Date())
@@ -40,10 +37,6 @@ struct HomeView: View {
                     VStack(alignment: .leading, spacing: 22) {
                         levelCard
 
-                        if let learningTidbit {
-                            learningTidbitCard(learningTidbit)
-                        }
-
                         usageSummarySection
 
                         badgeShelf
@@ -55,7 +48,6 @@ struct HomeView: View {
             .background(Theme.Color.background.ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
         }
-        .task { loadLearningTidbit() }
     }
 
     // MARK: - Level
@@ -89,44 +81,6 @@ struct HomeView: View {
         .background(Theme.Color.card)
         .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card))
         .shadow(color: .black.opacity(0.04), radius: 8, y: 2)
-    }
-
-    // MARK: - Learning tidbit (cheap Suggestion Engine placeholder)
-
-    private func learningTidbitCard(_ concept: Concept) -> some View {
-        NavigationLink(destination: ConceptDetailView(conceptId: concept.id)) {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(spacing: 6) {
-                    Image(systemName: "sparkles")
-                    Text("Something new to learn")
-                        .font(Theme.Font.heading(12))
-                }
-                .foregroundStyle(Theme.Color.accentInk)
-
-                Text(concept.name)
-                    .font(Theme.Font.heading(17))
-                    .foregroundStyle(Theme.Color.ink)
-                Text(concept.shortExplanation)
-                    .font(Theme.Font.body(13.5))
-                    .foregroundStyle(Theme.Color.sub)
-                    .lineLimit(2)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(16)
-            .background(Theme.Color.accentSoftBackground)
-            .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card))
-        }
-        .buttonStyle(.plain)
-    }
-
-    private func loadLearningTidbit() {
-        let specialtyTags = Set(appState.userProfile.specialties.map(\.rawValue))
-        let viewedIds = Set(appState.gamification.snapshot.distinctConceptsByType.values.flatMap { $0 })
-        let candidates = appState.library.concepts.filter { concept in
-            !viewedIds.contains(concept.id)
-                && (specialtyTags.isEmpty || !Set(concept.tags).isDisjoint(with: specialtyTags))
-        }
-        learningTidbit = candidates.randomElement() ?? appState.library.concepts.filter { !viewedIds.contains($0.id) }.randomElement()
     }
 
     // MARK: - Usage summary

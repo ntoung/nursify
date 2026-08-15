@@ -265,10 +265,6 @@ final class AppState: ObservableObject {
         return session
     }
 
-    func clearLookupHistory() {
-        lookupSessions.removeAll()
-    }
-
     func removeLookupSession(_ session: LookupSession) {
         lookupSessions.removeAll { $0.id == session.id }
     }

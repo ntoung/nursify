@@ -20,6 +20,7 @@ struct JournalView: View {
     @State private var isPresentingNewEntry = false
     @State private var prefillNoteText = ""
     @State private var prefillDevice: CaptureDevice = .phone
+    @State private var learningTidbit: Concept?
 
     /// Notes and lookup sessions sharing an `entryGroupId` become one group;
     /// everything else (including every entry created before this merge)
@@ -59,26 +60,18 @@ struct JournalView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 0) {
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack(alignment: .firstTextBaseline) {
-                        Text("Journal")
-                            .font(Theme.Font.heading(28, weight: .bold))
-                            .foregroundStyle(Theme.Color.ink)
-                        Spacer()
-                        if !appState.lookupSessions.isEmpty {
-                            Button("Clear charts") { appState.clearLookupHistory() }
-                                .font(Theme.Font.body(15, weight: .semibold))
-                                .foregroundStyle(Theme.Color.accentInk)
-                        }
-                    }
-                    Text("Notes are saved. Chart lookups are cleared after 24 hours for patient confidentiality.")
-                        .font(Theme.Font.body(13.5))
-                        .foregroundStyle(Theme.Color.sub)
-                        .fixedSize(horizontal: false, vertical: true)
+                Text("Journal")
+                    .font(Theme.Font.heading(28, weight: .bold))
+                    .foregroundStyle(Theme.Color.ink)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 12)
+                    .padding(.bottom, 12)
+
+                if let learningTidbit {
+                    learningTidbitCard(learningTidbit)
+                        .padding(.horizontal, 24)
+                        .padding(.bottom, 16)
                 }
-                .padding(.horizontal, 24)
-                .padding(.top, 12)
-                .padding(.bottom, 12)
 
                 if groups.isEmpty {
                     EmptyStateView(
@@ -138,7 +131,65 @@ struct JournalView: View {
             .onChange(of: appState.pendingWatchDrafts.count) { _, _ in
                 openNextWatchDraftIfAvailable()
             }
+            .task { loadLearningTidbit() }
         }
+    }
+
+    // MARK: - Learning tidbit (cheap Suggestion Engine placeholder — see
+    // GAMIFICATION_ADR.md. Moved here from Home so it's the first thing
+    // seen on the tab a nurse actually lands on.)
+
+    private func learningTidbitCard(_ concept: Concept) -> some View {
+        ZStack(alignment: .topTrailing) {
+            NavigationLink(destination: ConceptDetailView(conceptId: concept.id)) {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "sparkles")
+                        Text("Something new to learn")
+                            .font(Theme.Font.heading(12))
+                    }
+                    .foregroundStyle(Theme.Color.accentInk)
+
+                    Text(concept.name)
+                        .font(Theme.Font.heading(17))
+                        .foregroundStyle(Theme.Color.ink)
+                    Text(concept.shortExplanation)
+                        .font(Theme.Font.body(13.5))
+                        .foregroundStyle(Theme.Color.sub)
+                        .lineLimit(2)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(16)
+                .padding(.trailing, 22)
+                .background(Theme.Color.accentSoftBackground)
+                .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card))
+            }
+            .buttonStyle(.plain)
+
+            // A sibling of the NavigationLink (not nested inside its label)
+            // so tapping it dismisses the card instead of also navigating —
+            // nested controls inside a NavigationLink's label don't reliably
+            // get their own tap separately from the link's.
+            Button {
+                learningTidbit = nil
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.system(size: 18))
+                    .foregroundStyle(Theme.Color.sub)
+            }
+            .buttonStyle(.plain)
+            .padding(10)
+        }
+    }
+
+    private func loadLearningTidbit() {
+        let specialtyTags = Set(appState.userProfile.specialties.map(\.rawValue))
+        let viewedIds = Set(appState.gamification.snapshot.distinctConceptsByType.values.flatMap { $0 })
+        let candidates = appState.library.concepts.filter { concept in
+            !viewedIds.contains(concept.id)
+                && (specialtyTags.isEmpty || !Set(concept.tags).isDisjoint(with: specialtyTags))
+        }
+        learningTidbit = candidates.randomElement() ?? appState.library.concepts.filter { !viewedIds.contains($0.id) }.randomElement()
     }
 
     private func journalRow(_ group: JournalEntryGroup) -> some View {
@@ -274,7 +325,10 @@ struct NewEntryView: View {
     }
 
     private var hasNote: Bool { !noteText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
-    private var hasLookup: Bool { !medications.isEmpty }
+    // Chief complaints and medications are each independently optional —
+    // either one alone (or both, or neither combined with a note) is enough
+    // to count as "this entry has a chart lookup."
+    private var hasLookup: Bool { !complaints.isEmpty || !medications.isEmpty }
     private var canSave: Bool {
         guard hasNote || hasLookup else { return false }
         if hasNote, !phiFindings.isEmpty, !phiAcknowledged { return false }

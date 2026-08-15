@@ -1,26 +1,31 @@
 import SwiftUI
 
 /// Root view: shows Onboarding until completed, then the 3-tab structure
-/// (Home, Journal, Search — Home first/leftmost so it's the default tab
-/// TabView opens to, landing on level/badges/activity before the
-/// in-the-moment tools). Journal replaces what used to be separate
-/// Capture/Charts tabs — see JournalView.
+/// (Home, Journal, Search — Home stays leftmost for the tab-bar order, but
+/// Journal is where a nurse actually wants to land: see `selectedTab`).
+/// Journal replaces what used to be separate Capture/Charts tabs — see
+/// JournalView.
 struct ContentView: View {
     @StateObject private var appState = AppState()
     @Environment(\.scenePhase) private var scenePhase
+    private enum Tab: Hashable { case home, journal, search }
+    @State private var selectedTab: Tab = .journal
 
     var body: some View {
         Group {
             if appState.hasCompletedOnboarding {
-                TabView {
+                TabView(selection: $selectedTab) {
                     HomeView()
                         .tabItem { Label("Home", systemImage: "point.3.connected.trianglepath.dotted") }
+                        .tag(Tab.home)
 
                     JournalView()
                         .tabItem { Label("Journal", systemImage: "book.closed") }
+                        .tag(Tab.journal)
 
                     SearchView()
                         .tabItem { Label("Search", systemImage: "magnifyingglass") }
+                        .tag(Tab.search)
                 }
                 .tint(Theme.Color.accentInk)
             } else {
