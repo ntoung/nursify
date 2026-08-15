@@ -28,26 +28,32 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 22) {
-                    Text(greeting)
-                        .font(Theme.Font.heading(25))
-                        .padding(.top, 8)
+            VStack(alignment: .leading, spacing: 0) {
+                Text(greeting)
+                    .font(Theme.Font.heading(28, weight: .bold))
+                    .foregroundStyle(Theme.Color.ink)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 12)
+                    .padding(.bottom, 12)
 
-                    levelCard
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 22) {
+                        levelCard
 
-                    if let learningTidbit {
-                        learningTidbitCard(learningTidbit)
+                        if let learningTidbit {
+                            learningTidbitCard(learningTidbit)
+                        }
+
+                        usageSummarySection
+
+                        badgeShelf
                     }
-
-                    usageSummarySection
-
-                    badgeShelf
+                    .padding(24)
+                    .padding(.bottom, 70)
                 }
-                .padding(24)
-                .padding(.bottom, 70)
             }
             .background(Theme.Color.background.ignoresSafeArea())
+            .toolbar(.hidden, for: .navigationBar)
         }
         .task { loadLearningTidbit() }
     }

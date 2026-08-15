@@ -22,7 +22,14 @@ struct CaptureView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                Text("Capture")
+                    .font(Theme.Font.heading(28, weight: .bold))
+                    .foregroundStyle(Theme.Color.ink)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 12)
+                    .padding(.bottom, 12)
+
                 ScrollView {
                     VStack(alignment: .leading, spacing: 4) {
                         if appState.notes.isEmpty {
@@ -73,7 +80,7 @@ struct CaptureView: View {
                 }
             }
             .background(Theme.Color.background.ignoresSafeArea())
-            .navigationTitle("Capture")
+            .toolbar(.hidden, for: .navigationBar)
             .alert(
                 "Recording issue",
                 isPresented: Binding(get: { speech.captureError != nil }, set: { if !$0 { speech.captureError = nil } }),

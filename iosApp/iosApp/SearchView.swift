@@ -19,78 +19,86 @@ struct SearchView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack(spacing: 10) {
+            VStack(alignment: .leading, spacing: 0) {
+                Text("Search")
+                    .font(Theme.Font.heading(28, weight: .bold))
+                    .foregroundStyle(Theme.Color.ink)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 12)
+                    .padding(.bottom, 12)
+
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 4) {
                         HStack(spacing: 10) {
-                            Image(systemName: "magnifyingglass").foregroundStyle(Theme.Color.sub)
-                            TextField("Medications, procedures, conditions, TAVR...", text: $query)
-                                .font(Theme.Font.body(15, weight: .semibold))
-                                .focused($searchFieldFocused)
-                            if !query.isEmpty {
-                                Button {
-                                    query = ""
-                                    results = []
-                                    searchFieldFocused = false
-                                } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .foregroundStyle(Theme.Color.sub)
+                            HStack(spacing: 10) {
+                                Image(systemName: "magnifyingglass").foregroundStyle(Theme.Color.sub)
+                                TextField("Medications, procedures, conditions, TAVR...", text: $query)
+                                    .font(Theme.Font.body(15, weight: .semibold))
+                                    .focused($searchFieldFocused)
+                                if !query.isEmpty {
+                                    Button {
+                                        query = ""
+                                        results = []
+                                        searchFieldFocused = false
+                                    } label: {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundStyle(Theme.Color.sub)
+                                    }
+                                    .buttonStyle(.plain)
                                 }
-                                .buttonStyle(.plain)
+                            }
+                            .padding(13)
+                            .background(SwiftUI.Color.white)
+                            .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1.5))
+                            .clipShape(RoundedRectangle(cornerRadius: 18))
+
+                            NavigationLink(destination: SearchHistoryView()) {
+                                Image(systemName: "clock")
+                                    .foregroundStyle(Theme.Color.sub)
+                                    .frame(width: 48, height: 48)
+                                    .background(SwiftUI.Color.white)
+                                    .overlay(Circle().stroke(Theme.Color.line, lineWidth: 1.5))
+                                    .clipShape(Circle())
                             }
                         }
-                        .padding(13)
-                        .background(SwiftUI.Color.white)
-                        .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1.5))
-                        .clipShape(RoundedRectangle(cornerRadius: 18))
 
-                        NavigationLink(destination: SearchHistoryView()) {
-                            Image(systemName: "clock")
+                        SectionLabel(text: "Browse by topic")
+                            .padding(.top, 22)
+                            .padding(.bottom, 8)
+
+                        // Single-row carousel; bleeds to the screen edges past the
+                        // parent's 24pt padding so chips scroll edge-to-edge.
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                ForEach(ConceptType.allCases) { type in
+                                    SelectableChip(text: type.displayName, isSelected: activeCategory == type)
+                                        .onTapGesture { selectCategory(type) }
+                                }
+                            }
+                            .padding(.horizontal, 24)
+                        }
+                        .padding(.horizontal, -24)
+
+                        if !results.isEmpty {
+                            resultsList
+                        } else if !trimmedQuery.isEmpty || activeCategory != nil {
+                            Text("No concepts found.")
+                                .font(Theme.Font.body(13.5))
                                 .foregroundStyle(Theme.Color.sub)
-                                .frame(width: 48, height: 48)
-                                .background(SwiftUI.Color.white)
-                                .overlay(Circle().stroke(Theme.Color.line, lineWidth: 1.5))
-                                .clipShape(Circle())
+                                .padding(.vertical, 12)
+                        }
+
+                        if trimmedQuery.isEmpty && activeCategory == nil {
+                            recentSection
+                                .transition(.opacity)
                         }
                     }
-                    .padding(.top, 8)
-
-                    SectionLabel(text: "Browse by topic")
-                        .padding(.top, 22)
-                        .padding(.bottom, 8)
-
-                    // Single-row carousel; bleeds to the screen edges past the
-                    // parent's 24pt padding so chips scroll edge-to-edge.
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 8) {
-                            ForEach(ConceptType.allCases) { type in
-                                SelectableChip(text: type.displayName, isSelected: activeCategory == type)
-                                    .onTapGesture { selectCategory(type) }
-                            }
-                        }
-                        .padding(.horizontal, 24)
-                    }
-                    .padding(.horizontal, -24)
-
-                    if !results.isEmpty {
-                        resultsList
-                    } else if !trimmedQuery.isEmpty || activeCategory != nil {
-                        Text("No concepts found.")
-                            .font(Theme.Font.body(13.5))
-                            .foregroundStyle(Theme.Color.sub)
-                            .padding(.vertical, 12)
-                    }
-
-                    if trimmedQuery.isEmpty && activeCategory == nil {
-                        recentSection
-                            .transition(.opacity)
-                    }
+                    .animation(.easeInOut(duration: 0.25), value: activeCategory)
+                    .padding(24)
                 }
-                .animation(.easeInOut(duration: 0.25), value: activeCategory)
-                .padding(24)
             }
             .background(Theme.Color.background.ignoresSafeArea())
-            .navigationTitle("Search")
+            .toolbar(.hidden, for: .navigationBar)
             .task { await appState.loadSearchHistory() }
             .task(id: searchKey) { await runSearch() }
         }
