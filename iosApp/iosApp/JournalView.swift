@@ -142,7 +142,7 @@ struct JournalView: View {
     }
 
     private func journalRow(_ group: JournalEntryGroup) -> some View {
-        NavigationLink(destination: JournalEntryDetailView(note: group.note, lookupSession: group.lookupSession)) {
+        NavigationLink(destination: JournalEntryDetailView(noteId: group.note?.id, lookupSessionId: group.lookupSession?.id)) {
             JournalRow(
                 group: group,
                 isPendingSync: group.note.map { appState.pendingNoteIds.contains($0.id) } ?? false
@@ -159,6 +159,11 @@ struct JournalView: View {
                 } label: {
                     Label(group.note != nil ? "Remove chart" : "Remove", systemImage: "trash")
                 }
+                // Explicit red — the ambient .tint(Theme.Color.accentInk) on
+                // the root TabView otherwise bleeds into swipe-action
+                // buttons too, making "destructive" look like the app's
+                // ordinary accent green instead of a clear delete signal.
+                .tint(.red)
             }
         }
     }
@@ -191,23 +196,29 @@ private struct JournalRow: View {
     var isPendingSync: Bool = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            if let note = group.note {
-                Text(note.transcript)
-                    .font(Theme.Font.body(14.5))
-                    .foregroundStyle(Theme.Color.ink)
-                    .lineLimit(group.lookupSession != nil ? 2 : 3)
-            }
-            if let session = group.lookupSession {
-                HStack(spacing: 6) {
-                    Image(systemName: "list.bullet.clipboard")
-                        .font(.system(size: 10, weight: .bold))
-                    Text("\(session.chiefComplaints.joined(separator: ", ")) · \(session.medications.count) medications")
-                        .font(Theme.Font.body(group.note == nil ? 14.5 : 12.5, weight: group.note == nil ? .semibold : .regular))
+        HStack(alignment: .top, spacing: 10) {
+            VStack(alignment: .leading, spacing: 4) {
+                if let note = group.note {
+                    Text(note.transcript)
+                        .font(Theme.Font.body(14.5))
+                        .foregroundStyle(Theme.Color.ink)
+                        .lineLimit(group.lookupSession != nil ? 2 : 3)
                 }
-                .foregroundStyle(group.note == nil ? Theme.Color.ink : Theme.Color.sub)
+                if let session = group.lookupSession {
+                    HStack(spacing: 6) {
+                        Image(systemName: "list.bullet.clipboard")
+                            .font(.system(size: 10, weight: .bold))
+                        Text("\(session.chiefComplaints.joined(separator: ", ")) · \(session.medications.count) medications")
+                            .font(Theme.Font.body(group.note == nil ? 14.5 : 12.5, weight: group.note == nil ? .semibold : .regular))
+                    }
+                    .foregroundStyle(group.note == nil ? Theme.Color.ink : Theme.Color.sub)
+                }
             }
-            HStack(spacing: 6) {
+            Spacer(minLength: 8)
+            // Compact trailing column, top-aligned beside the content — not a
+            // full-width row of its own, which was pushing the timestamp far
+            // from the title and inflating each row's height.
+            VStack(alignment: .trailing, spacing: 3) {
                 if isPendingSync {
                     Label("Pending sync", systemImage: "arrow.triangle.2.circlepath")
                         .labelStyle(.iconOnly)
@@ -215,14 +226,13 @@ private struct JournalRow: View {
                         .foregroundStyle(Theme.Color.sub)
                         .accessibilityLabel("Pending sync")
                 }
-                Spacer()
                 Text(group.date.formatted(date: .omitted, time: .shortened))
                     .font(Theme.Font.body(12, weight: .semibold))
                     .foregroundStyle(Theme.Color.sub)
-                // No manual chevron here — List already draws its own
-                // NavigationLink disclosure indicator on the trailing edge;
-                // adding a second one produced two chevrons per row.
             }
+            // No manual chevron here — List already draws its own
+            // NavigationLink disclosure indicator on the trailing edge;
+            // adding a second one produced two chevrons per row.
         }
         .padding(.vertical, 10)
         .contentShape(Rectangle())
@@ -605,10 +615,23 @@ struct NewEntryView: View {
 
 /// Merged detail view for a Journal entry — shows the note's mentioned
 /// concepts and/or the chart lookup's medication explanations, whichever
-/// parts the entry actually has.
+/// parts the entry actually has. Looks up the live note/session by id
+/// (rather than taking a value snapshot) so adding/removing a medication
+/// here updates immediately instead of showing stale content.
 struct JournalEntryDetailView: View {
-    let note: Note?
-    let lookupSession: LookupSession?
+    @EnvironmentObject private var appState: AppState
+    let noteId: UUID?
+    let lookupSessionId: UUID?
+    @State private var isPresentingAddMedication = false
+
+    private var note: Note? {
+        guard let noteId else { return nil }
+        return appState.notes.first { $0.id == noteId }
+    }
+    private var lookupSession: LookupSession? {
+        guard let lookupSessionId else { return nil }
+        return appState.lookupSessions.first { $0.id == lookupSessionId }
+    }
 
     private var title: String {
         switch (note != nil, lookupSession != nil) {
@@ -619,77 +642,221 @@ struct JournalEntryDetailView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                if let note {
-                    noteSection(note)
-                }
-                if let lookupSession {
-                    lookupSection(lookupSession)
+        List {
+            if let note {
+                Section {
+                    noteCard(note)
+                    if note.mentionedConcepts.isEmpty {
+                        Text("No concepts identified in this note yet.")
+                            .font(Theme.Font.body(14))
+                            .foregroundStyle(Theme.Color.sub)
+                            .plainRow()
+                    } else {
+                        ForEach(note.mentionedConcepts) { mention in
+                            ConceptCard(
+                                title: mention.conceptName,
+                                tags: [mention.type.displayName],
+                                shortText: mention.shortExplanation,
+                                longTitle: "Details",
+                                longText: mention.longExplanation
+                            )
+                            .plainRow()
+                        }
+                    }
+                } header: {
+                    SectionLabel(text: "Note")
                 }
             }
-            .padding(24)
+            if let lookupSession {
+                Section {
+                    Text("Short version always shown — tap a medication for mechanism, side effects & nursing implications.")
+                        .font(Theme.Font.body(13.5))
+                        .foregroundStyle(Theme.Color.sub)
+                        .plainRow()
+                    ForEach(lookupSession.medications) { med in
+                        ConceptCard(
+                            title: med.name,
+                            tags: med.relatedComplaints,
+                            shortText: med.shortExplanation,
+                            longTitle: "Mechanism & side effects",
+                            longText: med.longExplanation
+                        )
+                        .plainRow()
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button(role: .destructive) {
+                                appState.removeMedication(med, from: lookupSession)
+                            } label: {
+                                Label("Remove", systemImage: "trash")
+                            }
+                            .tint(.red)
+                        }
+                    }
+                    addMedicationRow
+                        .plainRow()
+                } header: {
+                    SectionLabel(text: "Chart lookup · \(lookupSession.chiefComplaints.joined(separator: ", "))")
+                }
+            }
         }
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
         .background(Theme.Color.background.ignoresSafeArea())
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
         // The Journal list hides its nav bar; force this pushed view's bar
         // back so the system back button is present.
         .toolbar(.visible, for: .navigationBar)
-    }
-
-    @ViewBuilder
-    private func noteSection(_ note: Note) -> some View {
-        VStack(alignment: .leading, spacing: 16) {
-            VStack(alignment: .leading, spacing: 6) {
-                Text(note.transcript)
-                    .font(Theme.Font.body(14, weight: .medium))
-                    .italic()
-                Text(note.createdAt.formatted(date: .abbreviated, time: .shortened))
-                    .font(Theme.Font.body(11.5, weight: .semibold))
-                    .foregroundStyle(Theme.Color.sub)
-            }
-            .padding(16)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(SwiftUI.Color.white)
-            .overlay(Rectangle().frame(width: 4).foregroundStyle(Theme.Color.accent), alignment: .leading)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-
-            if note.mentionedConcepts.isEmpty {
-                Text("No concepts identified in this note yet.")
-                    .font(Theme.Font.body(14))
-                    .foregroundStyle(Theme.Color.sub)
-            } else {
-                SectionLabel(text: "Mentioned in this note")
-                ForEach(note.mentionedConcepts) { mention in
-                    ConceptCard(
-                        title: mention.conceptName,
-                        tags: [mention.type.displayName],
-                        shortText: mention.shortExplanation,
-                        longTitle: "Details",
-                        longText: mention.longExplanation
-                    )
-                }
+        .sheet(isPresented: $isPresentingAddMedication) {
+            if let lookupSession {
+                AddMedicationView(session: lookupSession)
             }
         }
     }
 
-    @ViewBuilder
-    private func lookupSection(_ session: LookupSession) -> some View {
-        VStack(alignment: .leading, spacing: 14) {
-            SectionLabel(text: "Chart lookup · \(session.chiefComplaints.joined(separator: ", "))")
-            Text("Short version always shown — tap a medication for mechanism, side effects & nursing implications.")
-                .font(Theme.Font.body(13.5))
+    private func noteCard(_ note: Note) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(note.transcript)
+                .font(Theme.Font.body(14, weight: .medium))
+                .italic()
+            Text(note.createdAt.formatted(date: .abbreviated, time: .shortened))
+                .font(Theme.Font.body(11.5, weight: .semibold))
                 .foregroundStyle(Theme.Color.sub)
-            ForEach(session.medications) { med in
-                ConceptCard(
-                    title: med.name,
-                    tags: med.relatedComplaints,
-                    shortText: med.shortExplanation,
-                    longTitle: "Mechanism & side effects",
-                    longText: med.longExplanation
-                )
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(SwiftUI.Color.white)
+        .overlay(Rectangle().frame(width: 4).foregroundStyle(Theme.Color.accent), alignment: .leading)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .plainRow()
+    }
+
+    /// Skeleton "add another item" row at the bottom of the medications
+    /// list — tapping it opens a search sheet to append one more medication
+    /// to this already-saved entry, rather than requiring a whole new entry.
+    private var addMedicationRow: some View {
+        Button {
+            isPresentingAddMedication = true
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 19))
+                Text("Add another medication")
+                    .font(Theme.Font.heading(15))
+                Spacer()
             }
+            .foregroundStyle(Theme.Color.accentInk)
+            .padding(16)
+            .background(Theme.Color.card)
+            .overlay(
+                RoundedRectangle(cornerRadius: Theme.Radius.card)
+                    .stroke(Color(hex: "C9BFAD"), style: StrokeStyle(lineWidth: 1.5, dash: [5, 4]))
+            )
+            .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card))
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+/// Strips List's default row chrome (insets, separator, background) so
+/// custom card content (ConceptCard, the note card, the add-medication
+/// skeleton row) renders exactly as it does outside a List — needed here
+/// only to get `.swipeActions` (a List-only modifier) on individual
+/// medication rows within JournalEntryDetailView.
+private extension View {
+    func plainRow() -> some View {
+        self
+            .listRowInsets(EdgeInsets(top: 6, leading: 0, bottom: 6, trailing: 0))
+            .listRowSeparator(.hidden)
+            .listRowBackground(SwiftUI.Color.clear)
+    }
+}
+
+/// Search sheet for adding one more medication to an already-saved
+/// LookupSession — reachable from JournalEntryDetailView's "Add another
+/// medication" row.
+private struct AddMedicationView: View {
+    @EnvironmentObject private var appState: AppState
+    @Environment(\.dismiss) private var dismiss
+    let session: LookupSession
+    @State private var query = ""
+    @FocusState private var searchFocused: Bool
+
+    private var trimmedQuery: String { query.trimmingCharacters(in: .whitespacesAndNewlines) }
+
+    private var suggestions: [ConceptSummary] {
+        guard !trimmedQuery.isEmpty else { return [] }
+        let existing = Set(session.medications.map { $0.name.lowercased() })
+        return appState.library.search(trimmedQuery)
+            .filter { $0.type == .medication && !existing.contains($0.name.lowercased()) }
+    }
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 0) {
+                HStack(spacing: 10) {
+                    Image(systemName: "magnifyingglass").foregroundStyle(Theme.Color.sub)
+                    TextField("Search a medication", text: $query)
+                        .font(Theme.Font.body(15, weight: .semibold))
+                        .focused($searchFocused)
+                        .autocorrectionDisabled()
+                }
+                .padding(13)
+                .background(SwiftUI.Color.white)
+                .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1.5))
+                .clipShape(RoundedRectangle(cornerRadius: 18))
+                .padding(24)
+
+                if trimmedQuery.isEmpty {
+                    Text("Search for a medication to add to this entry.")
+                        .font(Theme.Font.body(13.5))
+                        .foregroundStyle(Theme.Color.sub)
+                        .padding(.horizontal, 24)
+                    Spacer()
+                } else if suggestions.isEmpty {
+                    Text("No matches.")
+                        .font(Theme.Font.body(13.5))
+                        .foregroundStyle(Theme.Color.sub)
+                        .padding(.horizontal, 24)
+                    Spacer()
+                } else {
+                    List(suggestions) { suggestion in
+                        Button {
+                            appState.addMedication(suggestion.name, to: session)
+                            dismiss()
+                        } label: {
+                            HStack {
+                                Text(suggestion.matchedAlias ?? suggestion.name)
+                                    .font(Theme.Font.body(14.5, weight: .semibold))
+                                    .foregroundStyle(Theme.Color.ink)
+                                Spacer()
+                                Text(suggestion.type.displayName)
+                                    .font(Theme.Font.body(11, weight: .bold))
+                                    .foregroundStyle(Theme.Color.sub)
+                            }
+                        }
+                    }
+                    .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
+                }
+            }
+            .background(Theme.Color.background.ignoresSafeArea())
+            .navigationTitle("Add Medication")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        searchFocused = false
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(Theme.Color.sub)
+                            .frame(width: 44, height: 44)
+                            .contentShape(Rectangle())
+                    }
+                }
+            }
+            .onAppear { searchFocused = true }
         }
     }
 }

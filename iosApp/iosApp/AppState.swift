@@ -273,6 +273,25 @@ final class AppState: ObservableObject {
         lookupSessions.removeAll { $0.id == session.id }
     }
 
+    /// Adds one more medication to an already-saved lookup session — the
+    /// Journal entry detail view's "Add medication" affordance, for when a
+    /// nurse thinks of another drug after the fact instead of redoing the
+    /// whole entry.
+    func addMedication(_ name: String, to session: LookupSession) {
+        guard let index = lookupSessions.firstIndex(where: { $0.id == session.id }),
+              let explanation = library.chartLookup(chiefComplaints: session.chiefComplaints, medicationNames: [name]).first
+        else { return }
+        lookupSessions[index].medications.append(explanation)
+    }
+
+    /// Removes a single medication from a session (swipe-to-remove on its
+    /// row in the entry detail view) — distinct from removeLookupSession,
+    /// which drops the whole session.
+    func removeMedication(_ medication: MedicationExplanation, from session: LookupSession) {
+        guard let index = lookupSessions.firstIndex(where: { $0.id == session.id }) else { return }
+        lookupSessions[index].medications.removeAll { $0.id == medication.id }
+    }
+
     /// Drops chart lookups past their 24-hour expiry, so the Journal list only
     /// ever shows the current window (see the "deleted after 24 hours" copy).
     func purgeExpiredLookups() {
