@@ -45,6 +45,10 @@ final class AppState: ObservableObject {
     /// browsing, and detail work fully offline. See ConceptLibrary.
     let library: ConceptLibrary
 
+    /// On-device badges/points/levels — see GAMIFICATION_ADR.md. Entirely
+    /// local, never synced.
+    let gamification: GamificationEngine
+
     /// Durable outbox of mutations made offline, replayed when the backend is
     /// reachable again. See SyncQueue and flushOutbox().
     private var syncQueue = SyncQueue()
@@ -68,9 +72,10 @@ final class AppState: ObservableObject {
         static let userProfile = "userProfile"
     }
 
-    init(api: APIClient = .shared, library: ConceptLibrary = .shared) {
+    init(api: APIClient = .shared, library: ConceptLibrary = .shared, gamification: GamificationEngine? = nil) {
         self.api = api
         self.library = library
+        self.gamification = gamification ?? GamificationEngine(library: library)
         hasCompletedOnboarding = UserDefaults.standard.bool(forKey: StorageKey.hasCompletedOnboarding)
         if let data = UserDefaults.standard.data(forKey: StorageKey.userProfile),
            let profile = try? JSONDecoder().decode(UserProfile.self, from: data) {
@@ -78,6 +83,7 @@ final class AppState: ObservableObject {
         }
         notes = AppState.loadNotes()
         pendingNoteIds = syncQueue.pendingNoteIds
+        self.gamification.updateSpecialties(userProfile.specialties)
         startConnectivityMonitoring()
     }
 
@@ -170,6 +176,7 @@ final class AppState: ObservableObject {
         if let data = try? JSONEncoder().encode(userProfile) {
             UserDefaults.standard.set(data, forKey: StorageKey.userProfile)
         }
+        gamification.updateSpecialties(specialties)
     }
 
     // MARK: - Network-backed loads
@@ -195,7 +202,9 @@ final class AppState: ObservableObject {
     // browsing, and detail all work with no network. The library refreshes from
     // the backend separately (see refreshLibrary()).
     func searchConcepts(query: String) async -> [ConceptSummary] {
-        library.search(query)
+        let results = library.search(query)
+        gamification.logSearchPerformed()
+        return results
     }
 
     func conceptsByCategory(_ type: ConceptType) async -> [ConceptSummary] {
@@ -214,6 +223,9 @@ final class AppState: ObservableObject {
     /// history is general medical-knowledge browsing (not patient data), so
     /// unlike chart-lookup history it's fine to sync.
     func recordSearchHistory(conceptId: UUID) async {
+        if let conceptType = library.concept(id: conceptId)?.type {
+            gamification.logConceptViewed(conceptId: conceptId, conceptType: conceptType)
+        }
         syncQueue.enqueue(.recordView(conceptId: conceptId))
         await flushOutbox()
     }
@@ -242,11 +254,22 @@ final class AppState: ObservableObject {
             expiresAt: Date().addingTimeInterval(60 * 60 * 24)
         )
         lookupSessions.insert(session, at: 0)
+        gamification.logChartLookupSessionCompleted()
         return session
     }
 
     func clearLookupHistory() {
         lookupSessions.removeAll()
+    }
+
+    func removeLookupSession(_ session: LookupSession) {
+        lookupSessions.removeAll { $0.id == session.id }
+    }
+
+    /// Drops chart lookups past their 24-hour expiry, so the Charts list only
+    /// ever shows the current window (see the "deleted after 24 hours" copy).
+    func purgeExpiredLookups() {
+        lookupSessions.removeAll { $0.expiresAt <= Date() }
     }
 
     // MARK: - Capture — offline-first via the outbox.
@@ -268,6 +291,7 @@ final class AppState: ObservableObject {
         )
         notes.insert(note, at: 0)
         persistNotes()
+        gamification.logNoteCaptured()
 
         syncQueue.enqueue(.createNote(localId: localId, transcript: transcript, device: device.rawValue, phiReviewed: phiReviewed))
         pendingNoteIds = syncQueue.pendingNoteIds
