@@ -348,9 +348,6 @@ struct NewEntryView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 4) {
-                    SectionLabel(text: "Chart lookup")
-                        .padding(.bottom, 6)
-
                     editableChipSection(
                         title: "Chief complaints (optional)",
                         addLabel: "Add complaint",
@@ -768,7 +765,7 @@ struct JournalEntryDetailView: View {
                     addMedicationRow
                         .plainRow()
                 } header: {
-                    SectionLabel(text: "Chart lookup · \(lookupSession.chiefComplaints.joined(separator: ", "))")
+                    SectionLabel(text: lookupSession.chiefComplaints.isEmpty ? "Medications" : lookupSession.chiefComplaints.joined(separator: ", "))
                 }
             }
         }
