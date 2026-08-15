@@ -1,8 +1,9 @@
 import SwiftUI
 
 /// Root view: shows Onboarding until completed, then the 4-tab structure
-/// (Capture, Search, Charts, Home — ordered per mockups/v4, fast in-the-moment
-/// tools first, reflective Home last).
+/// (Home, Capture, Search, Charts — Home first/leftmost so it's the default
+/// tab TabView opens to, landing on level/badges/activity before the
+/// in-the-moment tools).
 struct ContentView: View {
     @StateObject private var appState = AppState()
     @Environment(\.scenePhase) private var scenePhase
@@ -11,6 +12,9 @@ struct ContentView: View {
         Group {
             if appState.hasCompletedOnboarding {
                 TabView {
+                    HomeView()
+                        .tabItem { Label("Home", systemImage: "point.3.connected.trianglepath.dotted") }
+
                     CaptureView()
                         .tabItem { Label("Capture", systemImage: "mic.fill") }
 
@@ -19,9 +23,6 @@ struct ContentView: View {
 
                     ChartsListView()
                         .tabItem { Label("Charts", systemImage: "list.bullet.clipboard") }
-
-                    HomeView()
-                        .tabItem { Label("Home", systemImage: "point.3.connected.trianglepath.dotted") }
                 }
                 .tint(Theme.Color.accentInk)
             } else {

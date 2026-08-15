@@ -22,6 +22,10 @@ private struct GamificationUnlockDialogModifier: ViewModifier {
                         engine.dismissCurrentUnlock()
                     }
                 }
+                // Forces a fresh view (and fresh @State) per unlock, so the
+                // medallion's pop-in animation replays for each badge/level-up
+                // shown in sequence, not just the first.
+                .id(unlock.id)
                 .transition(.opacity.combined(with: .scale(scale: 0.92)))
             }
         }
@@ -32,6 +36,10 @@ private struct GamificationUnlockDialogModifier: ViewModifier {
 private struct UnlockDialogView: View {
     let unlock: GamificationUnlock
     let onDismiss: () -> Void
+
+    @State private var medallionScale: CGFloat = 0.2
+    @State private var medallionRotation: Double = -18
+    @State private var ringPulse = false
 
     var body: some View {
         ZStack {
@@ -66,16 +74,35 @@ private struct UnlockDialogView: View {
             .shadow(color: .black.opacity(0.2), radius: 24, y: 10)
             .padding(.horizontal, 32)
         }
+        .onAppear {
+            withAnimation(.spring(response: 0.55, dampingFraction: 0.55)) {
+                medallionScale = 1
+                medallionRotation = 0
+            }
+            withAnimation(.easeOut(duration: 0.9).delay(0.05)) {
+                ringPulse = true
+            }
+        }
     }
 
     private var medallion: some View {
         ZStack {
+            // Brief expanding, fading ring — a one-shot "burst" behind the
+            // medallion as it pops in, rather than a plain fade.
+            Circle()
+                .stroke(medallionColor, lineWidth: 3)
+                .frame(width: 108, height: 108)
+                .scaleEffect(ringPulse ? 1.6 : 1)
+                .opacity(ringPulse ? 0 : 0.6)
+
             Circle().fill(medallionColor.opacity(0.15)).frame(width: 108, height: 108)
             Circle().stroke(medallionColor, lineWidth: 3).frame(width: 108, height: 108)
             Image(systemName: symbolName)
                 .font(.system(size: 44, weight: .bold))
                 .foregroundStyle(medallionColor)
         }
+        .scaleEffect(medallionScale)
+        .rotationEffect(.degrees(medallionRotation))
     }
 
     private var symbolName: String {
