@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class ConceptType {
-    MEDICATION, PROCEDURE, CONDITION, LAB_VALUE, EQUIPMENT, PROTOCOL, ANATOMY
+    MEDICATION, PROCEDURE, CONDITION, LAB_VALUE, EQUIPMENT, PROTOCOL, ANATOMY, ASSESSMENT_TOOL
 }
 
 /**

@@ -188,6 +188,7 @@ private fun longExplanationFor(type: ConceptType, sections: ConceptSections): St
     ConceptType.EQUIPMENT -> sections.careConsiderations ?: sections.purpose
     ConceptType.PROTOCOL -> sections.steps ?: sections.triggerCriteria
     ConceptType.ANATOMY -> null
+    ConceptType.ASSESSMENT_TOOL -> sections.steps ?: sections.purpose
 }
 
 object NoteRepository {

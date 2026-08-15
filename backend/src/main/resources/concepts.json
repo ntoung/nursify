@@ -1156,6 +1156,38 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "apgar-score",
+      "type": "ASSESSMENT_TOOL",
+      "name": "APGAR Score",
+      "shortExplanation": "A quick assessment of a newborn's condition just after birth, done at 1 and 5 minutes of life.",
+      "sections": {
+        "purpose": "Rapidly assesses a newborn's transition to life outside the womb at 1 and 5 minutes (and beyond if needed) to determine whether resuscitation support is required.",
+        "steps": "Five signs - Appearance (color), Pulse (heart rate), Grimace (reflex irritability), Activity (muscle tone), and Respiration - each scored 0-2; total 0-10.",
+        "abnormalMeaning": "7-10 is generally reassuring, 4-6 moderately depressed, and 0-3 severely depressed and needing resuscitation. A low or non-improving 5-minute score prompts continued support; the score guides care but does not by itself predict long-term outcome."
+      },
+      "tags": [
+        "L&D / Maternity",
+        "Pediatrics",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "APGAR",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Appearance, Pulse, Grimace, Activity, Respiration",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "neonatal-respiratory-distress-syndrome",
+        "neonatal-sepsis"
+      ],
+      "pronunciation": "AP-gar",
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "apixaban",
       "type": "MEDICATION",
       "name": "Apixaban",
@@ -1884,6 +1916,32 @@
       "sourceCitation": "Source: MedlinePlus"
     },
     {
+      "key": "bishop-score",
+      "type": "ASSESSMENT_TOOL",
+      "name": "Bishop Score",
+      "shortExplanation": "A cervical exam score that predicts how ready the cervix is for labor induction.",
+      "sections": {
+        "purpose": "Assesses cervical readiness (ripeness) to predict the likelihood of a successful labor induction and guide whether cervical ripening is needed first.",
+        "steps": "Five cervical parameters: dilation, effacement, and fetal station (each 0-3), plus cervical consistency and position (each 0-2); total 0-13.",
+        "abnormalMeaning": "A higher score means a more favorable cervix: generally 8 or more is favorable with good chances of vaginal delivery, while 6 or less is unfavorable and often prompts cervical ripening before induction."
+      },
+      "tags": [
+        "L&D / Maternity",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "Bishop Pelvic Score",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "oxytocin",
+        "misoprostol"
+      ],
+      "sourceCitation": "Source: StatPearls"
+    },
+    {
       "key": "bladder-scanner",
       "type": "EQUIPMENT",
       "name": "Bladder Scanner",
@@ -2071,6 +2129,33 @@
         "chf-exacerbation"
       ],
       "sourceCitation": "Source: MedlinePlus"
+    },
+    {
+      "key": "braden-scale",
+      "type": "ASSESSMENT_TOOL",
+      "name": "Braden Scale",
+      "shortExplanation": "A tool that scores a patient's risk of developing pressure injuries so prevention can be started early.",
+      "sections": {
+        "purpose": "Predicts risk of pressure injury (bedsores) so preventive measures like repositioning and support surfaces can be started before skin breaks down.",
+        "steps": "Six subscales - sensory perception, moisture, activity, mobility, nutrition (each 1-4), and friction/shear (1-3); total 6-23. Lower scores mean higher risk.",
+        "abnormalMeaning": "Lower scores indicate greater risk: roughly 15-18 mild, 13-14 moderate, 10-12 high, and 9 or below very high risk. A score of 18 or less generally triggers pressure-injury prevention protocols."
+      },
+      "tags": [
+        "Med-Surg",
+        "Rehab",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "Braden Scale for Predicting Pressure Sore Risk",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "pressure-injury",
+        "negative-pressure-wound-therapy"
+      ],
+      "sourceCitation": "Source: StatPearls"
     },
     {
       "key": "bronchiolitis",
@@ -2339,6 +2424,37 @@
       ],
       "pronunciation": "KAL-see-um GLOO-koh-nate",
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "cam-icu",
+      "type": "ASSESSMENT_TOOL",
+      "name": "CAM-ICU",
+      "shortExplanation": "A bedside tool to detect delirium in ICU patients, including those on a ventilator who cannot speak.",
+      "sections": {
+        "purpose": "Screens for delirium in critically ill patients, including nonverbal and ventilated patients, so it can be recognized and addressed early.",
+        "steps": "Assesses four features: (1) acute change or fluctuating course of mental status, (2) inattention, (3) altered level of consciousness (using RASS), and (4) disorganized thinking. It is applied only when the patient is arousable (not RASS -4 or -5).",
+        "abnormalMeaning": "Delirium is present (CAM-ICU positive) when features 1 and 2 are both present plus either feature 3 or feature 4. A positive screen prompts a search for causes and delirium-reducing measures."
+      },
+      "tags": [
+        "ICU / Critical Care",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "CAM-ICU",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Confusion Assessment Method for the ICU",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "delirium",
+        "rass-sedation-scale",
+        "mechanical-ventilator"
+      ],
+      "sourceCitation": "Source: StatPearls, AACN"
     },
     {
       "key": "cancer-pain-management",
@@ -2989,6 +3105,36 @@
       "sourceCitation": "Source: MedlinePlus"
     },
     {
+      "key": "cha2ds2-vasc",
+      "type": "ASSESSMENT_TOOL",
+      "name": "CHA2DS2-VASc Score",
+      "shortExplanation": "A score that estimates stroke risk in patients with atrial fibrillation to help decide on anticoagulation.",
+      "sections": {
+        "purpose": "Estimates annual stroke risk in patients with nonvalvular atrial fibrillation to guide the decision about anticoagulation.",
+        "steps": "Points for Congestive heart failure (1), Hypertension (1), Age 75 or older (2), Diabetes (1), prior Stroke/TIA/thromboembolism (2), Vascular disease (1), Age 65-74 (1), and Sex category female (1); total 0-9.",
+        "abnormalMeaning": "Higher scores mean higher stroke risk. Anticoagulation is generally recommended at a score of 2 or more in men and 3 or more in women, considered at 1 (men) or 2 (women), and often not needed at 0, per guidelines."
+      },
+      "tags": [
+        "Med-Surg",
+        "ICU / Critical Care",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "CHA2DS2-VASc",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "atrial-fibrillation",
+        "warfarin",
+        "apixaban",
+        "rivaroxaban"
+      ],
+      "pronunciation": "chads-vask",
+      "sourceCitation": "Source: StatPearls"
+    },
+    {
       "key": "chemotherapy",
       "type": "PROCEDURE",
       "name": "Chemotherapy",
@@ -3244,6 +3390,41 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "cincinnati-prehospital-stroke-scale",
+      "type": "ASSESSMENT_TOOL",
+      "name": "Cincinnati Prehospital Stroke Scale",
+      "shortExplanation": "A quick three-part check for stroke, the basis of the public FAST message, used to rapidly identify likely stroke.",
+      "sections": {
+        "purpose": "Rapidly screens for stroke in the field or at the bedside so patients can be triaged quickly to definitive stroke care.",
+        "steps": "Checks three signs: facial droop (ask the patient to smile), arm drift (ask them to hold both arms out), and abnormal speech (ask them to repeat a phrase). The public FAST version adds Time - note symptom onset and act fast.",
+        "abnormalMeaning": "Any one abnormal finding strongly suggests stroke and should trigger urgent stroke workup and transport. Establishing time of onset is critical for treatment eligibility."
+      },
+      "tags": [
+        "ER",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "CPSS",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "FAST",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Face Arm Speech Time",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "acute-ischemic-stroke",
+        "nih-stroke-scale",
+        "transient-ischemic-attack"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA"
+    },
+    {
       "key": "ciprofloxacin",
       "type": "MEDICATION",
       "name": "Ciprofloxacin",
@@ -3336,32 +3517,41 @@
     },
     {
       "key": "ciwa-ar",
-      "type": "PROTOCOL",
-      "name": "CIWA-Ar Protocol",
-      "shortExplanation": "A standardized scale used to measure the severity of alcohol withdrawal and guide how much benzodiazepine to give.",
+      "type": "ASSESSMENT_TOOL",
+      "name": "CIWA-Ar",
+      "shortExplanation": "A symptom scale that rates the severity of alcohol withdrawal to guide how much and how often to give benzodiazepines.",
       "sections": {
-        "triggerCriteria": "Used for patients at risk of or experiencing alcohol withdrawal, typically those with a history of heavy alcohol use who have stopped or reduced drinking. It is applied on a schedule and whenever withdrawal symptoms appear.",
-        "steps": "Score ten items: nausea and vomiting, tremor, paroxysmal sweats, anxiety, agitation, tactile disturbances, auditory disturbances, visual disturbances, headache, and orientation/clouding of sensorium. Sum the items; higher totals indicate more severe withdrawal. Use the score to drive symptom-triggered benzodiazepine dosing per the order set, reassess at set intervals, and escalate care for high or rising scores. Ensure thiamine, fluids, and a safe environment alongside scoring."
+        "purpose": "Grades the severity of alcohol withdrawal so treatment (usually symptom-triggered benzodiazepines) can be titrated to the patient's actual symptoms.",
+        "steps": "10 items: nausea/vomiting, tremor, sweats, anxiety, agitation, tactile, auditory, and visual disturbances, headache (each 0-7), and orientation/clouding of sensorium (0-4); total 0-67.",
+        "abnormalMeaning": "Lower scores (often under 8-10) suggest minimal withdrawal; higher scores indicate more severe withdrawal with rising risk of seizures and delirium tremens. Medication is commonly triggered at a threshold (frequently 8-10 or higher) per protocol."
       },
       "tags": [
-        "Psych / Behavioral Health",
-        "Addiction Medicine"
+        "Med-Surg",
+        "ICU / Critical Care",
+        "Assessment"
       ],
       "aliases": [
+        {
+          "text": "CIWA-Ar",
+          "type": "ACRONYM"
+        },
         {
           "text": "CIWA",
           "type": "ACRONYM"
         },
         {
-          "text": "CIWA-Ar",
-          "type": "ACRONYM"
+          "text": "Clinical Institute Withdrawal Assessment for Alcohol",
+          "type": "NICKNAME"
         }
       ],
       "related": [
         "alcohol-withdrawal",
-        "lorazepam"
+        "alcohol-withdrawal-syndrome",
+        "lorazepam",
+        "diazepam"
       ],
-      "sourceCitation": "Source: StatPearls"
+      "pronunciation": "SEE-wah A-R",
+      "sourceCitation": "Source: StatPearls, MedlinePlus"
     },
     {
       "key": "ck-mb",
@@ -3817,6 +4007,37 @@
       "sourceCitation": "Source: CDC, MedlinePlus"
     },
     {
+      "key": "cows",
+      "type": "ASSESSMENT_TOOL",
+      "name": "COWS",
+      "shortExplanation": "A clinician-rated scale for the severity of opioid withdrawal, used especially to time buprenorphine induction.",
+      "sections": {
+        "purpose": "Grades the severity of opioid withdrawal to guide treatment and, importantly, to time the start of buprenorphine so it is given once enough withdrawal is present.",
+        "steps": "11 items including resting pulse, sweating, restlessness, pupil size, bone/joint aches, GI upset, tremor, yawning, anxiety/irritability, gooseflesh skin, and runny nose/tearing; total roughly 0-48.",
+        "abnormalMeaning": "Common bands: 5-12 mild, 13-24 moderate, 25-36 moderately severe, and over 36 severe withdrawal. Higher scores support the need for treatment; buprenorphine induction is typically started once moderate withdrawal is present."
+      },
+      "tags": [
+        "ER",
+        "Med-Surg",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "COWS",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Clinical Opiate Withdrawal Scale",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "opioid-withdrawal",
+        "naloxone"
+      ],
+      "sourceCitation": "Source: StatPearls"
+    },
+    {
       "key": "cpap",
       "type": "EQUIPMENT",
       "name": "CPAP (Continuous Positive Airway Pressure)",
@@ -3907,6 +4128,35 @@
       ],
       "pronunciation": "kree-AT-ih-neen",
       "sourceCitation": "Source: MedlinePlus"
+    },
+    {
+      "key": "cpot-pain-tool",
+      "type": "ASSESSMENT_TOOL",
+      "name": "Critical-Care Pain Observation Tool",
+      "shortExplanation": "A behavioral pain scale for critically ill adults who cannot self-report, including patients on a ventilator.",
+      "sections": {
+        "purpose": "Assesses pain through observable behavior in ICU adults who cannot communicate, including intubated patients, so analgesia can be guided appropriately.",
+        "steps": "Four items - facial expression, body movements, muscle tension, and compliance with the ventilator (or vocalization if extubated) - each scored 0-2, for a total of 0-8. Observe at rest and during a procedure such as turning.",
+        "abnormalMeaning": "Higher scores indicate more pain-related behavior; a score above 2 (some guidelines use 3 or more) suggests significant pain and the need for intervention."
+      },
+      "tags": [
+        "ICU / Critical Care",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "CPOT",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "painad-scale",
+        "flacc-scale",
+        "rass-sedation-scale",
+        "mechanical-ventilator"
+      ],
+      "pronunciation": "SEE-pot",
+      "sourceCitation": "Source: StatPearls, AACN"
     },
     {
       "key": "crohn-disease",
@@ -5714,6 +5964,37 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "flacc-scale",
+      "type": "ASSESSMENT_TOOL",
+      "name": "FLACC Scale",
+      "shortExplanation": "An observational pain scale for young children or others who cannot self-report, scoring behaviors like facial expression and crying.",
+      "sections": {
+        "purpose": "Estimates pain in preverbal children (about 2 months to 7 years) and other nonverbal patients by observing behavior rather than self-report.",
+        "steps": "Five behaviors - Face, Legs, Activity, Cry, and Consolability - each scored 0-2 and summed for a total of 0-10.",
+        "abnormalMeaning": "Higher scores mean more pain: roughly 1-3 mild discomfort, 4-6 moderate pain, and 7-10 severe pain, prompting comfort measures and analgesia with reassessment."
+      },
+      "tags": [
+        "Pediatrics",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "FLACC",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Face, Legs, Activity, Cry, Consolability",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "numeric-pain-rating-scale",
+        "wong-baker-faces-pain-scale",
+        "cpot-pain-tool"
+      ],
+      "sourceCitation": "Source: StatPearls"
+    },
+    {
       "key": "fluconazole",
       "type": "MEDICATION",
       "name": "Fluconazole",
@@ -6107,17 +6388,18 @@
     },
     {
       "key": "glasgow-coma-scale",
-      "type": "PROCEDURE",
+      "type": "ASSESSMENT_TOOL",
       "name": "Glasgow Coma Scale",
-      "shortExplanation": "A standardized scale that rates level of consciousness by scoring eye, verbal, and motor responses. It is used to assess and track brain injury severity.",
+      "shortExplanation": "A standardized scale for grading level of consciousness by testing eye, verbal, and motor responses, used most often after head injury or with any acute change in mental status.",
       "sections": {
-        "targetConcern": "Rapidly and reproducibly assessing level of consciousness after brain injury or acute neurologic change, and tracking trends that signal improvement or deterioration.",
-        "whatToMonitor": "Scores three components: eye opening (1 to 4), verbal response (1 to 5), and motor response (1 to 6), for a total of 3 to 15. Lower scores indicate deeper impairment; a score of 8 or less generally reflects coma and concern for airway protection. Note the best response and any decline promptly."
+        "purpose": "Quantifies level of consciousness and tracks neurologic status over time, especially in traumatic brain injury, stroke, and other acute neurologic changes.",
+        "steps": "Three components: Eye opening (1-4), Verbal response (1-5), and Motor response (1-6); summed for a total of 3-15. Record the best response in each category, and note if a component is untestable (e.g. intubated).",
+        "abnormalMeaning": "13-15 = mild, 9-12 = moderate, 3-8 = severe injury. A total of 8 or less indicates coma - consider airway protection and urgent intervention. A drop of 2 or more points signals deterioration."
       },
       "tags": [
         "ICU / Critical Care",
         "ER",
-        "Neuro"
+        "Assessment"
       ],
       "aliases": [
         {
@@ -6127,12 +6409,13 @@
       ],
       "related": [
         "traumatic-brain-injury",
-        "subdural-hematoma",
         "increased-intracranial-pressure",
+        "subdural-hematoma",
+        "acute-ischemic-stroke",
         "nih-stroke-scale"
       ],
       "pronunciation": "GLAZ-goh KOH-muh scale",
-      "sourceCitation": "Source: StatPearls"
+      "sourceCitation": "Source: StatPearls, MedlinePlus"
     },
     {
       "key": "glipizide",
@@ -6337,6 +6620,37 @@
           "text": "RV",
           "type": "ACRONYM"
         }
+      ],
+      "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "heart-score",
+      "type": "ASSESSMENT_TOOL",
+      "name": "HEART Score",
+      "shortExplanation": "A chest-pain risk score used in the emergency department to estimate the short-term risk of a major cardiac event.",
+      "sections": {
+        "purpose": "Risk-stratifies patients with undifferentiated chest pain in the ED to estimate the short-term risk of major adverse cardiac events and guide disposition. Not for confirmed STEMI or clearly noncardiac pain.",
+        "steps": "Five components - History, ECG, Age, Risk factors, and Troponin - each scored 0, 1, or 2; total 0-10.",
+        "abnormalMeaning": "0-3 is low risk (often suitable for early discharge with follow-up), 4-6 moderate risk (typically admit/observe), and 7-10 high risk (early aggressive workup). A low score does not fully exclude ACS; use with serial troponins and clinical judgment."
+      },
+      "tags": [
+        "ER",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "HEART",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "History, ECG, Age, Risk factors, Troponin",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "acute-coronary-syndrome",
+        "chest-pain-protocol",
+        "troponin"
       ],
       "sourceCitation": "Source: StatPearls"
     },
@@ -9117,6 +9431,32 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "morse-fall-scale",
+      "type": "ASSESSMENT_TOOL",
+      "name": "Morse Fall Scale",
+      "shortExplanation": "A quick nursing tool that scores a patient's risk of falling to guide fall-prevention measures.",
+      "sections": {
+        "purpose": "Estimates a hospitalized patient's risk of falling so appropriate fall-prevention interventions can be put in place.",
+        "steps": "Six items - history of falling, secondary diagnosis, ambulatory aid, IV/heparin lock, gait, and mental status - each with set point values; total 0-125.",
+        "abnormalMeaning": "Commonly cited thresholds: 0-24 low, 25-44 moderate, and 45 or higher high risk. Higher scores trigger more aggressive fall precautions, though many facilities use their own cutoffs."
+      },
+      "tags": [
+        "Med-Surg",
+        "Rehab",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "MFS",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "pressure-injury"
+      ],
+      "sourceCitation": "Source: StatPearls"
+    },
+    {
       "key": "mrsa-infection",
       "type": "CONDITION",
       "name": "MRSA Infection",
@@ -9720,18 +10060,51 @@
       "sourceCitation": "Source: StatPearls, CDC"
     },
     {
-      "key": "nih-stroke-scale",
-      "type": "PROCEDURE",
-      "name": "NIH Stroke Scale",
-      "shortExplanation": "A standardized 15-item neurologic exam that quantifies stroke severity and guides treatment decisions and monitoring.",
+      "key": "news2",
+      "type": "ASSESSMENT_TOOL",
+      "name": "NEWS2",
+      "shortExplanation": "An aggregate early-warning score from routine vital signs that flags deteriorating adult patients for a timely response.",
       "sections": {
-        "targetConcern": "Objectively measuring the severity of neurologic deficits in acute stroke to guide thrombolysis and thrombectomy decisions, track changes over time, and communicate status among the care team.",
-        "whatToMonitor": "Assesses level of consciousness, gaze, visual fields, facial palsy, motor arm and leg strength, limb ataxia, sensation, language, speech (dysarthria), and inattention. Higher total scores indicate more severe strokes. Repeat serially to detect improvement or deterioration."
+        "purpose": "Detects clinical deterioration in adult inpatients by combining routine physiologic measurements into a single score that drives an escalation response.",
+        "steps": "Points (0-3 each) are assigned for respiratory rate, oxygen saturation, systolic blood pressure, pulse, level of consciousness/new confusion, and temperature, plus 2 points for supplemental oxygen; aggregate 0-20.",
+        "abnormalMeaning": "Higher scores mean greater risk: roughly 1-4 low, 5-6 medium, and 7 or more high risk. A score of 5 or more (or a 3 in any single parameter) is a key threshold prompting urgent clinical review."
+      },
+      "tags": [
+        "Med-Surg",
+        "ICU / Critical Care",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "NEWS2",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "National Early Warning Score 2",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "rapid-response-team",
+        "sepsis",
+        "acute-respiratory-failure"
+      ],
+      "sourceCitation": "Source: Royal College of Physicians"
+    },
+    {
+      "key": "nih-stroke-scale",
+      "type": "ASSESSMENT_TOOL",
+      "name": "NIH Stroke Scale",
+      "shortExplanation": "A structured neurologic exam that quantifies stroke severity, used to guide treatment decisions and track a stroke patient's course.",
+      "sections": {
+        "purpose": "Measures the severity of neurologic deficit in acute ischemic stroke and helps guide decisions about thrombolysis and thrombectomy while tracking improvement or decline.",
+        "steps": "11 items scored and summed for a total of 0-42: level of consciousness, gaze, visual fields, facial palsy, motor arm and leg, limb ataxia, sensory, language, dysarthria, and extinction/inattention. Higher scores mean greater deficit.",
+        "abnormalMeaning": "0 = no stroke symptoms; roughly 1-4 = minor, 5-15 = moderate, 16-20 = moderate to severe, 21-42 = severe. Higher scores predict worse outcomes; any acute rise signals worsening and prompts urgent reassessment."
       },
       "tags": [
         "ER",
         "ICU / Critical Care",
-        "Neuro"
+        "Assessment"
       ],
       "aliases": [
         {
@@ -9743,9 +10116,10 @@
         "acute-ischemic-stroke",
         "transient-ischemic-attack",
         "alteplase",
+        "hemorrhagic-stroke",
         "glasgow-coma-scale"
       ],
-      "sourceCitation": "Source: StatPearls, AHA"
+      "sourceCitation": "Source: StatPearls, MedlinePlus"
     },
     {
       "key": "nimodipine",
@@ -9923,6 +10297,42 @@
       ],
       "pronunciation": "nor-ep-ih-NEF-rin",
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "numeric-pain-rating-scale",
+      "type": "ASSESSMENT_TOOL",
+      "name": "Numeric Pain Rating Scale",
+      "shortExplanation": "A simple self-report scale where the patient rates pain from 0 to 10, used for any patient who can communicate their pain.",
+      "sections": {
+        "purpose": "Lets a patient self-report current pain intensity so it can be tracked and treatment response measured.",
+        "steps": "Patient chooses a whole number from 0 (no pain) to 10 (worst pain imaginable). Reassess after interventions to gauge effect.",
+        "abnormalMeaning": "Commonly grouped as 1-3 mild, 4-6 moderate, and 7-10 severe pain. Higher scores and inadequate relief after treatment prompt escalation, but the goal is a functional level meaningful to the patient."
+      },
+      "tags": [
+        "Med-Surg",
+        "ER",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "NRS",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Pain Scale",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "0-10 Pain Scale",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "wong-baker-faces-pain-scale",
+        "flacc-scale",
+        "cancer-pain-management"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
       "key": "obstructive-sleep-apnea",
@@ -10494,6 +10904,40 @@
           "type": "NICKNAME"
         }
       ],
+      "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "painad-scale",
+      "type": "ASSESSMENT_TOOL",
+      "name": "PAINAD",
+      "shortExplanation": "A short observational pain scale for people with advanced dementia or others who cannot describe their pain.",
+      "sections": {
+        "purpose": "Estimates pain in patients with advanced dementia or other noncommunicative older adults by observing behavior over a brief period.",
+        "steps": "Five items - breathing, negative vocalization, facial expression, body language, and consolability - each scored 0-2, for a total of 0-10.",
+        "abnormalMeaning": "Higher totals suggest more pain; some sources group 1-3 as mild, 4-6 moderate, and 7-10 severe, though these cutoffs are not firmly validated. Rising scores prompt comfort measures and analgesia with reassessment."
+      },
+      "tags": [
+        "Med-Surg",
+        "Rehab",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "PAINAD",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Pain Assessment in Advanced Dementia",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "cpot-pain-tool",
+        "flacc-scale",
+        "numeric-pain-rating-scale",
+        "alzheimer-disease"
+      ],
+      "pronunciation": "PAIN-add",
       "sourceCitation": "Source: StatPearls"
     },
     {
@@ -12056,6 +12500,40 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "qsofa",
+      "type": "ASSESSMENT_TOOL",
+      "name": "qSOFA",
+      "shortExplanation": "A rapid three-point bedside screen that flags patients with suspected infection who are at higher risk of poor outcomes.",
+      "sections": {
+        "purpose": "Quickly identifies patients with suspected infection who are at higher risk of sepsis-related deterioration and death, without needing lab tests.",
+        "steps": "Three criteria, each worth 1 point: respiratory rate of 22 or more, altered mental status (GCS under 15), and systolic blood pressure of 100 mmHg or less; total 0-3.",
+        "abnormalMeaning": "A score of 2 or more identifies patients at greater risk of poor outcomes and should prompt closer assessment and consideration of sepsis. It is a screen, not a diagnosis."
+      },
+      "tags": [
+        "ER",
+        "ICU / Critical Care",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "qSOFA",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Quick SOFA",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "sepsis",
+        "septic-shock",
+        "sepsis-bundle",
+        "lactate"
+      ],
+      "pronunciation": "cue-SO-fa",
+      "sourceCitation": "Source: StatPearls"
+    },
+    {
       "key": "quetiapine",
       "type": "MEDICATION",
       "name": "Quetiapine",
@@ -12225,16 +12703,17 @@
     },
     {
       "key": "rass-sedation-scale",
-      "type": "PROTOCOL",
+      "type": "ASSESSMENT_TOOL",
       "name": "RASS Sedation Scale",
-      "shortExplanation": "A standardized scale used to rate a patient's level of agitation or sedation, helping teams titrate sedatives to a target rather than over- or under-sedating.",
+      "shortExplanation": "A 10-point scale for rating a patient's level of agitation or sedation, used to titrate sedatives in ventilated and critically ill patients.",
       "sections": {
-        "triggerCriteria": "Used for any patient receiving sedation, particularly mechanically ventilated ICU patients, to set and reassess a sedation goal and to detect agitation or over-sedation.",
-        "steps": "Score the patient from +4 (combative) through 0 (alert and calm) to -5 (unarousable), based on observed behavior and response to voice then physical stimulation. Compare the current score with the ordered target, then titrate sedation up or down to reach the goal. Reassess regularly, and pair with lighter sedation and daily awakening and breathing trials when appropriate."
+        "purpose": "Standardizes assessment of agitation and depth of sedation so sedatives can be titrated to a target, most often in mechanically ventilated ICU patients.",
+        "steps": "A single score from +4 (combative) through 0 (alert and calm) down to -5 (unarousable). Positive scores describe agitation; negative scores describe increasing sedation based on response to voice then physical stimulation.",
+        "abnormalMeaning": "Positive scores indicate agitation needing attention; -1 to -3 is light to moderate sedation; -4 to -5 is deep sedation or unarousable. A common goal is a light target (around 0 to -2) unless deeper sedation is clinically required."
       },
       "tags": [
         "ICU / Critical Care",
-        "Protocol"
+        "Assessment"
       ],
       "aliases": [
         {
@@ -12249,11 +12728,13 @@
       "related": [
         "propofol",
         "dexmedetomidine",
+        "mechanical-ventilator",
+        "cam-icu",
         "midazolam",
-        "spontaneous-breathing-trial",
-        "mechanical-ventilator"
+        "spontaneous-breathing-trial"
       ],
-      "sourceCitation": "Source: StatPearls"
+      "pronunciation": "rass",
+      "sourceCitation": "Source: StatPearls, AACN"
     },
     {
       "key": "readmission-risk-reduction",
@@ -15076,6 +15557,69 @@
         "sepsis"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "wells-criteria",
+      "type": "ASSESSMENT_TOOL",
+      "name": "Wells Criteria",
+      "shortExplanation": "A clinical scoring rule that estimates the pretest probability of a blood clot (DVT or PE) to guide testing.",
+      "sections": {
+        "purpose": "Estimates the pretest probability of deep vein thrombosis or pulmonary embolism so clinicians can decide whether to use D-dimer testing or proceed to imaging. Separate versions exist for DVT and PE.",
+        "steps": "Points are assigned for clinical features (e.g. active cancer, immobilization/recent surgery, prior VTE, leg swelling and tenderness for DVT; tachycardia, hemoptysis, clinical signs of DVT for PE), with one DVT item subtracting points if an alternative diagnosis is as likely.",
+        "abnormalMeaning": "Scores stratify patients into low, moderate, and high probability (or unlikely vs likely in the two-tier model). Lower probability with a negative high-sensitivity D-dimer can rule out clot; higher probability warrants imaging (ultrasound for DVT, CT angiography for PE)."
+      },
+      "tags": [
+        "ER",
+        "Med-Surg",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "Wells Score",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Wells Criteria for DVT/PE",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "deep-vein-thrombosis",
+        "pulmonary-embolism",
+        "d-dimer"
+      ],
+      "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "wong-baker-faces-pain-scale",
+      "type": "ASSESSMENT_TOOL",
+      "name": "Wong-Baker FACES Pain Scale",
+      "shortExplanation": "A pain scale using a row of faces from smiling to crying, useful for children and others who struggle with number-based rating.",
+      "sections": {
+        "purpose": "Provides a self-report pain measure for children (generally 3 and older) and others who find numbers difficult, by having them pick the face that matches their pain.",
+        "steps": "Six faces ranging from a smiling face to a crying face, mapped to scores of 0, 2, 4, 6, 8, and 10. The patient selects the face; the corresponding number is recorded.",
+        "abnormalMeaning": "Interpreted like the 0-10 scale: higher scores mean more pain (roughly mild, moderate, severe as the number rises), guiding treatment and reassessment."
+      },
+      "tags": [
+        "Pediatrics",
+        "Med-Surg",
+        "Assessment"
+      ],
+      "aliases": [
+        {
+          "text": "FACES Scale",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Wong-Baker",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "numeric-pain-rating-scale",
+        "flacc-scale"
+      ],
+      "sourceCitation": "Source: MedlinePlus"
     },
     {
       "key": "wound-culture-collection",

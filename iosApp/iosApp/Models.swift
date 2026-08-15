@@ -15,6 +15,7 @@ enum ConceptType: String, Codable, CaseIterable, Identifiable {
     case equipment = "EQUIPMENT"
     case protocolOrderSet = "PROTOCOL"
     case anatomy = "ANATOMY"
+    case assessmentTool = "ASSESSMENT_TOOL"
 
     var id: String { rawValue }
 
@@ -27,6 +28,7 @@ enum ConceptType: String, Codable, CaseIterable, Identifiable {
         case .equipment: return "Equipment"
         case .protocolOrderSet: return "Protocol"
         case .anatomy: return "Anatomy"
+        case .assessmentTool: return "Assessment Tool"
         }
     }
 }

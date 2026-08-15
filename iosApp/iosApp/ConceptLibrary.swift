@@ -252,6 +252,7 @@ final class ConceptLibrary: ObservableObject {
         case .equipment: return s.careConsiderations ?? s.purpose
         case .protocolOrderSet: return s.steps ?? s.triggerCriteria
         case .anatomy: return nil
+        case .assessmentTool: return s.steps ?? s.purpose
         }
     }
 

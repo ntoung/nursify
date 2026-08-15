@@ -205,6 +205,10 @@ struct ConceptDetailView: View {
         case .anatomy:
             if let v = s.purpose { sections.append(.init(label: "Role in the body", content: v, isHighlighted: true)) }
             if let v = s.careConsiderations { sections.append(.init(label: "Clinical relevance", content: v, isHighlighted: true)) }
+        case .assessmentTool:
+            if let v = s.purpose { sections.append(.init(label: "What it measures", content: v, isHighlighted: true)) }
+            if let v = s.steps { sections.append(.init(label: "How it's scored", content: v, isHighlighted: true)) }
+            if let v = s.abnormalMeaning { sections.append(.init(label: "Interpreting the score", content: v, isHighlighted: true)) }
         }
         return sections
     }
