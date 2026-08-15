@@ -83,6 +83,7 @@ Every other table below carries a `user_id` FK, even in the single-user v1 — c
 | phi_reviewed | boolean | true once the nurse has cleared the capture-time PHI flag |
 | created_at | timestamp | |
 | sync_state | enum | PENDING / SYNCING / SYNCED / FAILED — **client-local only**, not meaningful server-side |
+| entry_group_id | uuid? | **client-local only, not part of the server schema.** Set when a note was created alongside a `LookupSession` in the same Journal "New Entry" composer session, purely so the client can render them as one card — see "Journal UI merge" below. Never sent to or read by the backend. |
 
 Note: raw audio is *not* modeled as a stored artifact here — per the PHI-screening requirement, transcription happens on-device and only the (screened) transcript is what ever leaves the phone. If audio itself is ever retained for playback, that's a client-local file reference, not a backend concern.
 
@@ -166,8 +167,16 @@ Retention: indefinite until the nurse taps "Clear history" (per `REQUIREMENTS.md
 | explanations | json (blob) | the short/long text shown, cached at generation time |
 | created_at | timestamp | |
 | expires_at | timestamp | `created_at` + ~24h (see open question on the exact window) |
+| entry_group_id | uuid? | Same client-local-only field as `Note.entry_group_id` above, same purpose. |
 
 The backend's role in Feature B is purely stateless request/response: given complaints + meds, return grounded explanations (generated fresh or served from the `Concept`/`ConceptEdge` cache below). It never sees or stores a `LookupSession`.
+
+### Journal UI merge (later revision)
+Capture (Feature A note-taking) and Chart Lookup (Feature B) originally shipped as two separate tabs/screens. They were later merged into one **Journal** tab with a single entry-creation form where a note and a chief-complaint/medication lookup are both optional fields on the same "entry." This is purely a client-side presentation change:
+
+- No new backend endpoints or schema. `Note` and `LookupSession` above are unchanged server-side.
+- `entry_group_id` (both tables, above) is the only new field, and it's client-local only — it lets the Journal list render a note and a lookup created in the same composer session as one merged card, without touching how either record is stored, synced, or expired.
+- The privacy boundary this document describes for `LookupSession` (client-local only, never sent to the backend, hard 24h expiry) is unaffected — grouping two records for display is not the same as merging their storage.
 
 ### RAG corpus
 

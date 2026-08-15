@@ -11,6 +11,8 @@ A Kotlin Multiplatform app (iOS first, native SwiftUI UI + Apple Watch companion
 
 Three related but distinct feature areas: **(A) personal learning graph**, **(B) in-the-moment chart lookup**, and onboarding/orientation that personalizes both.
 
+> **UI note (revised)**: A and B remain architecturally distinct below — different privacy/retention rules, not just a styling difference — but they're no longer presented as separate screens. Capture and Chart Lookup were merged into a single **Journal** tab; see "UI presentation" under Feature B for what changed and what didn't.
+
 ## Platform & stack decisions
 
 > iOS is the primary platform (revised from an earlier Android-first draft). Apple Watch support — dropped early on because Kotlin/KMP's watchOS support is limited — is back in scope as a native Swift companion now that iOS is primary.
@@ -183,9 +185,17 @@ Revised from an earlier fully-ephemeral design: a nurse may reasonably want to r
 - The de-identified graph-feeding mechanic (below) is separate and unaffected: it's a permanent, cross-patient, generic concept-to-concept edge, distinct from the temporary, this-shift `LookupSession`.
 
 ### History
-- A **History** button on the Chart Lookup screen opens a list of this shift's past lookups, each row showing the chief complaint(s), a medication-count summary, and a relative timestamp.
+- Past lookups appear as rows in the Journal tab's list (see UI presentation below), each showing the chief complaint(s), a medication-count summary, and a relative timestamp.
 - Tapping a row reopens that lookup's stored explanations directly — no re-fetching or re-generating, just replaying what was already shown.
 - Same list-of-rows pattern already established for the Learn page's search history, for consistency across the app.
+
+### UI presentation — merged into the Journal tab
+Originally shipped as two separate screens (a "Capture" tab for notes, a "Charts" tab for lookups, each with its own creation button). Later revised: both are now one **Journal** tab, and note-taking and chart lookup are optional fields on a single "New Entry" composer rather than two separate flows.
+
+- **One chronological list** mixes notes and chart lookups (Today / Earlier), instead of two separate lists on two separate tabs.
+- **"New Entry"** (renamed from "New Chart") opens one form: a note field (voice or typed, PHI-screened as above) plus optional chief-complaint/medication fields. A nurse can fill in either, or both, in one sitting.
+- **The privacy/retention split above is unchanged.** Filling in both fields on one entry still produces two separate underlying records — a Note (PHI-screened, synced, persists) and a LookupSession (local-only, expires after ~24h) — linked only by a client-local id so they render as one card in the Journal list. This is a UI/IA decision, not a data-model merge: a chart lookup still never becomes a synced, persistent record just because it was entered alongside a note.
+- Deleting an entry only ever removes its chart-lookup half via swipe — matches the pre-merge behavior exactly (notes were never swipe-deletable from Capture either, and still aren't).
 
 ### Output — two-tier explanation per medication
 For each prescribed drug, relative to the entered chief complaint:
