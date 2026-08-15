@@ -219,9 +219,9 @@ private struct JournalRow: View {
                 Text(group.date.formatted(date: .omitted, time: .shortened))
                     .font(Theme.Font.body(12, weight: .semibold))
                     .foregroundStyle(Theme.Color.sub)
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 11))
-                    .foregroundStyle(Color(hex: "C9C2B4"))
+                // No manual chevron here — List already draws its own
+                // NavigationLink disclosure indicator on the trailing edge;
+                // adding a second one produced two chevrons per row.
             }
         }
         .padding(.vertical, 10)
@@ -275,20 +275,11 @@ struct NewEntryView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 4) {
-                    noteSection
-
-                    Divider().padding(.vertical, 14)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        SectionLabel(text: "Chart lookup")
-                        Text("Optional — nothing patient-identifiable is ever saved.")
-                            .font(Theme.Font.body(12.5))
-                            .foregroundStyle(Theme.Color.sub)
-                    }
-                    .padding(.bottom, 6)
+                    SectionLabel(text: "Chart lookup")
+                        .padding(.bottom, 6)
 
                     editableChipSection(
-                        title: "Chief complaints",
+                        title: "Chief complaints (optional)",
                         addLabel: "Add complaint",
                         searchPlaceholder: "Search or type a complaint",
                         suggestType: .condition,
@@ -297,7 +288,7 @@ struct NewEntryView: View {
                         draftText: $newComplaintText
                     )
                     editableChipSection(
-                        title: "Medications",
+                        title: "Medications (optional)",
                         addLabel: "Add drug",
                         searchPlaceholder: "Search a medication",
                         suggestType: .medication,
@@ -327,27 +318,23 @@ struct NewEntryView: View {
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
+
+                    Divider().padding(.vertical, 14)
+
+                    // Last in the form, right above Save Entry — the most
+                    // frequently-used field sits closest to the thumb/button.
+                    noteSection
                 }
                 .padding(24)
                 .padding(.bottom, 90)
             }
             .safeAreaInset(edge: .bottom) {
-                VStack(spacing: 10) {
-                    PrimaryButton(title: isSaving ? "Saving..." : "Save Entry") {
-                        guard !isSaving else { return }
-                        Task { await save() }
-                    }
-                    .disabled(!canSave || isSaving)
-                    .opacity(canSave && !isSaving ? 1 : 0.5)
-
-                    HStack(spacing: 6) {
-                        Image(systemName: "lock.fill")
-                        Text("Notes sync after PHI review · chart lookups stay on this shift only")
-                    }
-                    .font(Theme.Font.body(11.5, weight: .semibold))
-                    .foregroundStyle(Theme.Color.sub)
-                    .multilineTextAlignment(.center)
+                PrimaryButton(title: isSaving ? "Saving..." : "Save Entry") {
+                    guard !isSaving else { return }
+                    Task { await save() }
                 }
+                .disabled(!canSave || isSaving)
+                .opacity(canSave && !isSaving ? 1 : 0.5)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 14)
                 .background(Theme.Color.background)
