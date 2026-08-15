@@ -31,6 +31,39 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "absence-seizure",
+      "type": "CONDITION",
+      "name": "Absence Seizure",
+      "shortExplanation": "A generalized seizure, most common in children, causing brief (seconds-long) staring spells with abrupt loss of awareness and no postictal confusion. Distinguished by its brevity, the lack of aura or postictal state, preserved posture, and provocation by hyperventilation.",
+      "sections": {
+        "presentation": "Sudden, brief (usually under 10-20 seconds) staring spells or 'daydreaming' with abrupt onset and offset, no loss of postural tone (the patient does not fall), and sometimes subtle eye fluttering or lip movements. There is no postictal confusion, and episodes may occur many times a day and be mistaken for inattention. Classic EEG shows 3-Hz spike-and-wave discharges, and hyperventilation can provoke an episode.",
+        "typicalTreatments": "Ethosuximide is first-line; valproate or lamotrigine are alternatives (valproate is preferred when generalized tonic-clonic seizures also occur). Avoid carbamazepine, phenytoin, and gabapentin, which can worsen absence seizures. Hyperventilation during EEG helps provoke and confirm the diagnosis.",
+        "riskFactors": "Childhood absence epilepsy (typical onset ages 4-10), family history or genetic predisposition, and more common in girls."
+      },
+      "tags": [
+        "Neuro",
+        "Pediatrics"
+      ],
+      "aliases": [
+        {
+          "text": "Petit mal",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Petit mal seizure",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "epilepsy",
+        "generalized-tonic-clonic-seizure",
+        "myoclonic-seizure",
+        "focal-seizure",
+        "electroencephalogram"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls, CDC"
+    },
+    {
       "key": "acetaminophen",
       "type": "MEDICATION",
       "name": "Acetaminophen",
@@ -236,6 +269,10 @@
         },
         {
           "text": "Brain Attack",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "stroke",
           "type": "NICKNAME"
         }
       ],
@@ -1102,6 +1139,105 @@
       "sourceCitation": "Source: MedlinePlus, DailyMed"
     },
     {
+      "key": "anaphylactic-shock",
+      "type": "CONDITION",
+      "name": "Anaphylactic Shock",
+      "shortExplanation": "Life-threatening distributive shock from a severe allergic reaction, with massive histamine-driven vasodilation, capillary leak, and bronchospasm. The distinguishing treatment priority is immediate intramuscular epinephrine - antihistamines and steroids are only adjuncts.",
+      "sections": {
+        "presentation": "Rapid onset (minutes to a couple of hours) after an allergen, with hypotension plus airway and skin findings: urticaria, angioedema, throat tightness, stridor, wheezing, dyspnea, nausea/vomiting, and a sense of impending doom. Distinguished from other distributive shock by the allergic features (hives, angioedema, bronchospasm) and clear temporal link to an exposure.",
+        "typicalTreatments": "Intramuscular epinephrine into the anterolateral (mid-outer) thigh is first-line and given immediately, repeated every 5-15 minutes as needed; use IV/IO epinephrine for refractory shock. Remove the trigger, give high-flow oxygen, and rapid IV fluid boluses for hypotension. Adjuncts (second-line, not substitutes): inhaled beta-agonists for bronchospasm, H1/H2 antihistamines, and corticosteroids. Observe for a delayed biphasic reaction.",
+        "riskFactors": "Known food, drug, latex, or insect-sting allergy; prior anaphylaxis; and asthma (a risk factor for severe or fatal reactions)."
+      },
+      "tags": [
+        "Critical Care / ICU",
+        "Emergency",
+        "Immunology"
+      ],
+      "aliases": [
+        {
+          "text": "Anaphylaxis",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "distributive-shock",
+        "epinephrine",
+        "diphenhydramine",
+        "albuterol",
+        "hydrocortisone",
+        "septic-shock"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "anemia",
+      "type": "CONDITION",
+      "name": "Anemia",
+      "shortExplanation": "A reduced red blood cell mass or hemoglobin, lowering the blood's oxygen-carrying capacity. A broad category with many causes; it is classified by red cell size (micro-, normo-, macrocytic) to narrow the diagnosis.",
+      "sections": {
+        "presentation": "Fatigue, weakness, pallor, dyspnea on exertion, tachycardia, palpitations, and lightheadedness. Severe or rapid drops can cause chest pain and hemodynamic instability.",
+        "typicalTreatments": "Directed at the cause: iron, B12, or folate replacement; transfusion of packed red cells for symptomatic or severe anemia; erythropoiesis-stimulating agents in CKD; and controlling any source of bleeding.",
+        "riskFactors": "Blood loss (GI, menstrual, surgical), nutritional deficiency, chronic disease and inflammation, chronic kidney disease, hemolysis, and bone marrow disorders."
+      },
+      "tags": [
+        "Hematology",
+        "Endocrine/Metabolic"
+      ],
+      "aliases": [
+        {
+          "text": "Low hemoglobin",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Low blood count",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "iron-deficiency-anemia",
+        "anemia-of-chronic-disease",
+        "complete-blood-count",
+        "packed-red-blood-cell-transfusion",
+        "ferritin",
+        "iron-studies"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "anemia-of-chronic-disease",
+      "type": "CONDITION",
+      "name": "Anemia of Chronic Disease",
+      "shortExplanation": "Anemia driven by chronic inflammation, where hepcidin traps iron in storage so it cannot reach the marrow. The key contrast with iron-deficiency anemia is that ferritin is normal or high and TIBC is low despite a low serum iron.",
+      "sections": {
+        "presentation": "Usually mild, normocytic anemia (can become microcytic over time) in a patient with a chronic inflammatory, infectious, malignant, or kidney condition. Labs show low serum iron, LOW TIBC, and normal-to-high ferritin.",
+        "typicalTreatments": "Treat the underlying disorder. Erythropoiesis-stimulating agents (with iron) are used in CKD and selected chemotherapy or perioperative patients. Iron alone is generally avoided unless true iron deficiency is also present.",
+        "riskFactors": "Chronic kidney disease, rheumatoid arthritis and other autoimmune disease, chronic infection, malignancy, and heart failure."
+      },
+      "tags": [
+        "Hematology",
+        "Endocrine/Metabolic"
+      ],
+      "aliases": [
+        {
+          "text": "ACD",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Anemia of inflammation",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "anemia",
+        "iron-deficiency-anemia",
+        "chronic-kidney-disease",
+        "epoetin-alfa",
+        "ferritin",
+        "iron-studies"
+      ],
+      "sourceCitation": "Source: Merck Manual, StatPearls"
+    },
+    {
       "key": "anion-gap",
       "type": "LAB_VALUE",
       "name": "Anion Gap",
@@ -1523,6 +1659,35 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "atelectasis",
+      "type": "CONDITION",
+      "name": "Atelectasis",
+      "shortExplanation": "Collapse of alveoli or a region of lung, reducing gas exchange. Very common after surgery and in immobile patients; it is a leading cause of early postoperative fever and hypoxemia.",
+      "sections": {
+        "presentation": "Often asymptomatic when small; larger collapse causes dyspnea, low-grade fever (classically in the first 24-48 hours after surgery), hypoxemia, decreased breath sounds and dullness over the affected area, and sometimes tachypnea. Chest imaging shows volume loss with opacification.",
+        "typicalTreatments": "Prevention and re-expansion: incentive spirometry, deep breathing and coughing, early mobilization, and adequate pain control so the patient can breathe deeply. Add chest physiotherapy and, for refractory or mucus-plugging cases, positive-pressure therapy or bronchoscopy to clear plugs. Supplemental oxygen for hypoxemia.",
+        "riskFactors": "Recent surgery (especially thoracic or upper-abdominal) and general anesthesia, immobility, shallow breathing from pain, thick secretions or mucus plugging, obesity, and smoking."
+      },
+      "tags": [
+        "Pulmonary",
+        "Perioperative"
+      ],
+      "aliases": [
+        {
+          "text": "Alveolar Collapse",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "incentive-spirometer",
+        "pneumonia",
+        "pleural-effusion",
+        "perioperative-hypothermia",
+        "alveoli"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "atenolol",
       "type": "MEDICATION",
       "name": "Atenolol",
@@ -1606,6 +1771,14 @@
         {
           "text": "AFib",
           "type": "NICKNAME"
+        },
+        {
+          "text": "AF",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "A-fib",
+          "type": "NICKNAME"
         }
       ],
       "related": [
@@ -1613,6 +1786,81 @@
       ],
       "pronunciation": "AY-tree-ul fih-brih-LAY-shun",
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "afib-with-rvr",
+      "type": "CONDITION",
+      "name": "Atrial Fibrillation with RVR",
+      "shortExplanation": "Atrial fibrillation in which the ventricular rate runs fast (typically over 100-120 bpm), often causing palpitations, hypotension, or chest pain. The priority is rate control, with urgent cardioversion if the patient is hemodynamically unstable.",
+      "sections": {
+        "presentation": "Irregularly irregular pulse with a rapid ventricular rate (often 110-160+ bpm). Palpitations, shortness of breath, chest pressure, lightheadedness, and fatigue. May progress to hypotension, altered mental status, angina, or acute pulmonary edema when the rate is too fast to allow adequate filling and cardiac output.",
+        "typicalTreatments": "Rate control is the first goal in stable patients: IV diltiazem or IV metoprolol (beta blocker); digoxin or amiodarone in select cases (heart failure, hypotension). Treat reversible drivers (fever, sepsis, hypovolemia, hyperthyroidism, PE, pain). If the patient is unstable (hypotension, ischemia, shock, or pulmonary edema), perform immediate synchronized cardioversion. Anticoagulation is assessed with the CHA2DS2-VASc score to reduce stroke risk.",
+        "riskFactors": "Underlying atrial fibrillation, sepsis or infection, heart failure exacerbation, hyperthyroidism, pulmonary embolism, dehydration, alcohol, electrolyte disturbances, and missed rate-control medications."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "RVR",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "AFib RVR",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Rapid Ventricular Response",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "AF with RVR",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "atrial-fibrillation",
+        "atrial-flutter",
+        "synchronized-cardioversion",
+        "diltiazem",
+        "metoprolol",
+        "cha2ds2-vasc"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA/ACLS"
+    },
+    {
+      "key": "atrial-flutter",
+      "type": "CONDITION",
+      "name": "Atrial Flutter",
+      "shortExplanation": "A fast, organized atrial rhythm from a re-entry circuit (usually in the right atrium) producing classic sawtooth flutter waves on ECG. It often conducts 2:1, giving a strikingly regular ventricular rate near 150 bpm, and carries a stroke risk similar to atrial fibrillation.",
+      "sections": {
+        "presentation": "Palpitations, breathlessness, fatigue, or chest discomfort. ECG shows sawtooth flutter (F) waves, typically at an atrial rate of about 250-350 bpm; with 2:1 AV conduction the ventricular rate is often near 150 bpm and regular, which distinguishes it from the irregularly irregular rhythm of AFib. Can become unstable if conduction accelerates.",
+        "typicalTreatments": "Rate control with beta blockers or diltiazem, and anticoagulation per CHA2DS2-VASc (same stroke-risk approach as AFib). Atrial flutter is often less responsive to drugs but very responsive to synchronized cardioversion, frequently at low energy. Cavotricuspid isthmus catheter ablation is highly effective and often curative for typical (right atrial) flutter. Perform immediate synchronized cardioversion if unstable.",
+        "riskFactors": "Coexisting atrial fibrillation, COPD, heart failure, valvular and structural heart disease, prior cardiac surgery, hyperthyroidism, and older age."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "A-flutter",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "AFL",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "atrial-fibrillation",
+        "afib-with-rvr",
+        "synchronized-cardioversion",
+        "cardiac-ablation",
+        "cha2ds2-vasc"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA"
     },
     {
       "key": "atropine",
@@ -1716,6 +1964,39 @@
       ],
       "pronunciation": "a-zith-roh-MYE-sin",
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "bacteremia",
+      "type": "CONDITION",
+      "name": "Bacteremia",
+      "shortExplanation": "The presence of viable bacteria in the bloodstream, confirmed by blood cultures. Distinguished from sepsis, which is the body's dysregulated systemic response to infection - bacteremia may be transient and asymptomatic or may progress to sepsis.",
+      "sections": {
+        "presentation": "May be asymptomatic and transient (for example, after dental work) or cause fever, chills, rigors, and tachycardia. It can progress to sepsis or septic shock with hypotension and organ dysfunction. Positive blood cultures are the defining finding.",
+        "typicalTreatments": "Obtain blood cultures (ideally before antibiotics), start empiric IV antibiotics and narrow them by culture and sensitivity, and identify and control the source (for example, remove an infected central line). Monitor for progression to sepsis, and obtain follow-up cultures to confirm clearance for certain organisms such as Staphylococcus aureus.",
+        "riskFactors": "Indwelling catheters and central lines, recent invasive procedures or surgery, immunosuppression, IV drug use, prosthetic devices or valves, and urinary tract infection."
+      },
+      "tags": [
+        "Infectious Disease"
+      ],
+      "aliases": [
+        {
+          "text": "Bloodstream infection",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "BSI",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "sepsis",
+        "septic-shock",
+        "systemic-inflammatory-response-syndrome",
+        "blood-cultures",
+        "central-line-associated-bloodstream-infection",
+        "infective-endocarditis"
+      ],
+      "sourceCitation": "Source: StatPearls, MedlinePlus"
     },
     {
       "key": "bacterial-meningitis",
@@ -3291,6 +3572,18 @@
         {
           "text": "CHF",
           "type": "ACRONYM"
+        },
+        {
+          "text": "ADHF",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Acute Decompensated Heart Failure",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Acute Heart Failure",
+          "type": "NICKNAME"
         }
       ],
       "related": [
@@ -3323,6 +3616,35 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "chronic-bronchitis",
+      "type": "CONDITION",
+      "name": "Chronic Bronchitis",
+      "shortExplanation": "A clinical subtype of COPD defined by a productive cough on most days for at least 3 months in each of 2 consecutive years, from chronic airway inflammation and mucus hypersecretion. Classically the 'blue bloater' phenotype.",
+      "sections": {
+        "presentation": "Chronic productive (mucus-heavy) cough, wheezing, and dyspnea. The classic 'blue bloater' picture: cyanosis and CO2 retention (hypoxemia), often overweight, with signs of right heart failure (cor pulmonale) such as peripheral edema and jugular venous distention. Coarse rhonchi and wheezes on auscultation. In practice most COPD patients overlap with emphysema features.",
+        "typicalTreatments": "Smoking cessation, inhaled bronchodilators (short- and long-acting beta-agonists and anticholinergics), inhaled corticosteroids for frequent exacerbations, pulmonary rehabilitation, vaccinations, and supplemental oxygen for chronic hypoxemia. Exacerbations: bronchodilators, systemic steroids, and antibiotics when sputum is purulent.",
+        "riskFactors": "Cigarette smoking (leading cause), long-term air-pollution or occupational-dust/fume exposure, and recurrent respiratory infections."
+      },
+      "tags": [
+        "Pulmonary",
+        "Respiratory"
+      ],
+      "aliases": [
+        {
+          "text": "Blue Bloater",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "chronic-obstructive-pulmonary-disease",
+        "emphysema",
+        "copd-exacerbation",
+        "pulmonary-hypertension",
+        "home-oxygen-therapy"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "chronic-kidney-disease",
       "type": "CONDITION",
       "name": "Chronic Kidney Disease",
@@ -3344,6 +3666,14 @@
         {
           "text": "ESRD",
           "type": "ACRONYM"
+        },
+        {
+          "text": "CRF",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Chronic Renal Failure",
+          "type": "NICKNAME"
         }
       ],
       "related": [
@@ -3580,6 +3910,73 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "ckd-stage-3",
+      "type": "CONDITION",
+      "name": "CKD Stage 3",
+      "shortExplanation": "Moderately reduced kidney function with an eGFR of 30 to 59 mL/min/1.73m2 (3a 45-59, 3b 30-44). This is often where CKD first becomes symptomatic and where slowing progression becomes the priority.",
+      "sections": {
+        "presentation": "Frequently still asymptomatic; may show early fatigue, mild edema, hypertension, and rising creatinine. Complications such as anemia and mineral-bone disease can begin, especially in stage 3b.",
+        "typicalTreatments": "Focus on slowing progression: blood pressure and glycemic control, ACE inhibitor or ARB for proteinuria, avoiding nephrotoxins (NSAIDs, contrast), and renal dosing of medications. Monitor eGFR, potassium, and albuminuria.",
+        "riskFactors": "Diabetes, hypertension, older age, cardiovascular disease, and recurrent acute kidney injury."
+      },
+      "tags": [
+        "Renal",
+        "Nephrology"
+      ],
+      "aliases": [
+        {
+          "text": "CKD 3",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Stage 3 CKD",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "chronic-kidney-disease",
+        "ckd-stage-4",
+        "end-stage-renal-disease",
+        "creatinine",
+        "bun"
+      ],
+      "sourceCitation": "Source: StatPearls, MedlinePlus"
+    },
+    {
+      "key": "ckd-stage-4",
+      "type": "CONDITION",
+      "name": "CKD Stage 4",
+      "shortExplanation": "Severely reduced kidney function with an eGFR of 15 to 29 mL/min/1.73m2. The distinguishing focus of this stage is preparing for renal replacement therapy - dialysis access and transplant evaluation - before failure arrives.",
+      "sections": {
+        "presentation": "Symptomatic uremia may appear: fatigue, nausea, pruritus, edema, and worsening hypertension. Anemia, hyperkalemia, metabolic acidosis, and mineral-bone disease are common and need active management.",
+        "typicalTreatments": "Nephrology co-management, dietary protein/potassium/phosphate restriction, phosphate binders, ESAs for anemia, and treatment of acidosis. Key stage-specific step: create dialysis access (AV fistula) and begin transplant workup ahead of need.",
+        "riskFactors": "Progression of diabetic or hypertensive nephropathy, glomerular disease, and repeated nephrotoxic or ischemic insults."
+      },
+      "tags": [
+        "Renal",
+        "Nephrology"
+      ],
+      "aliases": [
+        {
+          "text": "CKD 4",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Stage 4 CKD",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "chronic-kidney-disease",
+        "ckd-stage-3",
+        "end-stage-renal-disease",
+        "av-fistula-graft-care",
+        "epoetin-alfa",
+        "hyperkalemia"
+      ],
+      "sourceCitation": "Source: StatPearls, MedlinePlus"
+    },
+    {
       "key": "clindamycin",
       "type": "MEDICATION",
       "name": "Clindamycin",
@@ -3780,6 +4177,41 @@
       ],
       "pronunciation": "koh-luh-NOS-kuh-pee",
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "community-acquired-pneumonia",
+      "type": "CONDITION",
+      "name": "Community-Acquired Pneumonia (CAP)",
+      "shortExplanation": "Pneumonia acquired outside a hospital, most often from Streptococcus pneumoniae or atypical organisms. It is distinguished from hospital-acquired pneumonia mainly by its lower risk of drug-resistant pathogens and its narrower empiric antibiotic coverage.",
+      "sections": {
+        "presentation": "Fever, productive cough, pleuritic chest pain, dyspnea, and tachypnea; older adults may present atypically with confusion or malaise. Focal crackles or bronchial breath sounds on exam and a lobar or patchy infiltrate on chest imaging. Severity and disposition are guided by tools such as CURB-65.",
+        "typicalTreatments": "Empiric antibiotics chosen by setting and comorbidities. Healthy outpatients: amoxicillin, doxycycline, or a macrolide. Outpatients with comorbidities or hospitalized (non-ICU) patients: a beta-lactam (e.g., ceftriaxone) plus a macrolide, or a respiratory fluoroquinolone (e.g., levofloxacin). Add supportive oxygen, fluids, and antipyretics; de-escalate based on cultures. Standard (not resistant-pathogen) coverage is usually sufficient.",
+        "riskFactors": "Age over 65, smoking, COPD or asthma, chronic heart/liver/kidney disease, diabetes, immunosuppression, and aspiration risk."
+      },
+      "tags": [
+        "Pulmonary",
+        "Infectious disease"
+      ],
+      "aliases": [
+        {
+          "text": "CAP",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Walking Pneumonia",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "pneumonia",
+        "hospital-acquired-pneumonia",
+        "aspiration-pneumonia",
+        "ceftriaxone",
+        "azithromycin",
+        "levofloxacin",
+        "amoxicillin"
+      ],
+      "sourceCitation": "Source: StatPearls"
     },
     {
       "key": "complete-blood-count",
@@ -4392,6 +4824,14 @@
         {
           "text": "DVT",
           "type": "ACRONYM"
+        },
+        {
+          "text": "VTE",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Venous Thromboembolism",
+          "type": "NICKNAME"
         }
       ],
       "related": [
@@ -4604,6 +5044,43 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "diabetes-mellitus",
+      "type": "CONDITION",
+      "name": "Diabetes Mellitus",
+      "shortExplanation": "A chronic disorder of high blood glucose caused by inadequate insulin production, insulin resistance, or both. The parent diagnosis that includes type 1, type 2, and gestational diabetes.",
+      "sections": {
+        "presentation": "Classic hyperglycemia symptoms: polyuria, polydipsia, polyphagia, fatigue, blurred vision, and weight change. Long-standing disease drives microvascular (retinopathy, nephropathy, neuropathy) and macrovascular (coronary, cerebrovascular, peripheral arterial) complications.",
+        "typicalTreatments": "Glucose self-monitoring, diet and activity, and pharmacologic therapy tailored to type (oral agents such as metformin, injectable GLP-1 agonists, and/or insulin). A1c is trended as the marker of long-term control; treatment goals are individualized.",
+        "riskFactors": "Family history, obesity, physical inactivity, and older age favor type 2; autoimmune predisposition and genetics favor type 1. History of gestational diabetes raises future risk."
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Endocrine"
+      ],
+      "aliases": [
+        {
+          "text": "DM",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Diabetes",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "type-1-diabetes",
+        "type-2-diabetes",
+        "gestational-diabetes",
+        "diabetic-ketoacidosis",
+        "hyperosmolar-hyperglycemic-state",
+        "hemoglobin-a1c",
+        "hypoglycemia",
+        "metformin",
+        "insulin"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "diabetic-foot-ulcer",
       "type": "CONDITION",
       "name": "Diabetic Foot Ulcer",
@@ -4743,6 +5220,35 @@
       "sourceCitation": "Source: MedlinePlus"
     },
     {
+      "key": "dilated-cardiomyopathy",
+      "type": "CONDITION",
+      "name": "Dilated Cardiomyopathy",
+      "shortExplanation": "A disease of the heart muscle in which the left ventricle enlarges and weakens, contracting poorly. It is the most common cause of heart failure with reduced ejection fraction and predisposes to arrhythmias and clot formation.",
+      "sections": {
+        "presentation": "Signs and symptoms of systolic heart failure: exertional dyspnea, orthopnea, fatigue, edema, and reduced exercise tolerance. Echocardiogram shows a dilated, poorly contracting left ventricle with a low ejection fraction. Patients are prone to atrial and ventricular arrhythmias and to mural thrombus/embolism.",
+        "typicalTreatments": "Guideline-directed medical therapy for HFrEF (ARNI/ACEi/ARB, beta blocker, MRA, SGLT2 inhibitor) and diuretics for congestion. Treat the underlying cause where identifiable (ischemia, alcohol, tachyarrhythmia, myocarditis, peripartum, chemotherapy). ICD for sudden-death prevention in eligible patients; anticoagulation if thrombus or AFib is present.",
+        "riskFactors": "Ischemic heart disease, chronic alcohol use, viral myocarditis, chemotherapy (anthracyclines), genetic/familial forms, uncontrolled tachyarrhythmia, and peripartum state."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "DCM",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "hfref",
+        "heart-failure",
+        "hypertrophic-cardiomyopathy",
+        "chf-exacerbation",
+        "icd-placement"
+      ],
+      "sourceCitation": "Source: StatPearls, MedlinePlus"
+    },
+    {
       "key": "diltiazem",
       "type": "MEDICATION",
       "name": "Diltiazem",
@@ -4845,6 +5351,74 @@
         "prior-authorization"
       ],
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "disseminated-intravascular-coagulation",
+      "type": "CONDITION",
+      "name": "Disseminated Intravascular Coagulation (DIC)",
+      "shortExplanation": "A life-threatening consumptive coagulopathy in which widespread clotting activation uses up platelets and clotting factors, causing simultaneous microthrombi and bleeding. Distinguished by the paradox of clotting and bleeding together, with low platelets, low fibrinogen, prolonged PT/aPTT, and high D-dimer.",
+      "sections": {
+        "presentation": "Simultaneous bleeding (oozing from IV and line sites, petechiae, purpura, ecchymoses, mucosal or GI bleeding) and microvascular thrombosis (organ ischemia, oliguria, altered mentation, limb ischemia). Labs show thrombocytopenia (often the earliest, down-trending finding), prolonged PT and aPTT, low or falling fibrinogen, a markedly elevated D-dimer, and schistocytes on the peripheral smear.",
+        "typicalTreatments": "Treat the underlying cause - this is the cornerstone (for example, sepsis, an obstetric emergency, trauma, or malignancy). In bleeding patients, give supportive blood-product replacement - platelets, fresh frozen plasma (clotting factors), and cryoprecipitate (fibrinogen). Heparin is used in selected thrombosis-predominant or chronic cases. Monitor the coagulation panel and D-dimer closely.",
+        "riskFactors": "Sepsis (especially gram-negative), major trauma, obstetric complications (placental abruption, amniotic fluid embolism, HELLP), malignancy (especially acute promyelocytic leukemia), severe burns, and transfusion reactions."
+      },
+      "tags": [
+        "Hematology",
+        "Critical Care"
+      ],
+      "aliases": [
+        {
+          "text": "DIC",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Consumptive coagulopathy",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "sepsis",
+        "thrombocytopenia",
+        "d-dimer",
+        "fibrinogen",
+        "platelet-count",
+        "prothrombin-time",
+        "activated-partial-thromboplastin-time"
+      ],
+      "sourceCitation": "Source: StatPearls, Merck Manual"
+    },
+    {
+      "key": "distributive-shock",
+      "type": "CONDITION",
+      "name": "Distributive Shock",
+      "shortExplanation": "A category of shock caused by widespread blood-vessel dilation (low systemic vascular resistance), so blood pools and fails to perfuse organs despite a normal or high cardiac output. Includes septic, anaphylactic, and neurogenic shock.",
+      "sections": {
+        "presentation": "Hypotension with a WARM, flushed periphery early on (vasodilation) and a wide pulse pressure, unlike the cold, clamped-down periphery of hypovolemic or cardiogenic shock. Tachycardia is usual (the exception is neurogenic shock, which causes bradycardia). Low systemic vascular resistance with a normal-to-high cardiac output is the hemodynamic hallmark; ScvO2 is often high because tissues cannot extract oxygen. Progresses to altered mental status, rising lactate, and reduced urine output.",
+        "typicalTreatments": "Treat the underlying cause (antibiotics for sepsis, IM epinephrine for anaphylaxis, spine stabilization for neurogenic). Restore perfusion with IV isotonic crystalloid fluids, then add vasopressors when fluids alone do not restore mean arterial pressure - norepinephrine is the usual first-line pressor to counter vasodilation. Trend lactate and MAP; target adequate urine output.",
+        "riskFactors": "Severe infection (sepsis), severe allergic reaction, acute spinal cord injury above T6, and adrenal insufficiency."
+      },
+      "tags": [
+        "Critical Care / ICU",
+        "Emergency",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "Vasodilatory Shock",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "septic-shock",
+        "anaphylactic-shock",
+        "neurogenic-shock",
+        "hypovolemic-shock",
+        "cardiogenic-shock",
+        "obstructive-shock",
+        "norepinephrine",
+        "sepsis"
+      ],
+      "sourceCitation": "Source: StatPearls, MedlinePlus"
     },
     {
       "key": "diverticulitis",
@@ -5138,6 +5712,39 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "embolic-stroke",
+      "type": "CONDITION",
+      "name": "Embolic (Cardioembolic) Ischemic Stroke",
+      "shortExplanation": "An ischemic stroke caused by a clot or debris that travels from elsewhere - most often the heart in atrial fibrillation - and lodges in a cerebral artery. Distinguished by abrupt, maximal-at-onset deficits and by anticoagulation (rather than antiplatelet therapy) for prevention when the source is cardioembolic.",
+      "sections": {
+        "presentation": "Sudden, maximal-at-onset focal neurologic deficit (facial droop, arm or leg weakness, aphasia, neglect), often affecting a larger territory with more severe deficits than a lacunar stroke, and sometimes multiple vascular territories. There is frequently a history of atrial fibrillation, recent MI, or valvular disease.",
+        "typicalTreatments": "Acute management follows ischemic stroke care - IV thrombolysis (alteplase or tenecteplase) if within the treatment window, and mechanical thrombectomy for large-vessel occlusion. Identify the source with echocardiography and telemetry for atrial fibrillation. Secondary prevention uses anticoagulation (warfarin or a DOAC) when cardioembolic, in contrast to the antiplatelet therapy used for atherothrombotic stroke.",
+        "riskFactors": "Atrial fibrillation (the leading cause), recent myocardial infarction with left ventricular thrombus, reduced ejection fraction, valvular heart disease, prosthetic heart valves, infective endocarditis, and patent foramen ovale."
+      },
+      "tags": [
+        "Neuro",
+        "Cardiology"
+      ],
+      "aliases": [
+        {
+          "text": "Cardioembolic stroke",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "acute-ischemic-stroke",
+        "thrombotic-stroke",
+        "lacunar-stroke",
+        "atrial-fibrillation",
+        "transient-ischemic-attack",
+        "alteplase",
+        "apixaban",
+        "warfarin",
+        "cha2ds2-vasc"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls, AHA"
+    },
+    {
       "key": "empagliflozin",
       "type": "MEDICATION",
       "name": "Empagliflozin",
@@ -5175,6 +5782,35 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "emphysema",
+      "type": "CONDITION",
+      "name": "Emphysema",
+      "shortExplanation": "A subtype of COPD in which the alveolar walls are destroyed, reducing surface area for gas exchange and causing air trapping and loss of elastic recoil. Classically the 'pink puffer' phenotype.",
+      "sections": {
+        "presentation": "Progressive exertional dyspnea with minimal cough or sputum. The classic 'pink puffer': thin, barrel-chested, using pursed-lip breathing and accessory muscles, often adopting a tripod posture, with oxygenation relatively preserved until late. Hyperresonance and diminished breath sounds on exam; hyperinflation and flattened diaphragms on chest imaging. Most real patients show a mix of emphysema and chronic bronchitis.",
+        "typicalTreatments": "Smoking cessation, inhaled long-acting bronchodilators (LAMA/LABA) with inhaled corticosteroids for frequent exacerbations, pulmonary rehabilitation, vaccinations, and supplemental oxygen for chronic hypoxemia. Advanced disease may warrant lung-volume-reduction procedures or transplant evaluation; consider alpha-1 antitrypsin testing in early-onset or nonsmoking cases.",
+        "riskFactors": "Cigarette smoking (leading cause), alpha-1 antitrypsin deficiency, and long-term air-pollution or occupational exposures."
+      },
+      "tags": [
+        "Pulmonary",
+        "Respiratory"
+      ],
+      "aliases": [
+        {
+          "text": "Pink Puffer",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "chronic-obstructive-pulmonary-disease",
+        "chronic-bronchitis",
+        "copd-exacerbation",
+        "alveoli",
+        "home-oxygen-therapy"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "encephalitis",
       "type": "CONDITION",
       "name": "Encephalitis",
@@ -5197,6 +5833,54 @@
       ],
       "pronunciation": "en-sef-uh-LY-tis",
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "end-stage-renal-disease",
+      "type": "CONDITION",
+      "name": "End-Stage Renal Disease (CKD Stage 5)",
+      "shortExplanation": "Kidney failure with an eGFR under 15 mL/min/1.73m2, or the patient is on dialysis. Unlike earlier stages, survival now depends on renal replacement therapy (dialysis or transplant) because the kidneys can no longer clear wastes or manage fluid and electrolytes.",
+      "sections": {
+        "presentation": "Uremic symptoms (nausea, anorexia, pruritus, encephalopathy, pericarditis), fluid overload and pulmonary edema, hyperkalemia, metabolic acidosis, and anemia. Life-threatening hyperkalemia and volume overload are the emergent concerns.",
+        "typicalTreatments": "Hemodialysis or peritoneal dialysis, or kidney transplant. Ongoing management of anemia (ESAs, iron), bone-mineral disease (phosphate binders), fluid limits, and dialysis access care. Protect the non-dominant arm from BP cuffs and venipuncture in fistula patients.",
+        "riskFactors": "Progression of diabetes and hypertension (the leading causes), glomerulonephritis, and polycystic kidney disease."
+      },
+      "tags": [
+        "Renal",
+        "Nephrology"
+      ],
+      "aliases": [
+        {
+          "text": "ESRD",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "ESKD",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "ESRF",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Kidney failure",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "CKD Stage 5",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "chronic-kidney-disease",
+        "ckd-stage-4",
+        "hemodialysis",
+        "peritoneal-dialysis",
+        "av-fistula-graft-care",
+        "hyperkalemia",
+        "epoetin-alfa",
+        "anemia-of-chronic-disease"
+      ],
+      "sourceCitation": "Source: StatPearls, MedlinePlus"
     },
     {
       "key": "endotracheal-intubation",
@@ -6129,6 +6813,43 @@
       "sourceCitation": "Source: DailyMed, MedlinePlus"
     },
     {
+      "key": "focal-seizure",
+      "type": "CONDITION",
+      "name": "Focal (Partial) Seizure",
+      "shortExplanation": "A seizure that begins in one area of a single cerebral hemisphere. Distinguished from generalized seizures by localized symptoms and by whether awareness is retained (focal aware) or impaired (focal impaired awareness), often with automatisms such as lip-smacking.",
+      "sections": {
+        "presentation": "Localized motor or sensory symptoms (focal twitching, tingling, unusual smells or tastes), automatisms such as lip-smacking or picking at clothing, and staring. Awareness may be preserved (focal aware, formerly simple partial) or impaired (focal impaired awareness, formerly complex partial). Focal seizures can spread and secondarily generalize into a tonic-clonic seizure.",
+        "typicalTreatments": "Ensure safety and carefully observe and document the semiology - where symptoms began, how they progressed, and whether awareness was preserved. Antiseizure medications include carbamazepine, levetiracetam, lamotrigine, or oxcarbazepine. Give a benzodiazepine if the seizure evolves to prolonged or generalized activity.",
+        "riskFactors": "Structural brain lesions (prior stroke, tumor, traumatic injury, cortical scarring), mesial temporal sclerosis, CNS infection, congenital malformations, and epilepsy."
+      },
+      "tags": [
+        "Neuro",
+        "Neurology"
+      ],
+      "aliases": [
+        {
+          "text": "Partial seizure",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Focal onset seizure",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Complex partial seizure",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "epilepsy",
+        "generalized-tonic-clonic-seizure",
+        "absence-seizure",
+        "levetiracetam",
+        "electroencephalogram"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls, CDC"
+    },
+    {
       "key": "foley-catheter-insertion",
       "type": "PROCEDURE",
       "name": "Foley Catheter Insertion",
@@ -6387,6 +7108,75 @@
       "sourceCitation": "Source: StatPearls, MedlinePlus"
     },
     {
+      "key": "generalized-tonic-clonic-seizure",
+      "type": "CONDITION",
+      "name": "Generalized Tonic-Clonic Seizure",
+      "shortExplanation": "A generalized seizure with a tonic (stiffening) phase followed by a clonic (rhythmic jerking) phase and loss of consciousness - the classic 'grand mal' seizure. Distinguished by the whole-body convulsion, possible tongue biting and incontinence, and a postictal period of confusion.",
+      "sections": {
+        "presentation": "Sudden loss of consciousness, generalized body stiffening (tonic phase), then rhythmic jerking of all extremities (clonic phase); possible cyanosis, tongue biting, and urinary or fecal incontinence, followed by a postictal period of confusion, drowsiness, and headache.",
+        "typicalTreatments": "During the event, protect the airway and prevent injury - turn the patient to their side, lower to the floor and pad the area, do NOT restrain or put anything in the mouth, and time the seizure. Give a benzodiazepine (lorazepam, diazepam, or midazolam) if prolonged; escalate to the status epilepticus protocol if it lasts longer than 5 minutes. Maintenance antiseizure medications include valproate, levetiracetam, phenytoin, or carbamazepine.",
+        "riskFactors": "Known epilepsy, missed antiseizure medication doses, alcohol or benzodiazepine withdrawal, hypoglycemia, electrolyte disturbances, head trauma, stroke, and sleep deprivation."
+      },
+      "tags": [
+        "Neuro",
+        "Neurology"
+      ],
+      "aliases": [
+        {
+          "text": "Grand mal",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "GTC",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Tonic-clonic seizure",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "epilepsy",
+        "status-epilepticus",
+        "focal-seizure",
+        "absence-seizure",
+        "myoclonic-seizure",
+        "levetiracetam",
+        "phenytoin",
+        "lorazepam"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls, CDC"
+    },
+    {
+      "key": "gestational-diabetes",
+      "type": "CONDITION",
+      "name": "Gestational Diabetes",
+      "shortExplanation": "Glucose intolerance first recognized during pregnancy, typically screened at 24 to 28 weeks. Unlike pre-existing diabetes, it usually resolves after delivery but raises the mother's future risk of type 2 diabetes and threatens the fetus with macrosomia and neonatal hypoglycemia.",
+      "sections": {
+        "presentation": "Usually asymptomatic and detected by screening (a 50 g glucose challenge followed by a 3-hour oral glucose tolerance test, or a one-step 75 g OGTT) at 24 to 28 weeks.",
+        "typicalTreatments": "Start with medical nutrition therapy, exercise, and glucose self-monitoring; if targets are not met, insulin is the first-line pharmacologic agent in pregnancy (metformin or glyburide are alternatives). Postpartum glucose screening at 4 to 12 weeks is recommended.",
+        "riskFactors": "Obesity, older maternal age, prior gestational diabetes or macrosomic infant, family history of diabetes, and polycystic ovary syndrome."
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Obstetrics"
+      ],
+      "aliases": [
+        {
+          "text": "GDM",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "diabetes-mellitus",
+        "type-2-diabetes",
+        "preeclampsia",
+        "insulin",
+        "metformin"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "glasgow-coma-scale",
       "type": "ASSESSMENT_TOOL",
       "name": "Glasgow Coma Scale",
@@ -6624,6 +7414,149 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "heart-failure",
+      "type": "CONDITION",
+      "name": "Heart Failure",
+      "shortExplanation": "A chronic condition in which the heart cannot pump or fill well enough to meet the body's needs, leading to fluid congestion and reduced perfusion. It is classified by ejection fraction (HFrEF, HFmrEF, HFpEF) and by which side of the heart is affected.",
+      "sections": {
+        "presentation": "Dyspnea on exertion, orthopnea, paroxysmal nocturnal dyspnea, fatigue, and fluid retention (weight gain, peripheral edema, jugular venous distension, crackles). Symptoms are graded by NYHA functional class. An acute worsening of these symptoms is called decompensated heart failure.",
+        "typicalTreatments": "Chronic guideline-directed medical therapy tailored to ejection fraction. For reduced EF (HFrEF), the four pillars are an ARNI/ACE inhibitor/ARB, a beta blocker, a mineralocorticoid receptor antagonist, and an SGLT2 inhibitor. Diuretics manage congestion. Daily weights, sodium and fluid restriction, and monitoring of potassium and renal function are core nursing measures. Device therapy (ICD/CRT) in selected patients.",
+        "riskFactors": "Coronary artery disease and prior MI, hypertension, valvular disease, diabetes, obesity, cardiomyopathy, atrial fibrillation, and excess alcohol."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "HF",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "CHF",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Congestive Heart Failure",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "chf-exacerbation",
+        "hfref",
+        "hfpef",
+        "hfmref",
+        "left-sided-heart-failure",
+        "right-sided-heart-failure",
+        "bnp",
+        "furosemide"
+      ],
+      "sourceCitation": "Source: StatPearls, 2022 AHA/ACC/HFSA Guideline"
+    },
+    {
+      "key": "hfmref",
+      "type": "CONDITION",
+      "name": "Heart Failure with Mildly Reduced Ejection Fraction (HFmrEF)",
+      "shortExplanation": "An intermediate category of heart failure with a left ventricular ejection fraction of 41-49%. Patients often trend toward improvement or decline over time, so ejection fraction should be rechecked and many benefit from HFrEF-style therapy.",
+      "sections": {
+        "presentation": "Typical heart failure symptoms (dyspnea, fatigue, congestion) with an ejection fraction between 41% and 49% plus evidence of increased filling pressures (elevated natriuretic peptides). Because this range is dynamic, the ejection fraction may move up into the preserved range or down into the reduced range on follow-up imaging.",
+        "typicalTreatments": "SGLT2 inhibitors are recommended; diuretics for congestion. ARNI/ACE inhibitor/ARB, beta blockers, and MRAs carry weaker (2b) recommendations and are reasonable, particularly if the ejection fraction is at the lower end. Repeat echocardiography to reclassify over time; treat comorbidities and ischemia aggressively.",
+        "riskFactors": "Prior heart failure with reduced ejection fraction that has partly recovered, coronary disease, hypertension, and the same shared cardiovascular risk factors as other heart failure types."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "Mildly Reduced EF Heart Failure",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Mid-Range Ejection Fraction",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "heart-failure",
+        "hfref",
+        "hfpef",
+        "chf-exacerbation",
+        "echocardiogram"
+      ],
+      "sourceCitation": "Source: StatPearls, 2022 AHA/ACC/HFSA Guideline"
+    },
+    {
+      "key": "hfpef",
+      "type": "CONDITION",
+      "name": "Heart Failure with Preserved Ejection Fraction (HFpEF)",
+      "shortExplanation": "Diastolic heart failure in which the left ventricle is stiff and fills poorly despite a normal ejection fraction of 50% or greater. Unlike HFrEF, there are fewer mortality-reducing drugs, so treatment focuses on congestion, comorbidities, and SGLT2 inhibitors.",
+      "sections": {
+        "presentation": "Exertional dyspnea, fatigue, and congestion (edema, crackles, elevated JVP) with a preserved ejection fraction (50% or higher) on echo and evidence of elevated filling pressures (elevated natriuretic peptides, diastolic dysfunction). Often seen in older women with hypertension, obesity, and atrial fibrillation.",
+        "typicalTreatments": "SGLT2 inhibitors are recommended to reduce hospitalizations; diuretics manage volume overload. Aggressively control the drivers: blood pressure, atrial fibrillation rate/rhythm, obesity, and ischemia. MRAs and ARNI have weaker (adjunctive) recommendations. Rate control matters because a stiff ventricle depends on adequate diastolic filling time. Avoid overdiuresis, which can drop preload and output.",
+        "riskFactors": "Hypertension (especially with left ventricular hypertrophy), older age, female sex, obesity, diabetes, atrial fibrillation, and chronic kidney disease."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "Diastolic Heart Failure",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Preserved EF Heart Failure",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "heart-failure",
+        "hfref",
+        "hfmref",
+        "chf-exacerbation",
+        "essential-hypertension",
+        "empagliflozin"
+      ],
+      "sourceCitation": "Source: StatPearls, 2022 AHA/ACC/HFSA Guideline"
+    },
+    {
+      "key": "hfref",
+      "type": "CONDITION",
+      "name": "Heart Failure with Reduced Ejection Fraction (HFrEF)",
+      "shortExplanation": "Systolic heart failure in which the left ventricle is weak and cannot contract forcefully, defined by a left ventricular ejection fraction of 40% or less. It is the form with the strongest evidence-based drug therapy (the four pillars of GDMT).",
+      "sections": {
+        "presentation": "Signs of low output and congestion: exertional dyspnea, orthopnea, fatigue, edema, and elevated jugular venous pressure. Echocardiogram shows a dilated, poorly contracting left ventricle with an ejection fraction of 40% or less; BNP/NT-proBNP is elevated.",
+        "typicalTreatments": "Four pillars of guideline-directed medical therapy: an ARNI (sacubitril/valsartan) or ACE inhibitor/ARB, an evidence-based beta blocker (carvedilol, metoprolol succinate, bisoprolol), a mineralocorticoid receptor antagonist (spironolactone/eplerenone), and an SGLT2 inhibitor. Loop diuretics for volume overload. ICD/CRT for eligible patients. Monitor blood pressure, potassium, and renal function while up-titrating.",
+        "riskFactors": "Ischemic heart disease and prior MI, longstanding hypertension, dilated cardiomyopathy, valvular disease, and toxins such as alcohol or chemotherapy (e.g., anthracyclines)."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "Systolic Heart Failure",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Reduced EF Heart Failure",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "heart-failure",
+        "hfpef",
+        "hfmref",
+        "chf-exacerbation",
+        "dilated-cardiomyopathy",
+        "valsartan",
+        "spironolactone",
+        "empagliflozin"
+      ],
+      "sourceCitation": "Source: StatPearls, 2022 AHA/ACC/HFSA Guideline"
+    },
+    {
       "key": "heart-score",
       "type": "ASSESSMENT_TOOL",
       "name": "HEART Score",
@@ -6825,6 +7758,14 @@
         {
           "text": "Brain Bleed",
           "type": "NICKNAME"
+        },
+        {
+          "text": "CVA",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "stroke",
+          "type": "NICKNAME"
         }
       ],
       "related": [
@@ -6856,6 +7797,39 @@
       ],
       "pronunciation": "HEP-a-rin",
       "sourceCitation": "Source: MedlinePlus"
+    },
+    {
+      "key": "heparin-induced-thrombocytopenia",
+      "type": "CONDITION",
+      "name": "Heparin-Induced Thrombocytopenia (HIT)",
+      "shortExplanation": "An immune reaction to heparin (type II HIT) in which antibodies to the heparin-platelet factor 4 complex activate platelets, causing a paradoxical drop in platelets WITH a high clotting risk. Distinguished by a greater than 50% platelet fall 5-10 days after heparin, and by treatment with a non-heparin anticoagulant - platelet transfusions are avoided.",
+      "sections": {
+        "presentation": "A platelet count fall of more than 50% (or a new thrombosis) typically 5-10 days after starting heparin - sooner with recent prior exposure. New venous or arterial clots (DVT, PE, limb ischemia) and skin necrosis at injection sites can occur. The 4Ts score estimates pretest probability; confirm with an anti-PF4 antibody assay and serotonin release assay.",
+        "typicalTreatments": "Stop ALL heparin immediately (including flushes and low-molecular-weight heparin) - but understand this alone is not enough. Start a non-heparin anticoagulant such as argatroban (a direct thrombin inhibitor; monitor aPTT) or fondaparinux, later transitioning to a DOAC or warfarin once platelets recover. Avoid platelet transfusions (they may worsen thrombosis), and do not start warfarin until platelets have recovered.",
+        "riskFactors": "Unfractionated heparin exposure (higher risk than LMWH), longer duration of heparin therapy, surgical or postoperative patients, and prior heparin exposure."
+      },
+      "tags": [
+        "Hematology"
+      ],
+      "aliases": [
+        {
+          "text": "HIT",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "HITT",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "heparin",
+        "thrombocytopenia",
+        "platelet-count",
+        "deep-vein-thrombosis",
+        "pulmonary-embolism",
+        "enoxaparin"
+      ],
+      "sourceCitation": "Source: StatPearls"
     },
     {
       "key": "hepatic-encephalopathy",
@@ -7015,6 +7989,41 @@
         "cancer-pain-management"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "hospital-acquired-pneumonia",
+      "type": "CONDITION",
+      "name": "Hospital-Acquired Pneumonia (HAP)",
+      "shortExplanation": "Pneumonia developing 48 hours or more after admission in a non-intubated patient. Unlike community-acquired pneumonia, it requires broad empiric coverage for multidrug-resistant organisms including Pseudomonas and (in at-risk patients) MRSA.",
+      "sections": {
+        "presentation": "New or worsening infiltrate on imaging plus clinical signs of infection - fever, leukocytosis, purulent secretions, increased oxygen requirement, or hypotension - beginning at least 48 hours into the hospital stay. Higher likelihood of resistant gram-negative and staphylococcal pathogens than community-acquired pneumonia.",
+        "typicalTreatments": "Empiric therapy must cover Staphylococcus aureus and Pseudomonas/gram-negatives - e.g., an antipseudomonal beta-lactam such as piperacillin-tazobactam. Add MRSA coverage (vancomycin or linezolid) when the patient has resistance risk factors (recent IV antibiotics, high-MRSA unit) or high mortality risk, and add a second antipseudomonal agent for high-risk patients (avoid aminoglycoside monotherapy). Obtain respiratory cultures to de-escalate around 48 hours; typical duration is 7 days.",
+        "riskFactors": "Hospitalization 48 hours or more, recent IV antibiotics within 90 days, reduced level of consciousness or aspiration, immunosuppression, and prolonged/severe illness."
+      },
+      "tags": [
+        "Pulmonary",
+        "Infectious disease",
+        "Critical Care / ICU"
+      ],
+      "aliases": [
+        {
+          "text": "HAP",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Nosocomial Pneumonia",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "pneumonia",
+        "community-acquired-pneumonia",
+        "ventilator-associated-pneumonia",
+        "vancomycin",
+        "piperacillin-tazobactam",
+        "aspiration-pneumonia"
+      ],
+      "sourceCitation": "Source: IDSA/ATS 2016 Guidelines, StatPearls"
     },
     {
       "key": "hydralazine",
@@ -7217,6 +8226,41 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "hypercapnic-respiratory-failure",
+      "type": "CONDITION",
+      "name": "Hypercapnic Respiratory Failure (Type 2)",
+      "shortExplanation": "Respiratory failure that is primarily a ventilation problem - the patient cannot clear CO2 (PaCO2 over 45 mmHg with pH under 7.35). Management focuses on assisting ventilation, and oxygen must be given cautiously to avoid worsening CO2 retention.",
+      "sections": {
+        "presentation": "Dyspnea, drowsiness or confusion (CO2 narcosis), headache, and asterixis. ABG shows elevated PaCO2 with acidosis (pH under 7.35) in acute failure; chronic compensation shows a raised bicarbonate with near-normal pH. Caused by alveolar hypoventilation - COPD exacerbations, neuromuscular disease, chest-wall disorders, and CNS/opioid depression.",
+        "typicalTreatments": "Support ventilation: BiPAP (noninvasive ventilation) is first-line for acute hypercapnic failure such as a COPD exacerbation and reduces intubation and mortality; escalate to intubation if it fails. Use CONTROLLED oxygen targeting SpO2 88-92% to avoid worsening hypercapnia and CO2 narcosis. Treat the cause (bronchodilators and steroids for COPD, naloxone for opioid overdose). Reassess ABG within a few hours of starting NIV.",
+        "riskFactors": "COPD, obesity-hypoventilation and obstructive sleep apnea, neuromuscular disease (e.g., myasthenia gravis, Guillain-Barre), chest-wall deformity, and sedative or opioid use."
+      },
+      "tags": [
+        "Pulmonary",
+        "Critical Care / ICU"
+      ],
+      "aliases": [
+        {
+          "text": "Type 2 Respiratory Failure",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Ventilatory Failure",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "acute-respiratory-failure",
+        "hypoxemic-respiratory-failure",
+        "copd-exacerbation",
+        "chronic-obstructive-pulmonary-disease",
+        "bipap",
+        "respiratory-acidosis",
+        "arterial-blood-gas"
+      ],
+      "sourceCitation": "Source: StatPearls"
+    },
+    {
       "key": "hyperkalemia",
       "type": "CONDITION",
       "name": "Hyperkalemia",
@@ -7335,6 +8379,70 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "hypertensive-emergency",
+      "type": "CONDITION",
+      "name": "Hypertensive Emergency",
+      "shortExplanation": "Severely elevated blood pressure (usually above 180/120 mmHg) WITH acute target-organ damage such as stroke, MI, pulmonary edema, acute kidney injury, or aortic dissection. It requires immediate IV therapy in a monitored/ICU setting with a controlled, gradual reduction.",
+      "sections": {
+        "presentation": "Very high blood pressure plus evidence of acute end-organ injury: neurologic changes (encephalopathy, stroke), chest pain (ACS, aortic dissection), acute pulmonary edema, acute kidney injury, retinal hemorrhages/papilledema, or eclampsia in pregnancy. It is the acute organ damage, not the specific number, that defines an emergency.",
+        "typicalTreatments": "Admit to ICU/monitored setting for titratable IV antihypertensives (e.g., nicardipine, labetalol, nitroglycerin, or clevidipine) with an arterial line for continuous monitoring. Lower blood pressure in a controlled, gradual way - generally by no more than about 25% in the first hour - to avoid organ hypoperfusion; the target and agent depend on the specific end-organ syndrome (e.g., aortic dissection and acute stroke have distinct goals).",
+        "riskFactors": "Longstanding or poorly controlled hypertension, medication nonadherence, cocaine or other sympathomimetic use, renal disease, and pregnancy (preeclampsia/eclampsia)."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "HTN Emergency",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Malignant Hypertension",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "hypertensive-crisis",
+        "hypertensive-urgency",
+        "essential-hypertension",
+        "hydralazine",
+        "arterial-line-insertion"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA"
+    },
+    {
+      "key": "hypertensive-urgency",
+      "type": "CONDITION",
+      "name": "Hypertensive Urgency",
+      "shortExplanation": "Severely elevated blood pressure (typically above 180/120 mmHg) WITHOUT acute target-organ damage. Because there is no active organ injury, it is lowered gradually with oral medication over hours to days, not with rapid IV therapy.",
+      "sections": {
+        "presentation": "Markedly elevated blood pressure (often systolic over 180 or diastolic over 120 mmHg) with no signs of acute end-organ damage. Patients may be asymptomatic or have mild headache or anxiety, but there is no acute neurologic deficit, chest pain, pulmonary edema, or acute kidney injury. Chronic changes (e.g., stable CKD, LVH) may be present.",
+        "typicalTreatments": "Gradual blood pressure reduction over 24-48 hours using or restarting oral agents (e.g., resuming home medications, adding an oral agent), with outpatient follow-up. Avoid rapid lowering, which can cause hypoperfusion. Reassess for adherence, pain, or anxiety as reversible contributors. Rest and repeat measurement, since readings often fall without aggressive treatment. IV drugs are NOT indicated - the key distinction from hypertensive emergency.",
+        "riskFactors": "Poorly controlled or untreated essential hypertension, medication nonadherence, high-sodium diet, and stimulant or NSAID use."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "HTN Urgency",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Asymptomatic Severe Hypertension",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "hypertensive-crisis",
+        "hypertensive-emergency",
+        "essential-hypertension"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA"
+    },
+    {
       "key": "hyperthyroidism",
       "type": "CONDITION",
       "name": "Hyperthyroidism",
@@ -7403,6 +8511,42 @@
       ],
       "pronunciation": "hye-per-TON-ik SAY-leen",
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "hypertrophic-cardiomyopathy",
+      "type": "CONDITION",
+      "name": "Hypertrophic Cardiomyopathy",
+      "shortExplanation": "A usually genetic disease in which the heart muscle (especially the septum) becomes abnormally thick, which can obstruct outflow and stiffen the ventricle. It is a leading cause of sudden cardiac death in young athletes.",
+      "sections": {
+        "presentation": "Dyspnea, chest pain, palpitations, and exertional syncope; some patients are asymptomatic until sudden cardiac arrest. A harsh systolic murmur that increases with maneuvers reducing preload (standing, Valsalva) suggests outflow obstruction. Echo shows asymmetric left ventricular hypertrophy with preserved or high ejection fraction.",
+        "typicalTreatments": "Beta blockers or non-dihydropyridine calcium channel blockers (diltiazem/verapamil) to improve filling and reduce obstruction; a myosin inhibitor (mavacamten) in select obstructive cases; septal myectomy or alcohol septal ablation for refractory obstruction. AVOID preload/afterload reducers such as nitrates, aggressive diuretics, and vasodilators, which can worsen obstruction. Activity restriction and ICD for high sudden-death risk; family screening.",
+        "riskFactors": "Family history/autosomal dominant sarcomere gene mutations; it is the primary consideration in a young athlete with syncope or a family history of sudden cardiac death."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "HCM",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "HOCM",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Hypertrophic Obstructive Cardiomyopathy",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "dilated-cardiomyopathy",
+        "heart-failure",
+        "icd-placement",
+        "echocardiogram"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA/ACC"
     },
     {
       "key": "hypocalcemia",
@@ -7554,6 +8698,41 @@
       ],
       "pronunciation": "hy-poh-voh-LEE-mik shok",
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "hypoxemic-respiratory-failure",
+      "type": "CONDITION",
+      "name": "Hypoxemic Respiratory Failure (Type 1)",
+      "shortExplanation": "Respiratory failure that is primarily an oxygenation problem - low arterial oxygen (PaO2 under 60 mmHg) with a normal or low CO2. Management centers on delivering more oxygen, distinguishing it from the ventilation-focused hypercapnic (Type 2) form.",
+      "sections": {
+        "presentation": "Dyspnea, tachypnea, tachycardia, restlessness, and cyanosis with low SpO2. ABG shows PaO2 below 60 mmHg with a normal or reduced PaCO2. Driven by V/Q mismatch or shunt from conditions like pneumonia, pulmonary edema, PE, and ARDS. When already on oxygen, use the PaO2/FiO2 ratio to gauge severity.",
+        "typicalTreatments": "Escalating oxygen to target SpO2 roughly 94-98%: nasal cannula, then high-flow nasal cannula, then CPAP (first-line for cardiogenic pulmonary edema). Treat the underlying cause. Intubation and mechanical ventilation, often with PEEP to recruit alveoli, when oxygenation cannot be maintained noninvasively.",
+        "riskFactors": "Pneumonia, ARDS, pulmonary edema/heart failure, pulmonary embolism, and aspiration."
+      },
+      "tags": [
+        "Pulmonary",
+        "Critical Care / ICU"
+      ],
+      "aliases": [
+        {
+          "text": "Type 1 Respiratory Failure",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Type I Respiratory Failure",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "acute-respiratory-failure",
+        "hypercapnic-respiratory-failure",
+        "ards",
+        "acute-pulmonary-edema",
+        "high-flow-nasal-cannula",
+        "cpap",
+        "arterial-blood-gas"
+      ],
+      "sourceCitation": "Source: StatPearls"
     },
     {
       "key": "ibuprofen",
@@ -7862,6 +9041,106 @@
       "sourceCitation": "Source: MedlinePlus"
     },
     {
+      "key": "insulin-aspart",
+      "type": "MEDICATION",
+      "name": "Insulin Aspart",
+      "shortExplanation": "A rapid-acting insulin analog used for mealtime (bolus) coverage and in insulin pumps. Its very fast onset means it is given right at the meal and must be held if the patient is not eating, unlike basal insulins.",
+      "sections": {
+        "mechanism": "Rapid-acting human insulin analog. Onset is about 10 to 15 minutes, peak 1 to 3 hours, and duration 3 to 5 hours - closely matching the post-meal glucose rise.",
+        "sideEffects": "Injection-site reactions and weight gain.",
+        "adverseEffects": "Hypoglycemia, which can occur early after the dose; hypokalemia.",
+        "nursingImplications": "Give within about 15 minutes before (or just after) the start of a meal; confirm the meal tray is present and the patient will eat before dosing. It is a clear solution and is commonly used in insulin pumps. Watch for early postprandial hypoglycemia.",
+        "commonBrandName": "Novolog, Fiasp"
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Pharmacology"
+      ],
+      "aliases": [
+        {
+          "text": "Novolog",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Fiasp",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "NovoRapid",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "insulin",
+        "insulin-lispro",
+        "rapid-acting-insulin",
+        "hypoglycemia"
+      ],
+      "sourceCitation": "Source: DailyMed, StatPearls"
+    },
+    {
+      "key": "insulin-degludec",
+      "type": "MEDICATION",
+      "name": "Insulin Degludec",
+      "shortExplanation": "An ultra-long-acting basal insulin analog with a flat, peakless effect lasting beyond 42 hours. Its very long duration allows flexible once-daily timing but also means residual insulin action persists for days after the last dose.",
+      "sections": {
+        "mechanism": "Ultra-long-acting analog that forms soluble multi-hexamer depots in subcutaneous tissue, releasing monomers slowly for a flat, stable effect. Onset is about 1 hour, essentially peakless, with duration beyond 42 hours.",
+        "sideEffects": "Injection-site reactions and weight gain.",
+        "adverseEffects": "Hypoglycemia (lower nocturnal risk than NPH) and hypokalemia.",
+        "nursingImplications": "Give subcutaneously once daily; timing is flexible day to day because of the ultra-long duration. Do NOT mix or give IV. Remember residual action can last up to about 42 hours - keep this in mind when a patient is made NPO for surgery or is switched to a different basal insulin.",
+        "commonBrandName": "Tresiba"
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Pharmacology"
+      ],
+      "aliases": [
+        {
+          "text": "Tresiba",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "insulin",
+        "insulin-glargine",
+        "insulin-detemir",
+        "long-acting-insulin",
+        "hypoglycemia"
+      ],
+      "sourceCitation": "Source: DailyMed, StatPearls"
+    },
+    {
+      "key": "insulin-detemir",
+      "type": "MEDICATION",
+      "name": "Insulin Detemir",
+      "shortExplanation": "A long-acting basal insulin analog that binds albumin to prolong its action. Compared with glargine it has a somewhat shorter and less flat profile, so it is often dosed twice daily, especially in type 1 diabetes.",
+      "sections": {
+        "mechanism": "Long-acting insulin analog acylated with a fatty-acid chain that binds albumin, slowing absorption and distribution. Onset is about 1 to 2 hours with a relatively flat, prolonged effect lasting up to about 24 hours.",
+        "sideEffects": "Injection-site reactions and weight gain (typically less than NPH).",
+        "adverseEffects": "Hypoglycemia (less nocturnal hypoglycemia than NPH) and hypokalemia.",
+        "nursingImplications": "Give subcutaneously once or twice daily at consistent times; it is a clear solution but must NOT be mixed with other insulins. Provides background coverage only - the patient still needs mealtime insulin. Do not give IV.",
+        "commonBrandName": "Levemir"
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Pharmacology"
+      ],
+      "aliases": [
+        {
+          "text": "Levemir",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "insulin",
+        "insulin-glargine",
+        "insulin-degludec",
+        "long-acting-insulin",
+        "hypoglycemia"
+      ],
+      "sourceCitation": "Source: DailyMed, StatPearls"
+    },
+    {
       "key": "insulin-glargine",
       "type": "MEDICATION",
       "name": "Insulin Glargine",
@@ -7942,6 +9221,36 @@
       "sourceCitation": "Source: MedlinePlus, DailyMed"
     },
     {
+      "key": "intermediate-acting-insulin",
+      "type": "MEDICATION",
+      "name": "Intermediate-Acting Insulin (class)",
+      "shortExplanation": "NPH insulin - the cloudy, protamine-based class that gives basal-type coverage but with a distinct peak. That peak is what separates it from the peakless long-acting analogs and drives its hypoglycemia timing.",
+      "sections": {
+        "mechanism": "Insulin bound to protamine to slow absorption. Onset is about 1 to 2 hours, peak 4 to 12 hours, and duration 12 to 18 hours; usually dosed twice daily.",
+        "sideEffects": "Injection-site reactions and weight gain.",
+        "adverseEffects": "Hypoglycemia during the pronounced peak, including nocturnal hypoglycemia with evening dosing; hypokalemia.",
+        "nursingImplications": "Gently roll to resuspend the cloudy suspension before dosing; never give IV. May be mixed with regular insulin (clear before cloudy). Anticipate hypoglycemia around the peak and ensure meals align with dosing.",
+        "commonBrandName": "Humulin N, Novolin N"
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Pharmacology"
+      ],
+      "aliases": [
+        {
+          "text": "NPH class",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "insulin",
+        "nph-insulin",
+        "long-acting-insulin",
+        "hypoglycemia"
+      ],
+      "sourceCitation": "Source: DailyMed, StatPearls"
+    },
+    {
       "key": "intra-aortic-balloon-pump",
       "type": "EQUIPMENT",
       "name": "Intra-Aortic Balloon Pump",
@@ -7970,6 +9279,40 @@
       ],
       "pronunciation": "IN-tra ay-OR-tik balloon pump",
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "intrinsic-aki",
+      "type": "CONDITION",
+      "name": "Intrinsic (Intrarenal) AKI",
+      "shortExplanation": "Acute kidney injury from direct damage to the kidney tissue itself, most often acute tubular necrosis. Unlike prerenal AKI, the damaged tubules can no longer conserve sodium, so FENa is high and the injury does not simply reverse with fluids.",
+      "sections": {
+        "presentation": "Rising creatinine with a BUN:creatinine ratio under 20:1, FENa over 2%, urine sodium over 20 mEq/L, and muddy brown granular casts in acute tubular necrosis. May follow prolonged ischemia or a nephrotoxic exposure.",
+        "typicalTreatments": "Remove the offending cause (nephrotoxins, contrast), maintain euvolemia and renal perfusion, manage electrolytes and acidosis, and provide supportive care while the tubules recover. Dialysis if refractory hyperkalemia, acidosis, or volume overload develops.",
+        "riskFactors": "Ischemia (prolonged prerenal states, sepsis, hypotension), nephrotoxins (vancomycin, aminoglycosides, contrast), rhabdomyolysis, and glomerular or interstitial disease."
+      },
+      "tags": [
+        "Renal",
+        "Nephrology"
+      ],
+      "aliases": [
+        {
+          "text": "Intrarenal AKI",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "ATN",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "acute-kidney-injury",
+        "prerenal-aki",
+        "postrenal-aki",
+        "creatinine",
+        "vancomycin",
+        "hyperkalemia"
+      ],
+      "sourceCitation": "Source: StatPearls, AAFP"
     },
     {
       "key": "ionized-calcium",
@@ -8065,6 +9408,36 @@
       "related": [
         "ferritin",
         "complete-blood-count"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "iron-deficiency-anemia",
+      "type": "CONDITION",
+      "name": "Iron-Deficiency Anemia",
+      "shortExplanation": "Anemia from inadequate iron for hemoglobin production, the most common anemia worldwide. Its signature lab pattern - low ferritin with a high TIBC - distinguishes it from anemia of chronic disease.",
+      "sections": {
+        "presentation": "Fatigue and pallor with a microcytic, hypochromic smear (though early disease may be normocytic). Distinctive findings include koilonychia (spoon nails), atrophic glossitis, angular cheilitis, and pica/pagophagia (craving ice).",
+        "typicalTreatments": "Oral iron (take with vitamin C to boost absorption; expect GI upset and dark stools) or IV iron when oral is not tolerated or absorbed. Always investigate the cause, especially GI blood loss in adults.",
+        "riskFactors": "Chronic blood loss (menstrual or GI), poor dietary intake, malabsorption (celiac disease, gastric surgery), and pregnancy."
+      },
+      "tags": [
+        "Hematology",
+        "Endocrine/Metabolic"
+      ],
+      "aliases": [
+        {
+          "text": "IDA",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "anemia",
+        "anemia-of-chronic-disease",
+        "iron-studies",
+        "ferritin",
+        "complete-blood-count",
+        "gastrointestinal-bleed"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
@@ -8322,6 +9695,72 @@
       ],
       "pronunciation": "LAK-tyoo-lose",
       "sourceCitation": "Source: MedlinePlus, DailyMed"
+    },
+    {
+      "key": "lacunar-stroke",
+      "type": "CONDITION",
+      "name": "Lacunar Stroke",
+      "shortExplanation": "A small ischemic stroke deep in the brain from occlusion of a small penetrating artery, strongly linked to chronic hypertension and diabetes. Distinguished by classic lacunar syndromes (e.g., pure motor or pure sensory deficits) and small deep infarcts on imaging without cortical signs.",
+      "sections": {
+        "presentation": "A small, deep infarct producing a classic lacunar syndrome - pure motor hemiparesis, pure sensory stroke, sensorimotor stroke, ataxic hemiparesis, or dysarthria-clumsy hand syndrome - typically without cortical signs such as aphasia, neglect, or visual field loss. Symptoms may be subtle.",
+        "typicalTreatments": "Acute ischemic stroke care as eligible. Secondary prevention focuses on aggressive risk-factor control - blood pressure management, antiplatelet therapy, a statin, glycemic control, and smoking cessation.",
+        "riskFactors": "Chronic hypertension (the primary driver, via small-vessel hyaline arteriolosclerosis), diabetes mellitus, smoking, older age, and hyperlipidemia."
+      },
+      "tags": [
+        "Neuro",
+        "Neurology"
+      ],
+      "aliases": [
+        {
+          "text": "Small-vessel stroke",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Lacunar infarct",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "acute-ischemic-stroke",
+        "thrombotic-stroke",
+        "embolic-stroke",
+        "essential-hypertension",
+        "transient-ischemic-attack"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA"
+    },
+    {
+      "key": "left-sided-heart-failure",
+      "type": "CONDITION",
+      "name": "Left-Sided Heart Failure",
+      "shortExplanation": "Heart failure in which the left ventricle fails, causing blood to back up into the lungs. The hallmark is pulmonary congestion - dyspnea, orthopnea, and crackles - and it is the most common cause of right-sided failure.",
+      "sections": {
+        "presentation": "Pulmonary congestion dominates: dyspnea on exertion, orthopnea, paroxysmal nocturnal dyspnea, bibasilar crackles, cough (sometimes pink frothy sputum in acute pulmonary edema), fatigue, and hypoxia. Distinguish from right-sided failure, which causes systemic (peripheral) congestion rather than pulmonary congestion.",
+        "typicalTreatments": "Loop diuretics for pulmonary congestion, guideline-directed therapy based on ejection fraction, and oxygen or noninvasive ventilation for acute pulmonary edema. Vasodilators (nitroglycerin) reduce preload/afterload in acute presentations. Daily weights, strict intake/output, sodium and fluid restriction, and monitoring of respiratory status and oxygenation.",
+        "riskFactors": "Coronary artery disease and prior MI, hypertension, aortic and mitral valve disease, and cardiomyopathy."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "Left Heart Failure",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "LVF",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "heart-failure",
+        "right-sided-heart-failure",
+        "acute-pulmonary-edema",
+        "chf-exacerbation",
+        "furosemide"
+      ],
+      "sourceCitation": "Source: StatPearls, MedlinePlus"
     },
     {
       "key": "levetiracetam",
@@ -8653,6 +10092,38 @@
       "sourceCitation": "Source: MedlinePlus"
     },
     {
+      "key": "long-acting-insulin",
+      "type": "MEDICATION",
+      "name": "Long-Acting Insulin (class)",
+      "shortExplanation": "The basal analogs (glargine, detemir, degludec) that provide steady background insulin with little or no peak. Their flat profile and long duration distinguish them from NPH and mean they are never mixed and cannot substitute for mealtime insulin.",
+      "sections": {
+        "mechanism": "Insulin analogs engineered for slow, prolonged absorption to mimic basal secretion. Effect is relatively flat (peakless) lasting about 24 hours or more (degludec beyond 42 hours), giving a lower and less peaked hypoglycemia profile than NPH.",
+        "sideEffects": "Injection-site reactions and weight gain.",
+        "adverseEffects": "Hypoglycemia (less nocturnal hypoglycemia than NPH) and hypokalemia.",
+        "nursingImplications": "Give subcutaneously at consistent times, usually once daily; these are clear solutions but must NOT be mixed with other insulins or given IV. They cover background needs only, so patients still require mealtime insulin. Do not omit basal insulin in type 1 patients even when NPO.",
+        "commonBrandName": "Lantus/Toujeo (glargine), Levemir (detemir), Tresiba (degludec)"
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Pharmacology"
+      ],
+      "aliases": [
+        {
+          "text": "Basal insulin",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "insulin",
+        "insulin-glargine",
+        "insulin-detemir",
+        "insulin-degludec",
+        "intermediate-acting-insulin",
+        "hypoglycemia"
+      ],
+      "sourceCitation": "Source: DailyMed, StatPearls"
+    },
+    {
       "key": "loop-diuretics-class",
       "type": "MEDICATION",
       "name": "Loop Diuretics (class)",
@@ -8796,6 +10267,43 @@
       ],
       "pronunciation": "loh-SAR-tan",
       "sourceCitation": "Source: DailyMed, MedlinePlus"
+    },
+    {
+      "key": "lower-gi-bleed",
+      "type": "CONDITION",
+      "name": "Lower GI Bleed",
+      "shortExplanation": "Bleeding originating below the ligament of Treitz (small bowel, colon, rectum, or anus), classically presenting as hematochezia (bright red or maroon blood per rectum). Distinguished from an upper GI bleed, which more often causes melena and hematemesis and is worked up with upper endoscopy.",
+      "sections": {
+        "presentation": "Hematochezia (bright red or maroon blood per rectum), sometimes with clots; usually painless (diverticular disease, angiodysplasia) but may include cramping. Melena is less common than in upper GI bleeds. Signs of hypovolemia (tachycardia, hypotension) appear if bleeding is brisk. A normal or low BUN-to-creatinine ratio helps distinguish it from an upper GI bleed.",
+        "typicalTreatments": "Assess and resuscitate - two large-bore IVs, fluids, type and crossmatch, transfuse as needed, and correct any coagulopathy. Localize and treat the source with colonoscopy (which may allow endoscopic hemostasis), CT angiography, or a tagged RBC scan. Angiographic embolization or surgery is used for uncontrolled bleeding.",
+        "riskFactors": "Diverticulosis (the most common cause), angiodysplasia, colorectal cancer or polyps, hemorrhoids, ischemic or inflammatory colitis, anticoagulant, antiplatelet, or NSAID use, and older age."
+      },
+      "tags": [
+        "Gastroenterology"
+      ],
+      "aliases": [
+        {
+          "text": "LGIB",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Lower gastrointestinal bleed",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Hematochezia",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "gastrointestinal-bleed",
+        "upper-gi-bleed",
+        "colonoscopy",
+        "diverticulitis",
+        "packed-red-blood-cell-transfusion",
+        "ulcerative-colitis"
+      ],
+      "sourceCitation": "Source: StatPearls, MedlinePlus"
     },
     {
       "key": "lumbar-puncture",
@@ -9601,6 +11109,35 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "myoclonic-seizure",
+      "type": "CONDITION",
+      "name": "Myoclonic Seizure",
+      "shortExplanation": "A generalized seizure causing brief, sudden, shock-like muscle jerks, usually without loss of consciousness. Distinguished from tonic-clonic seizures by the very brief, lightning-quick jerks and preserved awareness, and it is a hallmark of juvenile myoclonic epilepsy.",
+      "sections": {
+        "presentation": "Sudden, brief, shock-like jerks of a muscle or muscle group (often the arms and shoulders), usually bilateral and typically without loss of consciousness. Jerks commonly occur on awakening and may cause the patient to drop objects.",
+        "typicalTreatments": "Valproate is commonly used; levetiracetam, clonazepam, and topiramate are alternatives. Avoid agents that can worsen myoclonus, such as carbamazepine, phenytoin, and gabapentin. Provide safety counseling given the clustering of jerks on awakening.",
+        "riskFactors": "Juvenile myoclonic epilepsy, other genetic generalized epilepsies, sleep deprivation, alcohol, and photic stimulation; also seen in metabolic and anoxic states."
+      },
+      "tags": [
+        "Neuro",
+        "Neurology"
+      ],
+      "aliases": [
+        {
+          "text": "Myoclonic jerks",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "epilepsy",
+        "generalized-tonic-clonic-seizure",
+        "absence-seizure",
+        "levetiracetam",
+        "clonazepam"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls, CDC"
+    },
+    {
       "key": "myxedema-coma",
       "type": "CONDITION",
       "name": "Myxedema Coma",
@@ -9970,6 +11507,33 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "neurogenic-shock",
+      "type": "CONDITION",
+      "name": "Neurogenic Shock",
+      "shortExplanation": "A form of distributive shock after acute spinal cord injury (usually at or above T6) in which loss of sympathetic tone causes vasodilation. Its distinguishing feature is hypotension WITH bradycardia (not the tachycardia seen in other shock).",
+      "sections": {
+        "presentation": "The classic triad is hypotension, bradycardia, and warm, dry, pink skin below the level of injury (loss of sympathetic vasoconstriction and sweating). Hypothermia can occur from impaired thermoregulation. The bradycardia is the key discriminator from hypovolemic shock (which causes tachycardia) - and coexisting hemorrhage must be ruled out first, since a trauma patient can have both.",
+        "typicalTreatments": "Spinal immobilization and airway protection first. Give judicious IV isotonic fluids for the relative hypovolemia, avoiding overload. Add vasopressors when fluids are inadequate - norepinephrine is preferred because it provides both vasoconstriction and heart-rate support; phenylephrine (pure alpha) can worsen the reflex bradycardia. Treat symptomatic bradycardia with atropine, and use pacing for refractory cases. Maintain MAP around 85-90 mmHg for the first 5-7 days to protect spinal cord perfusion.",
+        "riskFactors": "Acute traumatic spinal cord injury, especially cervical or high-thoracic (at or above T6) levels."
+      },
+      "tags": [
+        "Critical Care / ICU",
+        "Neuro",
+        "Emergency"
+      ],
+      "aliases": [],
+      "related": [
+        "spinal-cord-injury",
+        "distributive-shock",
+        "hypovolemic-shock",
+        "norepinephrine",
+        "phenylephrine",
+        "atropine",
+        "symptomatic-bradycardia"
+      ],
+      "sourceCitation": "Source: StatPearls"
+    },
+    {
       "key": "neuroleptic-malignant-syndrome",
       "type": "CONDITION",
       "name": "Neuroleptic Malignant Syndrome",
@@ -10271,6 +11835,41 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "nstemi",
+      "type": "CONDITION",
+      "name": "Non-ST-Elevation Myocardial Infarction (NSTEMI)",
+      "shortExplanation": "A heart attack with elevated troponin but no ST-segment elevation on ECG, usually from partial coronary occlusion. Unlike STEMI, management centers on medical stabilization and risk-stratified (often next-day) catheterization rather than immediate reperfusion.",
+      "sections": {
+        "presentation": "Chest pain or pressure similar to STEMI, sometimes at rest, with dyspnea and diaphoresis. ECG may show ST depression, T-wave inversion, or be nonspecific, but there is NO ST elevation. Cardiac troponin is elevated, confirming myocardial injury and distinguishing NSTEMI from unstable angina.",
+        "typicalTreatments": "Dual antiplatelet therapy (aspirin plus a P2Y12 inhibitor), anticoagulation (heparin or enoxaparin), beta blocker, nitroglycerin for pain, and high-intensity statin. Risk stratification (e.g., HEART or TIMI score) guides timing of invasive coronary angiography, typically within 24-72 hours rather than emergently; unstable patients go sooner. Serial troponins and continuous telemetry.",
+        "riskFactors": "Coronary artery disease, hypertension, hyperlipidemia, diabetes, smoking, chronic kidney disease, and older age."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "Non-ST-Elevation MI",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "NSTE-ACS",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "acute-coronary-syndrome",
+        "stemi",
+        "unstable-angina",
+        "troponin",
+        "heart-score",
+        "percutaneous-coronary-intervention",
+        "chest-pain-protocol"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA/ACC"
+    },
+    {
       "key": "norepinephrine",
       "type": "MEDICATION",
       "name": "Norepinephrine",
@@ -10297,6 +11896,52 @@
       ],
       "pronunciation": "nor-ep-ih-NEF-rin",
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "nph-insulin",
+      "type": "MEDICATION",
+      "name": "NPH Insulin",
+      "shortExplanation": "Intermediate-acting insulin that provides basal-type coverage, usually dosed twice daily. Unlike the peakless long-acting analogs, NPH has a pronounced peak that drives predictable hypoglycemia risk, notably overnight with evening doses.",
+      "sections": {
+        "mechanism": "Human insulin complexed with protamine to slow absorption, giving a cloudy suspension. Onset is about 1 to 2 hours, peak 4 to 12 hours, and duration 12 to 18 hours.",
+        "sideEffects": "Injection-site reactions and weight gain.",
+        "adverseEffects": "Hypoglycemia, especially during its 4-12 hour peak; an evening dose raises nocturnal hypoglycemia risk. Hypokalemia.",
+        "nursingImplications": "Gently roll the vial or pen to resuspend the cloudy insulin before drawing up; never give NPH IV. It may be mixed with regular insulin in one syringe - draw clear before cloudy. Teach patients to eat on schedule and watch for hypoglycemia around the peak.",
+        "commonBrandName": "Humulin N, Novolin N"
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Pharmacology"
+      ],
+      "aliases": [
+        {
+          "text": "NPH",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "N",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Humulin N",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Novolin N",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Isophane insulin",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "insulin",
+        "regular-insulin",
+        "intermediate-acting-insulin",
+        "hypoglycemia"
+      ],
+      "sourceCitation": "Source: DailyMed, StatPearls"
     },
     {
       "key": "numeric-pain-rating-scale",
@@ -10333,6 +11978,33 @@
         "cancer-pain-management"
       ],
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "obstructive-shock",
+      "type": "CONDITION",
+      "name": "Obstructive Shock",
+      "shortExplanation": "Shock from a mechanical block to blood flow into or out of the heart, even though the heart muscle itself is normal. The classic reversible causes are tension pneumothorax, cardiac tamponade, and massive pulmonary embolism.",
+      "sections": {
+        "presentation": "Hypotension and tachycardia with signs of impaired venous return: distended (engorged) neck veins, respiratory distress, and chest pain. Cause-specific clues - absent or decreased breath sounds with tracheal deviation (tension pneumothorax), muffled heart sounds with pulsus paradoxus (cardiac tamponade), or sudden dyspnea and hypoxia with signs of right-heart strain (massive PE). Bedside ultrasound (RUSH exam) and echocardiography help localize the obstruction.",
+        "typicalTreatments": "The obstruction itself must be relieved - vasopressors and fluids alone will not fix it. Tension pneumothorax: immediate needle decompression followed by chest tube. Cardiac tamponade: emergent pericardiocentesis. Massive PE: thrombolytics or embolectomy. Provide oxygen and cautious fluids as a temporizing measure while arranging the definitive intervention.",
+        "riskFactors": "Chest trauma, mechanical ventilation with high PEEP, pericardial effusion (malignancy, uremia, infection), venous thromboembolism, and severe pulmonary hypertension."
+      },
+      "tags": [
+        "Critical Care / ICU",
+        "Emergency",
+        "Cardiovascular"
+      ],
+      "aliases": [],
+      "related": [
+        "tension-pneumothorax",
+        "cardiac-tamponade",
+        "pulmonary-embolism",
+        "distributive-shock",
+        "cardiogenic-shock",
+        "pericardiocentesis",
+        "chest-tube-placement"
+      ],
+      "sourceCitation": "Source: StatPearls"
     },
     {
       "key": "obstructive-sleep-apnea",
@@ -11056,6 +12728,39 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "paroxysmal-atrial-fibrillation",
+      "type": "CONDITION",
+      "name": "Paroxysmal Atrial Fibrillation",
+      "shortExplanation": "Atrial fibrillation that comes and goes, converting back to normal sinus rhythm on its own (or with treatment) within 7 days, usually within 48 hours. Because episodes are intermittent, it is easy to miss and still carries stroke risk.",
+      "sections": {
+        "presentation": "Self-terminating episodes of irregularly irregular rhythm, often felt as sudden palpitations, fluttering, breathlessness, or lightheadedness that resolve spontaneously. Patients may be in normal sinus rhythm between episodes, so it can be missed without prolonged or ambulatory monitoring.",
+        "typicalTreatments": "Rate or rhythm control during episodes; antiarrhythmics (e.g., flecainide, amiodarone) or a 'pill-in-the-pocket' strategy in selected patients; catheter ablation for recurrent symptomatic cases. Anticoagulation decisions are based on CHA2DS2-VASc score, not on how brief the episodes are, since stroke risk persists. Identify and treat triggers (alcohol, caffeine, stress, sleep apnea).",
+        "riskFactors": "Hypertension, obesity, obstructive sleep apnea, excess alcohol, hyperthyroidism, older age, and structural heart disease. May progress over time to persistent atrial fibrillation."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "Paroxysmal AFib",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "PAF",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "atrial-fibrillation",
+        "persistent-atrial-fibrillation",
+        "permanent-atrial-fibrillation",
+        "cardiac-ablation",
+        "cha2ds2-vasc"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA"
+    },
+    {
       "key": "pca-pump",
       "type": "EQUIPMENT",
       "name": "Patient-Controlled Analgesia (PCA) Pump",
@@ -11465,6 +13170,76 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "permanent-atrial-fibrillation",
+      "type": "CONDITION",
+      "name": "Permanent Atrial Fibrillation",
+      "shortExplanation": "Longstanding atrial fibrillation in which the patient and clinician have jointly accepted the rhythm and no longer attempt to restore sinus rhythm. Care shifts entirely to rate control and stroke prevention.",
+      "sections": {
+        "presentation": "Continuous atrial fibrillation, often with a controlled or minimally symptomatic ventricular rate on medication. Many patients are asymptomatic at rest but note fatigue or breathlessness with exertion. The rhythm is chronic and accepted rather than actively converted.",
+        "typicalTreatments": "The goal is a controlled ventricular rate with beta blockers, diltiazem/verapamil, or digoxin, plus long-term anticoagulation (warfarin or a DOAC such as apixaban/rivaroxaban) guided by CHA2DS2-VASc. Rhythm control and cardioversion are no longer pursued by definition. AV node ablation with pacemaker placement is an option when rate control fails.",
+        "riskFactors": "Advanced or longstanding AFib, older age, significant structural heart disease, heart failure, and prior failed rhythm-control attempts."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "Permanent AFib",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Chronic AFib",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Chronic Atrial Fibrillation",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "atrial-fibrillation",
+        "persistent-atrial-fibrillation",
+        "apixaban",
+        "warfarin",
+        "cha2ds2-vasc"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA"
+    },
+    {
+      "key": "persistent-atrial-fibrillation",
+      "type": "CONDITION",
+      "name": "Persistent Atrial Fibrillation",
+      "shortExplanation": "Atrial fibrillation that lasts longer than 7 days and does not stop on its own, requiring medication or cardioversion to restore sinus rhythm. It reflects more established atrial remodeling than the paroxysmal form.",
+      "sections": {
+        "presentation": "Sustained irregularly irregular rhythm lasting more than 7 days. Symptoms range from palpitations, fatigue, and exertional breathlessness to few or no symptoms. Does not self-terminate; conversion requires pharmacologic or electrical cardioversion.",
+        "typicalTreatments": "Rate control (beta blocker, diltiazem) plus a rhythm-control decision: antiarrhythmic drugs, elective synchronized cardioversion (with adequate anticoagulation or a TEE to exclude atrial thrombus beforehand), or ablation. Anticoagulation per CHA2DS2-VASc. 'Longstanding persistent' AFib refers to continuous AFib for more than 12 months when a rhythm-control strategy is still being pursued.",
+        "riskFactors": "Longer duration of AFib, hypertension, heart failure, valvular disease, obesity, sleep apnea, and atrial enlargement. Tends to evolve from paroxysmal AFib and can progress to permanent AFib."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "Persistent AFib",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Longstanding Persistent AFib",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "atrial-fibrillation",
+        "paroxysmal-atrial-fibrillation",
+        "permanent-atrial-fibrillation",
+        "synchronized-cardioversion",
+        "cha2ds2-vasc"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA"
+    },
+    {
       "key": "phenylephrine",
       "type": "MEDICATION",
       "name": "Phenylephrine",
@@ -11775,6 +13550,10 @@
         {
           "text": "HAP",
           "type": "ACRONYM"
+        },
+        {
+          "text": "PNA",
+          "type": "ACRONYM"
         }
       ],
       "related": [
@@ -11942,6 +13721,36 @@
       ],
       "pronunciation": "pohst-PAR-tum HEM-uh-rij",
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "postrenal-aki",
+      "type": "CONDITION",
+      "name": "Postrenal AKI",
+      "shortExplanation": "Acute kidney injury from obstruction of urine outflow anywhere from the tubules to the urethra. The distinguishing feature is that relieving the obstruction can rapidly restore function, so it must not be missed.",
+      "sections": {
+        "presentation": "Rising creatinine with decreased or fluctuating urine output; a distended bladder or high post-void residual on bladder scan points to lower-tract obstruction. Common causes include BPH, stones, tumors, and clots.",
+        "typicalTreatments": "Relieve the obstruction: bladder catheterization for outlet obstruction, or ureteral stent/nephrostomy for upper-tract blockage. Watch for post-obstructive diuresis afterward, with large urine output and electrolyte shifts requiring replacement.",
+        "riskFactors": "Benign prostatic hyperplasia, nephrolithiasis, pelvic or GU malignancy, neurogenic bladder, and blocked or clamped urinary catheters."
+      },
+      "tags": [
+        "Renal",
+        "Nephrology"
+      ],
+      "aliases": [
+        {
+          "text": "Obstructive uropathy",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "acute-kidney-injury",
+        "prerenal-aki",
+        "intrinsic-aki",
+        "bladder-scanner",
+        "indwelling-urinary-catheter",
+        "creatinine"
+      ],
+      "sourceCitation": "Source: StatPearls, AAFP"
     },
     {
       "key": "potassium",
@@ -12133,6 +13942,36 @@
         "moderate-sedation"
       ],
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "prerenal-aki",
+      "type": "CONDITION",
+      "name": "Prerenal AKI",
+      "shortExplanation": "Acute kidney injury from reduced blood flow to otherwise healthy kidneys - the most common and most reversible type. Distinguished from intrinsic AKI by intact tubular function that avidly conserves sodium and water.",
+      "sections": {
+        "presentation": "Rising BUN and creatinine, often oliguria, in the setting of hypovolemia, low cardiac output, or hypotension. Labs classically show BUN:creatinine ratio over 20:1, FENa under 1%, and urine sodium under 20 mEq/L, reflecting preserved tubular reabsorption.",
+        "typicalTreatments": "Restore perfusion: volume repletion for hypovolemia, hemodynamic support for low output, and stop nephrotoxins including NSAIDs, ACE inhibitors, and ARBs. Prompt correction usually reverses it before it progresses to acute tubular necrosis.",
+        "riskFactors": "Dehydration, hemorrhage, sepsis, heart failure, cirrhosis, and drugs that impair renal autoregulation (NSAIDs, ACE inhibitors, ARBs, diuretics)."
+      },
+      "tags": [
+        "Renal",
+        "Nephrology"
+      ],
+      "aliases": [
+        {
+          "text": "Prerenal azotemia",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "acute-kidney-injury",
+        "intrinsic-aki",
+        "postrenal-aki",
+        "bun",
+        "creatinine",
+        "hypovolemic-shock"
+      ],
+      "sourceCitation": "Source: StatPearls, AAFP"
     },
     {
       "key": "pressure-injury",
@@ -12352,6 +14191,14 @@
         {
           "text": "PE",
           "type": "ACRONYM"
+        },
+        {
+          "text": "VTE",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Venous Thromboembolism",
+          "type": "NICKNAME"
         }
       ],
       "pronunciation": "PUL-moh-nair-ee EM-boh-liz-um",
@@ -12702,6 +14549,46 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "rapid-acting-insulin",
+      "type": "MEDICATION",
+      "name": "Rapid-Acting Insulin (class)",
+      "shortExplanation": "The mealtime bolus insulins (lispro, aspart, glulisine) with the fastest onset and shortest duration. Their defining nursing rule: give with the meal and hold if the patient is not eating.",
+      "sections": {
+        "mechanism": "Insulin analogs modified to absorb quickly for prandial coverage. Onset is roughly 15 minutes, peak about 1 hour, and duration 3 to 5 hours - the quickest and shortest of all insulins.",
+        "sideEffects": "Injection-site reactions and weight gain.",
+        "adverseEffects": "Hypoglycemia, particularly early after the dose if the meal is delayed or missed; hypokalemia.",
+        "nursingImplications": "Dose right before eating and confirm the patient will eat. These are the analogs used in insulin pumps and correction (sliding-scale) dosing. Clear solutions; do not confuse with basal insulins.",
+        "commonBrandName": "Humalog (lispro), Novolog (aspart), Apidra (glulisine)"
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Pharmacology"
+      ],
+      "aliases": [
+        {
+          "text": "Bolus insulin",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Mealtime insulin",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Prandial insulin",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "insulin",
+        "insulin-lispro",
+        "insulin-aspart",
+        "short-acting-insulin",
+        "sliding-scale-insulin",
+        "hypoglycemia"
+      ],
+      "sourceCitation": "Source: DailyMed, StatPearls"
+    },
+    {
       "key": "rass-sedation-scale",
       "type": "ASSESSMENT_TOOL",
       "name": "RASS Sedation Scale",
@@ -12761,6 +14648,47 @@
         "social-determinants-of-health"
       ],
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "regular-insulin",
+      "type": "MEDICATION",
+      "name": "Regular Insulin",
+      "shortExplanation": "Short-acting human insulin and the only insulin that can be given IV, making it the workhorse for DKA drips and hyperkalemia. Its slower onset and longer tail than rapid-acting analogs mean it is dosed about 30 minutes before meals.",
+      "sections": {
+        "mechanism": "Human insulin that lowers glucose by driving cellular uptake, promoting glycogen synthesis, and suppressing hepatic glucose production. Given subcutaneously, onset is about 30 minutes, peak 2 to 3 hours, and duration 5 to 8 hours.",
+        "sideEffects": "Injection-site reactions and weight gain.",
+        "adverseEffects": "Hypoglycemia (risk greatest around the 2-3 hour peak) and hypokalemia, since insulin drives potassium into cells.",
+        "nursingImplications": "Give subcutaneously 30 minutes before meals; it is a clear solution. Only regular insulin may be given IV (DKA, hyperkalemia) - monitor glucose and potassium closely on a drip. When mixing with NPH, draw up the clear regular insulin first, then the cloudy NPH.",
+        "commonBrandName": "Humulin R, Novolin R"
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Pharmacology"
+      ],
+      "aliases": [
+        {
+          "text": "R",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Humulin R",
+          "type": "BRAND_NAME"
+        },
+        {
+          "text": "Novolin R",
+          "type": "BRAND_NAME"
+        }
+      ],
+      "related": [
+        "insulin",
+        "nph-insulin",
+        "short-acting-insulin",
+        "diabetic-ketoacidosis",
+        "hyperkalemia",
+        "hypoglycemia",
+        "sliding-scale-insulin"
+      ],
+      "sourceCitation": "Source: DailyMed, StatPearls"
     },
     {
       "key": "respiratory-acidosis",
@@ -12922,6 +14850,43 @@
       ],
       "pronunciation": "rye-FAX-ih-min",
       "sourceCitation": "Source: MedlinePlus, DailyMed"
+    },
+    {
+      "key": "right-sided-heart-failure",
+      "type": "CONDITION",
+      "name": "Right-Sided Heart Failure",
+      "shortExplanation": "Heart failure in which the right ventricle fails, causing blood to back up into the body. The hallmark is systemic congestion - peripheral edema, jugular venous distension, and hepatic congestion - most often triggered by left-sided failure or lung disease (cor pulmonale).",
+      "sections": {
+        "presentation": "Systemic venous congestion: dependent peripheral edema, jugular venous distension, hepatomegaly and right-upper-quadrant fullness, ascites, weight gain, and nausea/anorexia from gut congestion. Lungs are typically clear unless left-sided failure coexists.",
+        "typicalTreatments": "Diuretics to relieve systemic congestion, treatment of the underlying cause (left-sided heart failure, pulmonary hypertension, COPD, or acute PE), and optimization of volume status. Daily weights, intake/output, abdominal girth for ascites, and edema monitoring. When caused by chronic lung disease it is termed cor pulmonale; managing hypoxia and the lung disease is central.",
+        "riskFactors": "Left-sided heart failure (the most common cause), pulmonary hypertension, chronic lung disease (COPD), pulmonary embolism, and right ventricular infarction."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "Right Heart Failure",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Cor Pulmonale",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "RVF",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "heart-failure",
+        "left-sided-heart-failure",
+        "pulmonary-hypertension",
+        "chf-exacerbation",
+        "chronic-obstructive-pulmonary-disease"
+      ],
+      "sourceCitation": "Source: StatPearls, MedlinePlus"
     },
     {
       "key": "risperidone",
@@ -13588,6 +15553,38 @@
       "sourceCitation": "Source: DailyMed, StatPearls"
     },
     {
+      "key": "short-acting-insulin",
+      "type": "MEDICATION",
+      "name": "Short-Acting Insulin (class)",
+      "shortExplanation": "Regular human insulin - the class given about 30 minutes before meals and the only insulin that can be given IV. Its slower onset and longer tail set it apart from the rapid-acting analogs.",
+      "sections": {
+        "mechanism": "Unmodified human insulin for prandial coverage. Given subcutaneously, onset is about 30 minutes, peak 2 to 3 hours, and duration 5 to 8 hours.",
+        "sideEffects": "Injection-site reactions and weight gain.",
+        "adverseEffects": "Hypoglycemia around the 2-3 hour peak; hypokalemia.",
+        "nursingImplications": "Administer 30 minutes before meals. This is the class used IV for DKA drips and hyperkalemia - monitor glucose and potassium. Clear solution; may be mixed with NPH (clear before cloudy).",
+        "commonBrandName": "Humulin R, Novolin R"
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Pharmacology"
+      ],
+      "aliases": [
+        {
+          "text": "Regular insulin class",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "insulin",
+        "regular-insulin",
+        "rapid-acting-insulin",
+        "diabetic-ketoacidosis",
+        "hyperkalemia",
+        "hypoglycemia"
+      ],
+      "sourceCitation": "Source: DailyMed, StatPearls"
+    },
+    {
       "key": "simethicone",
       "type": "MEDICATION",
       "name": "Simethicone",
@@ -13924,6 +15921,107 @@
       ],
       "pronunciation": "SPYOO-tum culture",
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "stemi",
+      "type": "CONDITION",
+      "name": "ST-Elevation Myocardial Infarction (STEMI)",
+      "shortExplanation": "The most time-critical form of heart attack, caused by complete occlusion of a coronary artery and marked by ST-segment elevation on ECG. It requires emergent reperfusion, with a door-to-balloon goal of 90 minutes for primary PCI.",
+      "sections": {
+        "presentation": "Sudden, severe crushing chest pain or pressure, often radiating to the arm, jaw, or back, with diaphoresis, nausea, and dyspnea. ECG shows ST-segment elevation in contiguous leads (or a new left bundle branch block), and troponin rises. Women, older adults, and diabetics may have atypical or 'silent' presentations.",
+        "typicalTreatments": "Immediate cath lab activation for primary percutaneous coronary intervention (PCI); fibrinolytics if timely PCI is unavailable. Antiplatelet therapy (aspirin plus a P2Y12 inhibitor such as ticagrelor or clopidogrel), anticoagulation (heparin), and anti-ischemic measures (nitroglycerin, beta blocker when appropriate). High-intensity statin. Continuous telemetry for lethal arrhythmias; oxygen only if hypoxic.",
+        "riskFactors": "Coronary artery disease, hypertension, hyperlipidemia, diabetes, smoking, obesity, family history, and older age."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "ST-Elevation MI",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "ST Elevation Myocardial Infarction",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "acute-coronary-syndrome",
+        "nstemi",
+        "unstable-angina",
+        "stemi-protocol",
+        "percutaneous-coronary-intervention",
+        "troponin",
+        "chest-pain-protocol"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA/ACC"
+    },
+    {
+      "key": "stable-angina",
+      "type": "CONDITION",
+      "name": "Stable Angina",
+      "shortExplanation": "Predictable chest pain brought on by exertion or stress and relieved within minutes by rest or nitroglycerin, caused by fixed coronary narrowing. It is a chronic condition, not an acute coronary syndrome, and troponin stays normal.",
+      "sections": {
+        "presentation": "Substernal chest pressure or tightness triggered by a reproducible amount of exertion or emotional stress, lasting a few minutes and relieved by rest or sublingual nitroglycerin. The pattern is stable and predictable over time. ECG and troponin are typically normal at rest.",
+        "typicalTreatments": "Chronic management: sublingual nitroglycerin for acute episodes; beta blockers, calcium channel blockers, and long-acting nitrates for prevention; aspirin and high-intensity statin for secondary prevention. Aggressive risk-factor modification (blood pressure, lipids, diabetes, smoking cessation). Stress testing and, if indicated, coronary angiography with revascularization. Teach patients that a change to rest pain or worsening pattern signals unstable angina and warrants emergency care.",
+        "riskFactors": "Coronary artery disease, hypertension, hyperlipidemia, diabetes, smoking, sedentary lifestyle, obesity, and family history."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "Angina Pectoris",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Stable Angina Pectoris",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "acute-coronary-syndrome",
+        "unstable-angina",
+        "nitroglycerin",
+        "cardiac-stress-test",
+        "hyperlipidemia"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA/ACC"
+    },
+    {
+      "key": "status-asthmaticus",
+      "type": "CONDITION",
+      "name": "Status Asthmaticus",
+      "shortExplanation": "A severe asthma exacerbation that does not respond to initial bronchodilators and corticosteroids and threatens respiratory failure. It differs from a routine asthma attack by requiring escalated therapy and close monitoring for intubation.",
+      "sections": {
+        "presentation": "Severe, persistent dyspnea and wheezing that continue despite repeated albuterol; accessory-muscle use, inability to speak in full sentences, and low peak flow (often under 40% predicted). Ominous signs of impending respiratory failure: a 'silent chest' (no air movement), rising or normalizing PaCO2 with fatigue, drowsiness, and falling oxygen saturation.",
+        "typicalTreatments": "Continuous or frequent nebulized short-acting beta-agonists (albuterol) plus ipratropium, early systemic corticosteroids, and controlled oxygen to keep SpO2 above 90%. For refractory cases add IV magnesium sulfate, which can rapidly reverse bronchospasm and help avert intubation. Escalate to noninvasive ventilation (BiPAP) in selected patients or to intubation and mechanical ventilation for progressive failure; ventilate carefully given high air-trapping and pneumothorax risk. Avoid sedatives outside of intubation.",
+        "riskFactors": "Poorly controlled or undertreated asthma, prior ICU admission or intubation for asthma, frequent rescue-inhaler use, and recent respiratory infection or allergen/irritant exposure."
+      },
+      "tags": [
+        "Pulmonary",
+        "Emergency",
+        "Critical Care / ICU"
+      ],
+      "aliases": [
+        {
+          "text": "Severe Acute Asthma",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "asthma",
+        "pediatric-asthma-exacerbation",
+        "albuterol",
+        "ipratropium",
+        "magnesium-sulfate",
+        "methylprednisolone",
+        "bipap",
+        "acute-respiratory-failure"
+      ],
+      "sourceCitation": "Source: StatPearls, GINA"
     },
     {
       "key": "status-epilepticus",
@@ -14418,6 +16516,36 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "systemic-inflammatory-response-syndrome",
+      "type": "CONDITION",
+      "name": "Systemic Inflammatory Response Syndrome (SIRS)",
+      "shortExplanation": "A widespread inflammatory state defined by meeting 2 or more of four bedside criteria (temperature, heart rate, respiratory rate, WBC). Distinguished from sepsis in that SIRS can be triggered by non-infectious causes such as trauma, burns, pancreatitis, or surgery; sepsis is SIRS caused by infection.",
+      "sections": {
+        "presentation": "Two or more of the following: temperature above 38 C (100.4 F) or below 36 C (96.8 F); heart rate above 90 beats per minute; respiratory rate above 20 breaths per minute (or PaCO2 below 32 mmHg); and WBC above 12,000 or below 4,000 cells/mm3 or more than 10% immature (band) forms.",
+        "typicalTreatments": "Identify and treat the underlying cause. If infection is suspected, treat as sepsis - obtain cultures and lactate, give early broad-spectrum antibiotics and fluids per the sepsis bundle. Provide supportive care with fluids, oxygen, and source control, and reassess frequently for progression to sepsis or organ dysfunction.",
+        "riskFactors": "Infection, major trauma, burns, major surgery, acute pancreatitis, ischemia, and malignancy."
+      },
+      "tags": [
+        "Infectious Disease",
+        "Critical Care"
+      ],
+      "aliases": [
+        {
+          "text": "SIRS",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "sepsis",
+        "septic-shock",
+        "bacteremia",
+        "qsofa",
+        "sepsis-bundle",
+        "lactate"
+      ],
+      "sourceCitation": "Source: StatPearls"
+    },
+    {
       "key": "targeted-temperature-management",
       "type": "PROCEDURE",
       "name": "Targeted Temperature Management",
@@ -14598,6 +16726,73 @@
       ],
       "pronunciation": "thor-uh-sen-TEE-sis",
       "sourceCitation": "Source: StatPearls"
+    },
+    {
+      "key": "thrombocytopenia",
+      "type": "CONDITION",
+      "name": "Thrombocytopenia",
+      "shortExplanation": "A low platelet count (typically below 150,000/uL) that increases bleeding risk. An umbrella term with many causes - decreased production, increased destruction or consumption, or splenic sequestration - that guide management.",
+      "sections": {
+        "presentation": "Often asymptomatic if mild; petechiae, purpura, easy bruising, mucosal bleeding (gums, nose), and prolonged bleeding. With severe drops there is a risk of spontaneous or internal bleeding. CBC shows a low platelet count.",
+        "typicalTreatments": "Identify and treat the cause; hold or avoid agents that worsen bleeding. Platelet transfusion is used for severe thrombocytopenia or active bleeding, with important exceptions such as HIT and TTP where platelet transfusion is generally avoided. Institute bleeding precautions.",
+        "riskFactors": "Sepsis and DIC, chemotherapy and bone marrow suppression, medications (including heparin - see HIT), immune thrombocytopenia, liver disease with splenomegaly, alcohol, viral infections, and massive transfusion."
+      },
+      "tags": [
+        "Hematology"
+      ],
+      "aliases": [
+        {
+          "text": "Low platelets",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Low PLT",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "platelet-count",
+        "heparin-induced-thrombocytopenia",
+        "disseminated-intravascular-coagulation",
+        "complete-blood-count",
+        "packed-red-blood-cell-transfusion"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "thrombotic-stroke",
+      "type": "CONDITION",
+      "name": "Thrombotic Ischemic Stroke",
+      "shortExplanation": "An ischemic stroke caused by a clot forming directly on an atherosclerotic plaque within a brain-supplying artery. Distinguished by an often gradual or stuttering onset, frequent preceding TIAs, and antiplatelet-based secondary prevention.",
+      "sections": {
+        "presentation": "Focal neurologic deficits that may develop gradually or in a stepwise, stuttering fashion, sometimes noticed on awakening. Onset is often preceded by transient ischemic attacks (TIAs), and the patient usually has an atherosclerotic risk profile, frequently involving large vessels (carotid or vertebral arteries).",
+        "typicalTreatments": "Acute ischemic stroke care - thrombolysis if eligible and thrombectomy for large-vessel occlusion. Secondary prevention centers on antiplatelet therapy (aspirin, clopidogrel), a high-intensity statin, and control of blood pressure and diabetes. Carotid revascularization (endarterectomy or stenting) is considered for significant carotid stenosis.",
+        "riskFactors": "Atherosclerosis, hypertension, hyperlipidemia, diabetes, smoking, older age, and carotid artery stenosis."
+      },
+      "tags": [
+        "Neuro",
+        "Neurology"
+      ],
+      "aliases": [
+        {
+          "text": "Atherothrombotic stroke",
+          "type": "NICKNAME"
+        },
+        {
+          "text": "Large-vessel stroke",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "acute-ischemic-stroke",
+        "embolic-stroke",
+        "lacunar-stroke",
+        "transient-ischemic-attack",
+        "aspirin",
+        "clopidogrel",
+        "atorvastatin"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls, AHA"
     },
     {
       "key": "thyroid-storm",
@@ -14988,6 +17183,89 @@
       "sourceCitation": "Source: StatPearls"
     },
     {
+      "key": "type-1-diabetes",
+      "type": "CONDITION",
+      "name": "Type 1 Diabetes",
+      "shortExplanation": "Autoimmune destruction of pancreatic beta cells causing an absolute lack of insulin, so the patient depends on insulin for life and is prone to diabetic ketoacidosis. Distinct from type 2, which is driven by insulin resistance.",
+      "sections": {
+        "presentation": "Often abrupt onset in children or young adults with polyuria, polydipsia, and unintended weight loss; may first present in diabetic ketoacidosis (DKA). Little to no endogenous insulin.",
+        "typicalTreatments": "Lifelong insulin by basal-bolus (multiple daily injections) or pump; carbohydrate counting. Key nursing point that distinguishes it from type 2: never withhold basal insulin, even when the patient is NPO, because stopping insulin can precipitate DKA.",
+        "riskFactors": "Genetic predisposition (HLA associations), family history, and coexisting autoimmune disorders. Not caused by lifestyle or obesity."
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Endocrine"
+      ],
+      "aliases": [
+        {
+          "text": "T1DM",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "IDDM",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Juvenile diabetes",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "diabetes-mellitus",
+        "type-2-diabetes",
+        "diabetic-ketoacidosis",
+        "insulin",
+        "insulin-glargine",
+        "insulin-lispro",
+        "hemoglobin-a1c"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "type-2-diabetes",
+      "type": "CONDITION",
+      "name": "Type 2 Diabetes",
+      "shortExplanation": "Insulin resistance combined with a relative insulin deficiency, usually tied to obesity and metabolic syndrome. Unlike type 1, it often responds to lifestyle and oral agents before insulin is needed, and severe hyperglycemia tends toward HHS rather than DKA.",
+      "sections": {
+        "presentation": "Gradual, often asymptomatic onset; found on screening or with polyuria, polydipsia, fatigue, or recurrent infections. Frequently accompanied by hypertension, obesity, and dyslipidemia.",
+        "typicalTreatments": "Stepwise: lifestyle change, then metformin, then additional agents (GLP-1 agonists such as semaglutide, SGLT2 inhibitors such as empagliflozin), with insulin added as beta-cell function declines. A1c is trended to guide escalation.",
+        "riskFactors": "Obesity, physical inactivity, older age, family history, prior gestational diabetes, and certain ethnicities."
+      },
+      "tags": [
+        "Endocrine/Metabolic",
+        "Endocrine"
+      ],
+      "aliases": [
+        {
+          "text": "T2DM",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "DM2",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "NIDDM",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Adult-onset diabetes",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "diabetes-mellitus",
+        "type-1-diabetes",
+        "hyperosmolar-hyperglycemic-state",
+        "metformin",
+        "semaglutide",
+        "empagliflozin",
+        "insulin",
+        "hemoglobin-a1c"
+      ],
+      "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
       "key": "ulcerative-colitis",
       "type": "CONDITION",
       "name": "Ulcerative Colitis",
@@ -15015,6 +17293,41 @@
       ],
       "pronunciation": "UL-ser-uh-tiv koh-LY-tis",
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "unstable-angina",
+      "type": "CONDITION",
+      "name": "Unstable Angina",
+      "shortExplanation": "Cardiac chest pain that is new, worsening (crescendo), or occurs at rest, signaling an unstable coronary plaque. Unlike NSTEMI, troponin is NOT elevated, but it is treated as an acute coronary syndrome because it can progress to infarction.",
+      "sections": {
+        "presentation": "Angina that is new-onset, more frequent or severe than the patient's usual pattern, occurs at rest, or is no longer relieved by rest or nitroglycerin. ECG may show transient ST depression or T-wave changes or be normal. By definition, troponin is NOT elevated (no myocardial necrosis), which separates it from NSTEMI.",
+        "typicalTreatments": "Managed like NSTEMI without evidence of necrosis: aspirin plus a P2Y12 inhibitor, anticoagulation, nitroglycerin, beta blocker, and statin. Serial troponins and ECGs to detect evolution to NSTEMI. Risk stratification (HEART/TIMI) determines whether and when to pursue coronary angiography. Continuous telemetry and prompt reassessment of any recurrent pain.",
+        "riskFactors": "Established coronary artery disease, hypertension, hyperlipidemia, diabetes, smoking, and prior cardiac events."
+      },
+      "tags": [
+        "Cardiac / Telemetry",
+        "Cardiovascular"
+      ],
+      "aliases": [
+        {
+          "text": "UA",
+          "type": "ACRONYM"
+        },
+        {
+          "text": "Crescendo Angina",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "acute-coronary-syndrome",
+        "stable-angina",
+        "nstemi",
+        "stemi",
+        "troponin",
+        "heart-score",
+        "chest-pain-protocol"
+      ],
+      "sourceCitation": "Source: StatPearls, AHA/ACC"
     },
     {
       "key": "upper-endoscopy",
@@ -15343,6 +17656,38 @@
       "sourceCitation": "Source: MedlinePlus, StatPearls"
     },
     {
+      "key": "ventilator-associated-pneumonia",
+      "type": "CONDITION",
+      "name": "Ventilator-Associated Pneumonia (VAP)",
+      "shortExplanation": "Pneumonia arising more than 48 hours after endotracheal intubation. Distinguished by its strong link to the breathing tube, its high rate of resistant organisms, and a bundle of nursing measures aimed at prevention.",
+      "sections": {
+        "presentation": "New infiltrate plus new fever, leukocytosis, purulent tracheal secretions, worsening oxygenation or rising ventilator requirements developing after 48 hours of mechanical ventilation. Obtain lower respiratory (endotracheal aspirate) cultures before starting or changing antibiotics.",
+        "typicalTreatments": "Empiric regimen covering S. aureus and Pseudomonas/gram-negatives (antipseudomonal beta-lactam such as piperacillin-tazobactam), adding vancomycin or linezolid for MRSA and dual antipseudomonal coverage in high-risk patients; de-escalate by culture at ~48 hours, treat ~7 days. Prevention is central: the VAP bundle - elevate head of bed 30-45 degrees, daily sedation interruption and readiness-to-extubate assessment, oral care with chlorhexidine, and DVT/stress-ulcer prophylaxis.",
+        "riskFactors": "Prolonged mechanical ventilation, reintubation, supine positioning, heavy sedation, aspiration, and prior antibiotic exposure."
+      },
+      "tags": [
+        "Pulmonary",
+        "Critical Care / ICU",
+        "Infectious disease"
+      ],
+      "aliases": [
+        {
+          "text": "VAP",
+          "type": "ACRONYM"
+        }
+      ],
+      "related": [
+        "pneumonia",
+        "hospital-acquired-pneumonia",
+        "mechanical-ventilator",
+        "endotracheal-intubation",
+        "vancomycin",
+        "piperacillin-tazobactam",
+        "spontaneous-breathing-trial"
+      ],
+      "sourceCitation": "Source: IDSA/ATS 2016 Guidelines, StatPearls"
+    },
+    {
       "key": "ventricular-fibrillation",
       "type": "CONDITION",
       "name": "Ventricular Fibrillation",
@@ -15466,6 +17811,35 @@
       ],
       "pronunciation": "VIN-ka AL-ka-loyds",
       "sourceCitation": "Source: MedlinePlus, StatPearls"
+    },
+    {
+      "key": "viral-meningitis",
+      "type": "CONDITION",
+      "name": "Viral (Aseptic) Meningitis",
+      "shortExplanation": "Inflammation of the meninges caused by a virus, most often an enterovirus; the most common and usually self-limiting form of meningitis. Distinguished from bacterial meningitis by clearer CSF with lymphocytic predominance, normal glucose, and mainly supportive treatment.",
+      "sections": {
+        "presentation": "Headache, fever, neck stiffness, photophobia, malaise, and nausea - typically less severe and less rapidly progressive than bacterial meningitis. CSF shows a lymphocytic pleocytosis, normal glucose, and normal to mildly elevated protein, with a negative Gram stain and culture.",
+        "typicalTreatments": "Mainly supportive - fluids, analgesics and antipyretics, and rest. Empiric antibiotics (and acyclovir if HSV is suspected) are often started until bacterial meningitis is ruled out; acyclovir is used for herpes-related cases. The illness is usually self-limited with a good prognosis.",
+        "riskFactors": "Enteroviral exposure (the most common cause, peaking in summer and fall), young age, immunocompromise, and HSV, HIV, mumps, or arbovirus infection."
+      },
+      "tags": [
+        "Infectious Disease",
+        "Neuro"
+      ],
+      "aliases": [
+        {
+          "text": "Aseptic meningitis",
+          "type": "NICKNAME"
+        }
+      ],
+      "related": [
+        "bacterial-meningitis",
+        "encephalitis",
+        "lumbar-puncture",
+        "meninges",
+        "acyclovir"
+      ],
+      "sourceCitation": "Source: StatPearls, Merck Manual"
     },
     {
       "key": "viral-hepatitis",
