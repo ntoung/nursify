@@ -3,11 +3,11 @@ import CallKit
 import Foundation
 import Speech
 
-/// Real mic capture + on-device transcription for Capture (REQUIREMENTS.md
-/// "Capture" / "Privacy guardrail" - on-device transcription so the
-/// transcript stays local until it passes the on-device PHIScreener heuristic
-/// check and nurse review in CaptureView's draft step, before anything is
-/// sent to the backend).
+/// Real mic capture + on-device transcription for the Journal tab's New
+/// Entry composer (REQUIREMENTS.md "Capture" / "Privacy guardrail" -
+/// on-device transcription so the transcript stays local until it passes the
+/// on-device PHIScreener heuristic check and nurse review, before anything
+/// is sent to the backend).
 @MainActor
 final class SpeechCapture: NSObject, ObservableObject {
     enum CaptureError: LocalizedError {
@@ -42,7 +42,7 @@ final class SpeechCapture: NSObject, ObservableObject {
     @Published private(set) var isRecording = false
     @Published private(set) var liveTranscript = ""
     @Published var captureError: CaptureError?
-    /// Whether a phone/FaceTime call is currently active — CaptureView uses
+    /// Whether a phone/FaceTime call is currently active — NewEntryView uses
     /// this to disable the record button and explain why up front, rather
     /// than letting the nurse tap it and hit a bare "Session activation
     /// failed" with no context.

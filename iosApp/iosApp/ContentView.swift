@@ -1,9 +1,10 @@
 import SwiftUI
 
-/// Root view: shows Onboarding until completed, then the 4-tab structure
-/// (Home, Capture, Search, Charts — Home first/leftmost so it's the default
-/// tab TabView opens to, landing on level/badges/activity before the
-/// in-the-moment tools).
+/// Root view: shows Onboarding until completed, then the 3-tab structure
+/// (Home, Journal, Search — Home first/leftmost so it's the default tab
+/// TabView opens to, landing on level/badges/activity before the
+/// in-the-moment tools). Journal replaces what used to be separate
+/// Capture/Charts tabs — see JournalView.
 struct ContentView: View {
     @StateObject private var appState = AppState()
     @Environment(\.scenePhase) private var scenePhase
@@ -15,14 +16,11 @@ struct ContentView: View {
                     HomeView()
                         .tabItem { Label("Home", systemImage: "point.3.connected.trianglepath.dotted") }
 
-                    CaptureView()
-                        .tabItem { Label("Capture", systemImage: "mic.fill") }
+                    JournalView()
+                        .tabItem { Label("Journal", systemImage: "book.closed") }
 
                     SearchView()
                         .tabItem { Label("Search", systemImage: "magnifyingglass") }
-
-                    ChartsListView()
-                        .tabItem { Label("Charts", systemImage: "list.bullet.clipboard") }
                 }
                 .tint(Theme.Color.accentInk)
             } else {

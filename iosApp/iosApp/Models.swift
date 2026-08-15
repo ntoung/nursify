@@ -158,6 +158,11 @@ struct Note: Identifiable, Codable, Hashable {
     var phiFlagged: Bool
     var createdAt: Date
     var mentionedConcepts: [MentionedConcept]
+    /// Client-local only, never sent to the backend — links this note to a
+    /// LookupSession created in the same New Entry composer session, so the
+    /// Journal list can render them as one merged entry. Nil for notes
+    /// created without an accompanying chart lookup (the common case).
+    var entryGroupId: UUID?
 }
 
 // MARK: - Chart lookup (Feature B) — LookupSession is client-local only,
@@ -221,6 +226,8 @@ struct LookupSession: Identifiable, Codable, Hashable {
     var medications: [MedicationExplanation]
     var createdAt: Date
     var expiresAt: Date
+    /// See Note.entryGroupId — same purpose, same client-local-only scope.
+    var entryGroupId: UUID?
 }
 
 // MARK: - Onboarding / user profile

@@ -19,7 +19,7 @@ final class AppState: ObservableObject {
     @Published var searchHistory: [SearchHistoryEntry] = []
 
     /// Local ids of notes captured offline and still awaiting sync — drives the
-    /// "pending" indicator in the Capture list.
+    /// "pending" indicator in the Journal list.
     @Published private(set) var pendingNoteIds: Set<UUID> = []
 
     @Published var errorMessage: String?
@@ -30,7 +30,7 @@ final class AppState: ObservableObject {
     /// via Watch Connectivity." A FIFO queue rather than a single optional:
     /// a nurse can finish a second watch note before reviewing the first, and
     /// this way the second never silently overwrites/loses the first — each
-    /// is reviewed in turn. CaptureView pops the next one when it's ready.
+    /// is reviewed in turn. JournalView pops the next one when it's ready.
     @Published var pendingWatchDrafts: [String] = []
 
     /// Removes and returns the oldest queued watch note, if any.
@@ -148,7 +148,8 @@ final class AppState: ObservableObject {
             device: existing.device,
             phiFlagged: existing.phiFlagged,
             createdAt: existing.createdAt,
-            mentionedConcepts: serverMentions.isEmpty ? existing.mentionedConcepts : serverMentions
+            mentionedConcepts: serverMentions.isEmpty ? existing.mentionedConcepts : serverMentions,
+            entryGroupId: existing.entryGroupId
         )
         persistNotes()
     }
@@ -159,7 +160,7 @@ final class AppState: ObservableObject {
     }
 
     /// Loads persisted notes. The list starts empty on a fresh install — the
-    /// Capture tab shows an empty state until the user records their own note.
+    /// Journal tab shows an empty state until the user creates their own entry.
     private static func loadNotes() -> [Note] {
         guard let url = notesFileURL, FileManager.default.fileExists(atPath: url.path),
               let data = try? Data(contentsOf: url),
@@ -249,14 +250,15 @@ final class AppState: ObservableObject {
     // /chart-lookup. The resulting LookupSession stays device-local (PHI never
     // leaves the device — see SYSTEM_DESIGN.md "Chart lookup (Feature B)").
 
-    func performChartLookup(chiefComplaints: [String], medicationNames: [String]) -> LookupSession {
+    func performChartLookup(chiefComplaints: [String], medicationNames: [String], entryGroupId: UUID? = nil) -> LookupSession {
         let medications = library.chartLookup(chiefComplaints: chiefComplaints, medicationNames: medicationNames)
         let session = LookupSession(
             id: UUID(),
             chiefComplaints: chiefComplaints,
             medications: medications,
             createdAt: Date(),
-            expiresAt: Date().addingTimeInterval(60 * 60 * 24)
+            expiresAt: Date().addingTimeInterval(60 * 60 * 24),
+            entryGroupId: entryGroupId
         )
         lookupSessions.insert(session, at: 0)
         gamification.logChartLookupSessionCompleted()
@@ -271,7 +273,7 @@ final class AppState: ObservableObject {
         lookupSessions.removeAll { $0.id == session.id }
     }
 
-    /// Drops chart lookups past their 24-hour expiry, so the Charts list only
+    /// Drops chart lookups past their 24-hour expiry, so the Journal list only
     /// ever shows the current window (see the "deleted after 24 hours" copy).
     func purgeExpiredLookups() {
         lookupSessions.removeAll { $0.expiresAt <= Date() }
@@ -284,7 +286,7 @@ final class AppState: ObservableObject {
     // never depends on connectivity and never gets lost if the backend is
     // unreachable — see SyncQueue / flushOutbox.
 
-    func createNote(transcript: String, device: CaptureDevice, phiReviewed: Bool) async {
+    func createNote(transcript: String, device: CaptureDevice, phiReviewed: Bool, entryGroupId: UUID? = nil) async {
         let localId = UUID()
         let note = Note(
             id: localId,
@@ -292,7 +294,8 @@ final class AppState: ObservableObject {
             device: device,
             phiFlagged: false,
             createdAt: Date(),
-            mentionedConcepts: library.mentions(in: transcript)
+            mentionedConcepts: library.mentions(in: transcript),
+            entryGroupId: entryGroupId
         )
         notes.insert(note, at: 0)
         persistNotes()

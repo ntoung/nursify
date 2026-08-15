@@ -94,6 +94,52 @@ struct EducationalDisclaimerBanner: View {
     }
 }
 
+/// Flags on-device PHIScreener hits for review before saving a note —
+/// REQUIREMENTS.md "Privacy guardrail". Never auto-redacts; the nurse must
+/// explicitly acknowledge before the save action unlocks. Shared between any
+/// flow that collects free-text note content (see JournalView's New Entry
+/// composer).
+struct PHIWarningCard: View {
+    let findings: [PHIFinding]
+    @Binding var acknowledged: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                Text("Possible patient-identifying details found")
+                    .font(Theme.Font.heading(12.5))
+            }
+            .foregroundStyle(Theme.Color.warnInk)
+
+            VStack(alignment: .leading, spacing: 4) {
+                ForEach(findings) { finding in
+                    Text("\(finding.category): \u{201C}\(finding.matchedText)\u{201D}")
+                        .font(Theme.Font.body(12))
+                        .foregroundStyle(Theme.Color.warnInk)
+                }
+            }
+
+            Button {
+                acknowledged.toggle()
+            } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: acknowledged ? "checkmark.square.fill" : "square")
+                    Text("I've reviewed this and removed any PHI")
+                        .font(Theme.Font.body(12, weight: .semibold))
+                }
+            }
+            .buttonStyle(.plain)
+            .foregroundStyle(Theme.Color.warnInk)
+        }
+        .padding(.horizontal, 13)
+        .padding(.vertical, 10)
+        .background(Theme.Color.warnBackground)
+        .overlay(RoundedRectangle(cornerRadius: 14).stroke(Theme.Color.warnLine, lineWidth: 1))
+        .clipShape(RoundedRectangle(cornerRadius: 14))
+    }
+}
+
 struct PrimaryButton: View {
     let title: String
     let action: () -> Void
