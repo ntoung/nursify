@@ -45,8 +45,12 @@ struct ContentView: View {
         // usage" metric and the First Shift / daily-points signal — see
         // GAMIFICATION_ADR.md. Only fires on real transitions, not every
         // scenePhase change (`.inactive` is a transient mid-transition state
-        // on iOS, not a real foreground/background boundary).
+        // on iOS, not a real foreground/background boundary), and only once
+        // onboarding is complete — First Shift and its unlock dialog should
+        // show after the nurse taps Get Started, not mid-onboarding.
+        // completeOnboarding() logs the first one directly (see AppState).
         .onChange(of: scenePhase) { oldPhase, newPhase in
+            guard appState.hasCompletedOnboarding else { return }
             if newPhase == .active, oldPhase != .active {
                 appState.gamification.logAppForegrounded()
             } else if oldPhase == .active, newPhase != .active {

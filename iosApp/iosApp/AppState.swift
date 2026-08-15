@@ -177,6 +177,11 @@ final class AppState: ObservableObject {
             UserDefaults.standard.set(data, forKey: StorageKey.userProfile)
         }
         gamification.updateSpecialties(specialties)
+        // First real "session start" from a product standpoint — this is
+        // what should trigger First Shift, not any foreground that happens
+        // to occur mid-onboarding (ContentView suppresses those; see its
+        // scenePhase handler).
+        gamification.logAppForegrounded()
     }
 
     // MARK: - Network-backed loads
