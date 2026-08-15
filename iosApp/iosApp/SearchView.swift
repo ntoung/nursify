@@ -35,17 +35,23 @@ struct SearchView: View {
                                 TextField("Medications, procedures, conditions, TAVR...", text: $query)
                                     .font(Theme.Font.body(15, weight: .semibold))
                                     .focused($searchFieldFocused)
-                                if !query.isEmpty {
-                                    Button {
+                                // Always visible — with nothing typed, it's the
+                                // only way to dismiss the keyboard without
+                                // hitting Return, so it just resigns focus
+                                // instead of having nothing to clear.
+                                Button {
+                                    if query.isEmpty {
+                                        searchFieldFocused = false
+                                    } else {
                                         query = ""
                                         results = []
                                         searchFieldFocused = false
-                                    } label: {
-                                        Image(systemName: "xmark.circle.fill")
-                                            .foregroundStyle(Theme.Color.sub)
                                     }
-                                    .buttonStyle(.plain)
+                                } label: {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundStyle(Theme.Color.sub)
                                 }
+                                .buttonStyle(.plain)
                             }
                             .padding(13)
                             .background(Theme.Color.card)
@@ -96,6 +102,12 @@ struct SearchView: View {
                     .animation(.easeInOut(duration: 0.25), value: activeCategory)
                     .padding(24)
                 }
+                // Drag-to-dismiss (the keyboard follows the scroll like
+                // Messages/Mail), plus a plain tap anywhere else on screen —
+                // .simultaneous so it doesn't swallow taps meant for buttons/
+                // NavigationLinks underneath.
+                .scrollDismissesKeyboard(.interactively)
+                .simultaneousGesture(TapGesture().onEnded { searchFieldFocused = false })
             }
             .background(Theme.Color.background.ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
