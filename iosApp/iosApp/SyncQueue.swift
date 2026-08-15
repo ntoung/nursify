@@ -19,9 +19,6 @@ struct SyncQueue {
         /// already shown in the UI, so the server response can be reconciled
         /// back onto it.
         case createNote(localId: UUID, transcript: String, device: String, phiReviewed: Bool)
-        /// Record that a concept was viewed (search history). Low-stakes, and a
-        /// natural fit for the same replay path.
-        case recordView(conceptId: UUID)
     }
 
     struct PendingOperation: Codable, Identifiable, Equatable {
@@ -51,14 +48,6 @@ struct SyncQueue {
     }
 
     mutating func enqueue(_ operation: Operation) {
-        // Collapse repeat views of the same concept so browsing offline can't
-        // grow the queue without bound; the newest view wins.
-        if case .recordView(let conceptId) = operation {
-            operations.removeAll {
-                if case .recordView(conceptId) = $0.operation { return true }
-                return false
-            }
-        }
         operations.append(PendingOperation(id: UUID(), operation: operation, queuedAt: Date()))
         persist()
     }
