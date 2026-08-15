@@ -114,7 +114,7 @@ struct JournalView: View {
                 .background(Theme.Color.background)
             }
             .sheet(isPresented: $isPresentingNewEntry, onDismiss: { openNextWatchDraftIfAvailable() }) {
-                NewEntryView(prefillNote: prefillNoteText, draftDevice: prefillDevice)
+                NewEntryView(prefillNote: prefillNoteText, draftDevice: prefillDevice, speech: appState.speechCapture)
             }
             .alert(
                 "Couldn't save note",
@@ -297,7 +297,9 @@ private struct JournalRow: View {
 struct NewEntryView: View {
     @EnvironmentObject private var appState: AppState
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var speech = SpeechCapture()
+    // Shared instance from AppState (see its speechCapture doc comment) —
+    // not a fresh SpeechCapture per composer session.
+    @ObservedObject var speech: SpeechCapture
 
     @State private var noteText: String
     @State private var complaints: [String] = []
@@ -319,9 +321,10 @@ struct NewEntryView: View {
 
     private let quickComplaints = ["COPD flare", "Post-op pain", "Sepsis workup", "Chest pain"]
 
-    init(prefillNote: String = "", draftDevice: CaptureDevice = .phone) {
+    init(prefillNote: String = "", draftDevice: CaptureDevice = .phone, speech: SpeechCapture) {
         _noteText = State(initialValue: prefillNote)
         self.draftDevice = draftDevice
+        self.speech = speech
     }
 
     private var hasNote: Bool { !noteText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }

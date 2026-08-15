@@ -49,6 +49,14 @@ final class AppState: ObservableObject {
     /// local, never synced.
     let gamification: GamificationEngine
 
+    /// One shared instance for the app's lifetime, not recreated per
+    /// composer session. A freshly-constructed CXCallObserver's synchronous
+    /// `.calls` read at that exact instant isn't reliable — it can report a
+    /// phantom active call — so creating a new SpeechCapture (and thus a new
+    /// CXCallObserver) every time New Entry opened was intermittently
+    /// showing the mic as call-disabled/gray with no real call in progress.
+    let speechCapture: SpeechCapture
+
     /// Durable outbox of mutations made offline, replayed when the backend is
     /// reachable again. See SyncQueue and flushOutbox().
     private var syncQueue = SyncQueue()
@@ -72,10 +80,16 @@ final class AppState: ObservableObject {
         static let userProfile = "userProfile"
     }
 
-    init(api: APIClient = .shared, library: ConceptLibrary = .shared, gamification: GamificationEngine? = nil) {
+    init(
+        api: APIClient = .shared,
+        library: ConceptLibrary = .shared,
+        gamification: GamificationEngine? = nil,
+        speechCapture: SpeechCapture? = nil
+    ) {
         self.api = api
         self.library = library
         self.gamification = gamification ?? GamificationEngine(library: library)
+        self.speechCapture = speechCapture ?? SpeechCapture()
         hasCompletedOnboarding = UserDefaults.standard.bool(forKey: StorageKey.hasCompletedOnboarding)
         if let data = UserDefaults.standard.data(forKey: StorageKey.userProfile),
            let profile = try? JSONDecoder().decode(UserProfile.self, from: data) {
