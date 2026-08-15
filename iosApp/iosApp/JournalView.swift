@@ -491,6 +491,12 @@ struct NewEntryView: View {
             guard speech.isRecording else { return }
             noteText = newValue
         }
+        .onChange(of: speech.isRecording) { wasRecording, nowRecording in
+            // When a recording ends, snap obvious ASR near-misses to real
+            // medical terms before the nurse reviews the draft.
+            guard wasRecording, !nowRecording, !noteText.isEmpty else { return }
+            noteText = ConceptLibrary.shared.correctMedicalTerms(in: noteText)
+        }
         .onChange(of: noteText) { _, newValue in
             let newFindings = PHIScreener.scan(newValue)
             if newFindings != phiFindings {

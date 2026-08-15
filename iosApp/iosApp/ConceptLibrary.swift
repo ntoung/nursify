@@ -36,18 +36,112 @@ final class ConceptLibrary: ObservableObject {
         self.byId = Dictionary(loaded.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
     }
 
-    /// Every concept name + alias (brand names, abbreviations, nicknames) —
-    /// fed to `SFSpeechRecognitionRequest.contextualStrings` so on-device
-    /// transcription is biased toward correctly recognizing medical terms it
-    /// has no other reason to know, instead of "correcting" a rare word
-    /// toward a common one that merely sounds similar (e.g. the brand name
-    /// "Fioricet" getting heard as "fire"). See SpeechCapture.
-    ///
-    /// Deduplicated: many aliases (e.g. "EKG") repeat verbatim across
-    /// concepts, and Apple's docs don't specify how repeats affect biasing,
-    /// so there's no reason to hand the recognizer the same string twice.
+    /// A bounded, high-value slice of the corpus for
+    /// `SFSpeechRecognitionRequest.contextualStrings`. That API is meant for a
+    /// modest set of phrases, not a full ~1,300-term corpus, so we prioritize
+    /// the terms the recognizer is least likely to know on its own - brand
+    /// names first, then drug names, then abbreviations/nicknames and other
+    /// hard, pronunciation-bearing terms - deduplicate, and cap the list. The
+    /// long tail is handled after recording by `correctMedicalTerms(in:)`.
     var contextualStrings: [String] {
-        Array(Set(concepts.flatMap { [$0.name] + $0.aliases.map(\.text) }))
+        var result: [String] = []
+        var seen = Set<String>()
+        func add(_ s: String) {
+            let t = s.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !t.isEmpty, seen.insert(t.lowercased()).inserted else { return }
+            result.append(t)
+        }
+        for c in concepts { for a in c.aliases where a.type == .brandName { add(a.text) } }
+        for c in concepts where c.type == .medication { add(c.name) }
+        for c in concepts { for a in c.aliases where a.type == .acronym || a.type == .nickname { add(a.text) } }
+        for c in concepts where c.type != .medication && c.pronunciation != nil { add(c.name) }
+        return Array(result.prefix(Self.maxContextualStrings))
+    }
+
+    private static let maxContextualStrings = 500
+
+    // MARK: - Post-recording correction
+
+    /// Distinctive single-word terms (drug/brand/abbrev names and other hard,
+    /// pronunciation-bearing words, length >= 5) used to snap ASR near-misses
+    /// back to real terms. Short/common words are excluded so ordinary English
+    /// is left alone.
+    private var distinctiveTerms: [String] {
+        var seen = Set<String>()
+        var out: [String] = []
+        func add(_ s: String) {
+            guard !s.contains(" "), s.count >= 5, seen.insert(s.lowercased()).inserted else { return }
+            out.append(s)
+        }
+        for c in concepts {
+            if c.type == .medication || c.pronunciation != nil { add(c.name) }
+            for a in c.aliases { add(a.text) }
+        }
+        return out
+    }
+
+    /// Nudges obvious transcription near-misses toward real medical terms once a
+    /// recording finishes - a backstop for the long tail that can't fit in
+    /// `contextualStrings`. Deliberately conservative: only single tokens of
+    /// length >= 5 within a small, length-scaled edit distance of a distinctive
+    /// term (and sharing its first letter) are replaced, so common English is
+    /// untouched. The nurse still reviews the transcript before saving.
+    func correctMedicalTerms(in text: String) -> String {
+        guard !text.isEmpty else { return text }
+        let targets = distinctiveTerms
+        guard !targets.isEmpty,
+              let regex = try? NSRegularExpression(pattern: "[A-Za-z][A-Za-z'’-]{4,}")
+        else { return text }
+
+        let ns = text as NSString
+        var result = ""
+        var last = 0
+        regex.enumerateMatches(in: text, range: NSRange(location: 0, length: ns.length)) { match, _, _ in
+            guard let match else { return }
+            let range = match.range
+            result += ns.substring(with: NSRange(location: last, length: range.location - last))
+            let token = ns.substring(with: range)
+            result += Self.bestCorrection(for: token, targets: targets) ?? token
+            last = range.location + range.length
+        }
+        result += ns.substring(from: last)
+        return result
+    }
+
+    private static func bestCorrection(for token: String, targets: [String]) -> String? {
+        let lower = token.lowercased()
+        let n = lower.count
+        let maxDist = n <= 6 ? 1 : 2
+        var best: String?
+        var bestDist = maxDist + 1
+        for target in targets {
+            let t = target.lowercased()
+            if t == lower { return nil }              // token is already a real term
+            if abs(t.count - n) > maxDist { continue }
+            if t.first != lower.first { continue }    // prefilter; also guards against wild swaps
+            let d = levenshtein(lower, t, cap: maxDist)
+            if d < bestDist { bestDist = d; best = target }
+        }
+        return bestDist <= maxDist ? best : nil
+    }
+
+    private static func levenshtein(_ a: String, _ b: String, cap: Int) -> Int {
+        let a = Array(a), b = Array(b)
+        let n = a.count, m = b.count
+        if abs(n - m) > cap { return cap + 1 }
+        var prev = Array(0...m)
+        for i in 1...n {
+            var cur = [i] + Array(repeating: 0, count: m)
+            var rowMin = i
+            for j in 1...m {
+                let cost = a[i - 1] == b[j - 1] ? 0 : 1
+                cur[j] = Swift.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost)
+                rowMin = Swift.min(rowMin, cur[j])
+            }
+            if rowMin > cap { return cap + 1 }
+            prev = cur
+        }
+        return prev[m]
     }
 
     // MARK: - Offline reads (mirror the backend's query semantics)
