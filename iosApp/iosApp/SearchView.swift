@@ -48,7 +48,7 @@ struct SearchView: View {
                                 }
                             }
                             .padding(13)
-                            .background(SwiftUI.Color.white)
+                            .background(Theme.Color.card)
                             .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1.5))
                             .clipShape(RoundedRectangle(cornerRadius: 18))
 
@@ -56,7 +56,7 @@ struct SearchView: View {
                                 Image(systemName: "clock")
                                     .foregroundStyle(Theme.Color.sub)
                                     .frame(width: 48, height: 48)
-                                    .background(SwiftUI.Color.white)
+                                    .background(Theme.Color.card)
                                     .overlay(Circle().stroke(Theme.Color.line, lineWidth: 1.5))
                                     .clipShape(Circle())
                             }
@@ -117,7 +117,7 @@ struct SearchView: View {
                 }
             }
         }
-        .background(SwiftUI.Color.white)
+        .background(Theme.Color.card)
         .clipShape(RoundedRectangle(cornerRadius: 18))
         .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1))
         .padding(.top, 10)
@@ -249,6 +249,12 @@ struct SearchHistoryView: View {
                             .foregroundStyle(Theme.Color.sub)
                     }
                 }
+                // List rows keep their own opaque system cell background
+                // even with .scrollContentBackground(.hidden) on the List
+                // itself — without clearing it per-row, rows render with
+                // the system default (black in Dark Mode) instead of the
+                // screen's actual background showing through.
+                .listRowBackground(SwiftUI.Color.clear)
             }
         }
         .overlay {

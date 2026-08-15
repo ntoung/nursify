@@ -69,7 +69,7 @@ private struct UnlockDialogView: View {
             }
             .padding(28)
             .frame(maxWidth: 320)
-            .background(SwiftUI.Color.white)
+            .background(Theme.Color.card)
             .clipShape(RoundedRectangle(cornerRadius: 28))
             .shadow(color: .black.opacity(0.2), radius: 24, y: 10)
             .padding(.horizontal, 32)

@@ -11,7 +11,7 @@ struct SelectableChip: View {
             .font(Theme.Font.body(14.5, weight: .bold))
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
-            .background(isSelected ? Theme.Color.accent : SwiftUI.Color.white)
+            .background(isSelected ? Theme.Color.accent : Theme.Color.card)
             .foregroundStyle(isSelected ? .white : Theme.Color.ink)
             .overlay(
                 Capsule().stroke(isSelected ? Theme.Color.accent : Theme.Color.line, lineWidth: 1.5)
@@ -89,7 +89,7 @@ struct EducationalDisclaimerBanner: View {
         .padding(.horizontal, 13)
         .padding(.vertical, 10)
         .background(Theme.Color.accentSoftBackground)
-        .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color(hex: "CFE6DB"), lineWidth: 1))
+        .overlay(RoundedRectangle(cornerRadius: 14).stroke(Theme.Color.accentBorder, lineWidth: 1))
         .clipShape(RoundedRectangle(cornerRadius: 14))
     }
 }

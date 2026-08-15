@@ -217,6 +217,12 @@ struct JournalView: View {
                 .tint(.red)
             }
         }
+        // List rows keep their own opaque system cell background even with
+        // .scrollContentBackground(.hidden) on the List itself — without
+        // clearing it per-row, rows render with the system default (black
+        // in Dark Mode) instead of the screen's actual background showing
+        // through.
+        .listRowBackground(SwiftUI.Color.clear)
     }
 
     /// Opens New Entry pre-filled with the oldest queued watch note, unless
@@ -376,9 +382,9 @@ struct NewEntryView: View {
                                     .font(Theme.Font.body(14, weight: .bold))
                                     .padding(.horizontal, 14)
                                     .padding(.vertical, 9)
-                                    .background(SwiftUI.Color.white)
+                                    .background(Theme.Color.card)
                                     .foregroundStyle(Theme.Color.accentInk)
-                                    .overlay(Capsule().stroke(Color(hex: "CFE6DB"), lineWidth: 1.5))
+                                    .overlay(Capsule().stroke(Theme.Color.accentBorder, lineWidth: 1.5))
                                     .clipShape(Capsule())
                             }
                             .buttonStyle(.plain)
@@ -586,7 +592,7 @@ struct NewEntryView: View {
                         .foregroundStyle(Theme.Color.accentInk)
                     }
                     .padding(13)
-                    .background(SwiftUI.Color.white)
+                    .background(Theme.Color.card)
                     .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.accent, lineWidth: 1.5))
                     .clipShape(RoundedRectangle(cornerRadius: 18))
 
@@ -615,7 +621,7 @@ struct NewEntryView: View {
                                 }
                             }
                         }
-                        .background(SwiftUI.Color.white)
+                        .background(Theme.Color.card)
                         .clipShape(RoundedRectangle(cornerRadius: 16))
                         .overlay(RoundedRectangle(cornerRadius: 16).stroke(Theme.Color.line, lineWidth: 1))
                     }
@@ -633,7 +639,7 @@ struct NewEntryView: View {
                     .foregroundStyle(Theme.Color.sub)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 9)
-                    .overlay(Capsule().stroke(Color(hex: "C9BFAD"), style: StrokeStyle(lineWidth: 1.5, dash: [4, 3])))
+                    .overlay(Capsule().stroke(Theme.Color.dashedBorder, style: StrokeStyle(lineWidth: 1.5, dash: [4, 3])))
                     .clipShape(Capsule())
                 }
                 .buttonStyle(.plain)
@@ -653,7 +659,7 @@ struct NewEntryView: View {
                         }
                         .padding(.horizontal, 14)
                         .padding(.vertical, 9)
-                        .background(SwiftUI.Color.white)
+                        .background(Theme.Color.card)
                         .overlay(Capsule().stroke(Theme.Color.line, lineWidth: 1.5))
                         .clipShape(Capsule())
                     }
@@ -810,7 +816,7 @@ struct JournalEntryDetailView: View {
         }
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(SwiftUI.Color.white)
+        .background(Theme.Color.card)
         .overlay(Rectangle().frame(width: 4).foregroundStyle(Theme.Color.accent), alignment: .leading)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .plainRow()
@@ -835,7 +841,7 @@ struct JournalEntryDetailView: View {
             .background(Theme.Color.card)
             .overlay(
                 RoundedRectangle(cornerRadius: Theme.Radius.card)
-                    .stroke(Color(hex: "C9BFAD"), style: StrokeStyle(lineWidth: 1.5, dash: [5, 4]))
+                    .stroke(Theme.Color.dashedBorder, style: StrokeStyle(lineWidth: 1.5, dash: [5, 4]))
             )
             .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.card))
         }
@@ -887,7 +893,7 @@ private struct AddMedicationView: View {
                         .autocorrectionDisabled()
                 }
                 .padding(13)
-                .background(SwiftUI.Color.white)
+                .background(Theme.Color.card)
                 .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1.5))
                 .clipShape(RoundedRectangle(cornerRadius: 18))
                 .padding(24)
@@ -905,20 +911,25 @@ private struct AddMedicationView: View {
                         .padding(.horizontal, 24)
                     Spacer()
                 } else {
-                    List(suggestions) { suggestion in
-                        Button {
-                            appState.addMedication(suggestion.name, to: session)
-                            dismiss()
-                        } label: {
-                            HStack {
-                                Text(suggestion.matchedAlias ?? suggestion.name)
-                                    .font(Theme.Font.body(14.5, weight: .semibold))
-                                    .foregroundStyle(Theme.Color.ink)
-                                Spacer()
-                                Text(suggestion.type.displayName)
-                                    .font(Theme.Font.body(11, weight: .bold))
-                                    .foregroundStyle(Theme.Color.sub)
+                    List {
+                        ForEach(suggestions) { suggestion in
+                            Button {
+                                appState.addMedication(suggestion.name, to: session)
+                                dismiss()
+                            } label: {
+                                HStack {
+                                    Text(suggestion.matchedAlias ?? suggestion.name)
+                                        .font(Theme.Font.body(14.5, weight: .semibold))
+                                        .foregroundStyle(Theme.Color.ink)
+                                    Spacer()
+                                    Text(suggestion.type.displayName)
+                                        .font(Theme.Font.body(11, weight: .bold))
+                                        .foregroundStyle(Theme.Color.sub)
+                                }
                             }
+                            // See journalRow's listRowBackground comment —
+                            // same system-default-row-background-in-Dark-Mode fix.
+                            .listRowBackground(SwiftUI.Color.clear)
                         }
                     }
                     .listStyle(.plain)

@@ -106,7 +106,7 @@ struct ConceptDetailView: View {
                                 .font(Theme.Font.heading(12))
                                 .padding(.horizontal, 11)
                                 .padding(.vertical, 5)
-                                .background(Color(hex: "F1ECE1"))
+                                .background(Theme.Color.tagBackground)
                                 .foregroundStyle(Theme.Color.sub)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                         }
@@ -223,7 +223,7 @@ private struct RelatedConceptChip: View {
             .font(Theme.Font.body(13.5, weight: .bold))
             .padding(.horizontal, 14)
             .padding(.vertical, 9)
-            .background(SwiftUI.Color.white)
+            .background(Theme.Color.card)
             .foregroundStyle(Theme.Color.accentInk)
             .overlay(Capsule().stroke(Theme.Color.line, lineWidth: 1.5))
             .clipShape(Capsule())

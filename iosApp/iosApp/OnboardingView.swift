@@ -237,7 +237,7 @@ struct OnboardingView: View {
                         }
                     }
                     .padding(13)
-                    .background(SwiftUI.Color.white)
+                    .background(Theme.Color.card)
                     .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1.5))
                     .clipShape(RoundedRectangle(cornerRadius: 18))
                     .padding(.bottom, 4)
