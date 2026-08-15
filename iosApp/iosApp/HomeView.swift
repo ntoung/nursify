@@ -104,7 +104,7 @@ struct HomeView: View {
                 summaryStat("Concepts viewed", value: summary.conceptsViewed)
                 summaryStat("Searches", value: summary.searchesPerformed)
                 summaryStat("Notes captured", value: summary.notesCaptured)
-                summaryStat("Chart lookups", value: summary.chartLookupSessions)
+                summaryStat("Medication lookups", value: summary.chartLookupSessions)
                 summaryStat("Active time", value: summary.activeMinutes, display: activeTimeLabel(summary.activeMinutes))
             }
         }

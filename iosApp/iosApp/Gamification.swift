@@ -220,7 +220,7 @@ enum BadgeCatalog {
         ),
         BadgeDefinition(
             id: "making-rounds", name: "Making Rounds",
-            description: "Completed 10 chart-lookup sessions.",
+            description: "Completed 10 medication lookups.",
             symbolName: "figure.walk", accentColorHex: "4C6E9C", pointBonus: 50,
             isUnlocked: { $0.chartLookupSessions >= 10 }
         ),
