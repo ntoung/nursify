@@ -123,10 +123,14 @@ data class SuggestionDto(
 )
 
 @Serializable
-data class SearchHistoryDto(
+data class ReportCreateRequest(
+    val message: String,
+    val context: String? = null
+)
+
+@Serializable
+data class ReportDto(
     val id: String,
-    val conceptId: String,
-    val conceptName: String,
-    val type: ConceptType,
-    val viewedAt: Long // epoch millis — see NoteDto.createdAt comment
+    val message: String,
+    val createdAt: Long // epoch millis — see NoteDto.createdAt comment
 )

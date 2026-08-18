@@ -6,6 +6,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject private var appState: AppState
     @State private var summaryPeriod: SummaryPeriod = .week
+    @State private var selectedBadge: BadgeDefinition?
 
     private var greeting: String {
         let hour = Calendar.current.component(.hour, from: Date())
@@ -136,10 +137,90 @@ struct HomeView: View {
             SectionLabel(text: "Badges")
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 84), spacing: 14)], spacing: 16) {
                 ForEach(BadgeCatalog.all) { badge in
-                    BadgeMedallionView(badge: badge, isUnlocked: appState.gamification.unlockedBadgeIds.contains(badge.id))
+                    Button {
+                        selectedBadge = badge
+                    } label: {
+                        BadgeMedallionView(badge: badge, isUnlocked: appState.gamification.unlockedBadgeIds.contains(badge.id))
+                    }
+                    .buttonStyle(.plain)
                 }
             }
         }
+        .sheet(item: $selectedBadge) { badge in
+            BadgeDetailSheet(
+                badge: badge,
+                isUnlocked: appState.gamification.unlockedBadgeIds.contains(badge.id),
+                progress: badge.progress(appState.gamification.snapshot)
+            )
+            .presentationDetents([.height(360)])
+            .presentationDragIndicator(.visible)
+            .presentationBackground(Theme.Color.background)
+        }
+    }
+}
+
+/// Tapping a badge opens this - shows the badge, what it takes to earn, and
+/// current progress toward it (a filled progress bar + "current / target").
+private struct BadgeDetailSheet: View {
+    let badge: BadgeDefinition
+    let isUnlocked: Bool
+    let progress: BadgeProgress
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        VStack(spacing: 16) {
+            ZStack {
+                Circle()
+                    .fill(isUnlocked ? badge.accentColor.opacity(0.15) : Theme.Color.line)
+                    .frame(width: 92, height: 92)
+                Image(systemName: isUnlocked ? badge.symbolName : "lock.fill")
+                    .font(.system(size: isUnlocked ? 38 : 26, weight: .bold))
+                    .foregroundStyle(isUnlocked ? badge.accentColor : Theme.Color.sub.opacity(0.6))
+            }
+            .padding(.top, 12)
+
+            VStack(spacing: 6) {
+                Text(badge.name)
+                    .font(Theme.Font.heading(22, weight: .bold))
+                    .foregroundStyle(Theme.Color.ink)
+                Text(badge.description)
+                    .font(Theme.Font.body(14))
+                    .foregroundStyle(Theme.Color.sub)
+                    .multilineTextAlignment(.center)
+            }
+
+            VStack(spacing: 8) {
+                HStack {
+                    Text(isUnlocked ? "Complete" : "Progress")
+                        .font(Theme.Font.body(13, weight: .semibold))
+                        .foregroundStyle(Theme.Color.sub)
+                    Spacer()
+                    Text(progress.label)
+                        .font(Theme.Font.body(13, weight: .bold))
+                        .foregroundStyle(isUnlocked ? badge.accentColor : Theme.Color.ink)
+                }
+                GeometryReader { geo in
+                    ZStack(alignment: .leading) {
+                        Capsule().fill(Theme.Color.line).frame(height: 9)
+                        Capsule().fill(badge.accentColor)
+                            .frame(width: max(9, geo.size.width * progress.fraction), height: 9)
+                    }
+                }
+                .frame(height: 9)
+            }
+
+            HStack(spacing: 6) {
+                Image(systemName: isUnlocked ? "checkmark.seal.fill" : "sparkles")
+                Text(isUnlocked ? "Earned +\(badge.pointBonus) points" : "Worth +\(badge.pointBonus) points")
+            }
+            .font(Theme.Font.body(13, weight: .semibold))
+            .foregroundStyle(isUnlocked ? badge.accentColor : Theme.Color.sub)
+
+            Spacer(minLength: 0)
+
+            PrimaryButton(title: "Done") { dismiss() }
+        }
+        .padding(24)
     }
 }
 

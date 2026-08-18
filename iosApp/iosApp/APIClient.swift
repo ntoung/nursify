@@ -142,28 +142,25 @@ final class APIClient {
         return try await get(components.url!)
     }
 
-    // MARK: - Search history (synced — general medical-knowledge browsing,
-    // not patient-encounter data, so unlike chart lookup this is fine to sync)
+    // MARK: - Problem reports (shake-to-report)
 
-    func searchHistory() async throws -> [SearchHistoryEntry] {
-        try await get(baseURL.appendingPathComponent("search-history"))
+    private struct ReportCreateBody: Encodable {
+        let message: String
+        let context: String?
+    }
+
+    struct ReportResponse: Decodable {
+        let id: UUID
+        let message: String
+        let createdAt: Date
     }
 
     @discardableResult
-    func recordSearchHistory(conceptId: UUID) async throws -> SearchHistoryEntry {
-        try await post(baseURL.appendingPathComponent("search-history/\(conceptId.uuidString)"), body: EmptyBody())
-    }
-
-    func clearSearchHistory() async throws {
-        var request = URLRequest(url: baseURL.appendingPathComponent("search-history"))
-        request.httpMethod = "DELETE"
-        let (_, response) = try await session.data(for: request)
-        try validate(response)
+    func submitReport(message: String, context: String? = nil) async throws -> ReportResponse {
+        try await post(baseURL.appendingPathComponent("reports"), body: ReportCreateBody(message: message, context: context))
     }
 
     // MARK: - Low-level helpers
-
-    private struct EmptyBody: Encodable {}
 
     private func get<T: Decodable>(_ url: URL) async throws -> T {
         let (data, response) = try await session.data(from: url)

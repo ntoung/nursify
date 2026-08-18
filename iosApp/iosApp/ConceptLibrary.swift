@@ -146,22 +146,117 @@ final class ConceptLibrary: ObservableObject {
 
     // MARK: - Offline reads (mirror the backend's query semantics)
 
-    /// Case-insensitive substring match on the concept name or any of its
-    /// aliases — the same matching the backend's `search()` performs, so
-    /// medical abbreviations (STEMI, NTG, EKG, …) resolve offline too.
+    /// Relevance-ranked, typo-tolerant search over each concept's name,
+    /// aliases, and (low-weight) tags. Every concept is scored; those with any
+    /// signal are returned best-match-first, so exact and prefix hits lead,
+    /// multi-word queries match regardless of order, and misspellings still
+    /// resolve. Mirrors the backend `ConceptSearch.rank` scoring so online and
+    /// offline agree.
+    ///
+    /// Tiers (per concept, strongest signal wins):
+    ///   name  exact 1000 / prefix 700 / substring 400
+    ///   alias exact  900 / prefix 600 / substring 350
+    ///   all query words present 500, else partial coverage prorated to 250
+    ///   whole-query tag exact 150 / substring 60   (a category is a weak hint)
+    ///   typo (Levenshtein) on ≥4-char words         up to 170
+    /// Ties break toward shorter (more specific) names; results are capped.
     func search(_ query: String) -> [ConceptSummary] {
-        let q = query.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        let q = Self.normalizedForSearch(query)
         guard !q.isEmpty else { return [] }
-        return concepts.compactMap { concept in
-            let nameMatch = concept.name.lowercased().contains(q)
-            let aliasMatch = concept.aliases.first { $0.text.lowercased().contains(q) }
-            guard nameMatch || aliasMatch != nil else { return nil }
+        let qTokens = Self.searchTokens(q)
+        let fuzzyTokens = qTokens.filter { $0.count >= 4 }
+        // A single character matches only names/aliases that START with it - a
+        // 1-char substring/token match would return most of the corpus. From
+        // two characters up, full substring/token/tag scoring runs.
+        let allowSubstring = q.count >= 2
+
+        var scored: [(summary: ConceptSummary, score: Double)] = []
+        scored.reserveCapacity(concepts.count)
+
+        for concept in concepts {
+            let name = Self.normalizedForSearch(concept.name)
+            let aliases = concept.aliases.map { (text: $0.text, norm: Self.normalizedForSearch($0.text)) }
+            let tags = concept.tags.map { Self.normalizedForSearch($0) }
+
+            var score = 0.0
+
+            // Whole-query name tier.
+            if name == q { score = 1000 }
+            else if name.hasPrefix(q) { score = 700 }
+            else if allowSubstring && name.contains(q) { score = 400 }
+
+            // Whole-query alias tier (remember the strongest matching alias so
+            // the UI can surface the term the nurse actually typed).
+            var bestAlias: String?
+            var bestAliasScore = 0.0
+            for a in aliases {
+                let s = a.norm == q ? 900.0 : a.norm.hasPrefix(q) ? 600.0 : (allowSubstring && a.norm.contains(q)) ? 350.0 : 0.0
+                if s > bestAliasScore { bestAliasScore = s; bestAlias = a.text }
+            }
+            score = max(score, bestAliasScore)
+
+            // Multi-word coverage: how many query words appear anywhere (name,
+            // alias, or tag). Full coverage ranks like a strong name hit.
+            if allowSubstring && !qTokens.isEmpty {
+                let matched = qTokens.reduce(into: 0) { acc, t in
+                    if name.contains(t)
+                        || aliases.contains(where: { $0.norm.contains(t) })
+                        || tags.contains(where: { $0.contains(t) }) { acc += 1 }
+                }
+                if matched > 0 {
+                    let coverage = matched == qTokens.count ? 500.0 : 250.0 * Double(matched) / Double(qTokens.count)
+                    score = max(score, coverage)
+                }
+            }
+
+            // Category tags — a weak hint, well below any name/alias match.
+            if allowSubstring {
+                for tag in tags {
+                    if tag == q { score = max(score, 150) }
+                    else if tag.contains(q) { score = max(score, 60) }
+                }
+            }
+
+            // Typo tolerance: capped Levenshtein per word, gated to ≥4-char
+            // words (so short acronyms like "PE"/"MI" never fuzzy-match) with a
+            // same-first-letter prefilter that also guards against wild swaps.
+            if !fuzzyTokens.isEmpty {
+                let candidates = Self.searchTokens(name) + aliases.flatMap { Self.searchTokens($0.norm) }
+                for qt in fuzzyTokens {
+                    let maxDist = qt.count <= 6 ? 1 : 2
+                    for cand in candidates
+                    where cand.count >= 4 && cand.first == qt.first && abs(cand.count - qt.count) <= maxDist {
+                        let d = Self.levenshtein(qt, cand, cap: maxDist)
+                        if d <= maxDist { score = max(score, 240 - Double(d) * 70) }
+                    }
+                }
+            }
+
+            guard score > 0 else { continue }
+
             var summary = Self.summary(concept)
-            // Surface the matched alias only when the name itself didn't match,
-            // so brand/abbreviation searches show the term the nurse typed.
-            if !nameMatch, let aliasMatch { summary.matchedAlias = aliasMatch.text }
-            return summary
+            // Surface the matched alias only when the name itself didn't
+            // substring-match, so brand/abbreviation hits show what was typed.
+            if !name.contains(q), let bestAlias, bestAliasScore > 0 { summary.matchedAlias = bestAlias }
+            // Nudge shorter (more specific) names above longer ones at a tie.
+            scored.append((summary, score - Double(name.count) * 0.1))
         }
+
+        return scored
+            .sorted { $0.score != $1.score ? $0.score > $1.score : $0.summary.name.count < $1.summary.name.count }
+            .prefix(60)
+            .map(\.summary)
+    }
+
+    /// Lowercased + diacritic-folded, for accent/case-insensitive matching.
+    private static func normalizedForSearch(_ s: String) -> String {
+        s.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    /// Split into alphanumeric word tokens, dropping punctuation/whitespace.
+    private static func searchTokens(_ s: String) -> [String] {
+        s.split { !$0.isLetter && !$0.isNumber }.map(String.init)
     }
 
     func byCategory(_ type: ConceptType) -> [ConceptSummary] {

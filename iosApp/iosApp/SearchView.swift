@@ -1,9 +1,9 @@
 import SwiftUI
 
-/// The utility-focused tab: search + alias-aware autocomplete + category
-/// browse + recent/history — all now backed by real calls to `backend/`
-/// via AppState/APIClient. See REQUIREMENTS.md "Learn page — search,
-/// browse & history".
+/// The utility-focused tab: relevance-ranked, typo-tolerant search with
+/// alias-aware autocomplete and category browse, served from the offline
+/// ConceptLibrary. (Viewed concepts are tracked by the gamification usage
+/// summary on Home - there's no separate search-history list here.)
 struct SearchView: View {
     @EnvironmentObject private var appState: AppState
     @State private var query = ""
@@ -57,15 +57,6 @@ struct SearchView: View {
                             .background(Theme.Color.card)
                             .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1.5))
                             .clipShape(RoundedRectangle(cornerRadius: 18))
-
-                            NavigationLink(destination: SearchHistoryView()) {
-                                Image(systemName: "clock")
-                                    .foregroundStyle(Theme.Color.sub)
-                                    .frame(width: 48, height: 48)
-                                    .background(Theme.Color.card)
-                                    .overlay(Circle().stroke(Theme.Color.line, lineWidth: 1.5))
-                                    .clipShape(Circle())
-                            }
                         }
 
                         SectionLabel(text: "Browse by topic")
@@ -93,11 +84,6 @@ struct SearchView: View {
                                 .foregroundStyle(Theme.Color.sub)
                                 .padding(.vertical, 12)
                         }
-
-                        if trimmedQuery.isEmpty && activeCategory == nil {
-                            recentSection
-                                .transition(.opacity)
-                        }
                     }
                     .animation(.easeInOut(duration: 0.25), value: activeCategory)
                     .padding(24)
@@ -111,7 +97,6 @@ struct SearchView: View {
             }
             .background(Theme.Color.background.ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
-            .task { await appState.loadSearchHistory() }
             .task(id: searchKey) { await runSearch() }
         }
     }
@@ -135,35 +120,6 @@ struct SearchView: View {
         .padding(.top, 10)
     }
 
-    @ViewBuilder
-    private var recentSection: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            SectionLabel(text: "Recent")
-                .padding(.top, 22)
-                .padding(.bottom, 4)
-
-            if appState.searchHistory.isEmpty {
-                Text("Nothing viewed yet.")
-                    .font(Theme.Font.body(13.5))
-                    .foregroundStyle(Theme.Color.sub)
-                    .padding(.vertical, 8)
-            } else {
-                VStack(spacing: 0) {
-                    ForEach(appState.searchHistory.prefix(4)) { entry in
-                        NavigationLink(destination: ConceptDetailView(conceptId: entry.conceptId)) {
-                            RecentRow(entry: entry)
-                        }
-                        .buttonStyle(.plain)
-                        if entry.id != appState.searchHistory.prefix(4).last?.id {
-                            Divider()
-                        }
-                    }
-                }
-                .padding(.top, 4)
-            }
-        }
-    }
-
     private func selectCategory(_ type: ConceptType) {
         searchFieldFocused = false
         activeCategory = (activeCategory == type) ? nil : type
@@ -171,7 +127,7 @@ struct SearchView: View {
 
     /// Fetches results for the current query + topic scope. With a query, it
     /// searches (debounced) and filters to the active topic if one is set;
-    /// with no query it browses the active topic, or clears to show Recent.
+    /// with no query it browses the active topic, or clears the results.
     private func runSearch() async {
         if trimmedQuery.isEmpty {
             if let activeCategory {
@@ -227,66 +183,6 @@ private struct AutocompleteRow: View {
                 + Text(sideEffects).font(Theme.Font.body(12.5, weight: .semibold)).foregroundColor(Theme.Color.warnInk)
         }
         return text
-    }
-}
-
-private struct RecentRow: View {
-    let entry: SearchHistoryEntry
-
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(entry.conceptName).font(Theme.Font.heading(14.5)).foregroundStyle(Theme.Color.ink)
-                Text(entry.type.displayName).font(Theme.Font.body(12, weight: .semibold)).foregroundStyle(Theme.Color.sub)
-            }
-            Spacer()
-            Text(entry.viewedAt.relativeDescription).font(Theme.Font.body(12, weight: .semibold)).foregroundStyle(Theme.Color.sub)
-        }
-        .padding(.vertical, 12)
-        .contentShape(Rectangle())
-    }
-}
-
-struct SearchHistoryView: View {
-    @EnvironmentObject private var appState: AppState
-
-    var body: some View {
-        List {
-            ForEach(appState.searchHistory) { entry in
-                NavigationLink(destination: ConceptDetailView(conceptId: entry.conceptId)) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(entry.conceptName).font(Theme.Font.heading(15))
-                        Text("\(entry.type.displayName) · \(entry.viewedAt.relativeDescription)")
-                            .font(Theme.Font.body(12))
-                            .foregroundStyle(Theme.Color.sub)
-                    }
-                }
-                // List rows keep their own opaque system cell background
-                // even with .scrollContentBackground(.hidden) on the List
-                // itself — without clearing it per-row, rows render with
-                // the system default (black in Dark Mode) instead of the
-                // screen's actual background showing through.
-                .listRowBackground(SwiftUI.Color.clear)
-            }
-        }
-        .overlay {
-            if appState.searchHistory.isEmpty {
-                Text("No search history yet.")
-                    .font(Theme.Font.body(14))
-                    .foregroundStyle(Theme.Color.sub)
-            }
-        }
-        .scrollContentBackground(.hidden)
-        .background(Theme.Color.background)
-        .navigationTitle("History")
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("Clear") {
-                    Task { await appState.clearSearchHistory() }
-                }
-            }
-        }
-        .task { await appState.loadSearchHistory() }
     }
 }
 

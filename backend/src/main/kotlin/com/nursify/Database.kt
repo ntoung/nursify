@@ -29,8 +29,8 @@ object Database {
                 ConceptEdges,
                 Notes,
                 NoteMentions,
-                SearchHistoryEntries,
-                ReviewSchedules
+                ReviewSchedules,
+                Reports
             )
         }
     }

@@ -18,6 +18,16 @@ fun Application.configureRouting() {
             call.respondText("ok")
         }
 
+        // Shake-to-report "Report a problem" feedback from the app.
+        post("/reports") {
+            val request = call.receive<ReportCreateRequest>()
+            val message = request.message.trim()
+            if (message.isEmpty()) {
+                return@post call.respond(HttpStatusCode.BadRequest, "Report message is empty")
+            }
+            call.respond(HttpStatusCode.Created, ReportRepository.create(message, request.context))
+        }
+
         route("/concepts") {
             // Full corpus with complete detail — powers the iOS offline-first
             // bundled library and its snapshot sync (one request, no N+1).
@@ -52,22 +62,6 @@ fun Application.configureRouting() {
                 val request = call.receive<NoteCreateRequest>()
                 val note = NoteRepository.create(request)
                 call.respond(HttpStatusCode.Created, note)
-            }
-        }
-
-        route("/search-history") {
-            get {
-                call.respond(SearchHistoryRepository.all())
-            }
-            post("/{conceptId}") {
-                val idParam = call.parameters["conceptId"] ?: return@post call.respond(HttpStatusCode.BadRequest)
-                val id = runCatching { UUID.fromString(idParam) }.getOrNull()
-                    ?: return@post call.respond(HttpStatusCode.BadRequest, "Invalid id")
-                call.respond(SearchHistoryRepository.record(id))
-            }
-            delete {
-                SearchHistoryRepository.clear()
-                call.respond(HttpStatusCode.NoContent)
             }
         }
 

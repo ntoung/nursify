@@ -68,14 +68,6 @@ object NoteMentions : Table("note_mentions") {
     override val primaryKey = PrimaryKey(noteId, conceptId)
 }
 
-object SearchHistoryEntries : Table("search_history_entries") {
-    val id = uuid("id")
-    val conceptId = uuid("concept_id").references(Concepts.id)
-    val viewedAt = timestamp("viewed_at")
-
-    override val primaryKey = PrimaryKey(id)
-}
-
 object ReviewSchedules : Table("review_schedules") {
     val id = uuid("id")
     val conceptId = uuid("concept_id").references(Concepts.id)
@@ -83,6 +75,17 @@ object ReviewSchedules : Table("review_schedules") {
     val intervalDays = integer("interval_days").default(1)
     val easeFactor = double("ease_factor").default(2.5)
     val lastReviewedAt = timestamp("last_reviewed_at").nullable()
+
+    override val primaryKey = PrimaryKey(id)
+}
+
+// User-submitted "Report a problem" feedback (shake-to-report). `context` holds
+// optional app/device info; no PHI is expected here.
+object Reports : Table("reports") {
+    val id = uuid("id")
+    val message = text("message")
+    val context = text("context").nullable()
+    val createdAt = timestamp("created_at")
 
     override val primaryKey = PrimaryKey(id)
 }

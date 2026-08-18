@@ -85,25 +85,12 @@ object ConceptRepository {
         Concepts.select { Concepts.id eq aliasRow[Aliases.conceptId] }.singleOrNull()?.let { rowToDto(it) }
     }
 
-    fun search(query: String): List<ConceptSummaryDto> = transaction {
-        val lowerQuery = query.lowercase()
-        val matchingConceptIds = Aliases.selectAll()
-            .filter { it[Aliases.aliasText].lowercase().contains(lowerQuery) }
-            .map { it[Aliases.conceptId] }
-            .toSet()
-
-        Concepts.selectAll()
-            .filter { it[Concepts.name].lowercase().contains(lowerQuery) || it[Concepts.id] in matchingConceptIds }
-            .map { row ->
-                val sections = json.decodeFromString<ConceptSections>(row[Concepts.sectionsJson])
-                ConceptSummaryDto(
-                    id = row[Concepts.id].toString(),
-                    type = ConceptType.valueOf(row[Concepts.type]),
-                    name = row[Concepts.name],
-                    sideEffectsPreview = sections.sideEffects
-                )
-            }
-    }
+    // Relevance-ranked, typo-tolerant search over the full corpus. Scoring
+    // lives in ConceptSearch, kept in lock-step with the iOS offline library so
+    // the API and the app agree. `findAll()` already carries names, aliases,
+    // and tags, so ranking is plain in-memory work at this corpus scale (see
+    // SYSTEM_DESIGN.md for the eventual SQL trigram/index plan).
+    fun search(query: String): List<ConceptSummaryDto> = ConceptSearch.rank(query, findAll())
 
     /**
      * Full corpus with complete detail (sections, aliases, related ids) in one
@@ -240,43 +227,17 @@ object NoteRepository {
     }
 }
 
-object SearchHistoryRepository {
-    // Note: doesn't dedupe a repeat view of the same concept into one row yet
-    // (the iOS mock layer does this client-side) — `all()` orders by
-    // viewedAt DESC so the latest view still surfaces first either way.
-    // Follow-up: move old entries aside instead of leaving duplicates.
-    fun record(conceptId: UUID): SearchHistoryDto = transaction {
+object ReportRepository {
+    fun create(message: String, context: String?): ReportDto = transaction {
         val id = UUID.randomUUID()
         val now = Instant.now()
-        SearchHistoryEntries.insert {
-            it[SearchHistoryEntries.id] = id
-            it[SearchHistoryEntries.conceptId] = conceptId
-            it[SearchHistoryEntries.viewedAt] = now
+        Reports.insert {
+            it[Reports.id] = id
+            it[Reports.message] = message
+            it[Reports.context] = context
+            it[Reports.createdAt] = now
         }
-        val concept = ConceptRepository.findById(conceptId)
-        SearchHistoryDto(
-            id = id.toString(),
-            conceptId = conceptId.toString(),
-            conceptName = concept?.name ?: "Unknown",
-            type = concept?.type ?: ConceptType.MEDICATION,
-            viewedAt = now.toEpochMilli()
-        )
-    }
-
-    fun all(): List<SearchHistoryDto> = transaction {
-        SearchHistoryEntries.selectAll().orderBy(SearchHistoryEntries.viewedAt to SortOrder.DESC).map { row ->
-            val concept = ConceptRepository.findById(row[SearchHistoryEntries.conceptId])
-            SearchHistoryDto(
-                id = row[SearchHistoryEntries.id].toString(),
-                conceptId = row[SearchHistoryEntries.conceptId].toString(),
-                conceptName = concept?.name ?: "Unknown",
-                type = concept?.type ?: ConceptType.MEDICATION,
-                viewedAt = row[SearchHistoryEntries.viewedAt].toEpochMilli()
-            )
-        }
-    }
-
-    fun clear() = transaction {
-        SearchHistoryEntries.deleteAll()
+        ReportDto(id = id.toString(), message = message, createdAt = now.toEpochMilli())
     }
 }
+

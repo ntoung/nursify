@@ -45,7 +45,7 @@ struct ConceptDetailView: View {
         do {
             let loaded = try await appState.fetchConcept(id: conceptId)
             concept = loaded
-            await appState.recordSearchHistory(conceptId: conceptId)
+            await appState.recordConceptView(conceptId: conceptId)
         } catch {
             loadError = error.localizedDescription
         }

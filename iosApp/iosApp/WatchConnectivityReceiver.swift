@@ -102,12 +102,10 @@ final class WatchConnectivityReceiver: NSObject, ObservableObject {
         guard let match = ConceptLibrary.shared.mentions(in: transcript).first else {
             return AskResponse(found: false, termName: nil, shortExplanation: nil, longExplanation: nil, errorMessage: nil)
         }
-        // Fire-and-forget: logs the lookup to the same synced search history
-        // Search-tab lookups use, so it shows up under Recent there too.
-        // Not on the reply's critical path — the watch shouldn't wait on a
-        // network round-trip just to log history.
+        // Fire-and-forget: count the watch lookup toward the "Concepts viewed"
+        // usage stat, like opening a concept on the phone does.
         let conceptId = match.conceptId
-        Task { await appState?.recordSearchHistory(conceptId: conceptId) }
+        Task { await appState?.recordConceptView(conceptId: conceptId) }
         return AskResponse(
             found: true,
             termName: match.conceptName,

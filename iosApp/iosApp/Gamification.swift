@@ -132,6 +132,22 @@ struct UsageSummary {
 
 // MARK: - Badges
 
+/// Progress toward a badge, for the tap-to-open detail dialog. `current` is
+/// shown capped at `target`, but the raw values drive `isComplete`.
+struct BadgeProgress {
+    let current: Int
+    let target: Int
+    var isPercent = false
+
+    var fraction: Double { target > 0 ? min(1, Double(current) / Double(target)) : (current > 0 ? 1 : 0) }
+    var isComplete: Bool { current >= target }
+    /// e.g. "7 / 10" or "60% / 75%".
+    var label: String {
+        let shown = Swift.min(current, target)
+        return isPercent ? "\(shown)% / \(target)%" : "\(shown) / \(target)"
+    }
+}
+
 struct BadgeDefinition: Identifiable {
     let id: String
     let name: String
@@ -140,6 +156,8 @@ struct BadgeDefinition: Identifiable {
     let accentColorHex: String
     let pointBonus: Int
     let isUnlocked: (GamificationSnapshot) -> Bool
+    /// Current progress toward the badge, shown in the tap-to-open detail.
+    let progress: (GamificationSnapshot) -> BadgeProgress
 
     var accentColor: Color { Color(hex: accentColorHex) }
 }
@@ -150,79 +168,97 @@ enum BadgeCatalog {
             id: "first-shift", name: "First Shift",
             description: "Opened Nursify for the first time.",
             symbolName: "hand.wave.fill", accentColorHex: "E9A65C", pointBonus: 20,
-            isUnlocked: { $0.appForegroundedCount >= 1 }
+            isUnlocked: { $0.appForegroundedCount >= 1 },
+            progress: { BadgeProgress(current: $0.appForegroundedCount, target: 1) }
         ),
         BadgeDefinition(
             id: "book-worm-bronze", name: "Book Worm",
             description: "Viewed 10 different concepts.",
             symbolName: "book.fill", accentColorHex: "5FA88C", pointBonus: 30,
-            isUnlocked: { $0.distinctConceptsTotal >= 10 }
+            isUnlocked: { $0.distinctConceptsTotal >= 10 },
+            progress: { BadgeProgress(current: $0.distinctConceptsTotal, target: 10) }
         ),
         BadgeDefinition(
             id: "book-worm-silver", name: "Book Worm II",
             description: "Viewed 50 different concepts.",
             symbolName: "book.fill", accentColorHex: "6FA8DC", pointBonus: 75,
-            isUnlocked: { $0.distinctConceptsTotal >= 50 }
+            isUnlocked: { $0.distinctConceptsTotal >= 50 },
+            progress: { BadgeProgress(current: $0.distinctConceptsTotal, target: 50) }
         ),
         BadgeDefinition(
             id: "book-worm-gold", name: "Book Worm III",
             description: "Viewed 150 different concepts.",
             symbolName: "book.fill", accentColorHex: "C9A227", pointBonus: 150,
-            isUnlocked: { $0.distinctConceptsTotal >= 150 }
+            isUnlocked: { $0.distinctConceptsTotal >= 150 },
+            progress: { BadgeProgress(current: $0.distinctConceptsTotal, target: 150) }
         ),
         BadgeDefinition(
             id: "pharmacist-in-training", name: "Pharmacist in Training",
             description: "Viewed 25 different medications.",
             symbolName: "pills.fill", accentColorHex: "B5583B", pointBonus: 50,
-            isUnlocked: { $0.distinctCount(for: .medication) >= 25 }
+            isUnlocked: { $0.distinctCount(for: .medication) >= 25 },
+            progress: { BadgeProgress(current: $0.distinctCount(for: .medication), target: 25) }
         ),
         BadgeDefinition(
             id: "procedure-pro", name: "Procedure Pro",
             description: "Viewed 15 different procedures.",
             symbolName: "stethoscope", accentColorHex: "4C6E9C", pointBonus: 50,
-            isUnlocked: { $0.distinctCount(for: .procedure) >= 15 }
+            isUnlocked: { $0.distinctCount(for: .procedure) >= 15 },
+            progress: { BadgeProgress(current: $0.distinctCount(for: .procedure), target: 15) }
         ),
         BadgeDefinition(
             id: "detective", name: "Detective",
             description: "Viewed 25 different conditions.",
             symbolName: "magnifyingglass", accentColorHex: "8B6BAF", pointBonus: 50,
-            isUnlocked: { $0.distinctCount(for: .condition) >= 25 }
+            isUnlocked: { $0.distinctCount(for: .condition) >= 25 },
+            progress: { BadgeProgress(current: $0.distinctCount(for: .condition), target: 25) }
         ),
         BadgeDefinition(
             id: "lab-rat", name: "Lab Rat",
             description: "Viewed 15 different lab values.",
             symbolName: "flask.fill", accentColorHex: "3F8158", pointBonus: 50,
-            isUnlocked: { $0.distinctCount(for: .labValue) >= 15 }
+            isUnlocked: { $0.distinctCount(for: .labValue) >= 15 },
+            progress: { BadgeProgress(current: $0.distinctCount(for: .labValue), target: 15) }
         ),
         BadgeDefinition(
             id: "by-the-book", name: "By the Book",
             description: "Viewed 10 different protocols.",
             symbolName: "list.clipboard.fill", accentColorHex: "A57C2E", pointBonus: 50,
-            isUnlocked: { $0.distinctCount(for: .protocolOrderSet) >= 10 }
+            isUnlocked: { $0.distinctCount(for: .protocolOrderSet) >= 10 },
+            progress: { BadgeProgress(current: $0.distinctCount(for: .protocolOrderSet), target: 10) }
         ),
         BadgeDefinition(
             id: "full-coverage", name: "Full Coverage",
             description: "Viewed at least one concept of every type.",
             symbolName: "checkmark.seal.fill", accentColorHex: "5FA88C", pointBonus: 50,
-            isUnlocked: { snapshot in ConceptType.allCases.allSatisfy { snapshot.distinctCount(for: $0) >= 1 } }
+            isUnlocked: { snapshot in ConceptType.allCases.allSatisfy { snapshot.distinctCount(for: $0) >= 1 } },
+            progress: { snapshot in
+                BadgeProgress(
+                    current: ConceptType.allCases.filter { snapshot.distinctCount(for: $0) >= 1 }.count,
+                    target: ConceptType.allCases.count
+                )
+            }
         ),
         BadgeDefinition(
             id: "specialist", name: "Specialist",
             description: "Viewed 75% of concepts tagged to your specialty.",
             symbolName: "star.fill", accentColorHex: "C9A227", pointBonus: 50,
-            isUnlocked: { $0.specialistCoverageFraction >= 0.75 }
+            isUnlocked: { $0.specialistCoverageFraction >= 0.75 },
+            progress: { BadgeProgress(current: Int(($0.specialistCoverageFraction * 100).rounded()), target: 75, isPercent: true) }
         ),
         BadgeDefinition(
             id: "note-taker", name: "Note Taker",
             description: "Captured 10 notes.",
             symbolName: "pencil.and.list.clipboard", accentColorHex: "DE7259", pointBonus: 50,
-            isUnlocked: { $0.notesCaptured >= 10 }
+            isUnlocked: { $0.notesCaptured >= 10 },
+            progress: { BadgeProgress(current: $0.notesCaptured, target: 10) }
         ),
         BadgeDefinition(
             id: "making-rounds", name: "Making Rounds",
             description: "Completed 10 medication lookups.",
             symbolName: "figure.walk", accentColorHex: "4C6E9C", pointBonus: 50,
-            isUnlocked: { $0.chartLookupSessions >= 10 }
+            isUnlocked: { $0.chartLookupSessions >= 10 },
+            progress: { BadgeProgress(current: $0.chartLookupSessions, target: 10) }
         ),
     ]
 
@@ -273,7 +309,7 @@ final class GamificationEngine: ObservableObject {
     }
 
     // MARK: Public logging API — one purpose-named method per event source,
-    // matching AppState's existing style (createNote, recordSearchHistory).
+    // matching AppState's existing style (createNote, recordConceptView).
 
     func logConceptViewed(conceptId: UUID, conceptType: ConceptType) {
         recordEvent(.conceptViewed, conceptId: conceptId, conceptType: conceptType)

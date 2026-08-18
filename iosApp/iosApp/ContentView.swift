@@ -10,6 +10,7 @@ struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     private enum Tab: Hashable { case home, journal, search }
     @State private var selectedTab: Tab = .journal
+    @State private var isReportingProblem = false
 
     var body: some View {
         Group {
@@ -34,6 +35,12 @@ struct ContentView: View {
         }
         .environmentObject(appState)
         .gamificationUnlockDialog(appState.gamification)
+        // Instagram-style shake-to-report: a shake anywhere opens the
+        // "Report a problem" drawer.
+        .onShake { isReportingProblem = true }
+        .sheet(isPresented: $isReportingProblem) {
+            ReportProblemView()
+        }
         // On launch: refresh the offline concept library and replay any
         // mutations queued while offline (both no-op silently when
         // unreachable), and prime speech-recognition permission so a Watch

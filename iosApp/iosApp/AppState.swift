@@ -16,7 +16,6 @@ final class AppState: ObservableObject {
     @Published var lookupSessions: [LookupSession] = SampleData.lookupSessions
 
     @Published var suggestions: [Suggestion] = []
-    @Published var searchHistory: [SearchHistoryEntry] = []
 
     /// Local ids of notes captured offline and still awaiting sync — drives the
     /// "pending" indicator in the Journal list.
@@ -72,12 +71,6 @@ final class AppState: ObservableObject {
             .appendingPathComponent("Notes.json")
     }()
 
-    private static let searchHistoryFileURL: URL? = {
-        try? FileManager.default
-            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("SearchHistory.json")
-    }()
-
     /// Onboarding answers are device-local (no profile endpoint exists yet),
     /// persisted to UserDefaults so they survive relaunch instead of asking
     /// again every time the app opens.
@@ -102,7 +95,6 @@ final class AppState: ObservableObject {
             userProfile = profile
         }
         notes = AppState.loadNotes()
-        searchHistory = AppState.loadPersistedSearchHistory()
         pendingNoteIds = syncQueue.pendingNoteIds
         self.gamification.updateSpecialties(userProfile.specialties)
         startConnectivityMonitoring()
@@ -185,20 +177,6 @@ final class AppState: ObservableObject {
         return notes
     }
 
-    private func persistSearchHistory() {
-        guard let url = AppState.searchHistoryFileURL, let data = try? JSONEncoder().encode(searchHistory) else { return }
-        try? data.write(to: url, options: .atomic)
-    }
-
-    private static func loadPersistedSearchHistory() -> [SearchHistoryEntry] {
-        guard let url = searchHistoryFileURL, FileManager.default.fileExists(atPath: url.path),
-              let data = try? Data(contentsOf: url),
-              let entries = try? JSONDecoder().decode([SearchHistoryEntry].self, from: data) else {
-            return []
-        }
-        return entries
-    }
-
     func completeOnboarding(name: String, specialties: Set<Specialty>, experience: ExperienceLevel?) {
         userProfile = UserProfile(name: name, specialties: specialties, experienceLevel: experience)
         hasCompletedOnboarding = true
@@ -227,13 +205,6 @@ final class AppState: ObservableObject {
         }
     }
 
-    /// Reloads from local storage — a cheap, idempotent refresh, not a
-    /// network call. See `recordSearchHistory` for why search history moved
-    /// off the backend.
-    func loadSearchHistory() async {
-        searchHistory = AppState.loadPersistedSearchHistory()
-    }
-
     // Concept content is served from the offline library, so search, category
     // browsing, and detail all work with no network. The library refreshes from
     // the backend separately (see refreshLibrary()).
@@ -254,32 +225,13 @@ final class AppState: ObservableObject {
         return try await api.concept(id: id)
     }
 
-    /// Records a resolved concept view — entirely local (device storage),
-    /// not synced to the backend.
-    ///
-    /// This used to sync through the outbox (POST /search-history/{id}), but
-    /// that silently stopped working: the backend's concept corpus and the
-    /// client's bundled ConceptLibrary snapshot have drifted apart (different
-    /// concept UUIDs for the "same" concept after a backend reseed), so every
-    /// sync attempt failed with the backend not recognizing the id — and
-    /// because the outbox replays in order and stops at the first failure,
-    /// a stuck recordView could have silently blocked note-sync behind it
-    /// too. Local storage sidesteps both problems and matches how Notes and
-    /// Chart Lookups already work — nothing here depends on the backend
-    /// being reachable or being in sync with the client's corpus. Revisit
-    /// once there's a real, stable backend to sync against (see AUTH_ADR.md
-    /// for the broader multi-device/accounts context that would motivate it).
-    func recordSearchHistory(conceptId: UUID) async {
+    /// Records that a concept was viewed, feeding the "Concepts viewed" usage
+    /// stat and view-based achievements (see GamificationEngine). We no longer
+    /// keep a separate viewed-concepts list - the gamification summary already
+    /// surfaces that.
+    func recordConceptView(conceptId: UUID) async {
         guard let concept = library.concept(id: conceptId) else { return }
         gamification.logConceptViewed(conceptId: conceptId, conceptType: concept.type)
-        let entry = SearchHistoryEntry(id: UUID(), conceptId: conceptId, conceptName: concept.name, type: concept.type, viewedAt: Date())
-        searchHistory.insert(entry, at: 0)
-        persistSearchHistory()
-    }
-
-    func clearSearchHistory() async {
-        searchHistory = []
-        persistSearchHistory()
     }
 
     // MARK: - Chart lookup — computed entirely from the offline library, so it

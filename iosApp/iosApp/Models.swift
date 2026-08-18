@@ -290,16 +290,6 @@ struct Suggestion: Identifiable, Codable, Hashable {
     var kind: SuggestionKind
 }
 
-// MARK: - Search history (Learn page)
-
-struct SearchHistoryEntry: Identifiable, Codable, Hashable {
-    let id: UUID
-    var conceptId: UUID
-    var conceptName: String
-    var type: ConceptType
-    var viewedAt: Date
-}
-
 extension Date {
     var relativeDescription: String {
         let formatter = RelativeDateTimeFormatter()
