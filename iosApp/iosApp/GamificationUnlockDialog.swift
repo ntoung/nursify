@@ -13,12 +13,20 @@ extension View {
 
 private struct GamificationUnlockDialogModifier: ViewModifier {
     @ObservedObject var engine: GamificationEngine
+    // Separate from engine.unlockQueue.first?.id so the overlay's insertion
+    // (and its fade/scale transition) is delayed relative to when the
+    // unlock actually queues — an unlock can queue the instant a screen
+    // transition happens (e.g. First Shift right as onboarding hands off to
+    // the tab view), and popping the dialog in immediately slams it on top
+    // of that transition instead of letting it settle first.
+    @State private var visibleUnlockId: String?
 
     func body(content: Content) -> some View {
         content.overlay {
-            if let unlock = engine.unlockQueue.first {
+            if let unlock = engine.unlockQueue.first, unlock.id == visibleUnlockId {
                 UnlockDialogView(unlock: unlock) {
                     withAnimation(.easeOut(duration: 0.2)) {
+                        visibleUnlockId = nil
                         engine.dismissCurrentUnlock()
                     }
                 }
@@ -29,7 +37,22 @@ private struct GamificationUnlockDialogModifier: ViewModifier {
                 .transition(.opacity.combined(with: .scale(scale: 0.92)))
             }
         }
-        .animation(.spring(response: 0.4, dampingFraction: 0.8), value: engine.unlockQueue.first?.id)
+        .animation(.spring(response: 0.4, dampingFraction: 0.8), value: visibleUnlockId)
+        // task(id:) re-runs (cancelling any pending sleep) whenever the
+        // front-of-queue unlock changes, including the very first time one
+        // appears — unlike onChange, which only fires on subsequent changes.
+        .task(id: engine.unlockQueue.first?.id) {
+            guard let id = engine.unlockQueue.first?.id else {
+                visibleUnlockId = nil
+                return
+            }
+            do {
+                try await Task.sleep(nanoseconds: 2_000_000_000)
+            } catch {
+                return
+            }
+            visibleUnlockId = id
+        }
     }
 }
 
