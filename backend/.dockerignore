@@ -1,0 +1,7 @@
+# Keep the build context small and reproducible (don't ship host build output).
+build/
+.gradle/
+.idea/
+*.iml
+.DS_Store
+docker-compose.yml

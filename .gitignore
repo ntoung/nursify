@@ -24,3 +24,6 @@ local.properties
 # Environment / secrets
 .env
 *.env.local
+
+# Lavish Editor scratch artifacts
+.lavish/

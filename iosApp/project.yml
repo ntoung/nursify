@@ -21,10 +21,11 @@ targets:
         CFBundleDisplayName: Nursify
         CFBundleShortVersionString: "1.0"
         CFBundleVersion: "7"
-        # Backend base URL — override per configuration (dev/staging/prod) here,
-        # or at runtime via a UserDefaults/launch-arg `APIBaseURL`. See
-        # APIClient.resolveBaseURL. Concept content works offline regardless.
-        APIBaseURL: http://192.168.1.194:8081
+        # Backend base URL, taken from the per-config API_BASE_URL build setting
+        # below (Debug = dev LAN, Release = prod). Also overridable at runtime
+        # via a UserDefaults/launch-arg `APIBaseURL` (see APIClient.resolveBaseURL).
+        # Concept content works offline regardless of this value.
+        APIBaseURL: $(API_BASE_URL)
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
@@ -42,6 +43,14 @@ targets:
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: W5A6QAYASM
+      configs:
+        # Debug builds hit the dev backend on your LAN; Release (TestFlight /
+        # App Store) builds hit production. Replace the Release URL with your
+        # Cloud Run service URL after the first deploy (see backend/DEPLOY.md).
+        Debug:
+          API_BASE_URL: "http://192.168.1.194:8081"
+        Release:
+          API_BASE_URL: "https://nursify-api-REPLACE-ME.run.app"
 
   WatchApp:
     type: application
