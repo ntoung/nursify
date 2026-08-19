@@ -15,6 +15,8 @@ struct ConceptDetailView: View {
     @State private var concept: Concept?
     @State private var loadError: String?
     @State private var showingAddToList = false
+    /// Horizontal offset while the user swipes the page rightward to dismiss.
+    @State private var dragOffset: CGFloat = 0
 
     var body: some View {
         Group {
@@ -196,6 +198,27 @@ struct ConceptDetailView: View {
         // in line, so there's no separate nav-bar row taking vertical space.
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
+        // Hiding the nav bar also disables SwiftUI's built-in edge-swipe-back,
+        // so restore swipe-right-to-close ourselves. .simultaneousGesture keeps
+        // vertical scrolling working; the horizontal-dominance guard means we
+        // only engage on a clearly rightward swipe, not while scrolling.
+        .offset(x: max(0, dragOffset))
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 15)
+                .onChanged { value in
+                    guard value.translation.width > 0,
+                          value.translation.width > abs(value.translation.height) else { return }
+                    dragOffset = value.translation.width
+                }
+                .onEnded { value in
+                    if value.translation.width > 90,
+                       value.translation.width > abs(value.translation.height) {
+                        dismiss()
+                    } else {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.85)) { dragOffset = 0 }
+                    }
+                }
+        )
     }
 
     @ViewBuilder
