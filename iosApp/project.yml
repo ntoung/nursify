@@ -19,6 +19,8 @@ targets:
       path: iosApp/Info.plist
       properties:
         CFBundleDisplayName: Nursify
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "7"
         # Backend base URL — override per configuration (dev/staging/prod) here,
         # or at runtime via a UserDefaults/launch-arg `APIBaseURL`. See
         # APIClient.resolveBaseURL. Concept content works offline regardless.
@@ -50,6 +52,8 @@ targets:
       path: WatchApp/Info.plist
       properties:
         CFBundleDisplayName: Nursify
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "7"
         WKApplication: true
         WKCompanionAppBundleIdentifier: com.nursify.ios
         UISupportedInterfaceOrientations:

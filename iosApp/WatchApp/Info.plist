@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>7</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Nursify uses your microphone to record voice memos, sent to your phone to finish and review.</string>
 	<key>UISupportedInterfaceOrientations</key>
