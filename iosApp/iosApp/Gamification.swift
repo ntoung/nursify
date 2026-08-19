@@ -378,6 +378,24 @@ final class GamificationEngine: ObservableObject {
         return summary
     }
 
+    /// Distinct concepts the nurse has viewed, most-recent first - backs the
+    /// Search page's "Recent" list. Deduped by concept (keeping the latest
+    /// view) and capped to `limit`. Reads the same local event log as the usage
+    /// summary, so it works fully offline.
+    func recentlyViewedConceptIds(limit: Int = 8) -> [UUID] {
+        let events = ((try? modelContext.fetch(FetchDescriptor<GamificationEvent>())) ?? [])
+            .filter { $0.type == .conceptViewed && $0.conceptId != nil }
+            .sorted { $0.at > $1.at }
+        var seen = Set<UUID>()
+        var ordered: [UUID] = []
+        for event in events {
+            guard let id = event.conceptId, seen.insert(id).inserted else { continue }
+            ordered.append(id)
+            if ordered.count >= limit { break }
+        }
+        return ordered
+    }
+
     /// Pops the currently-presented unlock so the next queued one (if any)
     /// shows next — badges/level-ups are shown one at a time.
     func dismissCurrentUnlock() {

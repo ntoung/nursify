@@ -14,6 +14,7 @@ struct ConceptDetailView: View {
 
     @State private var concept: Concept?
     @State private var loadError: String?
+    @State private var showingAddToList = false
 
     var body: some View {
         Group {
@@ -51,7 +52,33 @@ struct ConceptDetailView: View {
         }
     }
 
+    /// Kebab menu (top-right of the header) for grouping this concept to review
+    /// from the "Saved" section on the Search tab. See CollectionsView.
     @ViewBuilder
+    private func savedActionsMenu(for concept: Concept) -> some View {
+        let isFavorite = appState.isFavorite(concept.id)
+        Menu {
+            Button { appState.toggleFavorite(concept.id) } label: {
+                Label(isFavorite ? "Remove from Favorites" : "Add to Favorites",
+                      systemImage: isFavorite ? "star.slash" : "star")
+            }
+            Button { showingAddToList = true } label: {
+                Label("Add to list", systemImage: "text.badge.plus")
+            }
+        } label: {
+            Image(systemName: "ellipsis")
+                .rotationEffect(.degrees(90))
+                .font(.system(size: 18, weight: .bold))
+                .foregroundStyle(Theme.Color.ink)
+                .frame(width: 30, height: 30)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .sheet(isPresented: $showingAddToList) {
+            AddToListSheet(conceptId: concept.id)
+        }
+    }
+
     private func content(for concept: Concept) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -97,6 +124,10 @@ struct ConceptDetailView: View {
                         }
                         .padding(.top, 2)
                     }
+
+                    Spacer(minLength: 8)
+
+                    savedActionsMenu(for: concept)
                 }
 
                 if !concept.tags.isEmpty {

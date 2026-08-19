@@ -15,6 +15,12 @@ final class AppState: ObservableObject {
     @Published var notes: [Note] = []
     @Published var lookupSessions: [LookupSession] = SampleData.lookupSessions
 
+    /// Favorited concepts and user-created review lists - device-local (like
+    /// notes; no server endpoint yet), persisted to Collections.json. Surfaced
+    /// in the "Saved" section on the Search tab. See CollectionsView.swift.
+    @Published private(set) var favorites: Set<UUID> = []
+    @Published private(set) var lists: [ConceptList] = []
+
     @Published var suggestions: [Suggestion] = []
 
     /// Local ids of notes captured offline and still awaiting sync — drives the
@@ -71,6 +77,19 @@ final class AppState: ObservableObject {
             .appendingPathComponent("Notes.json")
     }()
 
+    private static let collectionsFileURL: URL? = {
+        try? FileManager.default
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("Collections.json")
+    }()
+
+    /// On-disk shape for favorites + lists (Set isn't directly Codable-friendly
+    /// to round-trip, so favorites persist as an array).
+    private struct StoredCollections: Codable {
+        var favorites: [UUID] = []
+        var lists: [ConceptList] = []
+    }
+
     /// Onboarding answers are device-local (no profile endpoint exists yet),
     /// persisted to UserDefaults so they survive relaunch instead of asking
     /// again every time the app opens.
@@ -95,6 +114,9 @@ final class AppState: ObservableObject {
             userProfile = profile
         }
         notes = AppState.loadNotes()
+        let storedCollections = AppState.loadCollections()
+        favorites = Set(storedCollections.favorites)
+        lists = storedCollections.lists
         pendingNoteIds = syncQueue.pendingNoteIds
         self.gamification.updateSpecialties(userProfile.specialties)
         startConnectivityMonitoring()
@@ -177,6 +199,78 @@ final class AppState: ObservableObject {
         return notes
     }
 
+    // MARK: Favorites & lists
+
+    private func persistCollections() {
+        guard let url = AppState.collectionsFileURL,
+              let data = try? JSONEncoder().encode(StoredCollections(favorites: Array(favorites), lists: lists)) else { return }
+        try? data.write(to: url, options: .atomic)
+    }
+
+    private static func loadCollections() -> StoredCollections {
+        guard let url = collectionsFileURL, FileManager.default.fileExists(atPath: url.path),
+              let data = try? Data(contentsOf: url),
+              let stored = try? JSONDecoder().decode(StoredCollections.self, from: data) else {
+            return StoredCollections()
+        }
+        return stored
+    }
+
+    func isFavorite(_ conceptId: UUID) -> Bool { favorites.contains(conceptId) }
+
+    func toggleFavorite(_ conceptId: UUID) {
+        if favorites.contains(conceptId) {
+            favorites.remove(conceptId)
+        } else {
+            favorites.insert(conceptId)
+        }
+        persistCollections()
+    }
+
+    /// Creates a new (empty) list and returns its id. Lists are inserted at the
+    /// front so the most recently created is shown first.
+    @discardableResult
+    func createList(named name: String) -> UUID {
+        let list = ConceptList(
+            id: UUID(),
+            name: name.trimmingCharacters(in: .whitespacesAndNewlines),
+            conceptIds: [],
+            createdAt: Date()
+        )
+        lists.insert(list, at: 0)
+        persistCollections()
+        return list.id
+    }
+
+    func renameList(_ listId: UUID, to name: String) {
+        guard let index = lists.firstIndex(where: { $0.id == listId }) else { return }
+        lists[index].name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        persistCollections()
+    }
+
+    func deleteList(_ listId: UUID) {
+        lists.removeAll { $0.id == listId }
+        persistCollections()
+    }
+
+    func isConcept(_ conceptId: UUID, inList listId: UUID) -> Bool {
+        lists.first { $0.id == listId }?.conceptIds.contains(conceptId) ?? false
+    }
+
+    /// Adds or removes a concept from a list. New members go to the front so the
+    /// most recently added shows first when reviewing.
+    func setConcept(_ conceptId: UUID, inList listId: UUID, member: Bool) {
+        guard let index = lists.firstIndex(where: { $0.id == listId }) else { return }
+        if member {
+            if !lists[index].conceptIds.contains(conceptId) {
+                lists[index].conceptIds.insert(conceptId, at: 0)
+            }
+        } else {
+            lists[index].conceptIds.removeAll { $0 == conceptId }
+        }
+        persistCollections()
+    }
+
     func completeOnboarding(name: String, specialties: Set<Specialty>, experience: ExperienceLevel?) {
         userProfile = UserProfile(name: name, specialties: specialties, experienceLevel: experience)
         hasCompletedOnboarding = true
@@ -232,6 +326,13 @@ final class AppState: ObservableObject {
     func recordConceptView(conceptId: UUID) async {
         guard let concept = library.concept(id: conceptId) else { return }
         gamification.logConceptViewed(conceptId: conceptId, conceptType: concept.type)
+    }
+
+    /// Recently viewed concepts (most recent first) for the Search page's
+    /// "Recent" list - sourced from the local gamification event log, so it
+    /// works fully offline, and resolved to summaries through the library.
+    func recentlyViewedConcepts(limit: Int = 8) -> [ConceptSummary] {
+        library.summaries(ids: gamification.recentlyViewedConceptIds(limit: limit))
     }
 
     // MARK: - Chart lookup — computed entirely from the offline library, so it

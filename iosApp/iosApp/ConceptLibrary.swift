@@ -265,6 +265,12 @@ final class ConceptLibrary: ObservableObject {
 
     func concept(id: UUID) -> Concept? { byId[id] }
 
+    /// Summaries for the given concept ids, preserving order and dropping any
+    /// that no longer resolve - backs the Search page's "Recent" list.
+    func summaries(ids: [UUID]) -> [ConceptSummary] {
+        ids.compactMap { byId[$0] }.map(Self.summary)
+    }
+
     /// Resolve a term to a concept by exact (case-insensitive) name first, then
     /// by any exact alias — mirrors the backend's `findByNameOrAliasIgnoreCase`
     /// so chart lookup matches brand names and abbreviations ("Lasix", "ASA")

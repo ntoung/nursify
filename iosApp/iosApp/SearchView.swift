@@ -2,14 +2,18 @@ import SwiftUI
 
 /// The utility-focused tab: relevance-ranked, typo-tolerant search with
 /// alias-aware autocomplete and category browse, served from the offline
-/// ConceptLibrary. (Viewed concepts are tracked by the gamification usage
-/// summary on Home - there's no separate search-history list here.)
+/// ConceptLibrary. With nothing typed and no topic selected, it shows a
+/// "Recent" list of recently viewed concepts (from the local view log).
 struct SearchView: View {
     @EnvironmentObject private var appState: AppState
     @State private var query = ""
     @State private var results: [ConceptSummary] = []
+    @State private var recents: [ConceptSummary] = []
     @State private var activeCategory: ConceptType?
     @FocusState private var searchFieldFocused: Bool
+
+    /// The idle state - no query, no topic scope - is when the Recent list shows.
+    private var isBrowsingIdle: Bool { trimmedQuery.isEmpty && activeCategory == nil }
 
     private var trimmedQuery: String { query.trimmingCharacters(in: .whitespacesAndNewlines) }
 
@@ -83,6 +87,11 @@ struct SearchView: View {
                                 .font(Theme.Font.body(13.5))
                                 .foregroundStyle(Theme.Color.sub)
                                 .padding(.vertical, 12)
+                        } else if isBrowsingIdle {
+                            SavedSection()
+                            if !recents.isEmpty {
+                                recentSection
+                            }
                         }
                     }
                     .animation(.easeInOut(duration: 0.25), value: activeCategory)
@@ -98,7 +107,31 @@ struct SearchView: View {
             .background(Theme.Color.background.ignoresSafeArea())
             .toolbar(.hidden, for: .navigationBar)
             .task(id: searchKey) { await runSearch() }
+            // Reload on every appearance - including popping back from a
+            // concept detail - so a just-viewed concept shows up at the top.
+            .onAppear { recents = appState.recentlyViewedConcepts() }
         }
+    }
+
+    @ViewBuilder
+    private var recentSection: some View {
+        SectionLabel(text: "Recent")
+            .padding(.top, 22)
+            .padding(.bottom, 8)
+        VStack(spacing: 0) {
+            ForEach(recents) { item in
+                NavigationLink(destination: ConceptDetailView(conceptId: item.id)) {
+                    AutocompleteRow(item: item)
+                }
+                .buttonStyle(.plain)
+                if item.id != recents.last?.id {
+                    Divider().padding(.leading, 16)
+                }
+            }
+        }
+        .background(Theme.Color.card)
+        .clipShape(RoundedRectangle(cornerRadius: 18))
+        .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.Color.line, lineWidth: 1))
     }
 
     @ViewBuilder
