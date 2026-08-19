@@ -34,6 +34,37 @@ data class ConceptSections(
     val steps: String? = null
 )
 
+// Structured scoring for ASSESSMENT_TOOL concepts (e.g. GCS, NIHSS) that drives
+// the "Score" tab's interactive calculator and the "Learn" tab's component
+// table + colour-coded interpretation bands. Optional: tools without a simple
+// additive score (CAM-ICU, FAST) leave this null and render Learn-only.
+@Serializable
+data class AssessmentScoring(
+    val components: List<AssessmentComponent>,
+    val bands: List<AssessmentBand>,
+    val criticalNote: String? = null
+)
+
+@Serializable
+data class AssessmentComponent(
+    val name: String,
+    val options: List<AssessmentOption>
+)
+
+@Serializable
+data class AssessmentOption(
+    val label: String,
+    val points: Int
+)
+
+@Serializable
+data class AssessmentBand(
+    val min: Int,
+    val max: Int,
+    val label: String,
+    val severity: String // "mild" | "moderate" | "severe"
+)
+
 @Serializable
 data class AliasDto(
     val id: String,
@@ -52,6 +83,7 @@ data class ConceptDto(
     val aliases: List<AliasDto> = emptyList(),
     val relatedConceptIds: List<String> = emptyList(),
     val pronunciation: String? = null,
+    val assessment: AssessmentScoring? = null,
     val sourceCitation: String? = null
 )
 

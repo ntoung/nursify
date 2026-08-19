@@ -119,7 +119,37 @@ struct Concept: Identifiable, Codable, Hashable {
     /// Written phonetic respelling (e.g. "byoo-TAL-bih-tal"), shown under the
     /// title alongside a tap-to-hear button. Optional; not every concept needs one.
     var pronunciation: String?
+    /// Structured scoring for ASSESSMENT_TOOL concepts — drives the Learn/Score
+    /// tabs on the detail page. Nil for tools without a simple additive score.
+    var assessment: AssessmentScoring?
     var sourceCitation: String?
+}
+
+/// Structured scoring model for assessment tools (GCS, NIHSS, Braden, …).
+struct AssessmentScoring: Codable, Hashable {
+    var components: [AssessmentComponent]
+    var bands: [AssessmentBand]
+    var criticalNote: String?
+}
+
+struct AssessmentComponent: Codable, Hashable, Identifiable {
+    var name: String
+    var options: [AssessmentOption]
+    var id: String { name }
+}
+
+struct AssessmentOption: Codable, Hashable, Identifiable {
+    var label: String
+    var points: Int
+    var id: String { "\(label)#\(points)" }
+}
+
+struct AssessmentBand: Codable, Hashable, Identifiable {
+    var min: Int
+    var max: Int
+    var label: String
+    var severity: String // "mild" | "moderate" | "severe"
+    var id: String { "\(min)-\(max)" }
 }
 
 /// Lightweight result shape for search/category-browse — matches the

@@ -118,16 +118,22 @@ struct ConceptDetailView: View {
                     .foregroundStyle(Theme.Color.ink)
                     .fixedSize(horizontal: false, vertical: true)
 
-                ForEach(typeSpecificSections(for: concept), id: \.label) { section in
-                    if section.isHighlighted {
-                        VStack(alignment: .leading, spacing: 6) {
-                            SectionLabel(text: section.label)
-                            Text(section.content)
-                                .font(Theme.Font.body(15))
-                                .foregroundStyle(Theme.Color.ink)
+                if concept.type == .assessmentTool, let assessment = concept.assessment {
+                    // Structured tools get the Learn/Score experience; tools
+                    // without scoring data fall through to the text sections.
+                    AssessmentToolBody(scoring: assessment)
+                } else {
+                    ForEach(typeSpecificSections(for: concept), id: \.label) { section in
+                        if section.isHighlighted {
+                            VStack(alignment: .leading, spacing: 6) {
+                                SectionLabel(text: section.label)
+                                Text(section.content)
+                                    .font(Theme.Font.body(15))
+                                    .foregroundStyle(Theme.Color.ink)
+                            }
+                        } else {
+                            labeledParagraph(section.label, section.content)
                         }
-                    } else {
-                        labeledParagraph(section.label, section.content)
                     }
                 }
 

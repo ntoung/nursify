@@ -20,6 +20,7 @@ object ConceptRepository {
         sections: ConceptSections,
         tags: List<String>,
         pronunciation: String?,
+        assessment: AssessmentScoring?,
         sourceCitation: String?
     ) = transaction {
         Concepts.insert {
@@ -30,6 +31,7 @@ object ConceptRepository {
             it[Concepts.sectionsJson] = json.encodeToString(sections)
             it[Concepts.tagsJson] = json.encodeToString(tags)
             it[Concepts.pronunciation] = pronunciation
+            it[Concepts.assessmentJson] = assessment?.let { a -> json.encodeToString(a) }
             it[Concepts.sourceCitation] = sourceCitation
             it[Concepts.createdAt] = Instant.now()
         }
@@ -150,6 +152,7 @@ object ConceptRepository {
             aliases = aliases,
             relatedConceptIds = relatedIds,
             pronunciation = row[Concepts.pronunciation],
+            assessment = row[Concepts.assessmentJson]?.let { json.decodeFromString<AssessmentScoring>(it) },
             sourceCitation = row[Concepts.sourceCitation]
         )
     }

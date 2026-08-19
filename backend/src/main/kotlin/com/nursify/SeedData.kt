@@ -35,6 +35,7 @@ object SeedData {
         val aliases: List<AliasSeed> = emptyList(),
         val related: List<String> = emptyList(),
         val pronunciation: String? = null,
+        val assessment: AssessmentScoring? = null,
         val sourceCitation: String? = null
     )
 
@@ -69,6 +70,7 @@ object SeedData {
                 sections = seed.sections,
                 tags = seed.tags,
                 pronunciation = seed.pronunciation,
+                assessment = seed.assessment,
                 sourceCitation = seed.sourceCitation
             )
             seed.aliases.forEach { alias ->
