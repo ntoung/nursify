@@ -50,7 +50,7 @@ targets:
         Debug:
           API_BASE_URL: "http://192.168.1.194:8081"
         Release:
-          API_BASE_URL: "https://nursify-api-REPLACE-ME.run.app"
+          API_BASE_URL: "https://nursify-api-vjzv7vblpq-uw.a.run.app"
 
   WatchApp:
     type: application

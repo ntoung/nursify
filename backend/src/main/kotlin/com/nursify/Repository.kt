@@ -101,7 +101,33 @@ object ConceptRepository {
      * request rather than N+1 category + by-id calls.
      */
     fun findAll(): List<ConceptDto> = transaction {
-        Concepts.selectAll().map { rowToDto(it) }.sortedBy { it.name.lowercase() }
+        // Batch-load aliases and related edges once (grouped by concept) rather
+        // than issuing a per-concept query in rowToDto. That N+1 was invisible
+        // on a zero-latency local DB but became ~1,400 round-trips (=~40s) over
+        // a remote managed Postgres; this keeps the whole-corpus fetch to 3 queries.
+        val aliasesByConcept: Map<UUID, List<AliasDto>> = Aliases.selectAll()
+            .groupBy({ it[Aliases.conceptId] }) {
+                AliasDto(id = it[Aliases.id].toString(), text = it[Aliases.aliasText], type = it[Aliases.aliasType])
+            }
+        val relatedByConcept: Map<UUID, List<String>> = ConceptEdges.selectAll()
+            .groupBy({ it[ConceptEdges.fromConceptId] }) { it[ConceptEdges.toConceptId].toString() }
+
+        Concepts.selectAll().map { row ->
+            val id = row[Concepts.id]
+            ConceptDto(
+                id = id.toString(),
+                type = ConceptType.valueOf(row[Concepts.type]),
+                name = row[Concepts.name],
+                shortExplanation = row[Concepts.shortExplanation],
+                sections = json.decodeFromString<ConceptSections>(row[Concepts.sectionsJson]),
+                tags = json.decodeFromString<List<String>>(row[Concepts.tagsJson]),
+                aliases = aliasesByConcept[id] ?: emptyList(),
+                relatedConceptIds = relatedByConcept[id] ?: emptyList(),
+                pronunciation = row[Concepts.pronunciation],
+                assessment = row[Concepts.assessmentJson]?.let { json.decodeFromString<AssessmentScoring>(it) },
+                sourceCitation = row[Concepts.sourceCitation]
+            )
+        }.sortedBy { it.name.lowercase() }
     }
 
     fun byCategory(type: ConceptType): List<ConceptSummaryDto> = transaction {
