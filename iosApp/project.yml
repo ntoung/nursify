@@ -20,7 +20,7 @@ targets:
       properties:
         CFBundleDisplayName: Nursify
         CFBundleShortVersionString: "1.0"
-        CFBundleVersion: "8"
+        CFBundleVersion: "9"
         # Backend base URL, taken from the per-config API_BASE_URL build setting
         # below (Debug = dev LAN, Release = prod). Also overridable at runtime
         # via a UserDefaults/launch-arg `APIBaseURL` (see APIClient.resolveBaseURL).
@@ -62,7 +62,7 @@ targets:
       properties:
         CFBundleDisplayName: Nursify
         CFBundleShortVersionString: "1.0"
-        CFBundleVersion: "8"
+        CFBundleVersion: "9"
         WKApplication: true
         WKCompanionAppBundleIdentifier: com.nursify.ios
         UISupportedInterfaceOrientations:
