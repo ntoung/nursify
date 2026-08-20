@@ -73,6 +73,18 @@ cd iosApp && xcodegen generate
 Re-run this any time `project.yml` changes **or a new Swift file is added** - a new source file won't be in the build until the project is regenerated.
 This is the most common reason a just-added file "isn't found" at build time.
 
+## Tests
+
+Unit tests live in `iosApp/iosAppTests` (target `iosAppTests`, wired into the `iosApp` scheme's test action).
+
+```sh
+cd iosApp
+xcodebuild test -project iosApp.xcodeproj -scheme iosApp \
+  -destination 'id=<sim-udid>' CODE_SIGNING_ALLOWED=NO
+```
+
+- watchOS UI + real mic + on-device speech recognition **can't** be exercised in the Simulator or by XCUITest (Apple doesn't support watchOS UI testing, and the sim has no mic/on-device model). So logic that would otherwise be trapped behind those services is extracted into plain, injectable types and tested there - e.g. `WatchNoteAssembler` covers the Watch-note buffer/join/partial-failure logic with transcription results passed in. Verify those paths definitively on a physical Apple Watch.
+
 ## Backend
 
 ```sh

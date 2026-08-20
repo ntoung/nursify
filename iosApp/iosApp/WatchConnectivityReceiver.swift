@@ -24,15 +24,9 @@ final class WatchConnectivityReceiver: NSObject, ObservableObject {
 
     weak var appState: AppState?
 
-    private struct SessionBuffer {
-        var transcriptsBySequence: [Int: String] = [:]
-        var failedSequences: Set<Int> = []
-        var expectedCount: Int?
-
-        var receivedCount: Int { transcriptsBySequence.count + failedSequences.count }
-    }
-
-    private var sessionBuffers: [String: SessionBuffer] = [:]
+    /// Session buffering/joining lives in WatchNoteAssembler so it can be
+    /// unit-tested without a live WCSession or the speech recognizer.
+    private var assembler = WatchNoteAssembler()
 
     private let session: WCSession? = WCSession.isSupported() ? .default : nil
 
@@ -45,24 +39,38 @@ final class WatchConnectivityReceiver: NSObject, ObservableObject {
     private func handleReceivedFile(at url: URL, sessionId: String, sequence: Int) {
         Task {
             defer { try? FileManager.default.removeItem(at: url) }
+            // A transcription failure or silence (nil/empty) is counted as
+            // "heard back from" by the assembler so the session can still
+            // complete, just without this clip - there's nowhere good to
+            // surface it synchronously (the phone app may not even be in the
+            // foreground when this runs).
             let transcript = try? await SpeechCapture.transcribeFile(at: url)
-            let trimmed = transcript?.trimmingCharacters(in: .whitespacesAndNewlines)
-            if let trimmed, !trimmed.isEmpty {
-                sessionBuffers[sessionId, default: SessionBuffer()].transcriptsBySequence[sequence] = trimmed
-            } else {
-                // Transcription failure or silence has nowhere good to surface
-                // synchronously (the phone app may not even be in the
-                // foreground when this runs) — counted as "heard back from" so
-                // the session can still complete, just without this clip.
-                sessionBuffers[sessionId, default: SessionBuffer()].failedSequences.insert(sequence)
+            if let outcome = assembler.receiveClip(sessionId: sessionId, sequence: sequence, transcript: transcript) {
+                apply(outcome)
             }
-            tryFlush(sessionId)
         }
     }
 
     private func markSessionComplete(sessionId: String, totalCount: Int) {
-        sessionBuffers[sessionId, default: SessionBuffer()].expectedCount = totalCount
-        tryFlush(sessionId)
+        if let outcome = assembler.markComplete(sessionId: sessionId, totalCount: totalCount) {
+            apply(outcome)
+        }
+    }
+
+    private func apply(_ outcome: WatchNoteAssembler.Outcome) {
+        switch outcome {
+        case .lost:
+            // Previously a fully-failed note just vanished with no trace - a
+            // nurse would see it marked "sent" on the Watch and then nothing on
+            // the phone, unable to tell whether it was still in flight or lost
+            // for good. Surfacing it here at least makes the loss visible.
+            appState?.errorMessage = "A voice note from your Watch couldn't be transcribed and was lost. Try recording again closer to your phone."
+        case .ready(let text, let partialFailure):
+            if partialFailure {
+                appState?.errorMessage = "Part of a Watch note couldn't be transcribed - review it carefully before saving."
+            }
+            appState?.pendingWatchDrafts.append(text)
+        }
     }
 
     // MARK: - Ask mode — a single spoken term, answered immediately over
@@ -115,33 +123,6 @@ final class WatchConnectivityReceiver: NSObject, ObservableObject {
         )
     }
 
-    private func tryFlush(_ sessionId: String) {
-        guard let buffer = sessionBuffers[sessionId],
-              let expected = buffer.expectedCount,
-              buffer.receivedCount >= expected else { return }
-        sessionBuffers.removeValue(forKey: sessionId)
-
-        let joined = buffer.transcriptsBySequence
-            .sorted { $0.key < $1.key }
-            .map(\.value)
-            .joined(separator: " ")
-
-        guard !joined.isEmpty else {
-            // Every clip in this note failed to transcribe (denied
-            // permission, no on-device model, or nothing but silence was
-            // recorded). Previously this just vanished with no trace at all
-            // — a nurse who recorded a note on the Watch would see it marked
-            // "sent" there and then nothing would ever show up on the phone,
-            // with no way to tell whether it was still in flight or lost for
-            // good. Surfacing it here at least makes the loss visible.
-            appState?.errorMessage = "A voice note from your Watch couldn't be transcribed and was lost. Try recording again closer to your phone."
-            return
-        }
-        if !buffer.failedSequences.isEmpty {
-            appState?.errorMessage = "Part of a Watch note couldn't be transcribed — review it carefully before saving."
-        }
-        appState?.pendingWatchDrafts.append(joined)
-    }
 }
 
 extension WatchConnectivityReceiver: WCSessionDelegate {

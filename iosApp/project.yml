@@ -77,6 +77,25 @@ targets:
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: W5A6QAYASM
 
+  # Unit tests for phone-side logic. The Watch note-assembly path (buffering
+  # clips, joining in order, partial/total transcription failure) lives in
+  # WatchNoteAssembler precisely so it can be covered here without a live
+  # WCSession or the on-device speech recognizer, neither of which runs in the
+  # Simulator. See iosAppTests/WatchNoteAssemblerTests.swift.
+  iosAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: iosAppTests
+    dependencies:
+      - target: iosApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nursify.ios.tests
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: YES
+        DEVELOPMENT_TEAM: W5A6QAYASM
+
 # Explicit SHARED schemes (committed to the repo) so everyone gets the same
 # run setup instead of Xcode's per-user auto-schemes. Select "Nursify Watch"
 # with an Apple Watch destination and Run to install the watch app directly —
@@ -91,6 +110,8 @@ schemes:
       config: Debug
     test:
       config: Debug
+      targets:
+        - iosAppTests
     profile:
       config: Release
     analyze:
