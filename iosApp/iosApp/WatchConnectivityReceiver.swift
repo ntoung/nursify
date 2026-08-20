@@ -91,7 +91,10 @@ final class WatchConnectivityReceiver: NSObject, ObservableObject {
             let response: AskResponse
             do {
                 try audioData.write(to: url)
-                let transcript = try await SpeechCapture.transcribeFile(at: url)
+                // Short timeout: an Ask clip is a word or two, and the watch is
+                // waiting live - a stalled attempt should time out fast enough
+                // that the retry still lands before the watch's own cap.
+                let transcript = try await SpeechCapture.transcribeFile(at: url, timeout: 8)
                 response = resolveAskQuery(transcript: transcript)
             } catch {
                 response = AskResponse(

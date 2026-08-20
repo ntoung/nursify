@@ -284,7 +284,10 @@ final class SpeechCapture: NSObject, ObservableObject {
     /// Transcription of a pre-recorded audio file — used for Watch-recorded
     /// clips (WatchConnectivityReceiver, both note capture and Ask mode), as
     /// opposed to the live mic transcription above used for phone dictation.
-    static func transcribeFile(at url: URL) async throws -> String {
+    /// - Parameter timeout: per-attempt upper bound. Ask mode passes a short
+    ///   value (its clips are a word or two, and the watch is waiting live);
+    ///   note capture keeps the generous default so a longer memo isn't cut off.
+    static func transcribeFile(at url: URL, timeout: TimeInterval = 20) async throws -> String {
         guard let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US")),
               recognizer.supportsOnDeviceRecognition else {
             throw CaptureError.onDeviceUnavailable
@@ -295,15 +298,17 @@ final class SpeechCapture: NSObject, ObservableObject {
 
         // Same transient on-device-recognizer-init failure as the live path
         // in `start()` above can happen here too (a fresh SFSpeechRecognizer
-        // instance is created per call) — one silent retry before giving up.
+        // instance is created per call). The one silent retry now also covers a
+        // first attempt that *stalled* (timed out) rather than only one that
+        // threw - a warmed-up recognizer usually completes on the second try.
         do {
-            return try await attemptTranscribeFile(at: url, recognizer: recognizer)
+            return try await attemptTranscribeFile(at: url, recognizer: recognizer, timeout: timeout)
         } catch {
-            return try await attemptTranscribeFile(at: url, recognizer: recognizer)
+            return try await attemptTranscribeFile(at: url, recognizer: recognizer, timeout: timeout)
         }
     }
 
-    private static func attemptTranscribeFile(at url: URL, recognizer: SFSpeechRecognizer) async throws -> String {
+    private static func attemptTranscribeFile(at url: URL, recognizer: SFSpeechRecognizer, timeout: TimeInterval) async throws -> String {
         let request = SFSpeechURLRecognitionRequest(url: url)
         request.requiresOnDeviceRecognition = true
         request.taskHint = .dictation
@@ -332,7 +337,7 @@ final class SpeechCapture: NSObject, ObservableObject {
                     guardOnce.run { continuation.resume(returning: text) }
                 }
             }
-            DispatchQueue.global().asyncAfter(deadline: .now() + fileTranscriptionTimeout) {
+            DispatchQueue.global().asyncAfter(deadline: .now() + timeout) {
                 guardOnce.run {
                     task.cancel()
                     continuation.resume(throwing: CaptureError.transcriptionTimedOut)
@@ -340,10 +345,6 @@ final class SpeechCapture: NSObject, ObservableObject {
             }
         }
     }
-
-    /// Upper bound on file transcription. A short spoken memo transcribes in a
-    /// couple of seconds on-device; well past that means the task has stalled.
-    private static let fileTranscriptionTimeout: TimeInterval = 15
 }
 
 /// Runs a block at most once, thread-safely - the recognition callback and the
