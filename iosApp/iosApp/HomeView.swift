@@ -41,6 +41,12 @@ struct HomeView: View {
                         usageSummarySection
 
                         badgeShelf
+
+                        Text(AppInfo.versionLabel)
+                            .font(Theme.Font.body(11))
+                            .foregroundStyle(Theme.Color.sub.opacity(0.5))
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.top, 4)
                     }
                     .padding(24)
                     .padding(.bottom, 70)

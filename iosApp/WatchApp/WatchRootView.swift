@@ -9,6 +9,7 @@ struct WatchRootView: View {
         TabView {
             WatchCaptureView()
             WatchAskView()
+            WatchSettingsView()
         }
         .tabViewStyle(.page)
     }
