@@ -27,6 +27,7 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
     enum AskError: LocalizedError {
         case notReachable
         case invalidReply
+        case timedOut
 
         var errorDescription: String? {
             switch self {
@@ -34,6 +35,8 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
                 return "Can't reach your phone right now. Make sure the Nursify app is open nearby and try again."
             case .invalidReply:
                 return "Got an unexpected reply from your phone. Try again."
+            case .timedOut:
+                return "Your phone didn't answer in time. Make sure the Nursify app is open nearby and try again."
             }
         }
     }
@@ -70,20 +73,36 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
     }
 
     /// Sends a single spoken query to the phone and waits for its answer.
+    ///
+    /// Races the phone's reply against a hard timeout so the Ask screen can
+    /// never sit on "Thinking..." forever if a reply is lost or the phone is
+    /// slow - the phone also caps its own transcription, but this is the
+    /// last-resort guarantee the watch UI always resolves.
     func ask(fileAt url: URL) async throws -> AskResponse {
         guard let session, session.isReachable else { throw AskError.notReachable }
         let audioData = try Data(contentsOf: url)
 
-        return try await withCheckedThrowingContinuation { continuation in
-            session.sendMessageData(audioData) { replyData in
-                guard let response = try? JSONDecoder().decode(AskResponse.self, from: replyData) else {
-                    continuation.resume(throwing: AskError.invalidReply)
-                    return
+        return try await withThrowingTaskGroup(of: AskResponse.self) { group in
+            group.addTask {
+                try await withCheckedThrowingContinuation { continuation in
+                    session.sendMessageData(audioData) { replyData in
+                        guard let response = try? JSONDecoder().decode(AskResponse.self, from: replyData) else {
+                            continuation.resume(throwing: AskError.invalidReply)
+                            return
+                        }
+                        continuation.resume(returning: response)
+                    } errorHandler: { error in
+                        continuation.resume(throwing: error)
+                    }
                 }
-                continuation.resume(returning: response)
-            } errorHandler: { error in
-                continuation.resume(throwing: error)
             }
+            group.addTask {
+                try await Task.sleep(nanoseconds: 20_000_000_000)
+                throw AskError.timedOut
+            }
+            defer { group.cancelAll() }
+            guard let first = try await group.next() else { throw AskError.timedOut }
+            return first
         }
     }
 

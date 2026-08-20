@@ -17,6 +17,7 @@ final class SpeechCapture: NSObject, ObservableObject {
         case callInProgress
         case audioSessionFailed(Error)
         case recognitionFailed(Error)
+        case transcriptionTimedOut
 
         var errorDescription: String? {
             switch self {
@@ -35,6 +36,8 @@ final class SpeechCapture: NSObject, ObservableObject {
                 return "Couldn't start recording: \(error.localizedDescription). Try again — if it keeps happening, another app may be using the microphone."
             case .recognitionFailed(let error):
                 return "Recording stopped unexpectedly: \(error.localizedDescription)"
+            case .transcriptionTimedOut:
+                return "Transcription took too long and was stopped. Try recording again, a bit closer to the mic."
             }
         }
     }
@@ -312,15 +315,50 @@ final class SpeechCapture: NSObject, ObservableObject {
         // continuation twice and crash.
         request.shouldReportPartialResults = false
 
+        // A recognition task only resumes this continuation on an error or a
+        // final result. On some clips (short, silent, or when the on-device
+        // model is briefly unhappy) it delivers *neither* - no final result and
+        // no error - and would hang forever. That hang holds the Watch's Ask
+        // reply open ("Thinking..." with no end) and stalls Watch note assembly
+        // (the clip never resolves, so no journal entry and no error surfaces).
+        // A timeout converts that silent hang into a clear, recoverable failure.
+        let guardOnce = ResumeOnce()
         return try await withCheckedThrowingContinuation { continuation in
-            recognizer.recognitionTask(with: request) { result, error in
+            let task = recognizer.recognitionTask(with: request) { result, error in
                 if let error {
-                    continuation.resume(throwing: error)
+                    guardOnce.run { continuation.resume(throwing: error) }
                 } else if let result, result.isFinal {
-                    continuation.resume(returning: result.bestTranscription.formattedString)
+                    let text = result.bestTranscription.formattedString
+                    guardOnce.run { continuation.resume(returning: text) }
+                }
+            }
+            DispatchQueue.global().asyncAfter(deadline: .now() + fileTranscriptionTimeout) {
+                guardOnce.run {
+                    task.cancel()
+                    continuation.resume(throwing: CaptureError.transcriptionTimedOut)
                 }
             }
         }
+    }
+
+    /// Upper bound on file transcription. A short spoken memo transcribes in a
+    /// couple of seconds on-device; well past that means the task has stalled.
+    private static let fileTranscriptionTimeout: TimeInterval = 15
+}
+
+/// Runs a block at most once, thread-safely - the recognition callback and the
+/// timeout race to resume the same continuation from different queues, and
+/// resuming a checked continuation twice traps.
+private final class ResumeOnce {
+    private let lock = NSLock()
+    private var hasRun = false
+
+    func run(_ block: () -> Void) {
+        lock.lock()
+        let first = !hasRun
+        hasRun = true
+        lock.unlock()
+        if first { block() }
     }
 }
 
