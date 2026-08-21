@@ -20,7 +20,7 @@ targets:
       properties:
         CFBundleDisplayName: Nursify
         CFBundleShortVersionString: "1.0"
-        CFBundleVersion: "9"
+        CFBundleVersion: "10"
         # Nursify only uses standard exempt encryption (HTTPS/TLS and Apple's
         # system frameworks), so declare that up front. Without this key every
         # upload is stuck at "Missing Compliance" in TestFlight until the export
@@ -67,7 +67,7 @@ targets:
       properties:
         CFBundleDisplayName: Nursify
         CFBundleShortVersionString: "1.0"
-        CFBundleVersion: "9"
+        CFBundleVersion: "10"
         ITSAppUsesNonExemptEncryption: false
         WKApplication: true
         WKCompanionAppBundleIdentifier: com.nursify.ios
@@ -83,11 +83,9 @@ targets:
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: W5A6QAYASM
 
-  # Unit tests for phone-side logic. The Watch note-assembly path (buffering
-  # clips, joining in order, partial/total transcription failure) lives in
-  # WatchNoteAssembler precisely so it can be covered here without a live
-  # WCSession or the on-device speech recognizer, neither of which runs in the
-  # Simulator. See iosAppTests/WatchNoteAssemblerTests.swift.
+  # Unit tests for phone-side logic that would otherwise be trapped behind a
+  # live WCSession or the on-device speech recognizer (neither runs in the
+  # Simulator) - e.g. WatchIntent's note-vs-question routing. See iosAppTests/.
   iosAppTests:
     type: bundle.unit-test
     platform: iOS
