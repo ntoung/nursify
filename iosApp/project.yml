@@ -21,6 +21,11 @@ targets:
         CFBundleDisplayName: Nursify
         CFBundleShortVersionString: "1.0"
         CFBundleVersion: "9"
+        # Nursify only uses standard exempt encryption (HTTPS/TLS and Apple's
+        # system frameworks), so declare that up front. Without this key every
+        # upload is stuck at "Missing Compliance" in TestFlight until the export
+        # question is answered by hand.
+        ITSAppUsesNonExemptEncryption: false
         # Backend base URL, taken from the per-config API_BASE_URL build setting
         # below (Debug = dev LAN, Release = prod). Also overridable at runtime
         # via a UserDefaults/launch-arg `APIBaseURL` (see APIClient.resolveBaseURL).
@@ -63,6 +68,7 @@ targets:
         CFBundleDisplayName: Nursify
         CFBundleShortVersionString: "1.0"
         CFBundleVersion: "9"
+        ITSAppUsesNonExemptEncryption: false
         WKApplication: true
         WKCompanionAppBundleIdentifier: com.nursify.ios
         UISupportedInterfaceOrientations:
