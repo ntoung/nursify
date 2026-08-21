@@ -10,6 +10,10 @@ struct WatchRootView: View {
             WatchSettingsView()
         }
         .tabViewStyle(.page)
+        // Activate Watch Connectivity at launch (not only on the first
+        // recording) so a result the phone already sent is received right away,
+        // updating any row still showing "sending…".
+        .task { _ = WatchConnectivityManager.shared }
     }
 }
 

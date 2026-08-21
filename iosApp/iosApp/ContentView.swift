@@ -6,7 +6,9 @@ import SwiftUI
 /// Journal replaces what used to be separate Capture/Charts tabs — see
 /// JournalView.
 struct ContentView: View {
-    @StateObject private var appState = AppState()
+    // Owned by the app delegate (created at launch) rather than by this view, so
+    // the Watch Connectivity receiver can reach it even on a background launch.
+    @ObservedObject var appState: AppState
     @Environment(\.scenePhase) private var scenePhase
     private enum Tab: Hashable { case home, journal, search }
     @State private var selectedTab: Tab = .journal
@@ -47,7 +49,8 @@ struct ContentView: View {
         // recording finished before ever dictating on the phone still
         // transcribes — see SpeechCapture.requestSpeechPermissionIfNeeded.
         .task {
-            WatchConnectivityReceiver.shared.appState = appState
+            // Receiver is wired at launch in AppDelegate; here we just do the
+            // foreground refresh work.
             await appState.flushOutbox()
             await appState.refreshLibrary()
             await SpeechCapture.requestSpeechPermissionIfNeeded()
@@ -72,5 +75,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(appState: AppState())
 }
