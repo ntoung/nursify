@@ -29,21 +29,6 @@ final class AppState: ObservableObject {
 
     @Published var errorMessage: String?
 
-    /// Finished watch notes (WatchConnectivityReceiver) awaiting the same
-    /// review/PHI-acknowledgment step as any other capture before they're
-    /// saved — see REQUIREMENTS.md "queued and finished/transcribed on phone
-    /// via Watch Connectivity." A FIFO queue rather than a single optional:
-    /// a nurse can finish a second watch note before reviewing the first, and
-    /// this way the second never silently overwrites/loses the first — each
-    /// is reviewed in turn. JournalView pops the next one when it's ready.
-    @Published var pendingWatchDrafts: [String] = []
-
-    /// Removes and returns the oldest queued watch note, if any.
-    func popNextPendingWatchDraft() -> String? {
-        guard !pendingWatchDrafts.isEmpty else { return nil }
-        return pendingWatchDrafts.removeFirst()
-    }
-
     private let api: APIClient
 
     /// The concept corpus, served locally from the bundled snapshot so search,
@@ -391,13 +376,13 @@ final class AppState: ObservableObject {
     // never depends on connectivity and never gets lost if the backend is
     // unreachable — see SyncQueue / flushOutbox.
 
-    func createNote(transcript: String, device: CaptureDevice, phiReviewed: Bool, entryGroupId: UUID? = nil) async {
+    func createNote(transcript: String, device: CaptureDevice, phiReviewed: Bool, phiFlagged: Bool = false, entryGroupId: UUID? = nil) async {
         let localId = UUID()
         let note = Note(
             id: localId,
             transcript: transcript,
             device: device,
-            phiFlagged: false,
+            phiFlagged: phiFlagged,
             createdAt: Date(),
             mentionedConcepts: library.mentions(in: transcript),
             entryGroupId: entryGroupId

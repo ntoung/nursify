@@ -1,45 +1,15 @@
 import Foundation
 import WatchConnectivity
 
-/// Hands recorded clips to the phone via Watch Connectivity's durable
-/// transfer queues. Both `transferFile` and `transferUserInfo` persist and
-/// retry across relaunches and out-of-range gaps, unlike `sendMessage` which
-/// needs an active connection — matching REQUIREMENTS.md's "queued" capture
-/// model.
-///
-/// A note built from multiple watch recordings (WatchNoteDraft) sends each
-/// clip as its own file tagged with a shared `sessionId` + `sequence`, then
-/// a final `transferUserInfo` "session complete" marker carrying the total
-/// clip count once the nurse taps Done. The phone (WatchConnectivityReceiver)
-/// buffers clips per session and only surfaces a note for review once it has
-/// every clip the completion marker says to expect — see that file for why.
-///
-/// Ask mode (a single spoken term, answered immediately) is a different
-/// transaction shape entirely — a live request/reply, not a durable queued
-/// background one — so it uses `sendMessageData` instead, which requires
-/// `isReachable` and fails fast rather than queuing. That's the right
-/// tradeoff here: a query answered minutes later, after the nurse has moved
-/// on, isn't useful the way a delayed note capture still is.
+/// Ships each recorded clip to the phone over Watch Connectivity's durable file
+/// queue (persists and retries across relaunches and out-of-range gaps), and
+/// receives the phone's durable result back to update the on-watch capture
+/// list. One transaction shape for everything now - note or question, the watch
+/// just sends audio and shows whatever the phone reports back. See
+/// WatchConnectivityReceiver on the phone side.
 @MainActor
 final class WatchConnectivityManager: NSObject, ObservableObject {
     static let shared = WatchConnectivityManager()
-
-    enum AskError: LocalizedError {
-        case notReachable
-        case invalidReply
-        case timedOut
-
-        var errorDescription: String? {
-            switch self {
-            case .notReachable:
-                return "Can't reach your phone right now. Make sure the Nursify app is open nearby and try again."
-            case .invalidReply:
-                return "Got an unexpected reply from your phone. Try again."
-            case .timedOut:
-                return "Your phone didn't answer in time. Make sure the Nursify app is open nearby and try again."
-            }
-        }
-    }
 
     @Published private(set) var pendingTransferCount = 0
 
@@ -51,59 +21,14 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
         session?.activate()
     }
 
+    /// Sends a recorded clip to the phone, tagged with the capture id so the
+    /// phone's result can be matched back to the right row.
     @discardableResult
-    func send(fileAt url: URL, sessionId: UUID, sequence: Int) -> WCSessionFileTransfer? {
+    func send(fileAt url: URL, captureId: UUID) -> WCSessionFileTransfer? {
         guard let session else { return nil }
-        let metadata: [String: Any] = ["sessionId": sessionId.uuidString, "sequence": sequence]
-        let transfer = session.transferFile(url, metadata: metadata)
+        let transfer = session.transferFile(url, metadata: ["captureId": captureId.uuidString])
         refreshPendingCount()
         return transfer
-    }
-
-    /// Tells the phone how many clips to expect for `sessionId` so it knows
-    /// when the note is complete rather than guessing from file arrivals
-    /// alone (file and userInfo transfers are independent queues with no
-    /// ordering guarantee between them).
-    func finishSession(id: UUID, clipCount: Int) {
-        session?.transferUserInfo([
-            "type": "sessionComplete",
-            "sessionId": id.uuidString,
-            "totalCount": clipCount
-        ])
-    }
-
-    /// Sends a single spoken query to the phone and waits for its answer.
-    ///
-    /// Races the phone's reply against a hard timeout so the Ask screen can
-    /// never sit on "Thinking..." forever if a reply is lost or the phone is
-    /// slow - the phone also caps its own transcription, but this is the
-    /// last-resort guarantee the watch UI always resolves.
-    func ask(fileAt url: URL) async throws -> AskResponse {
-        guard let session, session.isReachable else { throw AskError.notReachable }
-        let audioData = try Data(contentsOf: url)
-
-        return try await withThrowingTaskGroup(of: AskResponse.self) { group in
-            group.addTask {
-                try await withCheckedThrowingContinuation { continuation in
-                    session.sendMessageData(audioData) { replyData in
-                        guard let response = try? JSONDecoder().decode(AskResponse.self, from: replyData) else {
-                            continuation.resume(throwing: AskError.invalidReply)
-                            return
-                        }
-                        continuation.resume(returning: response)
-                    } errorHandler: { error in
-                        continuation.resume(throwing: error)
-                    }
-                }
-            }
-            group.addTask {
-                try await Task.sleep(nanoseconds: 20_000_000_000)
-                throw AskError.timedOut
-            }
-            defer { group.cancelAll() }
-            guard let first = try await group.next() else { throw AskError.timedOut }
-            return first
-        }
     }
 
     private func refreshPendingCount() {
@@ -118,5 +43,14 @@ extension WatchConnectivityManager: WCSessionDelegate {
 
     nonisolated func session(_ session: WCSession, didFinish fileTransfer: WCSessionFileTransfer, error: Error?) {
         Task { @MainActor in WatchConnectivityManager.shared.refreshPendingCount() }
+    }
+
+    // The phone's durable result for a capture - decode and hand to the store to
+    // fill in the matching row.
+    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        guard userInfo["type"] as? String == "captureResult",
+              let data = userInfo["payload"] as? Data,
+              let result = try? JSONDecoder().decode(WatchCaptureResult.self, from: data) else { return }
+        Task { @MainActor in WatchCaptureStore.shared.apply(result) }
     }
 }

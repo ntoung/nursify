@@ -1,32 +1,24 @@
 import Foundation
 import WatchConnectivity
 
-/// Receives voice notes recorded on the Watch app (WatchApp/) and finishes
-/// them on the phone: on-device transcription, then handed to AppState as a
-/// pending draft so the nurse runs it through the same review/PHI-
-/// acknowledgment gate as any other capture before it's saved. See
-/// REQUIREMENTS.md "Voice notes via iPhone and... Apple Watch (short memos
-/// captured on watch, queued and finished/transcribed on phone via Watch
-/// Connectivity)."
+/// Receives Watch-recorded clips and does the work the watch can't: on-device
+/// transcription, then routing. There's one entry point on the watch now - the
+/// nurse just talks - so the phone decides what the utterance was:
 ///
-/// A watch note can be built from several recordings (WatchNoteDraft on the
-/// watch side). Each clip arrives as its own file tagged with a shared
-/// `sessionId` + `sequence`; a separate `transferUserInfo` "session complete"
-/// marker (sent when the nurse taps Done) carries the total clip count. File
-/// and userInfo transfers are independent queues with no ordering guarantee
-/// between them, so a session's clips are buffered here and only joined/
-/// surfaced once the buffer actually holds (or has given up on) every clip
-/// the completion marker says to expect — never on a partial buffer, so a
-/// still-arriving note is never shown to the nurse half-finished.
+/// - a definition *question* ("what is X", "what does X stand for") -> look the
+///   term up in the bundled concept library and answer;
+/// - anything else -> a note, auto-saved to the journal.
+///
+/// Either way the phone sends a durable result back so the watch can fill in
+/// its capture row (see WatchCaptureResult / WatchCaptureStore). Auto-saved
+/// notes still get run through the on-device PHIScreener; a hit doesn't block
+/// the save (the nurse chose auto-save) but is flagged on the note and the
+/// watch row so possible patient info isn't stored silently.
 @MainActor
 final class WatchConnectivityReceiver: NSObject, ObservableObject {
     static let shared = WatchConnectivityReceiver()
 
     weak var appState: AppState?
-
-    /// Session buffering/joining lives in WatchNoteAssembler so it can be
-    /// unit-tested without a live WCSession or the speech recognizer.
-    private var assembler = WatchNoteAssembler()
 
     private let session: WCSession? = WCSession.isSupported() ? .default : nil
 
@@ -36,96 +28,84 @@ final class WatchConnectivityReceiver: NSObject, ObservableObject {
         session?.activate()
     }
 
-    private func handleReceivedFile(at url: URL, sessionId: String, sequence: Int) {
+    private func handleReceivedFile(at url: URL, captureId: String) {
         Task {
             defer { try? FileManager.default.removeItem(at: url) }
-            // A transcription failure or silence (nil/empty) is counted as
-            // "heard back from" by the assembler so the session can still
-            // complete, just without this clip - there's nowhere good to
-            // surface it synchronously (the phone app may not even be in the
-            // foreground when this runs).
-            let transcript = try? await SpeechCapture.transcribeFile(at: url)
-            if let outcome = assembler.receiveClip(sessionId: sessionId, sequence: sequence, transcript: transcript) {
-                apply(outcome)
-            }
+            let result = await process(fileAt: url, captureId: captureId)
+            sendResult(result)
         }
     }
 
-    private func markSessionComplete(sessionId: String, totalCount: Int) {
-        if let outcome = assembler.markComplete(sessionId: sessionId, totalCount: totalCount) {
-            apply(outcome)
+    private func process(fileAt url: URL, captureId: String) async -> WatchCaptureResult {
+        let transcript: String
+        do {
+            transcript = try await SpeechCapture.transcribeFile(at: url)
+        } catch {
+            return WatchCaptureResult(
+                captureId: captureId, kind: .failed,
+                title: "Couldn't transcribe",
+                detail: "That recording couldn't be transcribed. Try again, a bit closer to the mic.",
+                phiFlagged: false
+            )
+        }
+
+        let trimmed = transcript.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            return WatchCaptureResult(
+                captureId: captureId, kind: .failed,
+                title: "Nothing heard",
+                detail: "No speech was detected in that recording. Try again.",
+                phiFlagged: false
+            )
+        }
+
+        if WatchIntent.isQuestion(trimmed) {
+            return resolveDefinition(for: trimmed, captureId: captureId)
+        } else {
+            return await saveNote(trimmed, captureId: captureId)
         }
     }
 
-    private func apply(_ outcome: WatchNoteAssembler.Outcome) {
-        switch outcome {
-        case .lost:
-            // Previously a fully-failed note just vanished with no trace - a
-            // nurse would see it marked "sent" on the Watch and then nothing on
-            // the phone, unable to tell whether it was still in flight or lost
-            // for good. Surfacing it here at least makes the loss visible.
-            appState?.errorMessage = "A voice note from your Watch couldn't be transcribed and was lost. Try recording again closer to your phone."
-        case .ready(let text, let partialFailure):
-            if partialFailure {
-                appState?.errorMessage = "Part of a Watch note couldn't be transcribed - review it carefully before saving."
-            }
-            appState?.pendingWatchDrafts.append(text)
-        }
-    }
+    // MARK: Question -> definition (resolved offline against the bundled library)
 
-    // MARK: - Ask mode — a single spoken term, answered immediately over
-    // `sendMessageData`'s reply handler rather than the queued file/userInfo
-    // transfers above. Resolved entirely offline against the bundled concept
-    // library (same one Search uses), reusing whole-term mention matching:
-    // a query like "what's TAVR" contains "TAVR" as a matchable term the same
-    // way a note transcript would, so there's no separate query-parsing path
-    // to build or keep in sync with the note side.
-
-    private func handleAskQuery(audioData: Data, replyHandler: @escaping (Data) -> Void) {
-        Task {
-            let url = FileManager.default.temporaryDirectory
-                .appendingPathComponent(UUID().uuidString)
-                .appendingPathExtension("m4a")
-            defer { try? FileManager.default.removeItem(at: url) }
-
-            let response: AskResponse
-            do {
-                try audioData.write(to: url)
-                // Short timeout: an Ask clip is a word or two, and the watch is
-                // waiting live - a stalled attempt should time out fast enough
-                // that the retry still lands before the watch's own cap.
-                let transcript = try await SpeechCapture.transcribeFile(at: url, timeout: 8)
-                response = resolveAskQuery(transcript: transcript)
-            } catch {
-                response = AskResponse(
-                    found: false,
-                    termName: nil,
-                    shortExplanation: nil,
-                    longExplanation: nil,
-                    errorMessage: "Couldn't hear that clearly. Try again."
-                )
-            }
-            replyHandler((try? JSONEncoder().encode(response)) ?? Data())
-        }
-    }
-
-    private func resolveAskQuery(transcript: String) -> AskResponse {
+    private func resolveDefinition(for transcript: String, captureId: String) -> WatchCaptureResult {
         guard let match = ConceptLibrary.shared.mentions(in: transcript).first else {
-            return AskResponse(found: false, termName: nil, shortExplanation: nil, longExplanation: nil, errorMessage: nil)
+            return WatchCaptureResult(
+                captureId: captureId, kind: .definition,
+                title: "No match",
+                detail: "Couldn't find that term in the library. Try saying just the term.",
+                phiFlagged: false
+            )
         }
-        // Fire-and-forget: count the watch lookup toward the "Concepts viewed"
-        // usage stat, like opening a concept on the phone does.
+        // Count the watch lookup toward "Concepts viewed", like opening a
+        // concept on the phone does.
         let conceptId = match.conceptId
         Task { await appState?.recordConceptView(conceptId: conceptId) }
-        return AskResponse(
-            found: true,
-            termName: match.conceptName,
-            shortExplanation: match.shortExplanation,
-            longExplanation: match.longExplanation,
-            errorMessage: nil
+
+        let detail = [match.shortExplanation, match.longExplanation].compactMap { $0 }.first ?? ""
+        return WatchCaptureResult(
+            captureId: captureId, kind: .definition,
+            title: match.conceptName, detail: detail, phiFlagged: false
         )
     }
 
+    // MARK: Note -> auto-saved journal entry
+
+    private func saveNote(_ transcript: String, captureId: String) async -> WatchCaptureResult {
+        let phiFlagged = !PHIScreener.scan(transcript).isEmpty
+        await appState?.createNote(transcript: transcript, device: .watch, phiReviewed: false, phiFlagged: phiFlagged)
+        return WatchCaptureResult(
+            captureId: captureId, kind: .note,
+            title: "Note saved", detail: transcript, phiFlagged: phiFlagged
+        )
+    }
+
+    private func sendResult(_ result: WatchCaptureResult) {
+        guard let session, let data = try? JSONEncoder().encode(result) else { return }
+        // Durable so the watch always gets its answer/confirmation, even if it
+        // was briefly out of range when the clip was processed.
+        session.transferUserInfo(["type": "captureResult", "payload": data])
+    }
 }
 
 extension WatchConnectivityReceiver: WCSessionDelegate {
@@ -137,33 +117,16 @@ extension WatchConnectivityReceiver: WCSessionDelegate {
         session.activate()
     }
 
-    // WatchConnectivity deletes the delivered temp file as soon as this
-    // method returns, so copy it somewhere durable before handing off to the
-    // async transcription step.
+    // WatchConnectivity deletes the delivered temp file as soon as this method
+    // returns, so copy it somewhere durable before the async transcription step.
     nonisolated func session(_ session: WCSession, didReceive file: WCSessionFile) {
-        guard let sessionId = file.metadata?["sessionId"] as? String,
-              let sequence = file.metadata?["sequence"] as? Int else { return }
+        guard let captureId = file.metadata?["captureId"] as? String else { return }
         let destination = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString)
             .appendingPathExtension("m4a")
         guard (try? FileManager.default.copyItem(at: file.fileURL, to: destination)) != nil else { return }
         Task { @MainActor in
-            WatchConnectivityReceiver.shared.handleReceivedFile(at: destination, sessionId: sessionId, sequence: sequence)
-        }
-    }
-
-    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
-        guard userInfo["type"] as? String == "sessionComplete",
-              let sessionId = userInfo["sessionId"] as? String,
-              let totalCount = userInfo["totalCount"] as? Int else { return }
-        Task { @MainActor in
-            WatchConnectivityReceiver.shared.markSessionComplete(sessionId: sessionId, totalCount: totalCount)
-        }
-    }
-
-    nonisolated func session(_ session: WCSession, didReceiveMessageData messageData: Data, replyHandler: @escaping (Data) -> Void) {
-        Task { @MainActor in
-            WatchConnectivityReceiver.shared.handleAskQuery(audioData: messageData, replyHandler: replyHandler)
+            WatchConnectivityReceiver.shared.handleReceivedFile(at: destination, captureId: captureId)
         }
     }
 }

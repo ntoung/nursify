@@ -1,79 +1,52 @@
 import SwiftUI
-import WatchConnectivity
 
-/// A note built from one or more recordings, in progress on the watch.
-/// `id` ties every clip transferred for this note together on the phone side
-/// (WatchConnectivityReceiver groups by it); `clipCount` is both the display
-/// count and the sequence number for the next recording.
-private struct WatchNoteDraft {
-    let id = UUID()
-    var clipCount = 0
-    var pendingTransfers: [WCSessionFileTransfer] = []
-}
-
+/// The single watch entry point: one mic, then a scrolling record of recent
+/// captures. Tap to record, tap to stop; a row appears immediately as
+/// "sending…" and fills in once the phone reports back whether it saved a note
+/// or answered a question. See WatchCaptureStore / WatchConnectivityManager.
 struct WatchCaptureView: View {
     @StateObject private var recorder = WatchAudioRecorder()
-    @StateObject private var connectivity = WatchConnectivityManager.shared
-    @State private var draft: WatchNoteDraft?
+    @StateObject private var store = WatchCaptureStore.shared
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 6) {
-                if let draft {
-                    Text(draft.clipCount == 1 ? "1 recording added" : "\(draft.clipCount) recordings added")
-                        .font(.caption2)
-                        .foregroundStyle(.primary)
-                } else {
-                    Text("Nursify")
-                        .font(.headline)
-                }
-
-                Button {
-                    Task { await toggleRecording() }
-                } label: {
-                    Image(systemName: recorder.isRecording ? "stop.circle.fill" : "mic.circle.fill")
-                        .font(.system(size: 36))
-                        .foregroundStyle(recorder.isRecording ? .red : .accentColor)
-                }
-                .buttonStyle(.plain)
-
-                Text(statusCaption)
-                    .font(.caption2)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-
-                if let draft, !recorder.isRecording {
-                    HStack(spacing: 16) {
-                        Button {
-                            Task { await toggleRecording() }
-                        } label: {
-                            Label("Add more", systemImage: "plus.circle.fill")
-                        }
-                        .tint(.accentColor)
-
-                        Button {
-                            finishNote(draft)
-                        } label: {
-                            Label("Done", systemImage: "checkmark.circle.fill")
-                        }
-                        .tint(.green)
-                    }
-                    .labelStyle(.iconOnly)
-                    .font(.system(size: 18))
-
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 8) {
                     Button {
-                        discardNote(draft)
+                        Task { await toggleRecording() }
                     } label: {
-                        Text("Discard")
-                            .font(.caption2)
-                            .foregroundStyle(.red)
+                        Image(systemName: recorder.isRecording ? "stop.circle.fill" : "mic.circle.fill")
+                            .font(.system(size: 42))
+                            .foregroundStyle(recorder.isRecording ? .red : .accentColor)
                     }
                     .buttonStyle(.plain)
+
+                    Text(recorder.isRecording ? "Recording… tap to stop" : "Tap to capture")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+
+                    if store.records.isEmpty {
+                        Text("Say a note, or ask “what is…”.")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 6)
+                    } else {
+                        ForEach(store.records) { record in
+                            NavigationLink {
+                                WatchCaptureDetailView(record: record)
+                            } label: {
+                                WatchCaptureRow(record: record)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
                 }
+                .padding(.horizontal, 4)
+                .padding(.top, 6)
             }
-            .padding(.top, 8)
-            .padding(.horizontal)
-            .padding(.bottom, 8)
+            .navigationTitle("Nursify")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .alert(
             "Recording issue",
@@ -86,38 +59,96 @@ struct WatchCaptureView: View {
         }
     }
 
-    private var statusCaption: String {
-        if recorder.isRecording { return "Recording... tap to stop" }
-        if draft != nil { return "Add more or finish" }
-        return "Tap to start a note"
-    }
-
     private func toggleRecording() async {
         if recorder.isRecording {
             guard let url = recorder.stop() else { return }
-            var current = draft ?? WatchNoteDraft()
-            current.clipCount += 1
-            let transfer = connectivity.send(fileAt: url, sessionId: current.id, sequence: current.clipCount)
-            if let transfer { current.pendingTransfers.append(transfer) }
-            draft = current
+            let id = store.addSending()
+            WatchConnectivityManager.shared.send(fileAt: url, captureId: id)
         } else {
             await recorder.start()
         }
     }
+}
 
-    private func finishNote(_ draft: WatchNoteDraft) {
-        connectivity.finishSession(id: draft.id, clipCount: draft.clipCount)
-        self.draft = nil
+/// One row in the capture list.
+struct WatchCaptureRow: View {
+    let record: WatchCaptureRecord
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Image(systemName: icon)
+                .font(.system(size: 15))
+                .foregroundStyle(tint)
+                .frame(width: 18)
+
+            VStack(alignment: .leading, spacing: 1) {
+                Text(record.title)
+                    .font(.caption)
+                    .lineLimit(1)
+                if record.status == .sending {
+                    Text("sending…").font(.caption2).foregroundStyle(.secondary)
+                } else if !record.detail.isEmpty {
+                    Text(record.detail).font(.caption2).foregroundStyle(.secondary).lineLimit(1)
+                }
+            }
+
+            Spacer(minLength: 0)
+
+            if record.phiFlagged {
+                Image(systemName: "exclamationmark.shield.fill")
+                    .font(.caption2)
+                    .foregroundStyle(.orange)
+            }
+        }
+        .padding(.vertical, 3)
     }
 
-    /// Best-effort: cancels any clip transfers still in flight. A transfer
-    /// that already reached the phone can't be recalled — the phone simply
-    /// never receives a "session complete" marker for this session, so its
-    /// buffered clips are never surfaced for review either. See
-    /// WatchConnectivityReceiver.
-    private func discardNote(_ draft: WatchNoteDraft) {
-        draft.pendingTransfers.forEach { $0.cancel() }
-        self.draft = nil
+    private var icon: String {
+        switch record.status {
+        case .sending: return "arrow.up.circle"
+        case .failed: return "exclamationmark.triangle.fill"
+        case .done:
+            switch record.kind {
+            case .definition: return "book.fill"
+            case .note, .pending: return "note.text"
+            }
+        }
+    }
+
+    private var tint: Color {
+        switch record.status {
+        case .sending: return .secondary
+        case .failed: return .red
+        case .done: return record.kind == .definition ? .accentColor : .green
+        }
+    }
+}
+
+/// Full text for a tapped capture: the whole note transcript or definition.
+struct WatchCaptureDetailView: View {
+    let record: WatchCaptureRecord
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(record.title)
+                    .font(.headline)
+
+                if record.phiFlagged {
+                    Label("Possible patient info", systemImage: "exclamationmark.shield.fill")
+                        .font(.caption2)
+                        .foregroundStyle(.orange)
+                }
+
+                if !record.detail.isEmpty {
+                    Text(record.detail)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+        }
     }
 }
 

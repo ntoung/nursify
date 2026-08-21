@@ -113,7 +113,7 @@ struct JournalView: View {
                 .padding(.vertical, 14)
                 .background(Theme.Color.background)
             }
-            .sheet(isPresented: $isPresentingNewEntry, onDismiss: { openNextWatchDraftIfAvailable() }) {
+            .sheet(isPresented: $isPresentingNewEntry) {
                 NewEntryView(prefillNote: prefillNoteText, draftDevice: prefillDevice, speech: appState.speechCapture)
             }
             .alert(
@@ -126,10 +126,6 @@ struct JournalView: View {
             }
             .onAppear {
                 appState.purgeExpiredLookups()
-                openNextWatchDraftIfAvailable()
-            }
-            .onChange(of: appState.pendingWatchDrafts.count) { _, _ in
-                openNextWatchDraftIfAvailable()
             }
             .task { loadLearningTidbit() }
         }
@@ -230,12 +226,6 @@ struct JournalView: View {
     /// mid-reviewing. Called on appear, whenever a new watch note finishes,
     /// and after New Entry closes so a backlog gets worked through one at a
     /// time.
-    private func openNextWatchDraftIfAvailable() {
-        guard !isPresentingNewEntry, let next = appState.popNextPendingWatchDraft() else { return }
-        prefillNoteText = next
-        prefillDevice = .watch
-        isPresentingNewEntry = true
-    }
 }
 
 /// Display-only union of a Note and/or a LookupSession sharing an
@@ -260,6 +250,14 @@ private struct JournalRow: View {
                         .font(Theme.Font.body(14.5))
                         .foregroundStyle(Theme.Color.ink)
                         .lineLimit(group.lookupSession != nil ? 2 : 3)
+                    if note.phiFlagged {
+                        // Auto-saved (e.g. from the watch) without manual PHI
+                        // review, and the on-device screener flagged something -
+                        // surface it so possible patient info isn't invisible.
+                        Label("Possible patient info", systemImage: "exclamationmark.shield.fill")
+                            .font(Theme.Font.body(11, weight: .semibold))
+                            .foregroundStyle(Theme.Color.warnInk)
+                    }
                 }
                 if let session = group.lookupSession {
                     HStack(spacing: 6) {
